@@ -1,0 +1,10 @@
+# Claude Code local config — not needed in the repo
+.claude/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.vscode/
+.idea/

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Specials — Everyday AI Playbook | The Prompt Kitchen</title>
+  <meta name="description" content="Ready-to-use AI prompts for your daily life: morning briefings, email drafting, research, writing, learning, and coding. Copy and paste into any AI tool." />
+  <meta property="og:title"       content="Daily Specials — Everyday AI Playbook | The Prompt Kitchen" />
+  <meta property="og:description" content="Ready-to-use prompts for the tasks most people use AI for every day." />
+  <meta property="og:url"         content="https://thepromkitchen.dev/daily/" />
+  <link rel="canonical" href="https://thepromkitchen.dev/daily/" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body>
+
+<nav class="nav" role="navigation">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../prompts/">Recipe Book</a></li>
+      <li><a href="../context/">Kitchen Prep</a></li>
+      <li><a href="../models/">Appliance Guide</a></li>
+      <li><a href="../daily/" class="active">Daily Specials</a></li>
+      <li><a href="../examples/">Tasting Menu</a></li>
+      <li><a href="../image-video/">Image &amp; Video</a></li>
+      <li><a href="../gallery/">Gallery</a></li>
+      <li><a href="../support.html">Support ♥</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark">☾</span><span class="theme-icon-light">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../prompts/">📖 Recipe Book</a></li>
+    <li><a href="../context/">🧑‍🍳 Kitchen Prep</a></li>
+    <li><a href="../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../daily/">⭐ Daily Specials</a></li>
+    <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+    <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
+    <li><a href="../gallery/">🖼️ Gallery</a></li>
+    <li><a href="../support.html">♥ Support</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">›</span><span class="current">Daily Specials</span>
+    </nav>
+    <h1>⭐ Daily Specials</h1>
+    <p class="lead">Complete, ready-to-use playbooks for the tasks most people reach for AI every day. Each one includes the situation, the recipe, and tips for making it yours.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container">
+
+<div class="toc" style="max-width:600px; margin-bottom: var(--s10);">
+  <h4>Jump to a playbook</h4>
+  <ol>
+    <li><a href="#morning">☀️ Morning Briefing</a></li>
+    <li><a href="#email">✉️ Email Drafting &amp; Tone Adjustment</a></li>
+    <li><a href="#research">🔍 Research Assistant Workflow</a></li>
+    <li><a href="#writing">✏️ Writing &amp; Editing Loop</a></li>
+    <li><a href="#learning">🧠 Learning a New Topic Fast</a></li>
+    <li><a href="#coding">💻 Coding Helper</a></li>
+  </ol>
+</div>
+
+<!-- ==============================
+     MORNING BRIEFING
+     ============================== -->
+<div class="playbook-card" id="morning">
+  <div class="playbook-card-header">
+    <span class="playbook-icon">☀️</span>
+    <div>
+      <h2>Morning Briefing</h2>
+      <p>Start your day with a clear head and a clear plan — without sifting through email, notes, and task lists yourself.</p>
+    </div>
+  </div>
+  <div class="playbook-card-body">
+    <p><strong>The situation:</strong> It's morning. You have a mix of things in your head — meetings, tasks, things you're worried about, things you've been putting off. You want a clear sense of what today actually needs to look like.</p>
+
+    <div class="recipe-section-label">The Recipe — Daily Planner</div>
+    <div class="prompt-block">
+      <pre>Help me plan my day. Here's what's on my plate:
+
+Meetings / fixed commitments: [list them with times if relevant]
+Tasks I need to finish today: [list the must-dos]
+Things I'd like to get to but could slip: [nice-to-haves]
+Things I've been putting off that I should probably tackle: [the procrastination list]
+How I'm feeling / energy level: [honest assessment — tired, sharp, anxious, etc.]
+
+Given all that, help me:
+1. Identify the one or two things that actually matter most today
+2. Suggest a rough order for the day
+3. Flag anything I should say no to or push back on
+4. Give me one sentence that sets the right tone for the day</pre>
+    </div>
+
+    <div class="recipe-section-label">The Recipe — Week Kickoff (use on Mondays)</div>
+    <div class="prompt-block">
+      <pre>It's the start of the week. Help me get oriented.
+
+This week's big goals: [what you want to accomplish by Friday]
+Key deadlines: [anything with a hard due date]
+Things carried over from last week: [unfinished business]
+Potential blockers or concerns: [what might get in the way]
+
+Give me:
+1. A prioritized list of this week's most important items
+2. Which day each major task should ideally happen
+3. One thing I should say no to or defer if I can
+4. A one-line intention for the week</pre>
+    </div>
+
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Make this a 5-minute habit</h4>
+        <p>Keep your morning briefing prompt saved in a notes app. Each morning, fill in the details and paste it into your AI of choice. It takes 5 minutes and consistently produces better days than winging it. Many people find they also surface things they'd forgotten by the act of listing them.</p>
+      </div>
+    </div>
+
+    <details style="margin-top: var(--s4);">
+      <summary>Tweaks for different situations</summary>
+      <div style="padding: var(--s3) 0 var(--s3) var(--s5);">
+        <ul>
+          <li><strong>Working from home:</strong> Add "I also need to handle [household things] today" — AI can help interleave personal and work tasks realistically.</li>
+          <li><strong>High-stakes day:</strong> Add "I have [important presentation/meeting/deadline] today. Help me protect my mental bandwidth for that."</li>
+          <li><strong>Overwhelmed:</strong> Add "There's too much and I'm stressed. Help me figure out what I can cut or push rather than pile more on."</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ==============================
+     EMAIL
+     ============================== -->
+<div class="playbook-card" id="email">
+  <div class="playbook-card-header">
+    <span class="playbook-icon">✉️</span>
+    <div>
+      <h2>Email Drafting &amp; Tone Adjustment</h2>
+      <p>Write it faster, say it better, and never second-guess the tone again.</p>
+    </div>
+  </div>
+  <div class="playbook-card-body">
+    <p><strong>The situation:</strong> You have something to say in an email but you're not sure how to say it, you want it to sound better than your rough draft, or you're dealing with a tricky situation that needs a careful tone.</p>
+
+    <div class="recipe-section-label">Recipe 1 — Draft from scratch</div>
+    <div class="prompt-block">
+      <pre>Draft a professional email for me.
+
+To: [who it's going to and their relationship to you]
+Purpose: [what you need to communicate — one sentence]
+Key points to include: [bullet list of what needs to be said]
+Tone: [e.g., warm but professional / apologetic but clear / firm but polite / enthusiastic]
+Length: [e.g., short — under 150 words / medium / as long as needed]
+Anything to avoid: [e.g., "don't sound defensive" / "no corporate jargon" / "don't apologize for things that aren't my fault"]</pre>
+    </div>
+
+    <div class="recipe-section-label">Recipe 2 — Fix my rough draft</div>
+    <div class="prompt-block">
+      <pre>Here's my rough draft of an email. Please improve it.
+
+[paste your draft here]
+
+What I want from you:
+- Make it clearer and more concise
+- Adjust the tone to be [e.g., warmer / more professional / less apologetic / more confident]
+- Fix any awkward phrasing
+- Keep my voice — don't make it sound like a template
+
+Tell me what you changed and why, briefly.</pre>
+    </div>
+
+    <div class="recipe-section-label">Recipe 3 — The difficult email</div>
+    <div class="prompt-block">
+      <pre>I need to write a difficult email and I want to get the tone exactly right.
+
+The situation: [describe the context — what happened, what the relationship is, what's at stake]
+What I need to say: [the core message, even if you're not sure how to say it yet]
+How I want to come across: [honest, fair, not aggressive, etc.]
+What I want to avoid: [sounding passive-aggressive / coming across as blaming / burning a bridge]
+
+Draft the email, then tell me: is there anything in it that could land badly that I should reconsider?</pre>
+    </div>
+
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Always read it out loud before sending</h4>
+        <p>AI-drafted emails can occasionally sound slightly formal or generic. Reading the final draft out loud tells you immediately if it sounds like you. Edit any sentence that feels stiff. The goal is to send something better than what you'd write alone — not something unrecognizable.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================
+     RESEARCH
+     ============================== -->
+<div class="playbook-card" id="research">
+  <div class="playbook-card-header">
+    <span class="playbook-icon">🔍</span>
+    <div>
+      <h2>Research Assistant Workflow</h2>
+      <p>Go from knowing nothing about a topic to knowing enough to make a decision — in a fraction of the time.</p>
+    </div>
+  </div>
+  <div class="playbook-card-body">
+    <p><strong>The situation:</strong> You need to understand something unfamiliar — a medical topic, a purchasing decision, a legal concept, a technical subject, a new industry. You want AI to be your first point of call before you consult a human expert.</p>
+
+    <div class="recipe-section-label">Recipe — The Smart Research Brief</div>
+    <div class="prompt-block">
+      <pre>I need to get up to speed on [topic] quickly. I know very little about it.
+
+Why I'm researching it: [the decision or action you're trying to inform]
+What I specifically need to understand: [your concrete questions]
+My background: [what you already know, if anything]
+What "good enough" looks like: [e.g., "I need to have an informed conversation with a specialist" / "I need to make a purchase decision" / "I just want a solid overview"]
+
+Please:
+1. Give me a clear, plain-English explanation of the key concepts I need to know
+2. Tell me the most important things people get wrong or misunderstand about this topic
+3. List the 3-5 questions I should be asking (that I probably don't know to ask yet)
+4. Tell me where the limits of your knowledge are on this — what should I verify with a human expert?</pre>
+    </div>
+
+    <div class="recipe-section-label">Recipe — Comparing options</div>
+    <div class="prompt-block">
+      <pre>I'm trying to decide between [option A] and [option B] for [your goal].
+
+My situation: [who you are, your constraints, what matters most to you]
+What I've already figured out: [any research you've done, preferences you have]
+What I'm uncertain about: [where you feel stuck or confused]
+
+Build me a comparison that focuses on what actually matters for my situation — not just a generic pros/cons list. Recommend one, with your reasoning. Tell me what could change that recommendation.</pre>
+    </div>
+
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Important: AI can be confidently wrong</h4>
+        <p>AI models can state incorrect facts with complete confidence. For anything important — medical decisions, legal matters, financial choices, safety-critical information — treat AI as a starting point that helps you ask better questions of a qualified human expert, not as the final word.</p>
+      </div>
+    </div>
+
+    <details style="margin-top: var(--s4);">
+      <summary>Getting the most out of AI research</summary>
+      <div style="padding: var(--s3) 0 var(--s3) var(--s5);">
+        <ul>
+          <li>Ask AI to give you its sources or to flag claims it's uncertain about.</li>
+          <li>If something important hinges on the answer, Google a few key facts from the AI's response to verify.</li>
+          <li>Use models with web access (Gemini, Copilot, Grok) for anything where recency matters.</li>
+          <li>Follow up with "What are the most common misconceptions about what you just told me?" to surface potential errors in the model's own response.</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+</div>
+
+<!-- ==============================
+     WRITING
+     ============================== -->
+<div class="playbook-card" id="writing">
+  <div class="playbook-card-header">
+    <span class="playbook-icon">✏️</span>
+    <div>
+      <h2>Writing &amp; Editing Loop</h2>
+      <p>Better writing, every time — whether you're starting from nothing or polishing a draft.</p>
+    </div>
+  </div>
+  <div class="playbook-card-body">
+    <p><strong>The situation:</strong> You need to produce good writing — a report, an article, a proposal, a social media post, a cover letter, a speech, a bio — and you want it to be genuinely good, not just adequate.</p>
+
+    <div class="recipe-section-label">Recipe 1 — Write from a brief</div>
+    <div class="prompt-block">
+      <pre>Write a [type of piece] for me.
+
+Topic / angle: [what it's about and what specific point you want to make]
+Audience: [who will read it and what they care about]
+Tone: [e.g., conversational and friendly / authoritative and serious / witty but informative]
+Key points to hit: [the essential things to cover]
+Length: [target word count or "short / medium / long"]
+What to avoid: [clichés / jargon / starting with "In today's world..." / etc.]
+
+After drafting, tell me: what's the weakest sentence or section, and why?</pre>
+    </div>
+
+    <div class="recipe-section-label">Recipe 2 — Edit for clarity and punch</div>
+    <div class="prompt-block">
+      <pre>Edit the following text for clarity, concision, and impact. My priorities:
+1. Cut anything that doesn't add meaning (but don't gut the personality)
+2. Fix any awkward sentences
+3. Make the opening stronger if it's weak
+4. Flag any claims that seem unsupported or that a reader might question
+
+Here's the text:
+[paste your writing]
+
+Show me the edited version, then list the 3 most significant changes you made and why.</pre>
+    </div>
+
+    <div class="recipe-section-label">Recipe 3 — Tone check before publishing</div>
+    <div class="prompt-block">
+      <pre>Read the following text and give me a tone analysis before I publish it.
+
+[paste your text]
+
+Tell me:
+1. How does this come across? (specific adjectives)
+2. Is there anything that could be misread or taken the wrong way?
+3. How would [specific person/group] likely react to this?
+4. Is there anything I should soften, strengthen, or cut?</pre>
+    </div>
+
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Your voice, AI's craft</h4>
+        <p>The best results come from giving AI something to work with — even a rough outline or bullet points — rather than asking it to write completely from scratch. That way, the ideas are yours and AI refines the execution. Pure AI-from-nothing writing tends to be generic. Your raw thoughts + AI polish tends to be good.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================
+     LEARNING
+     ============================== -->
+<div class="playbook-card" id="learning">
+  <div class="playbook-card-header">
+    <span class="playbook-icon">🧠</span>
+    <div>
+      <h2>Learning a New Topic Fast</h2>
+      <p>Use AI as your most patient tutor — available 24/7, never condescending, always willing to re-explain.</p>
+    </div>
+  </div>
+  <div class="playbook-card-body">
+    <p><strong>The situation:</strong> You need to get up to speed on something you know little about — a new technology, a subject for a course, a skill you want to develop, an industry you're entering.</p>
+
+    <div class="recipe-section-label">Recipe 1 — The Personalized Curriculum</div>
+    <div class="prompt-block">
+      <pre>I want to learn [topic]. Act as a knowledgeable tutor and help me build a genuine understanding.
+
+My starting point: [what you currently know about it]
+My goal: [why you're learning it — practical outcome, level of depth needed]
+Time available: [e.g., "30 minutes a day for 2 weeks" / "I need a solid foundation in 3 hours"]
+How I learn best: [e.g., "I like analogies and stories" / "I prefer concrete examples before theory" / "Give me the big picture first, then details"]
+
+Design a learning plan for me: what should I tackle first, second, third? For the first topic, teach me now — explain it clearly, check my understanding with a question, and tell me what misconceptions I should watch out for.</pre>
+    </div>
+
+    <div class="recipe-section-label">Recipe 2 — Active Recall Practice</div>
+    <div class="prompt-block">
+      <pre>I've been learning about [topic]. I want to test my understanding.
+
+Here's what I think I know: [explain it in your own words as best you can]
+
+Now:
+1. Correct anything I got wrong
+2. Fill in any significant gaps
+3. Ask me 3 questions that would test whether I really understand this (not just memorized it)
+4. After I answer, tell me what I've solidly understood vs. what I'm shaky on</pre>
+    </div>
+
+    <div class="recipe-section-label">Recipe 3 — The Analogy Request</div>
+    <div class="prompt-block">
+      <pre>Explain [concept] to me using an analogy from [domain I know well — e.g., cooking / sports / construction / music].
+
+I understand [domain] well but [concept] isn't clicking for me despite reading about it. I need a way to build an intuition for it, not just a definition.</pre>
+    </div>
+
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>The Feynman technique, AI-powered</h4>
+        <p>The physicist Richard Feynman said the best test of whether you understand something is whether you can explain it simply. Use AI to practice: explain a concept back to it in your own words, and ask it to correct you and fill in the gaps. This is one of the most effective learning techniques there is, and AI makes it available on any topic at any hour.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================
+     CODING
+     ============================== -->
+<div class="playbook-card" id="coding">
+  <div class="playbook-card-header">
+    <span class="playbook-icon">💻</span>
+    <div>
+      <h2>Coding Helper Patterns</h2>
+      <p>Whether you're a seasoned developer or someone who's never written a line of code, AI changes what's possible.</p>
+    </div>
+  </div>
+  <div class="playbook-card-body">
+    <p><strong>The situation:</strong> You need to write, understand, fix, or improve code. Maybe you're a developer who wants a rubber duck that talks back. Maybe you're a non-developer who wants to automate something without learning to program from scratch.</p>
+
+    <div class="recipe-section-label">Recipe 1 — Fix a bug</div>
+    <div class="prompt-block">
+      <pre>I have a bug in my code and I can't figure out what's wrong.
+
+Language / environment: [e.g., Python 3.11 / JavaScript in the browser / SQL in PostgreSQL]
+What it should do: [expected behavior]
+What it's actually doing: [actual behavior — be specific]
+Error message (if any): [paste the exact error text]
+
+Here's the relevant code:
+[paste the code — just the relevant section, not your whole project]
+
+Don't just give me the fix — explain what was wrong and why, so I understand it for next time.</pre>
+    </div>
+
+    <div class="recipe-section-label">Recipe 2 — Build something from a description (non-coder version)</div>
+    <div class="prompt-block">
+      <pre>I want to automate something but I don't know how to code. Can you help me build it?
+
+What I want to do: [describe the task in plain English — be as specific as possible]
+What tools/software I have access to: [e.g., "I use a Mac and have Excel / I have a Windows PC / I use Google Sheets"]
+My technical level: [complete beginner / some basic experience / comfortable with basic scripts]
+
+Start by suggesting the simplest possible approach — I'd rather something that works than something clever. Walk me through it step by step, and assume I'll need to be told where to click and paste things.</pre>
+    </div>
+
+    <div class="recipe-section-label">Recipe 3 — Explain this code to me</div>
+    <div class="prompt-block">
+      <pre>Explain what this code does, line by line if needed:
+
+[paste code]
+
+I'm [your experience level]. Use plain language. For any technical terms, explain what they mean in context. Tell me:
+1. What this code does overall
+2. What each significant section does
+3. Whether there's anything here that looks inefficient, risky, or confusing — and why</pre>
+    </div>
+
+    <div class="recipe-section-label">Recipe 4 — Write a formula (for Excel / Google Sheets)</div>
+    <div class="prompt-block">
+      <pre>I need a formula for [Excel / Google Sheets].
+
+What I want it to do: [describe in plain English — e.g., "add up all values in column B where the corresponding cell in column A says 'Rent'"]
+My data layout: [brief description — e.g., "Column A has category names, Column B has amounts, starting at row 2"]
+I'm using: [Excel / Google Sheets] on [Windows / Mac]
+
+Give me the formula, tell me where to put it, and explain in plain English what each part of the formula is doing.</pre>
+    </div>
+
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Paste the exact error message</h4>
+        <p>When asking AI to help with a code bug, the most important thing you can do is paste the exact, complete error message. Not a paraphrase — the actual text. Error messages are incredibly specific, and AI can often diagnose the problem immediately from the error text alone. Screenshot transcription works too.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../" class="nav-logo" style="margin-bottom: var(--s3);">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="16" r="3" fill="currentColor"/>
+          </svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI.</p>
+      </div>
+      <div class="footer-col"><h4>Pages</h4><ul>
+        <li><a href="../prompts/">Recipe Book</a></li>
+        <li><a href="../context/">Kitchen Prep</a></li>
+        <li><a href="../models/">Model Guide</a></li>
+        <li><a href="../examples/">Examples</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>More</h4><ul>
+        <li><a href="../image-video/">Image &amp; Video</a></li>
+        <li><a href="../gallery/">Gallery</a></li>
+        <li><a href="../support.html">Support</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Site</h4><ul>
+        <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <div class="footer-privacy"><span class="privacy-dot"></span><span>No tracking · No cookies · No ads</span></div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+<script src="../js/main.js"></script>
+</body>
+</html>

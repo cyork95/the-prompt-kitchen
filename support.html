@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support the Kitchen | The Prompt Kitchen</title>
+  <meta name="description" content="The Prompt Kitchen is free, has no ads, and never will. If it's been useful to you, here's how to support it." />
+  <meta property="og:title"       content="Support the Kitchen | The Prompt Kitchen" />
+  <meta property="og:description" content="The Prompt Kitchen is free, has no ads, and never will. If it's been useful to you, here's how to support it." />
+  <meta property="og:url"         content="https://thepromkitchen.dev/support.html" />
+  <link rel="canonical" href="https://thepromkitchen.dev/support.html" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    .support-hero {
+      text-align: center;
+      padding: var(--s16) 0 var(--s10);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .support-hero h1 { margin-bottom: var(--s5); }
+    .support-hero p  { font-size: var(--text-lg); color: var(--text-2); line-height: 1.7; margin-bottom: var(--s4); }
+
+    .paypal-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s3);
+      background: #0070BA;
+      color: #fff;
+      border: none;
+      border-radius: var(--r2);
+      padding: var(--s4) var(--s8);
+      font-size: var(--text-base);
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background var(--t-fast), transform var(--t-fast);
+    }
+    .paypal-btn:hover {
+      background: #005EA6;
+      color: #fff;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .crypto-note {
+      font-size: var(--text-sm);
+      color: var(--text-3);
+      text-align: center;
+      margin-top: var(--s3);
+      font-style: italic;
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: var(--s10) 0;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="prompts/">Recipe Book</a></li>
+      <li><a href="context/">Kitchen Prep</a></li>
+      <li><a href="models/">Appliance Guide</a></li>
+      <li><a href="daily/">Daily Specials</a></li>
+      <li><a href="examples/">Tasting Menu</a></li>
+      <li><a href="image-video/">Image &amp; Video</a></li>
+      <li><a href="gallery/">Gallery</a></li>
+      <li><a href="support.html" class="active">Support ♥</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark">☾</span><span class="theme-icon-light">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="prompts/">📖 Recipe Book</a></li>
+    <li><a href="context/">🧑‍🍳 Kitchen Prep</a></li>
+    <li><a href="models/">🍳 Appliance Guide</a></li>
+    <li><a href="daily/">⭐ Daily Specials</a></li>
+    <li><a href="examples/">🍽️ Tasting Menu</a></li>
+    <li><a href="image-video/">🎨 Image &amp; Video</a></li>
+    <li><a href="gallery/">🖼️ Gallery</a></li>
+    <li><a href="support.html">♥ Support</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+<div class="container">
+
+  <!-- Hero -->
+  <div class="support-hero">
+    <div style="font-size: 3rem; margin-bottom: var(--s5);">♥</div>
+    <h1>Support the Kitchen</h1>
+    <p>
+      The Prompt Kitchen is free. No ads, no sponsored content, no email list, no paywalled recipes.
+      Everything on this site is written to be genuinely useful — not to generate clicks or sell you something.
+    </p>
+    <p>
+      It takes real time to research, write, and maintain. If something here has saved you an hour,
+      helped you write something better, or made AI feel less intimidating, I'd be grateful for your support.
+      Anything helps, and nothing is expected.
+    </p>
+    <p style="font-size: var(--text-base); color: var(--text-3);">
+      Donations go toward hosting, domain, time spent writing new content, and — honestly — the coffee that makes it all happen.
+    </p>
+  </div>
+
+  <hr class="section-divider" />
+
+  <!-- PayPal -->
+  <div style="text-align: center; margin-bottom: var(--s12);">
+    <h2 style="margin-bottom: var(--s3);">PayPal</h2>
+    <p class="text-2" style="margin-bottom: var(--s6);">The simplest option — pay with a card or your PayPal balance. No crypto wallet needed.</p>
+    <a href="https://paypal.me/codysfinace" class="paypal-btn" rel="noopener" target="_blank">
+      <span style="font-size: 1.25rem;">𝙿</span> Donate via PayPal
+    </a>
+    <p class="crypto-note" style="margin-top: var(--s4);">Opens paypal.me in a new tab. No account required to pay by card.</p>
+  </div>
+
+  <hr class="section-divider" />
+
+  <!-- Crypto -->
+  <div style="text-align: center; margin-bottom: var(--s6);">
+    <h2 style="margin-bottom: var(--s3);">Crypto</h2>
+    <p class="text-2" style="max-width: 480px; margin: 0 auto var(--s8);">
+      Prefer to send crypto? Scan the QR code with your wallet app, or copy the address below.
+      No account needed — just scan and send.
+    </p>
+  </div>
+
+  <div class="crypto-grid">
+
+    <!-- Bitcoin -->
+    <div class="crypto-card">
+      <div class="crypto-card-icon">₿</div>
+      <h3>Bitcoin (BTC)</h3>
+      <div class="qr-canvas-wrap">
+        <canvas data-qr="bc1q8gel806yqepzcaup4nl0cjlxngt736efjm99ejrxnkwljclhzmqs3guasg" data-qr-scale="6" width="200" height="200" aria-label="Bitcoin QR code"></canvas>
+      </div>
+      <div class="crypto-address" id="btc-addr">bc1q8gel806yqepzcaup4nl0cjlxngt736efjm99ejrxnkwljclhzmqs3guasg</div>
+      <button class="btn btn-secondary" style="width:100%; margin-top: var(--s2);"
+        data-copy-target="btc-addr" aria-label="Copy Bitcoin address">
+        ⎘ Copy Address
+      </button>
+    </div>
+
+    <!-- Solana -->
+    <div class="crypto-card">
+      <div class="crypto-card-icon">◎</div>
+      <h3>Solana (SOL)</h3>
+      <div class="qr-canvas-wrap">
+        <canvas data-qr="3JeQUeJR15RTtyd6M1ggiFpjHyZSH46rhDvdD52wcpEh" data-qr-scale="6" width="200" height="200" aria-label="Solana QR code"></canvas>
+      </div>
+      <div class="crypto-address" id="sol-addr">3JeQUeJR15RTtyd6M1ggiFpjHyZSH46rhDvdD52wcpEh</div>
+      <button class="btn btn-secondary" style="width:100%; margin-top: var(--s2);"
+        data-copy-target="sol-addr" aria-label="Copy Solana address">
+        ⎘ Copy Address
+      </button>
+    </div>
+
+    <!-- XRP -->
+    <div class="crypto-card">
+      <div class="crypto-card-icon">✕</div>
+      <h3>XRP</h3>
+      <div class="qr-canvas-wrap">
+        <!-- QR encodes address only; enter the destination tag manually in your wallet -->
+        <canvas data-qr="r9PVz1ryF2YKpXY53c4KZLsg8mmwGDAiYV" data-qr-scale="6" width="200" height="200" aria-label="XRP QR code"></canvas>
+      </div>
+      <div class="crypto-address" id="xrp-addr">r9PVz1ryF2YKpXY53c4KZLsg8mmwGDAiYV</div>
+      <button class="btn btn-secondary" style="width:100%; margin-top: var(--s2);"
+        data-copy-target="xrp-addr" aria-label="Copy XRP address">
+        ⎘ Copy Address
+      </button>
+      <!-- Destination tag — required for exchanges that share a pool address -->
+      <div style="margin-top: var(--s3); background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: var(--r2); padding: var(--s3) var(--s4);">
+        <div style="font-size: var(--text-xs); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); margin-bottom: var(--s1);">⚠️ Destination Tag — Required</div>
+        <div class="crypto-address" id="xrp-tag" style="margin: 0; font-size: var(--text-base); font-weight: 700; color: var(--accent);">893236202</div>
+        <button class="btn btn-secondary btn-sm" style="width:100%; margin-top: var(--s2);"
+          data-copy-target="xrp-tag" aria-label="Copy XRP destination tag">
+          ⎘ Copy Tag
+        </button>
+      </div>
+      <p class="crypto-note" style="margin-top: var(--s2);">You must include the destination tag when sending from an exchange. Sending without it may result in lost funds.</p>
+    </div>
+
+  </div>
+
+  <div class="callout callout-info" style="max-width: 600px; margin: var(--s8) auto 0;">
+    <span class="callout-icon">ℹ️</span>
+    <div class="callout-body">
+      <h4>New to crypto donations?</h4>
+      <p>You need a wallet app on your phone (Coinbase, Trust Wallet, and Exodus are all free and beginner-friendly). Open the app, choose "Send," tap the QR scanner, and point it at the code above. Confirm the amount and send — that's it. No account creation needed on our end.</p>
+    </div>
+  </div>
+
+  <hr class="section-divider" />
+
+  <!-- Other ways to help -->
+  <div style="text-align: center; max-width: 580px; margin: 0 auto var(--s16);">
+    <h2 style="margin-bottom: var(--s5);">Other ways to help — all free</h2>
+    <div style="display: flex; flex-direction: column; gap: var(--s4); text-align: left;">
+
+      <div class="ingredient-item">
+        <span class="ingredient-emoji">🔗</span>
+        <div>
+          <h4>Share a page that helped you</h4>
+          <p>The single most impactful thing you can do. Copy a link to any page and share it with someone who would find it useful. Word of mouth is how small independent sites survive.</p>
+        </div>
+      </div>
+
+      <div class="ingredient-item">
+        <span class="ingredient-emoji">🐙</span>
+        <div>
+          <h4>Contribute on GitHub</h4>
+          <p>Found a mistake? Have a prompt pattern that's not here? Want to add gallery examples? The site is open source. See <a href="CONTRIBUTING.md">CONTRIBUTING.md</a> for how to submit improvements — no coding experience required for content changes.</p>
+        </div>
+      </div>
+
+      <div class="ingredient-item">
+        <span class="ingredient-emoji">✉️</span>
+        <div>
+          <h4>Send feedback</h4>
+          <p>Open a GitHub issue or reach out directly. What's confusing? What's missing? Which recipes didn't work the way you expected? Honest feedback makes the site genuinely better.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="nav-logo" style="margin-bottom: var(--s3);">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="16" r="3" fill="currentColor"/>
+          </svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI. Free, open, and always will be.</p>
+      </div>
+      <div class="footer-col"><h4>Recipes</h4><ul>
+        <li><a href="prompts/">Prompt Patterns</a></li>
+        <li><a href="context/">Context Engineering</a></li>
+        <li><a href="daily/">Daily Playbook</a></li>
+        <li><a href="examples/">Examples</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Tools</h4><ul>
+        <li><a href="models/">Model Guide</a></li>
+        <li><a href="image-video/">Image &amp; Video</a></li>
+        <li><a href="gallery/">Gallery</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Site</h4><ul>
+        <li><a href="support.html">Support the Kitchen</a></li>
+        <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
+        <li><a href="CONTRIBUTING.md">Contributing</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <div class="footer-privacy"><span class="privacy-dot"></span><span>No tracking · No cookies · No ads</span></div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+<script src="js/main.js"></script>
+</body>
+</html>

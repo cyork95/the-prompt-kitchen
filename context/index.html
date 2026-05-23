@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kitchen Prep — Context Engineering | The Prompt Kitchen</title>
+  <meta name="description" content="Learn how to give AI the right background information so it can help you properly. Context windows explained simply, with templates for common tasks." />
+  <meta property="og:title"       content="Kitchen Prep — Context Engineering | The Prompt Kitchen" />
+  <meta property="og:description" content="How to brief an AI before the real work starts — explained simply with practical templates." />
+  <meta property="og:url"         content="https://thepromkitchen.dev/context/" />
+  <link rel="canonical" href="https://thepromkitchen.dev/context/" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../prompts/">Recipe Book</a></li>
+      <li><a href="../context/" class="active">Kitchen Prep</a></li>
+      <li><a href="../models/">Appliance Guide</a></li>
+      <li><a href="../daily/">Daily Specials</a></li>
+      <li><a href="../examples/">Tasting Menu</a></li>
+      <li><a href="../image-video/">Image &amp; Video</a></li>
+      <li><a href="../gallery/">Gallery</a></li>
+      <li><a href="../support.html">Support ♥</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark" aria-hidden="true">☾</span>
+        <span class="theme-icon-light" aria-hidden="true">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../prompts/">📖 Recipe Book</a></li>
+    <li><a href="../context/">🧑‍🍳 Kitchen Prep</a></li>
+    <li><a href="../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../daily/">⭐ Daily Specials</a></li>
+    <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+    <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
+    <li><a href="../gallery/">🖼️ Gallery</a></li>
+    <li><a href="../support.html">♥ Support</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">›</span><span class="current">Kitchen Prep</span>
+    </nav>
+    <h1>🧑‍🍳 Kitchen Prep</h1>
+    <p class="lead">Context is the background information AI needs to give you a useful answer. Think of it as briefing a new chef before service — the more they know about tonight's menu, the better they can help.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container">
+
+<div class="toc" style="max-width: 600px; margin-bottom: var(--s10);">
+  <h4>On this page</h4>
+  <ol>
+    <li><a href="#what-is-context">What is context and why it matters</a></li>
+    <li><a href="#how-memory-works">How AI "remembers" — context windows explained</a></li>
+    <li><a href="#system-prompts">System prompts — set the scene before you start</a></li>
+    <li><a href="#conversation-priming">Conversation priming</a></li>
+    <li><a href="#few-shot">Few-shot examples — show, don't just tell</a></li>
+    <li><a href="#templates">Context templates for common tasks</a></li>
+    <li><a href="#long-conversations">Tips for long conversations</a></li>
+  </ol>
+</div>
+
+<!-- WHAT IS CONTEXT -->
+<section id="what-is-context" style="margin-bottom: var(--s12);">
+  <h2>What is context and why it matters</h2>
+  <div class="prose">
+    <p>
+      Imagine you've hired a brilliant contractor to renovate your kitchen. They show up on the first day
+      with no information — they don't know your budget, your taste, whether you have kids, how much you
+      cook, or that you specifically hate open shelving. They're talented, but their first suggestions
+      will be totally generic.
+    </p>
+    <p>
+      Now imagine you gave them a two-page brief before they started: your budget, your aesthetic, photos
+      of kitchens you love, a list of your must-haves and dealbreakers, and the fact that you've tried
+      two previous renovations that went over budget. Their first suggestions are now tailored, specific,
+      and far more useful.
+    </p>
+    <p>
+      AI works exactly the same way. <strong>Context is the brief.</strong> Without it, you get generic answers.
+      With it, you get responses that feel like they were written specifically for your situation —
+      because they were.
+    </p>
+    <p>
+      The difference between an AI newbie and someone who gets remarkable results from AI tools is usually
+      not which tool they use. It's how much context they provide.
+    </p>
+  </div>
+</section>
+
+<!-- HOW MEMORY WORKS -->
+<section id="how-memory-works" style="margin-bottom: var(--s12);">
+  <h2>How AI "remembers" — context windows explained</h2>
+  <div class="prose">
+    <p>
+      Here's something that surprises most people: AI doesn't actually have memory the way you do.
+      It can't remember your name from last week's conversation unless you tell it again.
+      What it <em>can</em> do is read everything in the current conversation — your messages,
+      its responses, any documents you paste in — and use all of that as its working context.
+    </p>
+  </div>
+
+  <div class="callout callout-info" style="margin: var(--s6) 0;">
+    <span class="callout-icon">📋</span>
+    <div class="callout-body">
+      <h4>The sticky-note analogy</h4>
+      <p>Think of a context window like a whiteboard in a meeting room. Everything written on that whiteboard is visible to everyone in the meeting. The AI can see and use everything on the whiteboard — but when the meeting ends and the whiteboard is erased, it starts fresh next time with no memory of what was there before.</p>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>
+      <strong>What this means practically:</strong>
+    </p>
+    <ul>
+      <li>If you start a new conversation, the AI has no memory of previous ones. You'll need to re-introduce yourself and your context.</li>
+      <li>Within a single conversation, the AI can see everything — so it gets smarter as you give it more information.</li>
+      <li>Very long conversations can eventually hit the "context limit" — like a whiteboard that's completely full. When this happens, earlier messages may get compressed or dropped. The AI may seem to "forget" things from earlier. The fix: start a fresh conversation and re-paste the essential context.</li>
+    </ul>
+
+    <details>
+      <summary>How long can a conversation be before it hits the limit?</summary>
+      <div style="padding: var(--s3) 0 var(--s3) var(--s4);">
+        <p>It depends on the model and the plan you're using. For reference, most free-tier AI tools can comfortably handle conversations of about 20–50 messages with normal amounts of text. If you're pasting large documents, that limit shrinks. Paid tiers typically offer much larger context windows — Claude's extended context, for example, can hold the equivalent of a small novel.</p>
+        <p>In practice, for everyday use (emails, questions, short research tasks), you'll rarely hit the limit in a single conversation.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- SYSTEM PROMPTS -->
+<section id="system-prompts" style="margin-bottom: var(--s12);">
+  <h2>System prompts — set the scene before you start</h2>
+  <div class="prose">
+    <p>
+      A <strong>system prompt</strong> is a set of instructions you give the AI at the very beginning
+      of a conversation — before you ask your actual question. It's like setting the rules of engagement
+      before the meeting starts.
+    </p>
+    <p>
+      Some AI tools (like Claude and ChatGPT) have a dedicated "system prompt" field or "custom instructions"
+      in their settings. Others, you can just paste it in as your first message. Either way works.
+    </p>
+  </div>
+
+  <div class="recipe-section-label" style="margin-top: var(--s6);">General-purpose system prompt template</div>
+  <div class="prompt-block">
+    <pre>You are helping me with [general area — e.g., "work writing tasks" / "learning about personal finance" / "planning my home renovation"].
+
+About me: [2-3 sentences about who you are and what's relevant — your job, your knowledge level, your situation]
+
+My preferences:
+- Tone: [how you want responses — e.g., "direct and concise" / "warm and conversational" / "technical is fine"]
+- Format: [how you want things structured — e.g., "use bullet points" / "prefer prose" / "always start with the bottom line"]
+- Avoid: [anything you don't want — e.g., "don't hedge everything with disclaimers" / "no jargon" / "don't give me legal/medical advice, just explain concepts"]
+
+When I ask a question, assume I want [your default expectation — e.g., "practical advice I can act on today" / "a complete explanation I can understand without follow-up"].</pre>
+  </div>
+
+  <div class="recipe-section-label">Example — Professional writing assistant</div>
+  <div class="prompt-block">
+    <pre>You are helping me with professional writing tasks — emails, proposals, and internal communications.
+
+About me: I'm a project manager at a mid-size software company. I communicate with technical developers, non-technical stakeholders, and external clients regularly. I'm a native English speaker but I write quickly and often need help making my writing more polished and clear.
+
+My preferences:
+- Tone: Professional but warm — not stiff corporate-speak, not too casual
+- Format: Short and scannable by default. Use bullet points when listing things. Lead with the key point.
+- Avoid: Long preambles, redundant phrases like "I hope this email finds you well," anything that sounds like a template
+
+When I ask you to draft or improve something, assume I want it tightened and clarified, not lengthened.</pre>
+  </div>
+
+  <div class="callout callout-tip">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body">
+      <h4>Save your best system prompts</h4>
+      <p>If you find a system prompt that works well for a recurring task (writing, research, coding help), save it in a notes app or document. Next time you start a new conversation, paste it in as your first message. Instant expert assistant, every time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONVERSATION PRIMING -->
+<section id="conversation-priming" style="margin-bottom: var(--s12);">
+  <h2>Conversation priming</h2>
+  <div class="prose">
+    <p>
+      Priming is giving AI relevant background <em>within</em> the conversation, not as a formal system prompt.
+      It's the difference between walking into a meeting cold and spending 5 minutes briefing the consultant first.
+    </p>
+    <p>You can prime a conversation by simply saying:</p>
+  </div>
+
+  <div class="prompt-block">
+    <pre>Before I ask my question, let me give you some background so your answer can be as useful as possible:
+
+[Brief your situation in 3-5 sentences: who you are, what you're working on, what you've already tried, what matters most, what you want to avoid]
+
+Got all that? Now here's my question: [your actual question]</pre>
+  </div>
+
+  <div class="prose" style="margin-top: var(--s6);">
+    <p>
+      This one change — giving background <em>before</em> asking — is responsible for more improvement
+      in AI output quality than almost anything else. It costs you 30 seconds and frequently saves you
+      several rounds of back-and-forth.
+    </p>
+  </div>
+</section>
+
+<!-- FEW-SHOT EXAMPLES -->
+<section id="few-shot" style="margin-bottom: var(--s12);">
+  <h2>Few-shot examples — show, don't just tell</h2>
+  <div class="prose">
+    <p>
+      Sometimes it's easier to show the AI what you want than to describe it. Providing 1–3 examples
+      of your desired output — before asking for the real thing — is called <strong>few-shot prompting</strong>.
+      (The "few shots" are the examples.)
+    </p>
+    <p>
+      This is especially powerful for stylistic tasks, where describing the style is harder than
+      just showing it.
+    </p>
+  </div>
+
+  <div class="recipe-section-label">Template</div>
+  <div class="prompt-block">
+    <pre>I want you to write [type of content] that matches this style. Here are examples of the style I'm going for:
+
+Example 1:
+[paste an example]
+
+Example 2:
+[paste another example]
+
+Now write [your actual request] in the same style.</pre>
+  </div>
+
+  <div class="recipe-section-label">Example — Matching your company's blog voice</div>
+  <div class="prompt-block">
+    <pre>I want you to write a blog post introduction that matches our company's voice. Here are two examples of our existing intros:
+
+Example 1:
+"Most people think budgeting means tracking every coffee. It doesn't. It means knowing which numbers actually matter — and ignoring the noise. Here's how we think about it."
+
+Example 2:
+"There's a moment in most home renovations where you realize the original plan was wrong. Not failed — just wrong. That moment is actually where the interesting work begins."
+
+Now write an intro for a post about why small businesses should audit their software subscriptions once a year. Same voice — direct, a little contrarian, short sentences, starts with a common assumption before flipping it.</pre>
+  </div>
+</section>
+
+<!-- CONTEXT TEMPLATES -->
+<section id="templates" style="margin-bottom: var(--s12);">
+  <h2>Context templates for common tasks</h2>
+  <p class="text-2" style="margin-bottom: var(--s6);">Copy and fill these in before starting any of these kinds of conversations. The more detail you add, the better.</p>
+
+  <div style="display: flex; flex-direction: column; gap: var(--s6);">
+
+    <div class="recipe-card">
+      <div class="recipe-card-header">
+        <h3 style="margin: 0;">Job Application Help</h3>
+      </div>
+      <div class="recipe-card-body">
+        <div class="prompt-block">
+          <pre>I need help with a job application. Here's my context:
+
+Role I'm applying for: [job title and company name]
+What the job involves: [2-3 sentences from the job posting or your understanding of it]
+My relevant background: [your current role, years of experience, key skills]
+My biggest strengths for this role: [2-3 things you think make you a strong candidate]
+Gaps or concerns: [anything you're worried might count against you]
+Tone I want to project: [e.g., confident but not arrogant / warm and collaborative / senior and strategic]
+
+I'll be asking you to help with: [cover letter / CV bullet points / interview prep / all of the above]</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="recipe-card">
+      <div class="recipe-card-header">
+        <h3 style="margin: 0;">Research Assistant</h3>
+      </div>
+      <div class="recipe-card-body">
+        <div class="prompt-block">
+          <pre>I need help researching a topic. Here's what I'm trying to understand:
+
+Topic: [what you're researching]
+Why I'm researching it: [context — making a decision, writing something, satisfying curiosity, etc.]
+What I already know: [your starting knowledge level]
+What I specifically want to find out: [specific questions you need answered]
+Format I want: [e.g., summary / list of key points / comparison table / pros and cons]
+What I don't want: [e.g., "don't go into the history" / "skip the technical details" / "focus on practical implications"]</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="recipe-card">
+      <div class="recipe-card-header">
+        <h3 style="margin: 0;">Coding Help</h3>
+      </div>
+      <div class="recipe-card-body">
+        <div class="prompt-block">
+          <pre>I need help with a coding problem. Here's my context:
+
+Language / framework: [e.g., Python 3.11 / JavaScript / React / SQL]
+What I'm trying to build or fix: [describe the goal or bug]
+What I've already tried: [what you've attempted]
+Error message (if any): [paste the exact error]
+Relevant code: [paste the specific section — don't paste your whole codebase]
+My experience level: [beginner / intermediate / I know the language but not this specific library]
+What I want from you: [explain what's wrong / fix the code / show me a better pattern / all three]</pre>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LONG CONVERSATIONS -->
+<section id="long-conversations" style="margin-bottom: var(--s10);">
+  <h2>Tips for long conversations</h2>
+
+  <div class="ingredient-list">
+    <div class="ingredient-item">
+      <span class="ingredient-emoji">📌</span>
+      <div>
+        <h4>Start with a summary, revisit it</h4>
+        <p>At the beginning of long sessions, give the AI a brief of everything relevant. If the conversation gets very long, paste that brief again: "Just to recap what we're working on:" — it refreshes the context without starting over.</p>
+      </div>
+    </div>
+    <div class="ingredient-item">
+      <span class="ingredient-emoji">🔖</span>
+      <div>
+        <h4>Use "remember this" checkpoints</h4>
+        <p>Say "Remember this for the rest of our conversation: [key fact / decision / preference]." AI will explicitly acknowledge it and apply it to subsequent answers. This is especially useful for stylistic preferences or constraints.</p>
+      </div>
+    </div>
+    <div class="ingredient-item">
+      <span class="ingredient-emoji">🔄</span>
+      <div>
+        <h4>Ask for a summary before context limit hits</h4>
+        <p>If your conversation is getting very long, ask: "Summarize the key decisions and information from our conversation so far in a format I could paste into a new chat." This gives you a ready-made context primer for a fresh session.</p>
+      </div>
+    </div>
+    <div class="ingredient-item">
+      <span class="ingredient-emoji">🆕</span>
+      <div>
+        <h4>Know when to start fresh</h4>
+        <p>If AI starts giving answers that seem to ignore what you said earlier, you've likely hit the context limit. Start a new conversation, paste your context summary, and continue. It's faster than fighting a degrading context.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: var(--r3); padding: var(--s6); text-align: center; margin-top: var(--s8);">
+  <h3 style="margin-bottom: var(--s3);">Ready to put this into practice?</h3>
+  <p class="text-2" style="margin-bottom: var(--s5);">The Daily Specials has complete, ready-to-use playbooks for the most common tasks — with context already built in.</p>
+  <a href="../daily/" class="btn btn-primary">Go to Daily Specials →</a>
+</div>
+
+</div>
+</div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../" class="nav-logo" style="margin-bottom: var(--s3);">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="16" r="3" fill="currentColor"/>
+          </svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="../prompts/">Recipe Book</a></li>
+          <li><a href="../models/">Model Guide</a></li>
+          <li><a href="../daily/">Daily Playbook</a></li>
+          <li><a href="../examples/">Examples</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>More</h4>
+        <ul>
+          <li><a href="../image-video/">Image &amp; Video</a></li>
+          <li><a href="../gallery/">Gallery</a></li>
+          <li><a href="../support.html">Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>&nbsp;</h4>
+        <ul>
+          <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <div class="footer-privacy"><span class="privacy-dot"></span><span>No tracking · No cookies · No ads</span></div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+<script src="../js/main.js"></script>
+</body>
+</html>

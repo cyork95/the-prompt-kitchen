@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Gallery — AI-Generated Image & Video Examples | The Prompt Kitchen</title>
+  <meta name="description" content="A curated gallery of AI-generated images and videos with full prompt transparency. Learn by example — every prompt shown, every parameter noted." />
+  <meta property="og:title"       content="The Gallery | The Prompt Kitchen" />
+  <meta property="og:description" content="AI-generated images and videos with full prompt transparency. Learn by example." />
+  <meta property="og:url"         content="https://thepromkitchen.dev/gallery/" />
+  <link rel="canonical" href="https://thepromkitchen.dev/gallery/" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    /* Placeholder cards for when images don't load */
+    .gallery-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--bg-alt) 0%, var(--border) 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-3);
+      font-size: var(--text-sm);
+      text-align: center;
+      padding: var(--s4);
+      gap: var(--s2);
+    }
+    .gallery-placeholder-icon { font-size: 2rem; }
+    .gallery-empty {
+      text-align: center;
+      padding: var(--s16) var(--s4);
+      color: var(--text-3);
+    }
+    .gallery-empty h3 { color: var(--text-2); margin-bottom: var(--s3); }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../prompts/">Recipe Book</a></li>
+      <li><a href="../context/">Kitchen Prep</a></li>
+      <li><a href="../models/">Appliance Guide</a></li>
+      <li><a href="../daily/">Daily Specials</a></li>
+      <li><a href="../examples/">Tasting Menu</a></li>
+      <li><a href="../image-video/">Image &amp; Video</a></li>
+      <li><a href="../gallery/" class="active">Gallery</a></li>
+      <li><a href="../support.html">Support ♥</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark">☾</span><span class="theme-icon-light">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../prompts/">📖 Recipe Book</a></li>
+    <li><a href="../context/">🧑‍🍳 Kitchen Prep</a></li>
+    <li><a href="../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../daily/">⭐ Daily Specials</a></li>
+    <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+    <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
+    <li><a href="../gallery/">🖼️ Gallery</a></li>
+    <li><a href="../support.html">♥ Support</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">›</span><span class="current">Gallery</span>
+    </nav>
+    <h1>🖼️ The Gallery</h1>
+    <p class="lead">Every image here was generated with AI. Every prompt is shown. Click any image to see the full recipe — what was asked, which model was used, and what made it work.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container">
+
+  <!-- Filter Bar -->
+  <div class="filter-bar" role="group" aria-label="Filter gallery">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="image">Images</button>
+    <button class="filter-btn" data-filter="video">Videos</button>
+    <button class="filter-btn" data-filter="photography">Photography</button>
+    <button class="filter-btn" data-filter="illustration">Illustration</button>
+    <button class="filter-btn" data-filter="concept-art">Concept Art</button>
+    <button class="filter-btn" data-filter="product">Product</button>
+    <button class="filter-btn" data-filter="architecture">Architecture</button>
+  </div>
+
+  <!-- Gallery Grid — populated by JS from gallery-data.js -->
+  <div class="gallery-grid" id="gallery-grid" aria-label="Image gallery">
+    <!-- JS renders items here. If JS fails, show the message below. -->
+    <noscript>
+      <p style="text-align:center; color: var(--text-2); padding: var(--s8);">
+        Enable JavaScript to view the gallery. Gallery items load dynamically from gallery-data.js.
+      </p>
+    </noscript>
+  </div>
+
+  <!-- State shown while loading or empty after filter -->
+  <div id="gallery-empty" class="gallery-empty" style="display:none;">
+    <h3>No images match this filter yet</h3>
+    <p>We're adding more examples all the time. Check back soon, or <a href="../image-video/">learn how to create your own</a>.</p>
+  </div>
+
+  <!-- Callout for adding your own images -->
+  <div class="callout callout-tip" style="margin-top: var(--s10);">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body">
+      <h4>Want to add an image to the gallery?</h4>
+      <p>Drop the image file in the <code>/gallery/</code> folder and add an entry to <code>js/gallery-data.js</code>. Full instructions are in <a href="../CONTRIBUTING.md">CONTRIBUTING.md</a>. Pull requests welcome.</p>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image details">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" aria-label="Close">✕</button>
+    <div class="lightbox-media"></div>
+    <div class="lightbox-info"></div>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../" class="nav-logo" style="margin-bottom: var(--s3);">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="16" r="3" fill="currentColor"/>
+          </svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI.</p>
+      </div>
+      <div class="footer-col"><h4>Pages</h4><ul>
+        <li><a href="../prompts/">Recipe Book</a></li>
+        <li><a href="../context/">Kitchen Prep</a></li>
+        <li><a href="../daily/">Daily Playbook</a></li>
+        <li><a href="../models/">Model Guide</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>More</h4><ul>
+        <li><a href="../image-video/">Image &amp; Video</a></li>
+        <li><a href="../examples/">Examples</a></li>
+        <li><a href="../support.html">Support</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Site</h4><ul>
+        <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
+        <li><a href="../CONTRIBUTING.md">Contributing</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <div class="footer-privacy"><span class="privacy-dot"></span><span>No tracking · No cookies · No ads</span></div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+
+<script src="../js/gallery-data.js"></script>
+<script src="../js/main.js"></script>
+<script>
+// After gallery renders, check if it's empty after a filter
+document.addEventListener('DOMContentLoaded', function () {
+  const emptyMsg = document.getElementById('gallery-empty');
+  const grid = document.getElementById('gallery-grid');
+  if (!grid || !emptyMsg) return;
+
+  // Show placeholder cards when image sources don't exist yet
+  grid.querySelectorAll('.gallery-item img').forEach(function (img) {
+    img.addEventListener('error', function () {
+      const placeholder = document.createElement('div');
+      placeholder.className = 'gallery-placeholder';
+      placeholder.innerHTML = '<span class="gallery-placeholder-icon">🖼️</span><span>Image coming soon</span><span style="font-size:0.75rem;opacity:0.7">Add file to /gallery/ folder</span>';
+      img.parentNode.replaceChild(placeholder, img);
+    });
+  });
+
+  // Watch for empty state after filtering
+  document.querySelectorAll('.filter-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      setTimeout(function () {
+        const visible = grid.querySelectorAll('.gallery-item:not(.hidden)');
+        emptyMsg.style.display = visible.length === 0 ? 'block' : 'none';
+      }, 50);
+    });
+  });
+});
+</script>
+</body>
+</html>

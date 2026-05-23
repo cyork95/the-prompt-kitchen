@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipe Book — Prompt Patterns | The Prompt Kitchen</title>
+  <meta name="description" content="A library of proven prompt patterns for everyday AI use. Copy any prompt with one click and paste it into ChatGPT, Claude, Gemini, or any AI tool." />
+  <meta property="og:title"       content="Recipe Book — Prompt Patterns | The Prompt Kitchen" />
+  <meta property="og:description" content="A library of proven prompt patterns for everyday AI use." />
+  <meta property="og:url"         content="https://thepromkitchen.dev/prompts/" />
+  <link rel="canonical" href="https://thepromkitchen.dev/prompts/" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css" id="hljs-theme-light" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme-dark" disabled />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+  <script>document.addEventListener('DOMContentLoaded', () => { if (window.hljs) hljs.highlightAll(); });</script>
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo" aria-label="The Prompt Kitchen — Home">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../prompts/" class="active">Recipe Book</a></li>
+      <li><a href="../context/">Kitchen Prep</a></li>
+      <li><a href="../models/">Appliance Guide</a></li>
+      <li><a href="../daily/">Daily Specials</a></li>
+      <li><a href="../examples/">Tasting Menu</a></li>
+      <li><a href="../image-video/">Image &amp; Video</a></li>
+      <li><a href="../gallery/">Gallery</a></li>
+      <li><a href="../support.html">Support ♥</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark" aria-hidden="true">☾</span>
+        <span class="theme-icon-light" aria-hidden="true">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../prompts/">📖 Recipe Book</a></li>
+    <li><a href="../context/">🧑‍🍳 Kitchen Prep</a></li>
+    <li><a href="../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../daily/">⭐ Daily Specials</a></li>
+    <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+    <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
+    <li><a href="../gallery/">🖼️ Gallery</a></li>
+    <li><a href="../support.html">♥ Support</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">›</span><span class="current">Recipe Book</span>
+    </nav>
+    <h1>📖 The Recipe Book</h1>
+    <p class="lead">Proven prompt patterns for everyday AI use. Copy any recipe and paste it into any AI tool — Claude, ChatGPT, Gemini, whatever you prefer.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container">
+
+<!-- Table of Contents -->
+<div class="toc" style="max-width: 600px; margin-bottom: var(--s10);">
+  <h4>Jump to a recipe</h4>
+  <ol>
+    <li><a href="#what-is-a-prompt">What is a prompt?</a></li>
+    <li><a href="#ingredients">The ingredients of a good prompt</a></li>
+    <li><a href="#beginner">🟢 Start here if you're new</a></li>
+    <li><a href="#research-plan">Research → Plan → Implement</a></li>
+    <li><a href="#teach-me">Teach Me Like I'm [level]</a></li>
+    <li><a href="#devils-advocate">Devil's Advocate / Steelman</a></li>
+    <li><a href="#step-by-step">Step-by-Step Breakdown</a></li>
+    <li><a href="#summarize">Summarize for [audience]</a></li>
+    <li><a href="#draft-critique-revise">Draft → Critique → Revise Loop</a></li>
+    <li><a href="#act-as">Act as [Expert]</a></li>
+    <li><a href="#rubber-duck">Rubber Duck Debugging</a></li>
+  </ol>
+</div>
+
+<!-- ==============================
+     WHAT IS A PROMPT?
+     ============================== -->
+<section id="what-is-a-prompt" style="margin-bottom: var(--s12);">
+  <h2>What is a prompt?</h2>
+  <div class="prose">
+    <p>
+      Think of an AI like a very knowledgeable friend who has read almost everything ever written —
+      but they've just arrived at your table in a restaurant and have no idea what you're in the mood for.
+      A <strong>prompt</strong> is your order. The more clearly you describe what you want, the better the result.
+    </p>
+    <p>
+      A bad order: <em>"Bring me food."</em><br>
+      A good order: <em>"I'd like something warm, not too heavy, maybe pasta — no seafood, and something that pairs well with the red wine I already have."</em>
+    </p>
+    <p>
+      AI prompts work exactly the same way. Vague asks get generic answers. Specific, well-structured asks
+      get results you can actually use. That's what this Recipe Book is about.
+    </p>
+
+    <details>
+      <summary>Do I need to learn special syntax or commands?</summary>
+      <div style="padding-left: var(--s5); padding-bottom: var(--s3);">
+        <p>No. AI chat tools understand plain English (or any language). You don't need to use slashes, hashtags, or anything technical. Just write naturally, like you're texting a very smart friend. The "patterns" in this book are just well-organized ways of saying what you want — not a special language.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ==============================
+     INGREDIENTS
+     ============================== -->
+<section id="ingredients" style="margin-bottom: var(--s12);">
+  <h2>The ingredients of a good prompt</h2>
+  <p class="text-2" style="margin-bottom: var(--s6);">You don't need all of these every time — but knowing them helps you get better results.</p>
+
+  <div class="ingredient-list">
+    <div class="ingredient-item">
+      <span class="ingredient-emoji">👤</span>
+      <div>
+        <h4>Role — Who should the AI be?</h4>
+        <p>Telling AI to respond as a specific type of expert shifts its tone and depth. "Act as a friendly GP explaining this to a patient" gives very different results than no role at all.</p>
+      </div>
+    </div>
+    <div class="ingredient-item">
+      <span class="ingredient-emoji">📋</span>
+      <div>
+        <h4>Context — What's the situation?</h4>
+        <p>Background information the AI needs to give you a useful answer. Who's the audience? What have you already tried? What do you already know? Give enough context that a stranger could help you.</p>
+      </div>
+    </div>
+    <div class="ingredient-item">
+      <span class="ingredient-emoji">🎯</span>
+      <div>
+        <h4>Task — What exactly do you want?</h4>
+        <p>The clearest part of the prompt. Be specific: "summarize this in 3 bullet points" is better than "summarize this." "Write a polite but firm reply" beats "write a reply."</p>
+      </div>
+    </div>
+    <div class="ingredient-item">
+      <span class="ingredient-emoji">📐</span>
+      <div>
+        <h4>Format — How should it look?</h4>
+        <p>Do you want a numbered list? A table? A short paragraph? Bullet points? Markdown? Specifying a format stops you from getting a wall of text when you wanted a quick checklist.</p>
+      </div>
+    </div>
+    <div class="ingredient-item">
+      <span class="ingredient-emoji">🚧</span>
+      <div>
+        <h4>Constraints — What should it avoid?</h4>
+        <p>Exclusions are just as useful as inclusions. "No jargon," "keep it under 150 words," "don't give legal advice, just explain the concept" — these guardrails prevent the most common problems.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-tip" style="margin-top: var(--s6);">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body">
+      <h4>The golden rule</h4>
+      <p>If you wouldn't ask a human assistant with that little information, don't ask an AI that way either. More context → better results, every time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     BEGINNER START
+     ============================== -->
+<section id="beginner" style="margin-bottom: var(--s12);">
+  <div class="callout callout-beginner" style="border-radius: var(--r3); padding: var(--s6);">
+    <span class="callout-icon">🟢</span>
+    <div class="callout-body">
+      <h4 style="font-size: var(--text-lg);">New to AI? Start right here.</h4>
+      <p style="margin-bottom: var(--s3);">Before using any of the patterns below, here's the one thing you need to know:</p>
+      <ol style="margin-bottom: var(--s3); font-size: var(--text-sm);">
+        <li>Go to <a href="https://claude.ai" rel="noopener">claude.ai</a>, <a href="https://chat.openai.com" rel="noopener">chat.openai.com</a>, or <a href="https://gemini.google.com" rel="noopener">gemini.google.com</a> — all have free tiers.</li>
+        <li>Create a free account (just an email address).</li>
+        <li>Click "New conversation" or "New chat."</li>
+        <li>Copy any prompt from this page, paste it into the chat box, and hit Enter.</li>
+        <li>The AI will respond. You can reply back to refine or ask follow-up questions — it's a conversation.</li>
+      </ol>
+      <p style="font-size: var(--text-sm); margin: 0;">That's it. You don't need to install anything or pay anything to get started.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     RECIPE: RESEARCH → PLAN → IMPLEMENT
+     ============================== -->
+<section id="research-plan" style="margin-bottom: var(--s10);">
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <div>
+        <span class="recipe-tag">Planning</span>
+        <h3 style="margin-top: var(--s2);">Research → Plan → Implement</h3>
+      </div>
+    </div>
+    <div class="recipe-card-body">
+      <div class="recipe-meta">
+        <span>⏱️ When to use: Before starting any complex project</span>
+        <span>🎯 Best for: Work tasks, home projects, learning goals</span>
+      </div>
+
+      <p>Use this pattern when you're facing something unfamiliar or complex and you don't want to jump straight into doing — you want to think it through first. AI is excellent at helping you map a problem before diving in.</p>
+
+      <div class="recipe-section-label">The Recipe</div>
+      <div class="prompt-block">
+        <pre>I want to [describe your goal]. I'm not sure of the best approach yet, so let's do this in stages.
+
+First, help me understand the landscape. What are the key things I should know before starting? What are the most common mistakes people make with this?
+
+Then, based on that, suggest a concrete plan for my specific situation. I am [brief description of your context — experience level, resources, constraints].
+
+Finally, give me the first 3 actionable steps I can take this week.</pre>
+      </div>
+
+      <div class="recipe-section-label">Example — Planning a vegetable garden</div>
+      <div class="prompt-block">
+        <pre>I want to start a vegetable garden in my backyard. I'm not sure of the best approach yet, so let's do this in stages.
+
+First, help me understand the landscape. What are the key things I should know before starting? What are the most common mistakes beginners make?
+
+Then, based on that, suggest a concrete plan for my situation. I have a 10x12 foot sunny patch, I'm a complete beginner, and I want to grow things my family will actually eat — mostly salads, tomatoes, and herbs.
+
+Finally, give me the first 3 actionable steps I can take this week.</pre>
+      </div>
+
+      <div class="callout callout-beginner">
+        <span class="callout-icon">🟢</span>
+        <div class="callout-body">
+          <h4>Never used AI before? Here's exactly what to do.</h4>
+          <p>Copy the example above (click "Copy"), open <a href="https://claude.ai" rel="noopener">claude.ai</a> or <a href="https://chat.openai.com" rel="noopener">chat.openai.com</a>, paste it in the message box, and press Enter. Replace the garden details with your own goal. The AI will walk you through everything in stages.</p>
+        </div>
+      </div>
+
+      <details style="margin-top: var(--s4);">
+        <summary>Tips for getting better results</summary>
+        <div style="padding-top: var(--s3);">
+          <ul>
+            <li>The more specific your context (your experience, constraints, resources), the more tailored the plan will be.</li>
+            <li>If you want to go deeper on the research phase, ask follow-up questions like "What are the top 3 resources you'd recommend for learning more about this?"</li>
+            <li>For work projects, add "I need to present this to [audience]" to get communication-ready output.</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     RECIPE: TEACH ME LIKE I'M
+     ============================== -->
+<section id="teach-me" style="margin-bottom: var(--s10);">
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <div>
+        <span class="recipe-tag">Learning</span>
+        <h3 style="margin-top: var(--s2);">Teach Me Like I'm [level]</h3>
+      </div>
+    </div>
+    <div class="recipe-card-body">
+      <div class="recipe-meta">
+        <span>⏱️ When to use: Any time you want to learn something new</span>
+        <span>🎯 Best for: Understanding concepts, skill-building, curiosity</span>
+      </div>
+
+      <p>AI is the most patient teacher in the world. It will explain anything at exactly the level you ask for — from "explain it to a curious 10-year-old" to "assume I have a graduate degree in this field." The trick is being explicit about your starting point.</p>
+
+      <div class="recipe-section-label">The Recipe</div>
+      <div class="prompt-block">
+        <pre>Explain [topic] to me like I'm [your level].
+
+I already know: [what you do know — even "nothing" is fine]
+I want to understand: [what specific aspect you're curious about]
+Please use [analogies / real-world examples / no math] to make it concrete.</pre>
+      </div>
+
+      <div class="recipe-section-label">Example — Understanding compound interest</div>
+      <div class="prompt-block">
+        <pre>Explain compound interest to me like I'm someone who never really paid attention in math class.
+
+I already know: money in a savings account earns some interest each year, but beyond that I'm fuzzy.
+I want to understand: why people say it's so powerful for long-term saving, and what the actual difference is between compound and simple interest.
+Please use real-world examples with actual numbers to make it concrete — no formulas needed.</pre>
+      </div>
+
+      <div class="callout callout-beginner">
+        <span class="callout-icon">🟢</span>
+        <div class="callout-body">
+          <h4>Never used AI before? Here's exactly what to do.</h4>
+          <p>Copy the example above, paste it into any AI chat. Then, after reading the response, type "Now explain the part about [whatever confused you]" — the AI remembers what it just said and will go deeper on that specific part. You can ask as many follow-up questions as you want. There's no judgment, no rushing.</p>
+        </div>
+      </div>
+
+      <details style="margin-top: var(--s4);">
+        <summary>Level guide — what to say for each depth</summary>
+        <div style="padding-top: var(--s3);">
+          <ul>
+            <li><strong>"like I'm 10 years old"</strong> — pure basics, lots of analogies, no technical terms</li>
+            <li><strong>"like a curious adult with no background in this"</strong> — explain terms as you go, conversational</li>
+            <li><strong>"I have a general interest but no formal training"</strong> — can use some standard terms if you explain them</li>
+            <li><strong>"I'm a professional in a related field"</strong> — assume domain knowledge, focus on the new thing</li>
+            <li><strong>"I'm an expert, give me the nuance"</strong> — skip the basics, go straight to edge cases and depth</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     RECIPE: DEVIL'S ADVOCATE
+     ============================== -->
+<section id="devils-advocate" style="margin-bottom: var(--s10);">
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <div>
+        <span class="recipe-tag">Critical Thinking</span>
+        <h3 style="margin-top: var(--s2);">Devil's Advocate / Steelman</h3>
+      </div>
+    </div>
+    <div class="recipe-card-body">
+      <div class="recipe-meta">
+        <span>⏱️ When to use: Before committing to a decision</span>
+        <span>🎯 Best for: Business decisions, purchases, plans, arguments</span>
+      </div>
+
+      <p>
+        AI can get stuck agreeing with you — it's trained to be helpful and pleasant. This recipe breaks that pattern.
+        A <strong>Devil's Advocate</strong> challenges your idea to find its weaknesses. A <strong>Steelman</strong>
+        builds the strongest possible version of the opposing view. Both make your thinking sharper.
+      </p>
+
+      <div class="recipe-section-label">The Devil's Advocate Recipe</div>
+      <div class="prompt-block">
+        <pre>I've decided to [your decision or plan]. I want you to play devil's advocate — push back hard on this idea. What are the strongest arguments against it? What could go wrong? What am I probably not considering? Don't soften it.</pre>
+      </div>
+
+      <div class="recipe-section-label">The Steelman Recipe</div>
+      <div class="prompt-block">
+        <pre>I believe [your position]. But I want to understand the other side as charitably as possible. Give me the strongest, most thoughtful version of the opposing argument — not a strawman, but the best case someone who disagrees could make. Then tell me where you think the strongest points of genuine disagreement lie.</pre>
+      </div>
+
+      <div class="recipe-section-label">Example — Deciding whether to freelance</div>
+      <div class="prompt-block">
+        <pre>I've decided to quit my job and go freelance as a graphic designer. I want you to play devil's advocate — push back hard on this idea. What are the strongest arguments against it? What financial, professional, or personal risks am I probably underweighting? What do most people get wrong about freelancing? Don't soften it.</pre>
+      </div>
+
+      <div class="callout callout-beginner">
+        <span class="callout-icon">🟢</span>
+        <div class="callout-body">
+          <h4>Never used AI before? Here's exactly what to do.</h4>
+          <p>This recipe works best after you've already made a decision and want a gut-check. Describe your plan clearly in the first sentence, then paste the template. After reading the response, you can ask "Now give me the best counter-arguments to your objections" to stress-test the other side too.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     RECIPE: STEP-BY-STEP
+     ============================== -->
+<section id="step-by-step" style="margin-bottom: var(--s10);">
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <div>
+        <span class="recipe-tag">How-To</span>
+        <h3 style="margin-top: var(--s2);">Step-by-Step Breakdown</h3>
+      </div>
+    </div>
+    <div class="recipe-card-body">
+      <div class="recipe-meta">
+        <span>⏱️ When to use: Any time a task feels overwhelming</span>
+        <span>🎯 Best for: Projects, new processes, technical tasks</span>
+      </div>
+
+      <p>When something feels too big to start, a numbered list of concrete steps cuts through the overwhelm. The key is being specific enough that each step is actually actionable — not "figure out the finances" but "open a spreadsheet and list every monthly expense."</p>
+
+      <div class="recipe-section-label">The Recipe</div>
+      <div class="prompt-block">
+        <pre>I need to [accomplish this goal]. Break this down into a step-by-step plan for me.
+
+My situation: [relevant context — tools/software you have, your skill level, time available, constraints]
+
+Give me concrete, actionable steps — each step should be specific enough that I know exactly what to do. Flag any steps where I might need outside help or where most people get stuck.</pre>
+      </div>
+
+      <div class="recipe-section-label">Example — Setting up a home budget</div>
+      <div class="prompt-block">
+        <pre>I need to create a household budget for the first time. Break this down into a step-by-step plan for me.
+
+My situation: I have a regular monthly salary, some irregular freelance income, and I've never formally tracked my spending before. I have access to my bank's online statements and I'm comfortable with Google Sheets.
+
+Give me concrete, actionable steps — each step should be specific enough that I know exactly what to do. Flag any steps where most beginners get stuck or where decisions get complicated.</pre>
+      </div>
+
+      <div class="callout callout-beginner">
+        <span class="callout-icon">🟢</span>
+        <div class="callout-body">
+          <h4>Never used AI before? Here's exactly what to do.</h4>
+          <p>After you get the step list, pick just the first step and ask: "Help me do step 1 right now." The AI will walk you through that single step in detail. You can do this for every step — it's like having a patient guide alongside you the whole way.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     RECIPE: SUMMARIZE FOR AUDIENCE
+     ============================== -->
+<section id="summarize" style="margin-bottom: var(--s10);">
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <div>
+        <span class="recipe-tag">Communication</span>
+        <h3 style="margin-top: var(--s2);">Summarize for [Audience]</h3>
+      </div>
+    </div>
+    <div class="recipe-card-body">
+      <div class="recipe-meta">
+        <span>⏱️ When to use: After reading a long document, article, or report</span>
+        <span>🎯 Best for: Work documents, research papers, meeting notes, news</span>
+      </div>
+
+      <p>Not all summaries are the same. A summary for your CEO should look different from one you'd send to a colleague, which should look different from what you'd explain to a friend. Specifying the audience unlocks much more useful output.</p>
+
+      <div class="recipe-section-label">The Recipe</div>
+      <div class="prompt-block">
+        <pre>Here's [a document / article / set of notes]:
+
+[paste your content here]
+
+Summarize this for [your audience]. They need to understand [specific aspect they care about]. Keep it to [length — e.g., "3 bullet points" or "a short paragraph" or "under 100 words"]. Use [plain language / technical terms are fine / bullet points / prose].</pre>
+      </div>
+
+      <div class="recipe-section-label">Example — Summarizing a medical article for a family member</div>
+      <div class="prompt-block">
+        <pre>Here's an article about a medication my father's doctor has recommended:
+
+[paste article text here]
+
+Summarize this for a 70-year-old with no medical background. He needs to understand what the medication is for, the most common side effects to watch out for, and whether there's anything he should ask his doctor. Keep it to a short, plain-English paragraph and a brief bullet list. No medical jargon — if a technical term is necessary, explain it in brackets.</pre>
+      </div>
+
+      <div class="callout callout-beginner">
+        <span class="callout-icon">🟢</span>
+        <div class="callout-body">
+          <h4>Never used AI before? Here's exactly what to do.</h4>
+          <p>Copy the text you want summarized (from a website, PDF, or document), then paste it into the chat after the recipe text. Most AI tools can read quite large blocks of text — don't worry about it being too long.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     RECIPE: DRAFT CRITIQUE REVISE
+     ============================== -->
+<section id="draft-critique-revise" style="margin-bottom: var(--s10);">
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <div>
+        <span class="recipe-tag">Writing</span>
+        <h3 style="margin-top: var(--s2);">Draft → Critique → Revise Loop</h3>
+      </div>
+    </div>
+    <div class="recipe-card-body">
+      <div class="recipe-meta">
+        <span>⏱️ When to use: Any time the writing quality actually matters</span>
+        <span>🎯 Best for: Emails, proposals, essays, reports, cover letters</span>
+      </div>
+
+      <p>The first draft AI produces is almost never the final product — but that's okay. The power move is to immediately turn around and have it critique what it just wrote, then revise based on that critique. This loop consistently produces better writing than asking for "a great email" once.</p>
+
+      <div class="recipe-section-label">Step 1 — Draft</div>
+      <div class="prompt-block">
+        <pre>Draft a [type of writing] for me. Here's the situation:
+
+Purpose: [what you're trying to achieve]
+Audience: [who will read this]
+Key points to include: [main things you need to say]
+Tone: [professional / warm / direct / apologetic / etc.]
+Length: [roughly how long]</pre>
+      </div>
+
+      <div class="recipe-section-label">Step 2 — Critique (send this after the draft)</div>
+      <div class="prompt-block">
+        <pre>Now critique what you just wrote. Be honest — what's weak about it? What could be misread? Where is it too long, too vague, or too generic? What's the single biggest thing that would improve it?</pre>
+      </div>
+
+      <div class="recipe-section-label">Step 3 — Revise (send this after the critique)</div>
+      <div class="prompt-block">
+        <pre>Now rewrite it, fixing the issues you identified. Make it tighter and more specific.</pre>
+      </div>
+
+      <div class="recipe-section-label">Example — A difficult client email</div>
+      <div class="prompt-block">
+        <pre>Draft a client email for me. Here's the situation:
+
+Purpose: Explain that a project will be delivered two weeks late and ask for understanding
+Audience: A client who has been patient so far but has a hard deadline coming up
+Key points to include: Honest reason for the delay (team illness), what's been done to catch up, the new delivery date, and what we're offering to make it right (a discount on this invoice)
+Tone: Professional but genuinely apologetic — not corporate-speak
+Length: Short — under 200 words</pre>
+      </div>
+
+      <div class="callout callout-beginner">
+        <span class="callout-icon">🟢</span>
+        <div class="callout-body">
+          <h4>Never used AI before? Here's exactly what to do.</h4>
+          <p>Send each step as a separate message in the same conversation. The AI remembers what it wrote and what you discussed, so the critique and revision build on each other naturally. This three-message exchange takes about 2 minutes and consistently beats what you'd get from a single prompt.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     RECIPE: ACT AS EXPERT
+     ============================== -->
+<section id="act-as" style="margin-bottom: var(--s10);">
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <div>
+        <span class="recipe-tag">Role-Play</span>
+        <h3 style="margin-top: var(--s2);">Act as [Expert]</h3>
+      </div>
+    </div>
+    <div class="recipe-card-body">
+      <div class="recipe-meta">
+        <span>⏱️ When to use: When you need specialist knowledge or a specific perspective</span>
+        <span>🎯 Best for: Research, decision-making, professional writing, feedback</span>
+      </div>
+
+      <p>
+        Assigning a role to the AI doesn't just change its tone — it shifts the entire frame of reference for its answers. "A financial advisor" thinks about your question differently than "a behavioral economist," even on the same topic. Use this intentionally.
+      </p>
+      <p>
+        <strong>Important:</strong> AI is not a licensed professional. Use this for education and to know what questions to ask your actual doctor, lawyer, or financial advisor — not as a substitute for professional advice.
+      </p>
+
+      <div class="recipe-section-label">The Recipe</div>
+      <div class="prompt-block">
+        <pre>Act as a [specific type of expert]. You are [brief description of their background and perspective].
+
+I'm going to describe my situation and I want you to respond as this expert would — including the questions they'd ask to get more information, the things they'd flag as important, and the advice or recommendations they'd give.
+
+My situation: [describe what you're dealing with]</pre>
+      </div>
+
+      <div class="recipe-section-label">Example — Getting a nutritionist's perspective</div>
+      <div class="prompt-block">
+        <pre>Act as an experienced registered dietitian who specializes in sustainable, practical eating habits (not fad diets). You're known for being realistic about what people can actually stick to long-term.
+
+I'm going to describe my situation and I want you to respond as this nutritionist would — including the questions you'd ask, things you'd flag as important, and practical suggestions.
+
+My situation: I'm 45, I work from home, I skip breakfast most days, I eat out for lunch maybe 4x a week, and I've been trying to lose about 15 pounds for two years without success. I'm not willing to count calories obsessively but I do want to make changes.</pre>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>Useful expert roles to try</h4>
+          <p>Financial planner · Experienced teacher in [subject] · Copywriter · UX designer · Career coach · Editor · Skeptical investor · Devil's advocate · Debate coach · Science communicator</p>
+        </div>
+      </div>
+
+      <div class="callout callout-beginner">
+        <span class="callout-icon">🟢</span>
+        <div class="callout-body">
+          <h4>Never used AI before? Here's exactly what to do.</h4>
+          <p>Replace "[specific type of expert]" with whatever professional you wish you could consult. Be specific: "a small business accountant" is better than "an accountant." Then describe your situation in plain language. After the first response, ask follow-up questions just like you would in a real consultation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     RECIPE: RUBBER DUCK
+     ============================== -->
+<section id="rubber-duck" style="margin-bottom: var(--s10);">
+  <div class="recipe-card">
+    <div class="recipe-card-header">
+      <div>
+        <span class="recipe-tag">Problem Solving</span>
+        <h3 style="margin-top: var(--s2);">Rubber Duck Debugging</h3>
+      </div>
+    </div>
+    <div class="recipe-card-body">
+      <div class="recipe-meta">
+        <span>⏱️ When to use: When you're stuck and can't see why</span>
+        <span>🎯 Best for: Coding problems, writing blocks, decision paralysis, project snags</span>
+      </div>
+
+      <p>
+        "Rubber duck debugging" is an old programmer trick: you explain your problem out loud to a rubber duck on your desk, and halfway through the explanation, you realize what's wrong. The duck doesn't say anything — the act of articulating the problem clearly is what solves it.
+      </p>
+      <p>
+        AI is a rubber duck that talks back. The magic is in the explanation — but AI can also ask the clarifying questions that reveal the real issue.
+      </p>
+
+      <div class="recipe-section-label">The Recipe</div>
+      <div class="prompt-block">
+        <pre>I'm stuck on a problem and I'd like you to help me think through it by asking me questions — don't try to solve it right away.
+
+Here's the situation: [describe what you're trying to do]
+Here's where I'm stuck: [describe the specific blockage]
+Here's what I've already tried: [what hasn't worked]
+
+Ask me 3 clarifying questions that might help reveal what I'm missing.</pre>
+      </div>
+
+      <div class="recipe-section-label">Example — Stuck on a work presentation</div>
+      <div class="prompt-block">
+        <pre>I'm stuck on a problem and I'd like you to help me think through it by asking me questions — don't try to solve it right away.
+
+Here's the situation: I'm building a presentation to convince my company's leadership to invest in a new customer feedback system. I've done the research and I know why it's a good idea.
+Here's where I'm stuck: The presentation feels unconvincing even to me, and I can't figure out why.
+Here's what I've already tried: I've rewritten the intro three times, tried different slide orders, and gotten feedback from a colleague who said it felt "too technical."
+
+Ask me 3 clarifying questions that might help reveal what I'm missing.</pre>
+      </div>
+
+      <div class="callout callout-beginner">
+        <span class="callout-icon">🟢</span>
+        <div class="callout-body">
+          <h4>Never used AI before? Here's exactly what to do.</h4>
+          <p>Answer the AI's questions honestly and in detail. Then ask it: "Based on what I've told you, what do you think the real problem is?" This works for code bugs, writing blocks, relationship knots, creative dead ends — any situation where being stuck isn't about lack of information but about a blind spot.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: var(--r3); padding: var(--s6); text-align: center; margin-top: var(--s8);">
+  <h3 style="margin-bottom: var(--s3);">Want more real-world examples?</h3>
+  <p class="text-2" style="margin-bottom: var(--s5);">The Tasting Menu shows exactly what happens when these recipes get used — full prompts, model used, and notes on what worked.</p>
+  <a href="../examples/" class="btn btn-primary">Browse the Tasting Menu →</a>
+</div>
+
+</div>
+</div>
+
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../" class="nav-logo" style="margin-bottom: var(--s3);">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="16" r="3" fill="currentColor"/>
+          </svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI. Free, open, and always will be.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Recipes</h4>
+        <ul>
+          <li><a href="../prompts/">Prompt Patterns</a></li>
+          <li><a href="../context/">Context Engineering</a></li>
+          <li><a href="../daily/">Daily Playbook</a></li>
+          <li><a href="../examples/">Examples</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="../models/">Model Guide</a></li>
+          <li><a href="../image-video/">Image &amp; Video</a></li>
+          <li><a href="../gallery/">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Site</h4>
+        <ul>
+          <li><a href="../support.html">Support the Kitchen</a></li>
+          <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <div class="footer-privacy">
+        <span class="privacy-dot"></span>
+        <span>No tracking · No cookies · No ads</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+<script src="../js/main.js"></script>
+</body>
+</html>

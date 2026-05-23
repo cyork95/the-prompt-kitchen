@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tasting Menu — Example Prompts & Outputs | The Prompt Kitchen</title>
+  <meta name="description" content="Real prompt-to-output examples across writing, research, learning, coding, and creative tasks. See what good AI use looks like before you start cooking yourself." />
+  <meta property="og:title"       content="Tasting Menu — Example Prompts & Outputs | The Prompt Kitchen" />
+  <meta property="og:description" content="Real before-and-after examples with full prompts shown. See what good AI use actually looks like." />
+  <meta property="og:url"         content="https://thepromkitchen.dev/examples/" />
+  <link rel="canonical" href="https://thepromkitchen.dev/examples/" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+</head>
+<body>
+
+<nav class="nav" role="navigation">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../prompts/">Recipe Book</a></li>
+      <li><a href="../context/">Kitchen Prep</a></li>
+      <li><a href="../models/">Appliance Guide</a></li>
+      <li><a href="../daily/">Daily Specials</a></li>
+      <li><a href="../examples/" class="active">Tasting Menu</a></li>
+      <li><a href="../image-video/">Image &amp; Video</a></li>
+      <li><a href="../gallery/">Gallery</a></li>
+      <li><a href="../support.html">Support ♥</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark">☾</span><span class="theme-icon-light">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../prompts/">📖 Recipe Book</a></li>
+    <li><a href="../context/">🧑‍🍳 Kitchen Prep</a></li>
+    <li><a href="../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../daily/">⭐ Daily Specials</a></li>
+    <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+    <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
+    <li><a href="../gallery/">🖼️ Gallery</a></li>
+    <li><a href="../support.html">♥ Support</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">›</span><span class="current">Tasting Menu</span>
+    </nav>
+    <h1>🍽️ The Tasting Menu</h1>
+    <p class="lead">See what's possible before you start cooking yourself. These are real prompts with real outputs — full transparency on what was asked, which model was used, and what made it work.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container">
+
+<!-- Filter Bar -->
+<div class="filter-bar" role="group" aria-label="Filter examples">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="beginner">Beginner</button>
+  <button class="filter-btn" data-filter="intermediate">Intermediate</button>
+  <button class="filter-btn" data-filter="advanced">Advanced</button>
+  <button class="filter-btn" data-filter="creative">Creative</button>
+  <button class="filter-btn" data-filter="technical">Technical</button>
+  <button class="filter-btn" data-filter="everyday">Everyday</button>
+</div>
+
+<!-- ==============================
+     EXAMPLE 1 — Email rewrite (beginner / everyday)
+     ============================== -->
+<div class="example-card" data-tags="beginner everyday">
+  <div class="example-card-header">
+    <div class="example-card-tags">
+      <span class="tag tag-beginner">Beginner</span>
+      <span class="tag tag-everyday">Everyday</span>
+    </div>
+    <span class="text-sm text-3">Model: Claude Sonnet · Task: Email rewrite</span>
+  </div>
+  <div class="example-card-body">
+    <h3 style="margin-bottom: var(--s3);">Turning a defensive email into a professional one</h3>
+    <p class="text-2" style="font-size: var(--text-sm); margin-bottom: var(--s4);">A project manager needed to respond to a client complaint without sounding defensive or dismissive — a tonal balancing act that AI handles well.</p>
+
+    <div class="recipe-section-label">Prompt used</div>
+    <div class="prompt-block">
+      <pre>Here's my rough draft of a reply to a client who complained that our last deliverable had errors:
+
+"Hi Sarah, I've reviewed the document and I don't think the errors were as significant as you're suggesting. Some of them were actually caused by changes you made to the spec after we started. We did flag this at the time. I've attached the corrected version. Let me know if there's anything else."
+
+Please improve this email. I want to:
+- Acknowledge her frustration genuinely (not with empty phrases)
+- Mention the spec changes factually, without it sounding like I'm blaming her
+- Come across as professional, solution-focused, and relationship-preserving
+- Keep it concise — under 120 words
+Tell me what you changed and why.</pre>
+    </div>
+
+    <div class="example-output">
+      <h5>AI Output (Claude Sonnet)</h5>
+      <p><strong>Revised email:</strong></p>
+      <p>Hi Sarah,</p>
+      <p>Thank you for flagging this — I've reviewed the document and you're right that the errors shouldn't have been there. I've attached a corrected version.</p>
+      <p>For context, a few of the changes trace back to the spec update in week three, which shifted some of the original requirements. We should have been clearer about how that would affect the output — that's on us to manage better.</p>
+      <p>Happy to jump on a quick call if it would help. I want to make sure you're confident in what we're delivering.</p>
+      <p><em>— Cody York</em></p>
+      <p style="margin-top: var(--s4);"><strong>What changed:</strong> Opened with acknowledgment rather than defense. Mentioned the spec change as context (not blame) and immediately owned the communication failure around it. Ended with a relationship-forward offer rather than a perfunctory sign-off.</p>
+    </div>
+
+    <div class="callout callout-tip" style="margin-top: var(--s4);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Why this worked</h4>
+        <p>The prompt gave specific tonal goals ("solution-focused, relationship-preserving") rather than just asking to "improve it." Asking AI to explain its changes after the fact is also a good habit — it helps you learn the reasoning, not just copy the output.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================
+     EXAMPLE 2 — Learning explanation (beginner)
+     ============================== -->
+<div class="example-card" data-tags="beginner everyday">
+  <div class="example-card-header">
+    <div class="example-card-tags">
+      <span class="tag tag-beginner">Beginner</span>
+      <span class="tag tag-everyday">Everyday</span>
+    </div>
+    <span class="text-sm text-3">Model: ChatGPT GPT-4o · Task: Concept explanation</span>
+  </div>
+  <div class="example-card-body">
+    <h3 style="margin-bottom: var(--s3);">Understanding a confusing medical concept</h3>
+    <p class="text-2" style="font-size: var(--text-sm); margin-bottom: var(--s4);">A patient was confused by their doctor's explanation of "insulin resistance." They used AI to build a genuine understanding before their follow-up appointment.</p>
+
+    <div class="recipe-section-label">Prompt used</div>
+    <div class="prompt-block">
+      <pre>My doctor told me I have insulin resistance and should watch my diet. I nodded but I honestly don't understand what it means or why diet matters.
+
+Explain insulin resistance to me like I'm a retired teacher with no medical background. Use a concrete analogy — ideally something from everyday life. Tell me:
+1. What's actually happening in my body
+2. Why diet specifically matters (not just "eat healthy" — why does it connect to this condition)
+3. What I should actually ask my doctor at my next appointment
+
+No jargon without explanation. I want to understand this, not just be told what to do.</pre>
+    </div>
+
+    <div class="example-output">
+      <h5>AI Output (GPT-4o — condensed)</h5>
+      <p><strong>The analogy:</strong> Think of insulin like a key, and your cells like houses with locked doors. Normally, insulin (the key) fits perfectly into the lock and lets glucose (energy) inside. With insulin resistance, it's as if the locks have gotten stiff — the keys still work, but your pancreas has to make many more keys than it used to just to get the same amount of glucose inside.</p>
+      <p><strong>Why diet matters:</strong> Every time you eat carbohydrates or sugar, your blood glucose rises and your body needs to send out insulin keys. If you eat in ways that cause big, frequent spikes — lots of refined carbs, sugary drinks, large portions — your body is constantly flooding the system with insulin. Over time, this makes the "stiff lock" problem worse. Eating in ways that cause gentler, steadier glucose rises gives your system a chance to recover...</p>
+      <p><strong>Questions to ask your doctor:</strong> 1) What specific dietary changes matter most for my situation? 2) Is my level of insulin resistance likely to be reversible with lifestyle changes? 3) Should I see a dietitian, or is this something we can manage with general guidance?</p>
+    </div>
+
+    <div class="callout callout-tip" style="margin-top: var(--s4);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Why this worked</h4>
+        <p>Specifying "retired teacher with no medical background" gave the model a precise level to pitch at. Asking for an analogy from everyday life — and stating that preference explicitly — produced something genuinely intuitive rather than a textbook definition. Ending with "questions to ask my doctor" turns the explanation into action.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================
+     EXAMPLE 3 — Research plan (intermediate)
+     ============================== -->
+<div class="example-card" data-tags="intermediate everyday">
+  <div class="example-card-header">
+    <div class="example-card-tags">
+      <span class="tag tag-intermediate">Intermediate</span>
+      <span class="tag tag-everyday">Everyday</span>
+    </div>
+    <span class="text-sm text-3">Model: Claude Sonnet · Task: Research → Plan → Implement</span>
+  </div>
+  <div class="example-card-body">
+    <h3 style="margin-bottom: var(--s3);">Planning a career pivot from finance to UX design</h3>
+    <p class="text-2" style="font-size: var(--text-sm); margin-bottom: var(--s4);">Someone with 8 years in financial analysis wanted to move into UX design and had no idea where to start. They used the Research → Plan → Implement pattern.</p>
+
+    <div class="recipe-section-label">Prompt used</div>
+    <div class="prompt-block">
+      <pre>I want to transition from financial analysis to UX design. I'm not sure of the best approach yet.
+
+First, help me understand the landscape: What are the realistic paths into UX from a non-design background? What do hiring managers actually look for? What are the mistakes career-switchers typically make?
+
+Then, based on that, suggest a concrete plan for my situation: I have 8 years in financial analysis, strong analytical skills, no design training, a full-time job I can't leave yet, and roughly 10 hours per week to dedicate to this transition. I'm 34 and based in the UK.
+
+Finally, give me the first 3 actionable steps I can take this month.</pre>
+    </div>
+
+    <div class="example-output">
+      <h5>AI Output (Claude Sonnet — condensed)</h5>
+      <p><strong>The landscape:</strong> The most common entry paths are: bootcamps (3–6 months, intensive, expensive), self-study with a strong portfolio (6–18 months, cheaper, harder to stay accountable), and hybrid approaches using structured online courses while building portfolio work. Hiring managers care far more about your portfolio than your credentials — specifically, they want to see 3–5 case studies that show your process: how you identified a problem, how you researched users, how you iterated on solutions. The common mistake career-switchers make is getting certified but not building real work.</p>
+      <p><strong>Your plan:</strong> Your analytical background is a genuine advantage — UX research and data-driven design thinking are highly valued. I'd suggest: Month 1-2: Build foundational knowledge (Google UX Design Certificate on Coursera — $50/month, ~10 hrs/week fits your schedule). Month 3-6: Start a portfolio project redesigning something you use at work. Month 7-12: Freelance one small project for free to get real client experience and a case study...</p>
+      <p><strong>Your first 3 steps this month:</strong> 1) Enroll in the Google UX Certificate and complete module one. 2) Create a simple portfolio site (Notion or Cargo work fine at this stage). 3) Identify one specific digital product you use regularly that has a clear usability problem — this becomes your first portfolio project.</p>
+    </div>
+
+    <div class="callout callout-tip" style="margin-top: var(--s4);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Why this worked</h4>
+        <p>The three-stage structure forced the AI to give context before jumping to solutions — which produced a plan grounded in reality rather than generic advice. Including very specific constraints (10 hrs/week, full-time job, UK-based, 34 years old) made the plan feel genuinely personal rather than copied from a career blog.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================
+     EXAMPLE 4 — Code debugging (technical)
+     ============================== -->
+<div class="example-card" data-tags="technical intermediate">
+  <div class="example-card-header">
+    <div class="example-card-tags">
+      <span class="tag tag-technical">Technical</span>
+      <span class="tag tag-intermediate">Intermediate</span>
+    </div>
+    <span class="text-sm text-3">Model: Claude Sonnet · Task: Code debugging</span>
+  </div>
+  <div class="example-card-body">
+    <h3 style="margin-bottom: var(--s3);">Fixing a Python data processing script that silently produces wrong results</h3>
+    <p class="text-2" style="font-size: var(--text-sm); margin-bottom: var(--s4);">A data analyst's script ran without errors but produced incorrect totals. Silent bugs like this are among the hardest to debug alone — AI spotted it immediately.</p>
+
+    <div class="recipe-section-label">Prompt used</div>
+    <div class="prompt-block">
+      <pre>My Python script runs without errors but the sales totals it produces are wrong — they're about 15% too high and I can't figure out why.
+
+Language: Python 3.11, using pandas
+What it should do: aggregate daily sales by region, excluding refunded orders
+What it's doing: producing totals that are consistently higher than expected
+
+Here's the relevant code:
+
+df_sales = pd.read_csv('sales.csv')
+df_filtered = df_sales[df_sales['status'] != 'refunded']
+totals = df_filtered.groupby('region')['amount'].sum()
+print(totals)
+
+Don't just fix it — explain what's wrong and why, so I understand it for next time. Also tell me how I could have caught this earlier.</pre>
+    </div>
+
+    <div class="example-output">
+      <h5>AI Output (Claude Sonnet)</h5>
+      <p><strong>The problem:</strong> Your filter <code>df_sales['status'] != 'refunded'</code> is case-sensitive. If your CSV contains values like 'Refunded', 'REFUNDED', or 'Refunded ' (with a trailing space), those rows won't be caught by the filter and their amounts will still be included in your totals. That would explain a consistent ~15% inflation if roughly that proportion of orders have mismatched status strings.</p>
+      <p><strong>The fix:</strong> <code>df_filtered = df_sales[df_sales['status'].str.strip().str.lower() != 'refunded']</code> — this strips whitespace and lowercases before comparing.</p>
+      <p><strong>How you could have caught this earlier:</strong> A quick <code>df_sales['status'].value_counts()</code> before filtering would have shown you all the unique values in the status column and immediately revealed any casing or spacing variations. Making this a habit whenever you filter on a string column will save you hours.</p>
+    </div>
+
+    <div class="callout callout-tip" style="margin-top: var(--s4);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Why this worked</h4>
+        <p>Asking AI to explain the root cause and how to prevent it next time turned a one-off fix into a lasting lesson. The "don't just fix it" instruction is essential — without it, many AI models just hand you the corrected code with no explanation.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================
+     EXAMPLE 5 — Creative writing (creative)
+     ============================== -->
+<div class="example-card" data-tags="creative intermediate">
+  <div class="example-card-header">
+    <div class="example-card-tags">
+      <span class="tag tag-creative">Creative</span>
+      <span class="tag tag-intermediate">Intermediate</span>
+    </div>
+    <span class="text-sm text-3">Model: Claude Sonnet · Task: Creative writing with style matching</span>
+  </div>
+  <div class="example-card-body">
+    <h3 style="margin-bottom: var(--s3);">Writing a short story opening in a specific voice</h3>
+    <p class="text-2" style="font-size: var(--text-sm); margin-bottom: var(--s4);">A writer used few-shot examples to get AI to match their established story voice instead of producing generic fiction.</p>
+
+    <div class="recipe-section-label">Prompt used</div>
+    <div class="prompt-block">
+      <pre>I'm writing a collection of short stories in a specific voice. Here are two openings from stories I've already written so you can match the style:
+
+Story 1 opening:
+"The day my father taught me to drive, he cried twice. Once when I stalled at the roundabout on Elm Street, and once when I didn't."
+
+Story 2 opening:
+"She kept the note in her shoe for three years. Not because she reread it — she hadn't — but because she needed to know exactly where it was."
+
+Now write an opening paragraph for a new story with this premise: A woman discovers that her recently deceased mother had a second phone she knew nothing about.
+
+Match the voice exactly — the restraint, the specificity, the emotional weight carried by small details. Don't over-explain. No melodrama.</pre>
+    </div>
+
+    <div class="example-output">
+      <h5>AI Output (Claude Sonnet)</h5>
+      <p>"The phone was in the left pocket of the winter coat, the one her mother hadn't worn since February. It had 34% battery. That was the part that stayed with her — not the texts she would eventually read, not the name she didn't recognise, but the 34%. Someone had charged it not so long ago."</p>
+    </div>
+
+    <div class="callout callout-tip" style="margin-top: var(--s4);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Why this worked</h4>
+        <p>Providing two concrete style examples (few-shot prompting) is dramatically more effective than describing a style in abstract terms. "Restraint, specificity, emotional weight in small details" as instructions alone would produce something generic. The examples gave the model something precise to calibrate against.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================
+     EXAMPLE 6 — Advanced analysis (advanced)
+     ============================== -->
+<div class="example-card" data-tags="advanced technical">
+  <div class="example-card-header">
+    <div class="example-card-tags">
+      <span class="tag tag-advanced">Advanced</span>
+      <span class="tag tag-technical">Technical</span>
+    </div>
+    <span class="text-sm text-3">Model: Claude Opus · Task: Strategic analysis with steelmanning</span>
+  </div>
+  <div class="example-card-body">
+    <h3 style="margin-bottom: var(--s3);">Stress-testing a business decision before committing</h3>
+    <p class="text-2" style="font-size: var(--text-sm); margin-bottom: var(--s4);">A founder used the Devil's Advocate pattern before making a significant hiring decision, and discovered a risk she hadn't considered.</p>
+
+    <div class="recipe-section-label">Prompt used</div>
+    <div class="prompt-block">
+      <pre>I'm about to hire a Head of Sales for my B2B SaaS startup (12 people, $800K ARR, Series A in 6 months). I've found a candidate I'm excited about — 10 years experience, big-company background (Salesforce, then a $50M ARR startup), strong references. I'm planning to offer the role.
+
+Play devil's advocate as hard as you can. What are the strongest arguments against this hire? What risks am I probably not weighting correctly? What questions should I have asked but haven't? Don't soften it — I need to stress-test this before committing.</pre>
+    </div>
+
+    <div class="example-output">
+      <h5>AI Output (Claude Opus — condensed)</h5>
+      <p><strong>The culture-fit risk you're probably underweighting:</strong> A candidate whose entire career has been at $50M+ companies has never had to build a sales motion from scratch. At Salesforce, the brand does half the selling. At a $50M ARR startup, there's a playbook and a team. At $800K ARR, there's neither. The skill of hunting enterprise deals with no brand, no case studies, and no SDR team is genuinely different — and many people who excel in the former struggle deeply with the latter. Did you test for this specifically, or did the impressive pedigree carry the interviews?</p>
+      <p><strong>The Series A timing is a landmine:</strong> If this person joins 3 months before your raise, they'll spend that time learning your business, not driving pipeline. You'll present to investors with a shiny new sales hire who hasn't produced anything yet — which can actually be a yellow flag if not handled carefully. Alternatively, a bad first 90 days could tank your confidence right before the raise.</p>
+      <p><strong>Questions you may not have asked:</strong> Walk me through a deal you won at a company with no brand recognition and no existing customer base. What was your average deal size and sales cycle at [the startup] vs. what I'd realistically expect here? Have you ever had to fire someone you hired? What happened?</p>
+    </div>
+
+    <div class="callout callout-tip" style="margin-top: var(--s4);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Why this worked</h4>
+        <p>The founder told me afterward that the Series A timing point was something she genuinely hadn't thought through. The "don't soften it" instruction is critical — without it, AI tends to hedge and present criticism as "things to consider" rather than genuine challenges. Asking for risks you're "not weighting correctly" is more useful than asking for a list of risks, because it focuses on the blind spots, not the obvious ones.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================
+     EXAMPLE 7 — Everyday / family (beginner)
+     ============================== -->
+<div class="example-card" data-tags="beginner everyday creative">
+  <div class="example-card-header">
+    <div class="example-card-tags">
+      <span class="tag tag-beginner">Beginner</span>
+      <span class="tag tag-everyday">Everyday</span>
+    </div>
+    <span class="text-sm text-3">Model: Gemini · Task: Gift research &amp; planning</span>
+  </div>
+  <div class="example-card-body">
+    <h3 style="margin-bottom: var(--s3);">Planning a meaningful birthday gift for a hard-to-shop-for parent</h3>
+    <p class="text-2" style="font-size: var(--text-sm); margin-bottom: var(--s4);">A 62-year-old who described herself as "completely new to AI" used Gemini to solve a gift-giving problem she'd struggled with for years. She called the result "shockingly good."</p>
+
+    <div class="recipe-section-label">Prompt used</div>
+    <div class="prompt-block">
+      <pre>I need help finding the perfect birthday gift for my 78-year-old father. He is impossible to shop for.
+
+About him: retired engineer, lives alone, physically healthy but doesn't like to travel far anymore, loves classical music (especially Beethoven), used to garden but his knees make it harder now, watches too much television according to him, drinks one glass of red wine in the evenings, and always says he "doesn't need anything."
+
+My budget: £75-£150. I want something he'll actually use and enjoy, not something that'll sit in a cupboard.
+
+Please give me 5 specific, creative suggestions — not generic "gift experience" ideas, but things a thoughtful daughter who knows him well would suggest. For each one, tell me where to actually buy it in the UK.</pre>
+    </div>
+
+    <div class="example-output">
+      <h5>AI Output (Gemini — condensed)</h5>
+      <p>1. <strong>A personalised vinyl record of his favourite Beethoven recordings</strong> — companies like Unboxed Experiences (unboxedexperiences.com) let you commission custom vinyl. Getting the specific recordings he grew up with, pressed as a proper LP, sits perfectly at the intersection of his love of music and his engineering appreciation for physical media.</p>
+      <p>2. <strong>A high-quality wine subscription for solo drinkers</strong> — Naked Wines (nakedwines.com) lets you set a preference for single-bottle selections. A three-month subscription at £45-50/month means he discovers new bottles without the commitment of a cellar. You can front-load it as a gift and let him continue or cancel.</p>
+      <p>3. <strong>A Kneeling Garden Cushion with integrated tools</strong> — specifically the Fellowes Professional Kneeler from Screwfix or Amazon (around £35-45) combined with a set of long-handled tools. This addresses the knee problem directly and means gardening stays possible rather than being abandoned...</p>
+    </div>
+
+    <div class="callout callout-tip" style="margin-top: var(--s4);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Why this worked</h4>
+        <p>The more personal detail, the better. Generic inputs ("I need a gift for an elderly man") produce generic results. Every detail — the knees, the Beethoven, the single glass of wine — gave the model something to work with. Asking for UK-specific purchasing options made the results immediately actionable rather than requiring another round of Googling.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: var(--r3); padding: var(--s6); text-align: center; margin-top: var(--s10);">
+  <h3 style="margin-bottom: var(--s3);">Want to try these patterns yourself?</h3>
+  <p class="text-2" style="margin-bottom: var(--s5);">The Recipe Book has all these patterns and more — with copy-and-paste prompts ready to go.</p>
+  <div style="display: flex; gap: var(--s3); justify-content: center; flex-wrap: wrap;">
+    <a href="../prompts/" class="btn btn-primary">Go to the Recipe Book →</a>
+    <a href="../daily/" class="btn btn-secondary">Daily Specials →</a>
+  </div>
+</div>
+
+</div>
+</div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../" class="nav-logo" style="margin-bottom: var(--s3);">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="16" r="3" fill="currentColor"/>
+          </svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI.</p>
+      </div>
+      <div class="footer-col"><h4>Pages</h4><ul>
+        <li><a href="../prompts/">Recipe Book</a></li>
+        <li><a href="../context/">Kitchen Prep</a></li>
+        <li><a href="../daily/">Daily Playbook</a></li>
+        <li><a href="../models/">Model Guide</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>More</h4><ul>
+        <li><a href="../image-video/">Image &amp; Video</a></li>
+        <li><a href="../gallery/">Gallery</a></li>
+        <li><a href="../support.html">Support</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Site</h4><ul>
+        <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <div class="footer-privacy"><span class="privacy-dot"></span><span>No tracking · No cookies · No ads</span></div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+<script src="../js/main.js"></script>
+</body>
+</html>
