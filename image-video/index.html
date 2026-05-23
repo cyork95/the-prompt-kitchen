@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Image & Video Studio — AI Visual Creation Guide | The Prompt Kitchen</title>
+  <title>Image, Video & Music Studio — AI Creative Tools Guide | The Prompt Kitchen</title>
   <meta name="description" content="Complete guide to prompting image and video AI tools. Midjourney, DALL-E, Stable Diffusion, Sora, Runway — with copy-paste prompt formulas for every common use case." />
   <meta property="og:title"       content="Image & Video Studio | The Prompt Kitchen" />
   <meta property="og:description" content="How to prompt image and video AI tools — explained simply with copy-paste formulas." />
@@ -77,8 +77,8 @@
     <nav class="breadcrumbs" aria-label="Breadcrumb">
       <a href="../">Home</a><span class="sep">›</span><span class="current">Image &amp; Video Studio</span>
     </nav>
-    <h1>🎨 Image &amp; Video Studio</h1>
-    <p class="lead">Everything you need to create compelling images and videos with AI — from understanding how these tools work to copy-paste prompt formulas for every common use case.</p>
+    <h1>🎨 Image, Video &amp; Music Studio</h1>
+    <p class="lead">Everything you need to create compelling images, videos, and music with AI — from understanding how these tools work to copy-paste prompt formulas for every common use case.</p>
   </div>
 </div>
 
@@ -89,6 +89,7 @@
 <div class="studio-tabs" role="tablist">
   <button class="studio-tab active" role="tab" aria-selected="true"  onclick="switchTab('images', this)">🖼️ Image Prompting</button>
   <button class="studio-tab"        role="tab" aria-selected="false" onclick="switchTab('video', this)">🎬 Video Prompting</button>
+  <button class="studio-tab"        role="tab" aria-selected="false" onclick="switchTab('music', this)">🎵 AI Music</button>
 </div>
 
 <!-- ============================================================
@@ -644,6 +645,314 @@ Example: Coffee being poured into a clear glass revealing beautiful layered colo
   </section>
 
 </div><!-- end video panel -->
+
+<!-- ============================================================
+     MUSIC PANEL
+     ============================================================ -->
+<div class="studio-panel" id="panel-music">
+
+  <section style="margin-bottom: var(--s12);">
+    <h2>How AI music actually works</h2>
+    <p>AI music tools are trained on millions of songs and learn the statistical relationships between descriptive words and musical patterns. "Lo-fi hip hop" reliably produces a specific combination of tempo, chord progressions, drum patterns, and vinyl crackle because that's what that genre consistently sounds like across millions of examples.</p>
+    <p>The key difference from image AI: music has <strong>time</strong>. Modern tools like Suno and Udio don't just generate audio — they generate complete songs with structure: intros, verses, choruses, bridges, and outros. They understand how music unfolds, not just how it sounds in a single moment.</p>
+    <p>This means your prompt isn't just describing a sound — it's describing an entire listening experience. The more specific you are about genre, mood, instruments, and vibe, the better the result.</p>
+    <div class="callout callout-tip" style="margin-top: var(--s6);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>The single most important tip</h4>
+        <p><strong>Generate 4–5 versions and pick the best one.</strong> AI music has far more variation than text — the same prompt can produce very different results each time. Always generate multiple options before deciding. Suno's free tier gives you ~50 songs per day, so don't be stingy with generations.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="margin-bottom: var(--s12);">
+    <h2>Which music AI should you use?</h2>
+    <div style="display: flex; flex-direction: column; gap: var(--s5);">
+
+      <div class="model-card">
+        <div class="model-card-header">
+          <div class="model-logo">🎵</div>
+          <div>
+            <h3 style="margin:0;">Suno</h3>
+            <p class="model-tagline">suno.com · Free &amp; paid · Best starting point for most people</p>
+          </div>
+        </div>
+        <div class="model-card-body">
+          <p>The most popular AI music tool and the best starting point for beginners. Suno creates complete songs with vocals, lyrics, and production in just about any genre. The free tier is genuinely generous — about 50 songs per day. Type a style description, click generate, and you have a real song in under 30 seconds.</p>
+          <div class="model-strengths">
+            <span class="strength-tag">~50 free songs/day</span>
+            <span class="strength-tag">Complete songs with vocals</span>
+            <span class="strength-tag">Huge genre range</span>
+            <span class="strength-tag">Custom lyrics support</span>
+            <span class="strength-tag">Very beginner-friendly</span>
+          </div>
+          <div class="model-weaknesses">
+            <span class="weakness-tag">Auto-lyrics can be generic</span>
+            <span class="weakness-tag">Can sound slightly AI on close listen</span>
+          </div>
+          <p style="margin-top: var(--s4);"><strong>Free tier:</strong> Yes — ~50 songs/day, all major features included.</p>
+          <p><strong>Paid:</strong> ~$10–$30/month. More generations, commercial rights, no watermark.</p>
+          <details style="margin-top: var(--s4);">
+            <summary>Suno: Custom Mode vs. Simple Mode</summary>
+            <div style="padding: var(--s3) 0 var(--s3) var(--s4);">
+              <p><strong>Simple Mode:</strong> Describe the song you want in plain language. Suno writes the lyrics and handles everything else. Best for experimenting.</p>
+              <p><strong>Custom Mode:</strong> Write your own lyrics and specify the style separately. Use <code>[Verse]</code>, <code>[Chorus]</code>, <code>[Bridge]</code>, <code>[Outro]</code> tags to control song structure. Best when you want specific lyrics or more control over the arrangement.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="model-card">
+        <div class="model-card-header">
+          <div class="model-logo">🎶</div>
+          <div>
+            <h3 style="margin:0;">Udio</h3>
+            <p class="model-tagline">udio.com · Free &amp; paid · Highest audio quality</p>
+          </div>
+        </div>
+        <div class="model-card-body">
+          <p>Udio's audio quality is exceptional — arguably the best-sounding AI music currently available. It's particularly strong at niche genres (jazz, classical, metal, folk) and produces more nuanced results. The section editing feature lets you regenerate specific parts of a song without losing the rest. Worth using when quality matters more than speed.</p>
+          <div class="model-strengths">
+            <span class="strength-tag">Top audio quality</span>
+            <span class="strength-tag">Excellent niche genre range</span>
+            <span class="strength-tag">Section editing</span>
+            <span class="strength-tag">Stems export (paid)</span>
+          </div>
+          <div class="model-weaknesses">
+            <span class="weakness-tag">Fewer free credits than Suno</span>
+            <span class="weakness-tag">Slightly slower generation</span>
+          </div>
+          <p style="margin-top: var(--s4);"><strong>Free tier:</strong> Yes — limited daily credits.</p>
+          <p><strong>Paid:</strong> ~$10–$30/month for more credits and commercial licensing.</p>
+        </div>
+      </div>
+
+      <div class="model-card">
+        <div class="model-card-header">
+          <div class="model-logo">🔬</div>
+          <div>
+            <h3 style="margin:0;">MusicFX (Google)</h3>
+            <p class="model-tagline">labs.google/musicfx · Completely free · Instrumentals only</p>
+          </div>
+        </div>
+        <div class="model-card-body">
+          <p>Google's experimental music tool, available free via Google Labs. Excellent for short instrumental loops and ambient music — background tracks, studying music, sound design. Uniquely, it generates in near-real-time so you can hear changes as you adjust the prompt. No vocals or full song structure.</p>
+          <div class="model-strengths">
+            <span class="strength-tag">Completely free</span>
+            <span class="strength-tag">Real-time generation</span>
+            <span class="strength-tag">Great for ambient &amp; loops</span>
+            <span class="strength-tag">No account needed</span>
+          </div>
+          <div class="model-weaknesses">
+            <span class="weakness-tag">No vocals or lyrics</span>
+            <span class="weakness-tag">Short clips only (~30 sec)</span>
+            <span class="weakness-tag">Experimental — may change</span>
+          </div>
+          <p style="margin-top: var(--s4);"><strong>Free tier:</strong> Yes — completely free, no sign-in required.</p>
+        </div>
+      </div>
+
+      <div class="model-card">
+        <div class="model-card-header">
+          <div class="model-logo">🌊</div>
+          <div>
+            <h3 style="margin:0;">Stable Audio (Stability AI)</h3>
+            <p class="model-tagline">stableaudio.com · Free &amp; paid · Long instrumentals &amp; SFX</p>
+          </div>
+        </div>
+        <div class="model-card-body">
+          <p>Stable Audio shines at generating longer instrumental tracks — up to 3 minutes — which makes it the go-to for background music, podcast intros, or anything that needs to run longer than a clip. Also strong for sound effects and cinematic scores. If you need a long, loopable instrumental, this is your tool.</p>
+          <div class="model-strengths">
+            <span class="strength-tag">Up to 3-minute tracks</span>
+            <span class="strength-tag">Cinematic &amp; ambient</span>
+            <span class="strength-tag">Sound effects / SFX</span>
+            <span class="strength-tag">Precise timing control</span>
+          </div>
+          <div class="model-weaknesses">
+            <span class="weakness-tag">Primarily instrumental</span>
+            <span class="weakness-tag">Only 20 free generations/month</span>
+          </div>
+          <p style="margin-top: var(--s4);"><strong>Free tier:</strong> Yes — 20 generations/month.</p>
+          <p><strong>Paid:</strong> ~$12/month for 500 generations + commercial rights.</p>
+        </div>
+      </div>
+
+      <div class="model-card">
+        <div class="model-card-header">
+          <div class="model-logo">🥁</div>
+          <div>
+            <h3 style="margin:0;">Boomy</h3>
+            <p class="model-tagline">boomy.com · Free &amp; paid · Simplest to use, publish to streaming</p>
+          </div>
+        </div>
+        <div class="model-card-body">
+          <p>Boomy takes the simplest approach: choose a genre, adjust a few sliders, generate. Less creative control than Suno or Udio, but it has a unique feature: you can publish your creations directly to Spotify, Apple Music, and other streaming platforms and potentially earn royalties. Perfect if your goal is publishing rather than experimenting.</p>
+          <div class="model-strengths">
+            <span class="strength-tag">Simplest interface</span>
+            <span class="strength-tag">Publish to Spotify &amp; Apple Music</span>
+            <span class="strength-tag">Royalty earning potential</span>
+          </div>
+          <div class="model-weaknesses">
+            <span class="weakness-tag">Less creative control</span>
+            <span class="weakness-tag">More template-based output</span>
+          </div>
+          <p style="margin-top: var(--s4);"><strong>Free tier:</strong> Yes — limited monthly creations.</p>
+          <p><strong>Paid:</strong> ~$3–$10/month for more songs and full publishing access.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section style="margin-bottom: var(--s12);">
+    <h2>Anatomy of a music prompt</h2>
+    <p class="text-2" style="margin-bottom: var(--s6);">The more dimensions you describe, the more precisely the AI can match your vision. You don't need all of these — but each one narrows the target.</p>
+    <div class="anatomy-grid">
+      <div class="anatomy-item">
+        <h4>🎸 Genre / Style</h4>
+        <p>The most important ingredient. Be specific: not "rock" but "bluesy Southern hard rock" or "jangly 60s British Invasion." Genre carries tempo, instrumentation, and production style all at once.</p>
+      </div>
+      <div class="anatomy-item">
+        <h4>😌 Mood / Emotion</h4>
+        <p>How should the listener feel? "Melancholic and reflective," "joyful and energetic," "tense and cinematic." Emotional language often works better than technical terms alone.</p>
+      </div>
+      <div class="anatomy-item">
+        <h4>⏱️ Tempo / Energy</h4>
+        <p>Slow and dreamy, mid-tempo driving, fast and intense — or a specific BPM like "120 BPM." Also useful: "builds from quiet to explosive" or "consistent and meditative."</p>
+      </div>
+      <div class="anatomy-item">
+        <h4>🎹 Instruments</h4>
+        <p>Name specific instruments: "acoustic guitar and upright bass," "Rhodes piano and muted trumpet," "heavy distorted guitar and pounding drums, no synths." The more specific, the better.</p>
+      </div>
+      <div class="anatomy-item">
+        <h4>🎤 Vocals</h4>
+        <p>Female vocalist with breathy delivery, deep gravelly male voice, harmonies, choir, rap flow — or simply "instrumental, no vocals." Suno adds vocals by default if you don't specify.</p>
+      </div>
+      <div class="anatomy-item">
+        <h4>📅 Era / Production</h4>
+        <p>Decade references are powerful: "1970s soul production," "80s synth pop with gated reverb drums," "modern hyperpop." These describe an entire production aesthetic in a few words.</p>
+      </div>
+      <div class="anatomy-item">
+        <h4>🏗️ Song Structure</h4>
+        <p>For Suno Custom Mode: use <code>[Intro]</code>, <code>[Verse]</code>, <code>[Chorus]</code>, <code>[Bridge]</code>, <code>[Outro]</code> tags in your lyrics. In style prompts, describe arc: "slow build from quiet to full band."</p>
+      </div>
+      <div class="anatomy-item">
+        <h4>🎬 Use Case</h4>
+        <p>Telling the AI what the music is for helps: "background music for a coffee shop," "podcast opening theme," "emotional scene in a drama," "workout pump-up track."</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="margin-bottom: var(--s12);">
+    <h2>Music prompt formulas</h2>
+    <p class="text-2" style="margin-bottom: var(--s6);">Copy any of these, fill in the brackets, and paste into Suno or Udio. Generate 3–5 versions and pick the best.</p>
+
+    <div class="recipe-card" style="margin-bottom: var(--s6);">
+      <div class="recipe-card-header"><div><span class="recipe-tag">Background</span><h3 style="margin-top: var(--s2);">Study / Work Background Music</h3></div></div>
+      <div class="recipe-card-body">
+        <div class="prompt-block"><pre>lo-fi hip hop, relaxed and focused, vinyl crackle, mellow piano loops, soft jazz drums, warm bass, no vocals, instrumental, perfect for studying
+
+— or —
+
+ambient electronic, meditative and calm, soft synthesizer pads, gentle arpeggios, no percussion, no vocals, perfect for deep work and concentration</pre></div>
+      </div>
+    </div>
+
+    <div class="recipe-card" style="margin-bottom: var(--s6);">
+      <div class="recipe-card-header"><div><span class="recipe-tag">Song</span><h3 style="margin-top: var(--s2);">Custom Song Formula</h3></div></div>
+      <div class="recipe-card-body">
+        <div class="prompt-block"><pre>[Genre] song, [mood], [vocal style], [key instruments], [era or production style], [tempo]
+
+Example: Indie folk song, bittersweet and nostalgic, warm female vocals with harmonies, fingerpicked acoustic guitar and cello, gentle percussion, mid-2000s indie production, mid-tempo
+
+Example: Upbeat funk soul, joyful and celebratory, soulful male vocals, brass section, rhythm guitar, tight funk drums, 1970s classic soul production, 105 BPM</pre></div>
+      </div>
+    </div>
+
+    <div class="recipe-card" style="margin-bottom: var(--s6);">
+      <div class="recipe-card-header"><div><span class="recipe-tag">Cinematic</span><h3 style="margin-top: var(--s2);">Film Score / Cinematic Music</h3></div></div>
+      <div class="recipe-card-body">
+        <div class="prompt-block"><pre>[Emotional tone] cinematic orchestral score, [instruments], no vocals, [tempo / arc], film score quality
+
+Example: Melancholic and hopeful cinematic score, solo piano with strings gradually joining, swelling to full orchestra, bittersweet emotional arc, no vocals, slow build from intimate to epic, film score quality
+
+Example: Tense action thriller score, fast pulsing strings, brass stabs, heavy percussion, no vocals, building intensity, Hans Zimmer style</pre></div>
+      </div>
+    </div>
+
+    <div class="recipe-card" style="margin-bottom: var(--s6);">
+      <div class="recipe-card-header"><div><span class="recipe-tag">Ambient</span><h3 style="margin-top: var(--s2);">Ambient / Mood Music</h3></div></div>
+      <div class="recipe-card-body">
+        <div class="prompt-block"><pre>ambient [adjective], [setting or feeling], [textures / instruments], no vocals, [energy level]
+
+Example: Ambient rainy evening, melancholic but cozy, piano notes blending with rain sounds and distant thunder, soft reverb tails, no drums, no vocals, slow and contemplative
+
+Example: Dark ambient, tense and ominous, low drone textures, distant metallic sounds, sparse low piano notes, building unease, no vocals, thriller soundtrack feel</pre></div>
+      </div>
+    </div>
+
+    <div class="recipe-card" style="margin-bottom: var(--s6);">
+      <div class="recipe-card-header"><div><span class="recipe-tag">Social / Viral</span><h3 style="margin-top: var(--s2);">Social Media / Short-Form Video Music</h3></div></div>
+      <div class="recipe-card-body">
+        <div class="prompt-block"><pre>[Trending genre], [energy], [signature elements], [vocals or no vocals], suitable for short-form video content
+
+Example: Phonk trap, dark and intense, heavy 808 bass, aggressive hi-hat rolls, distorted Memphis vocal chops, building drop, suitable for montage and car content
+
+Example: City pop, nostalgic and dreamy, 1980s Japanese pop production, guitar riff, bright synthesizers, smooth female vocals, retro aesthetic, suitable for aesthetic video content</pre></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="margin-bottom: var(--s10);">
+    <h2>Tips for better AI music</h2>
+    <div class="ingredient-list">
+      <div class="ingredient-item">
+        <span class="ingredient-emoji">🎯</span>
+        <div>
+          <h4>"Rock" is too broad — be specific with genre</h4>
+          <p>"Rock" covers everything from The Beatles to Metallica to Radiohead. Try "grunge rock with heavy distortion and angst," "jangly 60s British Invasion guitar pop," or "radio-friendly 2000s pop-rock with anthemic chorus." The more specific, the more focused.</p>
+        </div>
+      </div>
+      <div class="ingredient-item">
+        <span class="ingredient-emoji">💭</span>
+        <div>
+          <h4>Describe the feeling, not just the genre</h4>
+          <p>"The feeling of driving alone at 2am on an empty highway" or "background music for a montage of old home videos" often produces better results than pure genre labels. The AI has learned music in context, not just in isolation.</p>
+        </div>
+      </div>
+      <div class="ingredient-item">
+        <span class="ingredient-emoji">📅</span>
+        <div>
+          <h4>Era references carry a lot of information</h4>
+          <p>"1970s soul" implies analog warmth, horn arrangements, groove-based bass, and a specific drum sound. "80s synth pop" implies gated reverb, DX7 piano, and bright production. Decade references communicate more than you might expect.</p>
+        </div>
+      </div>
+      <div class="ingredient-item">
+        <span class="ingredient-emoji">🎤</span>
+        <div>
+          <h4>Always specify vocals or no vocals</h4>
+          <p>Suno and Udio add vocals by default. If you want instrumental music, explicitly say "no vocals, instrumental only." If you want vocals, describe the voice: "breathy female singer," "deep soul male vocals," "harmonies," "rap verse with melodic hook."</p>
+        </div>
+      </div>
+      <div class="ingredient-item">
+        <span class="ingredient-emoji">⚖️</span>
+        <div>
+          <h4>A note on copyright and commercial use</h4>
+          <p>Most AI music tools' free tiers restrict commercial use — check each tool's terms before using in paid projects. Paid tiers typically include the commercial rights you need. Genre descriptions ("80s funk style") are safer and usually produce better results than "in the style of [specific artist]."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-tip" style="margin-top: var(--s6);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Quick tool picker</h4>
+        <p><strong>Complete songs with lyrics</strong> → Suno &nbsp;·&nbsp; <strong>Best audio quality</strong> → Udio &nbsp;·&nbsp; <strong>Free instrumental loops</strong> → MusicFX &nbsp;·&nbsp; <strong>Long background track (3+ min)</strong> → Stable Audio &nbsp;·&nbsp; <strong>Publish to Spotify</strong> → Boomy</p>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end music panel -->
 
 </div>
 </div>
