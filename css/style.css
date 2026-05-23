@@ -812,6 +812,53 @@ details[open] summary { margin-bottom: var(--s3); }
   display: flex;
   align-items: center;
   gap: var(--s3);
+  justify-content: space-between;
+}
+
+/* Collapsible details/summary */
+details.recipe-card,
+details.example-card {
+  border-bottom: none;
+}
+
+details.recipe-card > summary,
+details.example-card > summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+details.recipe-card > summary::-webkit-details-marker,
+details.example-card > summary::-webkit-details-marker {
+  display: none;
+}
+
+details.recipe-card > summary:hover,
+details.example-card > summary:hover {
+  background: var(--border);
+}
+
+.recipe-chevron {
+  flex-shrink: 0;
+  color: var(--text-3);
+  font-size: 1.25rem;
+  line-height: 1;
+  transition: transform var(--t-base);
+}
+
+details[open] > summary .recipe-chevron {
+  transform: rotate(180deg);
+}
+
+.example-summary-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.example-summary-title h3 {
+  font-size: var(--text-base);
+  margin: var(--s1) 0 0;
+  font-weight: 600;
 }
 
 .recipe-card-header h3 {
