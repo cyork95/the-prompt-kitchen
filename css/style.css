@@ -1648,9 +1648,16 @@ details[open] > summary .recipe-chevron {
   font-size: var(--text-xs);
   padding: var(--s1) var(--s3);
   border-radius: var(--r-full);
-  background: var(--bg-alt);
-  color: var(--text-3);
+  background: #FEF3E2;
+  color: #7A4400;
+  border: 1px solid #F5D9A0;
   font-family: var(--font-mono);
+}
+
+[data-theme="dark"] .weakness-tag {
+  background: #2A1800;
+  color: #E8AA40;
+  border-color: #5A3800;
 }
 
 /* ============================================================
