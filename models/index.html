@@ -38,7 +38,7 @@
       <li><a href="../examples/">Tasting Menu</a></li>
       <li><a href="../image-video/">Image &amp; Video</a></li>
       <li><a href="../gallery/">Gallery</a></li>
-      <li><a href="../support.html">Support ♥</a></li>
+      <li><a href="../support.html">Support <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;display:inline-block;margin-left:1px" aria-hidden="true"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg></a></li>
     </ul>
     <div class="nav-actions">
       <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
@@ -82,6 +82,7 @@
   <h4>On this page</h4>
   <ol>
     <li><a href="#the-honest-truth">The honest truth about AI model differences</a></li>
+    <li><a href="#try-free">Try them free — quick links</a></li>
     <li><a href="#decision-tree">Which AI should I use? (Decision tree)</a></li>
     <li><a href="#claude">Claude (Anthropic)</a></li>
     <li><a href="#chatgpt">ChatGPT / GPT-4o (OpenAI)</a></li>
@@ -96,17 +97,15 @@
 <!-- HONEST TRUTH -->
 <section id="the-honest-truth" style="margin-bottom: var(--s12);">
   <h2>The honest truth about AI model differences</h2>
-  <div class="prose">
-    <p>
-      Here's what most AI comparison articles don't say: <strong>for everyday tasks, the differences between the major AI tools are smaller than the differences between a good prompt and a bad prompt.</strong>
-    </p>
-    <p>
-      Writing a well-briefed, specific prompt into a free AI tool will almost always beat a vague, generic prompt into the most expensive model. The recipes in this kitchen matter more than the appliance you cook them in.
-    </p>
-    <p>
-      That said, the tools genuinely do have different strengths. Some are better at nuanced writing. Some are faster and cheaper. Some are connected to the internet and can look things up. Some are already built into software you already use. Knowing this helps you pick the right tool for the right job.
-    </p>
-  </div>
+  <p>
+    Here's what most AI comparison articles don't say: <strong>for everyday tasks, the differences between the major AI tools are smaller than the differences between a good prompt and a bad prompt.</strong>
+  </p>
+  <p>
+    Writing a well-briefed, specific prompt into a free AI tool will almost always beat a vague, generic prompt into the most expensive model. The recipes in this kitchen matter more than the appliance you cook them in.
+  </p>
+  <p>
+    That said, the tools genuinely do have different strengths. Some are better at nuanced writing. Some are faster and cheaper. Some are connected to the internet and can look things up. Some are already built into software you already use. Knowing this helps you pick the right tool for the right job.
+  </p>
 
   <div class="callout callout-tip" style="margin-top: var(--s6);">
     <span class="callout-icon">💡</span>
@@ -117,61 +116,136 @@
   </div>
 </section>
 
+<!-- TRY FREE -->
+<section id="try-free" style="margin-bottom: var(--s12);">
+  <h2>Try them free</h2>
+  <p class="text-2" style="margin-bottom: var(--s6);">All of these tools have free tiers you can start with right now — no credit card required. Copy a prompt from the <a href="../prompts/">Recipe Book</a>, then paste it into any of these to try it out.</p>
+  <div class="try-free-grid">
+    <a href="https://claude.ai" target="_blank" rel="noopener" class="try-free-card">
+      <span class="try-free-icon">🧠</span>
+      <span class="try-free-name">Claude</span>
+      <span class="try-free-label">claude.ai</span>
+      <span class="try-free-cta">Try Claude free →</span>
+    </a>
+    <a href="https://chatgpt.com" target="_blank" rel="noopener" class="try-free-card">
+      <span class="try-free-icon">💬</span>
+      <span class="try-free-name">ChatGPT</span>
+      <span class="try-free-label">chatgpt.com</span>
+      <span class="try-free-cta">Try ChatGPT free →</span>
+    </a>
+    <a href="https://gemini.google.com" target="_blank" rel="noopener" class="try-free-card">
+      <span class="try-free-icon">♊</span>
+      <span class="try-free-name">Gemini</span>
+      <span class="try-free-label">gemini.google.com</span>
+      <span class="try-free-cta">Try Gemini free →</span>
+    </a>
+    <a href="https://grok.com" target="_blank" rel="noopener" class="try-free-card">
+      <span class="try-free-icon">𝕏</span>
+      <span class="try-free-name">Grok</span>
+      <span class="try-free-label">grok.com · no signup needed</span>
+      <span class="try-free-cta">Try Grok free →</span>
+    </a>
+    <a href="https://copilot.microsoft.com" target="_blank" rel="noopener" class="try-free-card">
+      <span class="try-free-icon">🪟</span>
+      <span class="try-free-name">Copilot</span>
+      <span class="try-free-label">copilot.microsoft.com</span>
+      <span class="try-free-cta">Try Copilot free →</span>
+    </a>
+  </div>
+</section>
+
 <!-- DECISION TREE -->
 <section id="decision-tree" style="margin-bottom: var(--s12);">
   <h2>Which AI should I use?</h2>
-  <p class="text-2" style="margin-bottom: var(--s6);">Answer these questions to find your best starting point.</p>
+  <p class="text-2" style="margin-bottom: var(--s6);">Answer a few questions to find your best starting point. <strong>Click a green box</strong> to open that tool — or click <em>No, continue</em> to keep going.</p>
 
-  <div style="display: flex; flex-direction: column; gap: var(--s4); max-width: 700px;">
+  <div id="dt-container" style="display: flex; flex-direction: column; gap: var(--s4); max-width: 700px;">
 
-    <div class="dt-node dt-question">
-      <div class="dt-question-text">❓ Are you already using Microsoft 365 (Word, Outlook, Teams) at work?</div>
-      <div class="dt-options">
-        <div class="dt-node dt-answer" style="flex:1">
-          <strong>✅ Yes →</strong> Start with <strong>Microsoft Copilot</strong>. It's built right into the apps you already use. You may already have access through your work subscription.
-        </div>
-        <div class="dt-option" style="flex:1; text-align:left;">
-          <strong>No →</strong> Continue below ↓
+    <!-- Step 1 — always visible -->
+    <div class="dt-step" id="dt-q1">
+      <div class="dt-node dt-question">
+        <div class="dt-question-text">❓ Are you already using Microsoft 365 (Word, Outlook, Teams) at work?</div>
+        <div class="dt-options">
+          <a href="https://copilot.microsoft.com" target="_blank" rel="noopener" class="dt-node dt-answer dt-answer-link" style="flex:1">
+            <strong>✅ Yes →</strong> Start with <strong>Microsoft Copilot</strong>. It's built right into the apps you already use — often zero setup required.
+            <span class="dt-go">Open Copilot → copilot.microsoft.com</span>
+          </a>
+          <button class="dt-continue-btn" onclick="dtShowNext('dt-q2')" style="flex:1">
+            No → Continue ↓
+          </button>
         </div>
       </div>
     </div>
 
-    <div class="dt-node dt-question">
-      <div class="dt-question-text">❓ Do you need to look up current information, news, or recent events?</div>
-      <div class="dt-options">
-        <div class="dt-node dt-answer" style="flex:1">
-          <strong>✅ Yes →</strong> Use <strong>Gemini</strong> (connected to Google Search) or <strong>ChatGPT with Browse</strong>. Both can look things up in real time.
-        </div>
-        <div class="dt-option" style="flex:1; text-align:left;">
-          <strong>No →</strong> Continue below ↓
-        </div>
-      </div>
-    </div>
-
-    <div class="dt-node dt-question">
-      <div class="dt-question-text">❓ Is this a writing task — emails, essays, reports, editing, creative writing?</div>
-      <div class="dt-options">
-        <div class="dt-node dt-answer" style="flex:1">
-          <strong>✅ Yes →</strong> Try <strong>Claude</strong> first. It consistently produces the most natural, well-structured prose. Many writers prefer it specifically for this.
-        </div>
-        <div class="dt-option" style="flex:1; text-align:left;">
-          <strong>No →</strong> Continue below ↓
+    <!-- Step 2 — hidden until No is clicked -->
+    <div class="dt-step" id="dt-q2" style="display:none">
+      <div class="dt-node dt-question">
+        <div class="dt-question-text">❓ Do you need to look up current information, news, or recent events?</div>
+        <div class="dt-options">
+          <div style="flex:1; display:flex; flex-direction:column; gap: var(--s2);">
+            <a href="https://gemini.google.com" target="_blank" rel="noopener" class="dt-node dt-answer dt-answer-link">
+              <strong>✅ Yes →</strong> Try <strong>Gemini</strong> — real-time web access built in, connected to Google Search.
+              <span class="dt-go">Open Gemini → gemini.google.com</span>
+            </a>
+            <a href="https://chatgpt.com" target="_blank" rel="noopener" class="dt-node dt-answer dt-answer-link">
+              <strong>✅ Or →</strong> <strong>ChatGPT</strong> also has web browsing available.
+              <span class="dt-go">Open ChatGPT → chatgpt.com</span>
+            </a>
+          </div>
+          <button class="dt-continue-btn" onclick="dtShowNext('dt-q3')" style="flex:1">
+            No → Continue ↓
+          </button>
         </div>
       </div>
     </div>
 
-    <div class="dt-node dt-question">
-      <div class="dt-question-text">❓ Is this a coding or technical task?</div>
-      <div class="dt-options">
-        <div class="dt-node dt-answer" style="flex:1">
-          <strong>✅ Yes →</strong> <strong>Claude</strong> or <strong>ChatGPT GPT-4o</strong> are both excellent for code. Claude tends to explain the reasoning well; ChatGPT has a large community of coding tutorials.
-        </div>
-        <div class="dt-node dt-answer" style="flex:1">
-          <strong>General use →</strong> Any of the major models (Claude, ChatGPT, Gemini) will serve you well. Start free, upgrade if you hit limits.
+    <!-- Step 3 — hidden -->
+    <div class="dt-step" id="dt-q3" style="display:none">
+      <div class="dt-node dt-question">
+        <div class="dt-question-text">❓ Is this a writing task — emails, essays, reports, editing, creative writing?</div>
+        <div class="dt-options">
+          <a href="https://claude.ai" target="_blank" rel="noopener" class="dt-node dt-answer dt-answer-link" style="flex:1">
+            <strong>✅ Yes →</strong> Try <strong>Claude</strong> first. It consistently produces the most natural, well-structured prose. Many writers prefer it.
+            <span class="dt-go">Open Claude → claude.ai</span>
+          </a>
+          <button class="dt-continue-btn" onclick="dtShowNext('dt-q4')" style="flex:1">
+            No → Continue ↓
+          </button>
         </div>
       </div>
     </div>
 
+    <!-- Step 4 — hidden -->
+    <div class="dt-step" id="dt-q4" style="display:none">
+      <div class="dt-node dt-question">
+        <div class="dt-question-text">❓ Is this a coding or technical task?</div>
+        <div class="dt-options">
+          <div style="flex:1; display:flex; flex-direction:column; gap: var(--s2);">
+            <a href="https://claude.ai" target="_blank" rel="noopener" class="dt-node dt-answer dt-answer-link">
+              <strong>✅ Yes →</strong> Try <strong>Claude</strong> — excellent at explaining reasoning and code review.
+              <span class="dt-go">Open Claude → claude.ai</span>
+            </a>
+            <a href="https://chatgpt.com" target="_blank" rel="noopener" class="dt-node dt-answer dt-answer-link">
+              <strong>✅ Or →</strong> <strong>ChatGPT</strong> — huge community of coding tutorials and examples.
+              <span class="dt-go">Open ChatGPT → chatgpt.com</span>
+            </a>
+          </div>
+          <div class="dt-node dt-answer" style="flex:1">
+            <strong>General use →</strong> Any of the major models will serve you well. Start free and see what fits:
+            <div style="margin-top: var(--s3); display:flex; flex-direction:column; gap: var(--s2);">
+              <a href="https://claude.ai" target="_blank" rel="noopener" class="dt-go-btn">Claude (claude.ai) →</a>
+              <a href="https://chatgpt.com" target="_blank" rel="noopener" class="dt-go-btn">ChatGPT (chatgpt.com) →</a>
+              <a href="https://grok.com" target="_blank" rel="noopener" class="dt-go-btn">Grok (grok.com) →</a>
+              <a href="https://gemini.google.com" target="_blank" rel="noopener" class="dt-go-btn">Gemini (gemini.google.com) →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div style="margin-top: var(--s3);">
+    <button id="dt-reset" onclick="dtReset()" class="dt-reset">↺ Start over</button>
   </div>
 </section>
 
@@ -519,6 +593,24 @@
 </footer>
 
 <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+  function dtShowNext(id) {
+    var el = document.getElementById(id);
+    if (el) {
+      el.style.display = 'block';
+      setTimeout(function() { el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 50);
+    }
+    document.getElementById('dt-reset').style.display = 'inline-block';
+  }
+  function dtReset() {
+    ['dt-q2','dt-q3','dt-q4'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    });
+    document.getElementById('dt-reset').style.display = 'none';
+    document.getElementById('dt-q1').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
 <script src="../js/main.js"></script>
 </body>
 </html>
