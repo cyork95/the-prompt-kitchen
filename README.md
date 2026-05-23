@@ -1,10 +1,10 @@
-# The Prompt Kitchen
+﻿# The Prompt Kitchen
 
 **Simple recipes for getting the most out of AI.**
 
 A free, friendly, jargon-free guide to using AI tools in everyday life — for everyone from complete beginners to experienced practitioners. No ads, no tracking, no paywalls.
 
-→ **Live site:** https://thepromkitchen.dev
+→ **Live site:** https://thepromptkitchen.fyi
 
 ---
 
@@ -61,7 +61,7 @@ Your site will be live at `https://YOUR_USERNAME.github.io/YOUR_REPO_NAME/` with
 
 Add a `CNAME` file to the repo root containing your domain name:
 ```
-thepromkitchen.dev
+thepromptkitchen.fyi
 ```
 Then point your domain's DNS to GitHub Pages. See [GitHub's docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site) for the exact DNS records needed.
 
@@ -70,7 +70,7 @@ Then point your domain's DNS to GitHub Pages. See [GitHub's docs](https://docs.g
 ## Before you launch — checklist
 
 - [x] ~~Replace crypto addresses in `support.html`~~ — BTC, SOL, XRP + destination tag, PayPal all set
-- [ ] Update `https://thepromkitchen.dev` throughout with your actual domain (or GitHub Pages URL)
+- [ ] Update `https://thepromptkitchen.fyi` throughout with your actual domain (or GitHub Pages URL)
 - [ ] Update the GitHub link in the footer of each page to your actual repo URL
 - [ ] Add real images to `/gallery/` and update `js/gallery-data.js` with actual file paths
 - [ ] Update `sitemap.xml` dates if you've made changes since initial build

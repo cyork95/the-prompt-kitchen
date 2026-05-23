@@ -1,4 +1,4 @@
-User-agent: *
+﻿User-agent: *
 Allow: /
 
-Sitemap: https://thepromkitchen.dev/sitemap.xml
+Sitemap: https://thepromptkitchen.fyi/sitemap.xml
