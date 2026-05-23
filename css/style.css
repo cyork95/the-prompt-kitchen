@@ -730,7 +730,7 @@ details[open] summary { margin-bottom: var(--s3); }
   white-space: pre-wrap;
   word-break: break-word;
   margin: 0;
-  padding-right: var(--s10);
+  padding-right: 6rem;
 }
 
 .copy-btn {
