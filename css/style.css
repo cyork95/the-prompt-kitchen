@@ -833,6 +833,34 @@ details.example-card > summary::-webkit-details-marker {
   display: none;
 }
 
+/* Hide the global ::before triangle on recipe-card headers — we use .recipe-chevron instead */
+details.recipe-card > summary::before {
+  display: none;
+}
+
+/* Single chevron on the left, content fills the rest */
+details.recipe-card > summary.recipe-card-header {
+  justify-content: flex-start;
+}
+
+details.recipe-card > summary.recipe-card-header .recipe-chevron {
+  order: -1;
+}
+
+/* Tag + title inline so the chevron vertically centres against one row */
+details.recipe-card > summary.recipe-card-header > div {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  flex-wrap: wrap;
+}
+
+details.recipe-card > summary.recipe-card-header h3 {
+  margin-top: 0 !important;
+  margin-bottom: 0;
+}
+
 details.recipe-card > summary:hover,
 details.example-card > summary:hover {
   background: var(--border);
@@ -1639,9 +1667,15 @@ details[open] > summary .recipe-chevron {
   font-size: var(--text-xs);
   padding: var(--s1) var(--s3);
   border-radius: var(--r-full);
-  background: var(--green-light);
-  color: var(--green);
+  background: #E8F7EE;
+  color: #1A5C38;
+  border: 1px solid #9ADCB8;
   font-family: var(--font-mono);
+}
+[data-theme="dark"] .strength-tag {
+  background: #0A2018;
+  color: #52B788;
+  border-color: #1E5C3A;
 }
 
 .weakness-tag {
