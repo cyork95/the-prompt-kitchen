@@ -345,7 +345,7 @@ details[open] summary { margin-bottom: var(--s3); }
   list-style: none;
   padding: 0;
   margin: 0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .nav-links a {
@@ -1937,6 +1937,14 @@ details[open] summary { margin-bottom: var(--s3); }
 }
 
 /* ============================================================
+   Responsive: Nav collapse (< 1060px)
+   ============================================================ */
+@media (max-width: 1060px) {
+  .nav-links { display: none; }
+  .btn-hamburger { display: flex; }
+}
+
+/* ============================================================
    Responsive: Tablet (< 900px)
    ============================================================ */
 @media (max-width: 900px) {
@@ -1963,9 +1971,6 @@ details[open] summary { margin-bottom: var(--s3); }
 
   .container, .container-narrow { padding: 0 var(--s4); }
   .section { padding: var(--s10) 0; }
-
-  .nav-links { display: none; }
-  .btn-hamburger { display: flex; }
 
   .grid-2, .grid-3, .grid-4, .featured-grid { grid-template-columns: 1fr; }
   .quickstart-grid { grid-template-columns: 1fr; }
