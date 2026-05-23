@@ -612,12 +612,20 @@ details[open] summary { margin-bottom: var(--s3); }
   border-radius: var(--r3);
   padding: var(--s6);
   transition: border-color var(--t-base), box-shadow var(--t-base), transform var(--t-base);
+  text-decoration: none;
 }
 
 .card:hover {
   border-color: var(--accent-border);
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.card:hover h3 {
+  text-decoration: underline;
+  text-decoration-color: var(--accent-border);
+  text-underline-offset: 3px;
 }
 
 .card-icon {
