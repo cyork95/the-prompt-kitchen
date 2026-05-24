@@ -12,12 +12,12 @@ const GALLERY_DATA = [
     title: "Misty Forest at Dawn",
     src: "gallery/img-001.jpg",
     thumbnail: "gallery/img-001.jpg",
-    model: "Midjourney v6.1",
-    prompt: "Ancient redwood forest at dawn, golden god rays breaking through morning mist, moss-covered bark, fern undergrowth, photorealistic, 8K, shot on Sony A7R V with 24-70mm f/2.8 lens",
-    negativePrompt: "people, animals, buildings, text, watermark, oversaturated",
-    params: "--ar 16:9 --style raw --v 6.1 --chaos 10",
+    model: "Grok Aurora (free via grok.com)",
+    prompt: "Ancient redwood forest at dawn, golden light rays breaking through morning mist, moss-covered bark, fern undergrowth, photorealistic, shot on Sony A7R V with 24-70mm f/2.8 lens, 8K detail",
+    negativePrompt: "",
+    params: "Default settings — Aurora generates one image per prompt, no parameters needed",
     tags: ["photography", "nature"],
-    note: "The --style raw flag removes Midjourney's default painterly treatment, making the lighting feel genuinely photographic. Adding the specific camera body and lens gives the model a concrete reference point for realistic optics."
+    note: "Grok's Aurora image model is free at grok.com with a free X account — no credits, no waitlist. Naming a specific camera body and lens gives it a precise reference for optics and depth of field. The 'golden light rays through mist' detail reliably produces strong atmospheric lighting."
   },
   {
     id: "img-002",
@@ -38,12 +38,12 @@ const GALLERY_DATA = [
     title: "Cyberpunk Street Market",
     src: "gallery/img-003.jpg",
     thumbnail: "gallery/img-003.jpg",
-    model: "Midjourney v6.1",
-    prompt: "Crowded night market in a rain-soaked cyberpunk city, neon reflections on wet cobblestones, vendors selling glowing food, paper lanterns mixed with holographic signs, warm vs cool color contrast, cinematic, Blade Runner aesthetic without logos, high detail",
-    negativePrompt: "text, logos, blurry, deformed people",
-    params: "--ar 2:3 --v 6.1 --chaos 20 --style raw",
+    model: "Google ImageFX (free via labs.google)",
+    prompt: "Crowded night market in a rain-soaked cyberpunk city, neon reflections on wet cobblestones, vendors selling glowing food, paper lanterns mixed with holographic signs, warm vs cool color contrast, cinematic, no logos or text, high detail",
+    negativePrompt: "",
+    params: "Aspect ratio: 9:16 (portrait) — selected from ImageFX aspect controls",
     tags: ["concept-art", "illustration"],
-    note: "Specifying 'without logos' and including it in the negative prompt keeps the image clean for commercial use. The warm/cool contrast instruction (warm stalls, cool neon) gave the image far more visual interest than a generic cyberpunk prompt."
+    note: "Google ImageFX is completely free at labs.google/fx — no account needed for limited use. ImageFX excels at atmospheric lighting and crowd scenes. The warm/cool color contrast instruction (warm vendor stalls, cool neon) is one of the most effective cinematic prompts across all models."
   },
   {
     id: "img-004",
@@ -64,12 +64,12 @@ const GALLERY_DATA = [
     title: "Illustrated Recipe Card Style",
     src: "gallery/img-005.jpg",
     thumbnail: "gallery/img-005.jpg",
-    model: "Midjourney v6.1",
-    prompt: "Botanical illustration style recipe card, hand-drawn ink and watercolor, sourdough bread loaf surrounded by wheat stalks, rosemary sprigs, sea salt crystals, soft cream paper texture, warm earth tones, editorial cookbook illustration, vintage feel",
-    negativePrompt: "photography, 3D, digital look, modern, harsh shadows",
-    params: "--ar 3:4 --v 6.1 --chaos 5",
+    model: "Leonardo AI (free tier — leonardo.ai)",
+    prompt: "Botanical illustration style, hand-drawn ink and watercolor, sourdough bread loaf surrounded by wheat stalks, rosemary sprigs, sea salt crystals, soft cream paper texture, warm earth tones, editorial cookbook illustration, vintage feel",
+    negativePrompt: "photography, 3D render, digital look, modern, harsh shadows, people",
+    params: "Model: Leonardo Diffusion XL · Preset: Illustration · Dimensions: 3:4",
     tags: ["illustration"],
-    note: "Low chaos (--chaos 5) keeps the illustration consistent for editorial use. Specifying both the medium ('ink and watercolor') and the paper texture grounds the style — 'botanical illustration' alone gives wildly varying results."
+    note: "Leonardo AI's free tier gives ~150 tokens/day — enough for several images. The Illustration preset at leonardo.ai naturally leans toward painterly results; combining it with 'hand-drawn ink and watercolor' and 'cream paper texture' grounds the style precisely. Without those medium descriptors, 'botanical illustration' alone gives inconsistent results."
   },
   {
     id: "img-006",
@@ -90,12 +90,12 @@ const GALLERY_DATA = [
     title: "Abstract Data Visualization Art",
     src: "gallery/img-007.jpg",
     thumbnail: "gallery/img-007.jpg",
-    model: "Midjourney v6.1",
-    prompt: "Abstract art inspired by data flow, flowing streams of light particles in deep navy and amber, connections branching like neural networks, glowing nodes, dark background, generative art aesthetic, 8K, painterly, digital fine art",
-    negativePrompt: "text, labels, UI elements, people, faces",
-    params: "--ar 16:9 --v 6.1 --chaos 35 --stylize 750",
+    model: "Canva AI Image Generator (free tier — canva.com)",
+    prompt: "Abstract art inspired by data flow, flowing streams of light particles in deep navy and amber, connections branching like neural networks, glowing nodes, dark background, generative art aesthetic, painterly, digital fine art",
+    negativePrompt: "",
+    params: "Style: None (let the model interpret freely) · Aspect ratio: 16:9",
     tags: ["concept-art", "illustration"],
-    note: "Higher chaos (35) and higher stylize (750) push Midjourney toward more abstract, creative interpretations. This combination is ideal for art pieces where you want visual interest over strict prompt adherence — good for backgrounds and hero images."
+    note: "Canva's free plan includes AI image generation — no credits needed for the basic generator. For abstract work, leaving the Style selector on 'None' and letting the prompt drive the visual gives more interesting results than using a preset. Deep navy + amber is a high-contrast palette that reads well at small sizes and as a background."
   },
   {
     id: "img-008",
