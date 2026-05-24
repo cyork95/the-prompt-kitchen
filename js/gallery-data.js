@@ -77,7 +77,7 @@ const GALLERY_DATA = [
     title: "Cozy Home Office Concept",
     src: "/gallery/img-006.jpg",
     thumbnail: "/gallery/img-006.jpg",
-    model: "Adobe Firefly (free tier — firefly.adobe.com)",
+    model: "Adobe Firefly 3",
     prompt: "Cozy home office in a converted attic, exposed wooden beams, large dormer window with afternoon light, built-in bookshelves filled with books and plants, a vintage wooden desk with a modern monitor, warm reading lamp, plaid blanket on chair, hygge aesthetic",
     negativePrompt: "people, anime, cartoon, watermark, messy, cluttered, unrealistic proportions",
     params: "Content Credentials: on · Aspect ratio: 4:3 · Style: Photo",
@@ -104,10 +104,10 @@ const GALLERY_DATA = [
     src: "/gallery/img-008.jpg",
     thumbnail: "/gallery/img-008.jpg",
     model: "Ideogram v2",
-    prompt: "Rustic mountain lodge exterior at twilight, warm amber light glowing through windows, snow on the pine trees, clear sky beginning to show stars, smoke from chimney, wide establishing shot, cinematic, national geographic style photography",
-    negativePrompt: "people, text signs, cars, power lines",
+    prompt: "Rustic mountain lodge exterior at twilight, warm amber light glowing through windows, snow on the pine trees, clear sky beginning to show stars, smoke from chimney, wide establishing shot, cinematic, national geographic style photography, no people, no text signs, no cars, no power lines",
+    negativePrompt: "",
     params: "Style: Realistic, Aspect ratio: 16:9",
     tags: ["photography", "nature"],
-    note: "Ideogram v2 handles architectural exteriors with surrounding environment very well, especially for establishing shots. The 'twilight' time specification reliably produces the blue-hour color palette with interior warm light — one of the most effective lighting prompts across all models."
+    note: "Ideogram v2 handles architectural exteriors with surrounding environment very well, especially for establishing shots. The 'twilight' time specification reliably produces the blue-hour color palette with interior warm light. Note: negative prompts are a paid feature on Ideogram — on the free tier, fold exclusions directly into your prompt with 'no [thing]' instead."
   }
 ];
