@@ -90,7 +90,7 @@ const GALLERY_DATA = [
     title: "Abstract Data Visualization Art",
     src: "/gallery/img-007.jpg",
     thumbnail: "/gallery/img-007.jpg",
-    model: "Canva AI Image Generator (free tier — canva.com)",
+    model: "Canva AI Image Generator",
     prompt: "Abstract art inspired by data flow, flowing streams of light particles in deep navy and amber, connections branching like neural networks, glowing nodes, dark background, generative art aesthetic, painterly, digital fine art",
     negativePrompt: "",
     params: "Style: None (let the model interpret freely) · Aspect ratio: 16:9",
