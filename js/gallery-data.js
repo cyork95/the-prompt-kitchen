@@ -38,12 +38,12 @@ const GALLERY_DATA = [
     title: "Cyberpunk Street Market",
     src: "/gallery/img-003.jpg",
     thumbnail: "/gallery/img-003.jpg",
-    model: "Google ImageFX (free via labs.google)",
+    model: "Google Gemini Imagen (free via gemini.google.com)",
     prompt: "Crowded night market in a rain-soaked cyberpunk city, neon reflections on wet cobblestones, vendors selling glowing food, paper lanterns mixed with holographic signs, warm vs cool color contrast, cinematic, no logos or text, high detail",
     negativePrompt: "",
-    params: "Aspect ratio: 9:16 (portrait) — selected from ImageFX aspect controls",
+    params: "Generated in Gemini chat — type the prompt directly, Gemini produces images inline",
     tags: ["concept-art", "illustration"],
-    note: "Google ImageFX is completely free at labs.google/fx — no account needed for limited use. ImageFX excels at atmospheric lighting and crowd scenes. The warm/cool color contrast instruction (warm vendor stalls, cool neon) is one of the most effective cinematic prompts across all models."
+    note: "Google Gemini's free tier includes Imagen-powered image generation — just type an image prompt in the chat at gemini.google.com. No separate tool needed. The warm/cool color contrast instruction (warm vendor stalls, cool neon) is one of the most effective cinematic prompts across all models."
   },
   {
     id: "img-004",
