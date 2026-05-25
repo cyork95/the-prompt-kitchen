@@ -1598,18 +1598,82 @@ Nice to have: keyboard and mouse bundle included.</pre>
       </div>
 
       <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--r3); padding: var(--s5);">
-        <h4>Series wrap-up — nineteen AIs, one prompt</h4>
-        <p>After running the same shopping prompt through nineteen different AI tools, here's what the series tells you:</p>
+        <h4>Running consensus — nineteen AIs in</h4>
         <p style="margin-top: var(--s3);">
-          ✅ <strong>RTX 4060 is the GPU sweet spot at this budget</strong> — appeared in 8+ AIs as a top pick. Consistently $699–$799 on Amazon. The clearest consensus finding.<br>
-          ✅ <strong>16GB RAM + 1TB NVMe SSD</strong> — the spec floor upheld by every well-performing AI in the series.<br>
-          ✅ <strong>RTX 3050 8GB and RX 6600 are the viable runner-up tier</strong> — good at $550–$700. Avoid the RTX 3050 6GB (UE5 texture streaming needs 8GB VRAM).<br>
-          ✅ <strong>Amazon and Walmart beat Best Buy at this budget</strong> — confirmed by a dozen-plus AIs. Best Buy's budget gaming PC inventory is genuinely thinner at $400–$800.<br>
-          ✅ <strong>The right tool matters as much as the right prompt.</strong> Research AIs (Perplexity, You.com, Claude, Grok) outperformed conversation tools, roleplay platforms, and privacy-first AIs that lack live inventory access.<br>
-          ✅ <strong>Model-line names age better than SKUs.</strong> Search for "HP Victus 15," "CyberPowerPC Gamer Xtreme," or "Skytech Shiva" and filter on the product page rather than trusting AI-reported specific configurations.<br>
-          ⚠️ <strong>Verify GPU VRAM before buying.</strong> RTX 3050 comes in 6GB and 8GB variants. The 6GB will stutter in UE5 games. Always check the product page spec sheet.<br>
-          ⚠️ <strong>Always check that the AI recommended a desktop, not a laptop.</strong> One AI in this series recommended a laptop with a 2GB mobile GPU in response to a desktop PC request.<br>
-          ⚠️ <strong>Verify prices, stock, and the retailer domain</strong> before ordering. AI product data goes stale fast, and one AI in this series linked to a third-party Shopify store as "Amazon."
+          ✅ <strong>RTX 4060 is the GPU sweet spot at this budget</strong> — appeared in 8+ AIs as a top pick.<br>
+          ✅ <strong>16GB RAM + 1TB NVMe SSD</strong> — the spec floor upheld by every well-performing AI.<br>
+          ✅ <strong>RTX 3050 8GB and RX 6600 are the viable runner-up tier.</strong> Avoid RTX 3050 6GB.<br>
+          ✅ <strong>Amazon and Walmart beat Best Buy at this budget.</strong><br>
+          ✅ <strong>The right tool matters as much as the right prompt.</strong><br>
+          ⚠️ <strong>Verify GPU VRAM, desktop vs laptop, and retailer domain before ordering.</strong>
+        </p>
+        <p style="margin-top: var(--s3);"><em>The series continues — see Example 27 (Cerebras AI) for the twentieth AI.</em></p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════
+     EXAMPLE 27 — Same prompt, Cerebras AI (intermediate / everyday)
+     ═══════════════════════════════════════════════ -->
+<details class="recipe-card" id="example-27" style="margin-bottom: var(--s6);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="badge badge-intermediate">Intermediate</span>
+      <span class="text-sm text-3">Model: Cerebras AI (Llama on Wafer Scale Engine) · Task: Same budget gaming PC prompt — twentieth AI, longest response in the series, SKU numbers included, missed 16GB RAM and RTX 3060 floors</span>
+      <h3>The same shopping prompt on Cerebras AI — most detailed structure in the series, but still missed the brief's key specs</h3>
+    </div>
+    <span class="recipe-chevron">▶</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-section">
+      <h4>The prompt (same as all previous examples)</h4>
+      <div class="prompt-block">I'm looking for a pre-built gaming PC that can run Arc Raiders well, within a budget of $400–$800. Please check Best Buy first, then Walmart, then Amazon. The PC should have at least 16GB of RAM, an NVMe SSD, and a modern GPU (RTX 3060 or better). Give me your top picks from each retailer.</div>
+    </div>
+
+    <div class="recipe-section">
+      <h5>Cerebras AI Output (Llama running on Wafer Scale Engine)</h5>
+      <p>Cerebras returned the longest, most structured response in the entire series — four picks across all three retailers, organised into a quick-look summary table, retailer-by-retailer detail sections, a benchmark FPS table, a situation-to-pick recommendation matrix, and a step-by-step buying guide.</p>
+
+      <p><strong>Best Buy (2 picks):</strong> CyberPowerPC Gamer Xtreme VR — i5-12400F + GTX 1650 4GB at $749, 8GB RAM, SKU #6405942, RGB keyboard and mouse included. Lenovo IdeaCentre Gaming 5i — i5-12400 + RTX 3050 8GB at $629, 8GB RAM, SKU #6412245, keyboard and mouse included.</p>
+
+      <p><strong>Walmart (1 pick):</strong> HP Pavilion Gaming Desktop TG01-3150m — Ryzen 5 5600G + RX 5500 XT 4GB at $699, 8GB RAM, HP keyboard and mouse included.</p>
+
+      <p><strong>Amazon (1 pick):</strong> Skytech Shadow Mini — Ryzen 5 3600 + RTX 3060 12GB at $779 (refurbished/discounted), 16GB RAM, mechanical-style keyboard and mouse included. ASIN B0B7K7XJZV.</p>
+
+      <p>The response also listed additional Walmart and Amazon alternatives (Acer Aspire TC-1660, Dell Inspiron Gaming, Acer Nitro N50-6100, HP Omen 25L refurb) with SKU and ASIN identifiers. A benchmark table cited TechPowerUp and Tom's Hardware data for estimated FPS at 1080p Medium and High per build.</p>
+
+      <div class="callout callout-tip" style="margin-top: var(--s4);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>What Cerebras did uniquely well</h4>
+          <p><strong>Most structured response in the series.</strong> Cerebras returned a five-section response — quick-look summary table, retailer details, benchmark estimates, situation-to-pick matrix, and a step-by-step buying guide. No other AI came close to this level of formatting depth.</p>
+          <p style="margin-top: var(--s2);"><strong>SKU and ASIN numbers included.</strong> The response provided Best Buy SKU numbers (#6405942, #6412245), Walmart SKU numbers, and Amazon ASIN codes for each pick. In a series where many AIs gave product names that were hard to find on the actual retailer site, these identifiers are genuinely useful for direct lookup — even if they may be outdated by the time you read this.</p>
+          <p style="margin-top: var(--s2);"><strong>Benchmark FPS estimates with sourcing.</strong> The benchmark table attributed estimates to TechPowerUp and Tom's Hardware, making it easier to verify independently. GTX 1650 at 55–62fps (medium), RTX 3050 at 70–78fps, RX 5500 XT at 60–66fps, RTX 3060 at 95–105fps.</p>
+          <p style="margin-top: var(--s2);"><strong>Speed of generation.</strong> Cerebras's Wafer Scale Engine produces responses at 1,000+ tokens per second — this multi-thousand-word response arrived in seconds rather than the 30–60 seconds it would take on a standard GPU API. For long-form generation tasks, this speed difference is immediately noticeable.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-warning" style="margin-top: var(--s4);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>What Cerebras missed — the spec floors again</h4>
+          <p><strong>Three of four picks have 8GB RAM.</strong> The brief asked for 16GB minimum. Only the Amazon Skytech Shadow Mini (16GB) meets this. The other three picks (8GB) were not flagged as falling short — they were presented as valid recommendations.</p>
+          <p style="margin-top: var(--s2);"><strong>Three of four picks don't meet the RTX 3060 GPU floor.</strong> The GTX 1650, RTX 3050, and RX 5500 XT are all below the brief's "RTX 3060 or better" requirement. Only the Amazon Skytech pick meets it.</p>
+          <p style="margin-top: var(--s2);"><strong>GTX 1650 described as meeting "recommended" GPU.</strong> Cerebras states the GTX 1650 "meets the recommended GPU for Arc Raiders." The actual recommended GPU is a GTX 1660 Super — the GTX 1650 is below recommended, meeting only the approximate minimum. This same error appeared in earlier AIs in the series.</p>
+          <p style="margin-top: var(--s2);"><strong>No RTX 4060.</strong> The twenty previous AIs that found the RTX 4060 as the sweet spot — Cerebras didn't surface it. Given that SKU/ASIN identifiers were provided, it's notable that the RTX 4060 tier wasn't included in the primary recommendations.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--r3); padding: var(--s5);">
+        <h4>Running consensus — twenty AIs in</h4>
+        <p style="margin-top: var(--s3);">
+          ✅ <strong>RTX 4060 is the GPU sweet spot</strong> — appeared in 8+ AIs. None of Cerebras's primary picks reached this tier.<br>
+          ✅ <strong>The only pick that met both spec floors</strong> — Cerebras's Amazon pick (RTX 3060, 16GB RAM) is the only one in this response that passes both the GPU and RAM requirements from the brief. When an AI gives you four picks and only one actually meets the brief, focus your research there.<br>
+          ✅ <strong>SKU/ASIN identifiers are useful but time-sensitive.</strong> These numbers are worth looking up to see if the product still exists at that configuration — but always verify the actual specs on the product page before buying.<br>
+          ✅ <strong>More structure doesn't mean better spec compliance.</strong> Cerebras produced the most formatted, detailed response in the series — and still missed the RAM and GPU floors on three of four picks. Structure and accuracy are independent dimensions.<br>
+          ⚠️ <strong>GTX 1650 ≠ "recommended" for Arc Raiders.</strong> At least three AIs in this series have made this claim. The GTX 1650 meets approximate minimum requirements, not the recommended tier. Verify any GPU "recommended" claims against the official Arc Raiders system requirements page.<br>
+          ⚠️ <strong>Always check RAM on every pick.</strong> 8GB RAM keeps appearing in picks across the series despite the brief asking for 16GB. It's the easiest brief requirement to verify on a product page — always confirm before adding to cart.
         </p>
       </div>
     </div>

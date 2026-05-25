@@ -104,6 +104,7 @@
     <li><a href="#pi">Pi (Inflection AI)</a></li>
     <li><a href="#brave-leo">Brave Leo AI</a></li>
     <li><a href="#character-ai">Character.AI</a></li>
+    <li><a href="#cerebras">Cerebras AI</a></li>
     <li><a href="#free-vs-paid">Free vs. paid — what's actually different?</a></li>
     <li><a href="#comparison-table">Quick comparison table</a></li>
   </ol>
@@ -1241,6 +1242,61 @@
   </div>
 </section>
 
+<!-- CEREBRAS AI -->
+<section id="cerebras" style="margin-bottom: var(--s12);">
+  <h2>Cerebras AI</h2>
+  <div class="model-card">
+    <div class="model-card-header">
+      <div class="model-card-icon">⚡</div>
+      <div>
+        <h3 style="margin:0;">Cerebras AI</h3>
+        <p style="margin:0; color: var(--text-3); font-size: var(--text-sm);">inference.cerebras.net · Cerebras Systems · Free tier available</p>
+      </div>
+    </div>
+    <div class="model-card-body">
+      <p>Cerebras is a semiconductor company best known for building the Wafer Scale Engine (WSE) — the world's largest AI chip, integrating an entire silicon wafer into a single processor with 900,000 AI cores. Cerebras Inference uses this hardware to run popular open-source models at dramatically faster speeds than conventional GPU-based cloud services.</p>
+      <p>Where most AI inference APIs generate 30–60 tokens per second, Cerebras can reach 1,000–2,000 tokens per second on the same models. In practice, this means responses that would take 30–60 seconds on a standard API arrive in under five seconds. For long-form research responses, detailed structured output, and tasks where you're iterating quickly, that speed difference is immediately noticeable.</p>
+
+      <h4 style="margin-top: var(--s5);">Available models</h4>
+      <ul style="font-size: var(--text-sm); margin-top: var(--s2);">
+        <li><strong>Llama 3.1 70B / 8B</strong> — Meta's open-source models, running at Cerebras speeds.</li>
+        <li><strong>Llama 3.3 70B</strong> — updated Llama with stronger instruction following.</li>
+        <li><strong>Qwen 3 / Qwen 2.5</strong> — Alibaba's open-source models, available for structured and multilingual tasks.</li>
+        <li><strong>DeepSeek R1</strong> — reasoning model with chain-of-thought, running at Cerebras inference speeds.</li>
+      </ul>
+      <p style="font-size: var(--text-sm); margin-top: var(--s2);">Model availability changes — check <a href="https://inference.cerebras.net" rel="noopener" target="_blank">inference.cerebras.net</a> for the current lineup.</p>
+
+      <h4 style="margin-top: var(--s5);">Free tier</h4>
+      <p>Free access at <a href="https://inference.cerebras.net" rel="noopener" target="_blank">inference.cerebras.net</a> with rate limits. API access for developers is also available with generous free credits. No credit card required to start.</p>
+
+      <div class="callout callout-tip" style="margin-top: var(--s5);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>Speed as a feature</h4>
+          <p>Cerebras's primary differentiator is raw inference speed — not a proprietary model or unique training data. If you're using Llama or Qwen already, Cerebras gives you the same model significantly faster. This matters most for: long-form generation (detailed reports, structured documents), rapid iteration where you're refining prompts many times, and tasks where waiting for responses breaks your flow. For casual one-off questions, the speed advantage is less impactful.</p>
+        </div>
+      </div>
+
+      <h4 style="margin-top: var(--s5);">Strengths</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Fastest AI inference available</span></li>
+        <li><span class="strength-tag">Long-form structured responses</span></li>
+        <li><span class="strength-tag">Open-source models (no proprietary lock-in)</span></li>
+        <li><span class="strength-tag">Free API credits for developers</span></li>
+        <li><span class="strength-tag">DeepSeek R1 reasoning at speed</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">No proprietary model — quality ceiling set by open-source models</span></li>
+        <li><span class="weakness-tag">No live web search or real-time data</span></li>
+        <li><span class="weakness-tag">May miss brief-specific constraints on complex tasks</span></li>
+        <li><span class="weakness-tag">Rate limits on free tier</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <!-- FREE VS PAID -->
 <section id="free-vs-paid" style="margin-bottom: var(--s12);">
   <h2>Free vs. paid — what's actually different?</h2>
@@ -1465,6 +1521,14 @@
           <td><span class="cross">✗</span></td>
           <td><span class="cross">✗</span></td>
           <td>C.AI+ ~$10/mo</td>
+        </tr>
+        <tr>
+          <td><strong>Cerebras AI</strong></td>
+          <td>Speed-critical tasks, long-form generation, rapid iteration, developer API</td>
+          <td><span class="check">✓ Free tier + API credits</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td>API pay-per-token</td>
         </tr>
       </tbody>
     </table>
