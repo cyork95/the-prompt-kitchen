@@ -105,6 +105,8 @@
     <li><a href="#brave-leo">Brave Leo AI</a></li>
     <li><a href="#character-ai">Character.AI</a></li>
     <li><a href="#cerebras">Cerebras AI</a></li>
+    <li><a href="#groq">Groq (Groq Inc.)</a></li>
+    <li><a href="#sambanova">SambaNova</a></li>
     <li><a href="#free-vs-paid">Free vs. paid — what's actually different?</a></li>
     <li><a href="#comparison-table">Quick comparison table</a></li>
   </ol>
@@ -418,14 +420,6 @@
 
       <p><strong>Free tier:</strong> Yes — <a href="https://grok.com" rel="noopener" target="_blank">grok.com</a> offers a free account with access to Grok models, no X/Twitter account required. A genuinely usable free option for general AI tasks.</p>
       <p><strong>Paid (SuperGrok):</strong> ~$30/month standalone, or included with X Premium+ (~$22/month). Unlocks higher usage limits, image generation via Aurora, and deeper X integration.</p>
-
-      <div class="callout callout-warning" style="margin-top: var(--s5);">
-        <span class="callout-icon">⚠️</span>
-        <div class="callout-body">
-          <h4>Free tier token limits on long prompts</h4>
-          <p>Grok's free tier has per-request token limits that can block longer, context-heavy prompts. If you're sending a detailed research brief — particularly one that includes background context, multi-part requirements, or a long conversation history — you may hit a "too many tokens" error on the free tier before getting a response. SuperGrok removes or significantly raises these limits. For complex multi-constraint prompts, try shortening your request or upgrading if you hit the ceiling regularly.</p>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -1297,6 +1291,120 @@
   </div>
 </section>
 
+<!-- GROQ -->
+<section id="groq" style="margin-bottom: var(--s12);">
+  <h2>Groq (Groq Inc.)</h2>
+  <div class="model-card">
+    <div class="model-card-header">
+      <div class="model-card-icon">⚡</div>
+      <div>
+        <h3 style="margin:0;">Groq</h3>
+        <p style="margin:0; color: var(--text-3); font-size: var(--text-sm);">console.groq.com · Groq Inc. · Free tier available · Not to be confused with Grok (xAI)</p>
+      </div>
+    </div>
+    <div class="model-card-body">
+      <div class="callout callout-warning" style="margin-bottom: var(--s5);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>Groq ≠ Grok</h4>
+          <p><strong>Groq</strong> (Groq Inc., console.groq.com) is a semiconductor company that makes Language Processing Units (LPUs) for fast AI inference. <strong>Grok</strong> (xAI, grok.com) is Elon Musk's AI assistant. The names are nearly identical and constantly confused — this card is about the chip company, not the chatbot.</p>
+        </div>
+      </div>
+
+      <p>Groq Inc. builds the Language Processing Unit (LPU) — a chip architecture purpose-built for sequential AI inference tasks like text generation. Like Cerebras, Groq's value proposition is speed: it runs popular open-source models (Llama, Mixtral, Gemma) at inference speeds that significantly outpace standard GPU-based APIs.</p>
+      <p>Groq is primarily a developer and API-first platform. The consumer-facing interface at console.groq.com lets you chat directly with available models, but the primary audience is developers building applications that need fast AI inference at low cost.</p>
+
+      <h4 style="margin-top: var(--s5);">Available models</h4>
+      <ul style="font-size: var(--text-sm); margin-top: var(--s2);">
+        <li><strong>Llama 3.3 70B / 3.1 8B</strong> — Meta's open-source models at Groq speeds.</li>
+        <li><strong>Mixtral 8x7B</strong> — Mistral's MoE model, fast on Groq hardware.</li>
+        <li><strong>Gemma 2 9B</strong> — Google's lightweight open-source model.</li>
+        <li><strong>DeepSeek R1</strong> — reasoning model available on Groq infrastructure.</li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Free tier</h4>
+      <p>Free access at <a href="https://console.groq.com" rel="noopener" target="_blank">console.groq.com</a>. The free tier has per-request and per-day token limits that can block longer, context-heavy prompts. If you're sending a detailed research brief with multi-part requirements, you may hit a "request too large" error on the free tier before getting a response. API access is pay-per-token with competitive pricing.</p>
+
+      <div class="callout callout-warning" style="margin-top: var(--s5);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>Free tier token limits on long prompts</h4>
+          <p>Groq's free tier has per-request token limits. Detailed, multi-constraint research prompts can exceed the free-tier context limit before generating a response. If you hit this ceiling, try shortening your prompt, removing conversational context, or using the paid API tier instead.</p>
+        </div>
+      </div>
+
+      <h4 style="margin-top: var(--s5);">Strengths</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Extremely fast inference (LPU hardware)</span></li>
+        <li><span class="strength-tag">Low-cost API for developers</span></li>
+        <li><span class="strength-tag">Open-source models (no lock-in)</span></li>
+        <li><span class="strength-tag">Good free tier for quick tasks</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Token limits on free tier</span></li>
+        <li><span class="weakness-tag">Developer-focused — not a polished consumer chat experience</span></li>
+        <li><span class="weakness-tag">No web search or real-time data</span></li>
+        <li><span class="weakness-tag">Quality ceiling set by available open-source models</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SAMBANOVA -->
+<section id="sambanova" style="margin-bottom: var(--s12);">
+  <h2>SambaNova</h2>
+  <div class="model-card">
+    <div class="model-card-header">
+      <div class="model-card-icon">🔴</div>
+      <div>
+        <h3 style="margin:0;">SambaNova Cloud</h3>
+        <p style="margin:0; color: var(--text-3); font-size: var(--text-sm);">cloud.sambanova.ai · SambaNova Systems · Free tier available</p>
+      </div>
+    </div>
+    <div class="model-card-body">
+      <p>SambaNova Systems is a Silicon Valley AI chip company that builds the Reconfigurable Dataflow Unit (RDU) — a chip architecture designed for both training and inference workloads. Like Cerebras and Groq, SambaNova runs open-source models at speeds that outpace conventional GPU clusters, and makes those models available through SambaNova Cloud.</p>
+      <p>SambaNova's offering includes DeepSeek models — including DeepSeek V3 and DeepSeek R1 — running on their own hardware. For users who want DeepSeek's capabilities with faster inference and without routing through Chinese cloud infrastructure, SambaNova is one of the best alternatives.</p>
+
+      <h4 style="margin-top: var(--s5);">Available models</h4>
+      <ul style="font-size: var(--text-sm); margin-top: var(--s2);">
+        <li><strong>DeepSeek V3 / DeepSeek R1</strong> — DeepSeek's flagship models running on US-based SambaNova infrastructure.</li>
+        <li><strong>Llama 3.3 70B / 3.1 405B</strong> — Meta's models, including the largest 405B variant.</li>
+        <li><strong>Qwen 2.5 72B / Coder 32B</strong> — Alibaba's open-source models for general and coding tasks.</li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Free tier</h4>
+      <p>Free access at <a href="https://cloud.sambanova.ai" rel="noopener" target="_blank">cloud.sambanova.ai</a>. Free API credits available on sign-up. No credit card required to start.</p>
+
+      <div class="callout callout-tip" style="margin-top: var(--s5);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>DeepSeek on US infrastructure</h4>
+          <p>If you want to use DeepSeek's models but prefer to avoid routing requests through DeepSeek's own Chinese servers, SambaNova runs the same models on US-based hardware. The model weights are the same; the infrastructure is different. For users with data residency concerns about DeepSeek.com, this is a practical alternative.</p>
+        </div>
+      </div>
+
+      <h4 style="margin-top: var(--s5);">Strengths</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">DeepSeek on US infrastructure</span></li>
+        <li><span class="strength-tag">Llama 405B (largest open-source Llama)</span></li>
+        <li><span class="strength-tag">Fast inference via RDU hardware</span></li>
+        <li><span class="strength-tag">Good structured research outputs</span></li>
+        <li><span class="strength-tag">Free API credits on sign-up</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Developer-focused — less polished than consumer chat UIs</span></li>
+        <li><span class="weakness-tag">No live web search</span></li>
+        <li><span class="weakness-tag">Quality ceiling set by open-source models</span></li>
+        <li><span class="weakness-tag">May miss brief-specific constraints on complex tasks</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <!-- FREE VS PAID -->
 <section id="free-vs-paid" style="margin-bottom: var(--s12);">
   <h2>Free vs. paid — what's actually different?</h2>
@@ -1526,6 +1634,22 @@
           <td><strong>Cerebras AI</strong></td>
           <td>Speed-critical tasks, long-form generation, rapid iteration, developer API</td>
           <td><span class="check">✓ Free tier + API credits</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td>API pay-per-token</td>
+        </tr>
+        <tr>
+          <td><strong>Groq (Groq Inc.)</strong></td>
+          <td>Fast open-source model inference, developer API, quick tasks (not Grok/xAI)</td>
+          <td><span class="check">✓ Free tier</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td>API pay-per-token</td>
+        </tr>
+        <tr>
+          <td><strong>SambaNova</strong></td>
+          <td>DeepSeek on US infrastructure, Llama 405B, fast inference, developer API</td>
+          <td><span class="check">✓ Free API credits</span></td>
           <td><span class="cross">✗</span></td>
           <td><span class="cross">✗</span></td>
           <td>API pay-per-token</td>
