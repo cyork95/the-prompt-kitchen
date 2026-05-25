@@ -1473,6 +1473,77 @@ Nice to have: keyboard and mouse bundle included.</pre>
           ⚠️ <strong>Watch for the RTX 3050 6GB trap</strong> (from GLM, Example 23) — confirmed relevant to this series. Verify VRAM variant when filtering by GPU model name.<br>
           ⚠️ <strong>When an AI includes raw product listing text at the end of a response</strong>, that's a sign it's surfacing scraped search results rather than curated recommendations. Treat those listings with extra scepticism.
         </p>
+        <p style="margin-top: var(--s3);"><em>The series continues — see Example 25 (Brave Leo AI) for the eighteenth AI.</em></p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════
+     EXAMPLE 25 — Same prompt, Brave Leo AI / Qwen VL (intermediate / everyday)
+     ═══════════════════════════════════════════════ -->
+<details class="recipe-card" id="example-25" style="margin-bottom: var(--s6);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="badge badge-intermediate">Intermediate</span>
+      <span class="text-sm text-3">Model: Brave Leo AI (Qwen VL) · Task: Same budget gaming PC prompt — eighteenth AI, most honest about live-inventory limits, gave search guidance instead of potentially stale picks</span>
+      <h3>The same shopping prompt on Brave Leo AI — the most transparent response about what it can't do, and a useful alternative when it can't</h3>
+    </div>
+    <span class="recipe-chevron">▶</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-section">
+      <h4>The prompt (same as all previous examples)</h4>
+      <div class="prompt-block">I'm looking for a pre-built gaming PC that can run Arc Raiders well, within a budget of $400–$800. Please check Best Buy first, then Walmart, then Amazon. The PC should have at least 16GB of RAM, an NVMe SSD, and a modern GPU (RTX 3060 or better). Give me your top picks from each retailer.</div>
+    </div>
+
+    <div class="recipe-section">
+      <h5>Brave Leo AI Output (Qwen VL model)</h5>
+      <p>Leo opened by acknowledging that it cannot browse live retailer inventories in real-time — and rather than pretending otherwise, it gave a target specification profile and a table of pre-built model lines to search for at each retailer.</p>
+
+      <p><strong>Target spec profile (accurate):</strong> Ryzen 5 5600 or i5-12400F, RTX 3050 / RTX 2060 / RX 6600, 16GB DDR4 dual channel, 512GB NVMe SSD minimum. Leo noted the RX 6600 is "often the best value here."</p>
+
+      <p><strong>Retailer search guidance (table format):</strong></p>
+      <ul>
+        <li><strong>Best Buy:</strong> HP Victus 15 or Dell G15 — $600–$750 — often comes with RTX 3050 or 4050, 16GB RAM.</li>
+        <li><strong>Walmart:</strong> CyberPowerPC Gamer Xtreme — $550–$700 — frequently bundles Ryzen 5 5600 with RX 6600.</li>
+        <li><strong>Amazon:</strong> Skytech Shiva or MSI Aegis — $650–$800 — look for RTX 3060 on sale; often includes keyboard/mouse bundle.</li>
+      </ul>
+
+      <p>Leo also added a peripherals note: Best Buy and Walmart pre-builts often don't include keyboard/mouse; Amazon (CyberPowerPC, iBuyPower) more commonly does. It offered to help draft a search query or advise on custom builds if pre-builts are out of stock.</p>
+
+      <div class="callout callout-tip" style="margin-top: var(--s4);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>The most honest AI in the series — and why that matters</h4>
+          <p><strong>Leo is the only AI in this series that explicitly said it can't browse live retailer inventory.</strong> Every other AI either gave specific (potentially stale) product picks, surfaced incorrect products, or recommended items that were out of stock or mispriced. Leo took a different approach: it gave you the target profile and the model family names to search for yourself.</p>
+          <p style="margin-top: var(--s2);">This is actually a legitimate strategy. If you search Best Buy for "HP Victus 15" or "Dell G15" and filter by price, you'll find the current available configurations — which will be more accurate than any AI's training data. The model line guidance ages better than specific SKUs.</p>
+          <p style="margin-top: var(--s2);"><strong>The RTX 3060 mention for Amazon is a useful signal.</strong> Leo specifically noted "look for RTX 3060 if on sale" for the Skytech Shiva / MSI Aegis tier — which aligns with the brief's GPU floor and the series consensus around the RTX 4060 / RTX 3060 sweet spot. This is better GPU guidance than several AIs that gave specific RTX 3050 picks.</p>
+          <p style="margin-top: var(--s2);"><strong>The target spec profile is solid.</strong> Ryzen 5 5600 / i5-12400F, 16GB DDR4, 512GB NVMe, RX 6600 as value pick — these are all consistent with what the best-performing AIs in the series recommended.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-warning" style="margin-top: var(--s4);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>What Leo didn't do — and the trade-off</h4>
+          <p><strong>No RTX 4060.</strong> The target spec profile stops at RTX 3050 / RTX 2060 / RX 6600. Eight previous AIs in the series identified the RTX 4060 as the sweet spot within the $800 budget. Leo's guidance doesn't mention it — which means if you search using only Leo's model-line suggestions, you may not filter for the better GPU option.</p>
+          <p style="margin-top: var(--s2);"><strong>The guidance is useful but not specific.</strong> "Look for Skytech Shiva or MSI Aegis, $650–$800, RTX 3060 if on sale" is helpful framing, but it requires you to do the actual searching. For users who wanted specific SKUs and prices, this response requires more follow-up effort than outputs from Perplexity, You.com, or Claude.</p>
+          <p style="margin-top: var(--s2);"><strong>Leo can't verify its model-line suggestions are currently stocked.</strong> The HP Victus 15 / Dell G15 / CyberPowerPC Gamer Xtreme / Skytech Shiva lines may or may not have the right configurations in stock right now — you still need to check.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--r3); padding: var(--s5);">
+        <h4>Running consensus — eighteen AIs in</h4>
+        <p style="margin-top: var(--s3);">
+          ✅ <strong>RTX 4060 is the GPU sweet spot</strong> — appeared in 8+ AIs as the best pick within budget. Leo points toward RTX 3060 as the search floor, which still gets you to the right tier.<br>
+          ✅ <strong>16GB RAM + NVMe SSD</strong> — upheld by Leo's target spec profile. Strong consensus across the series.<br>
+          ✅ <strong>RX 6600 is the AMD alternative to watch</strong> — Leo's explicit "often the best value" call is consistent with other AIs. Check it alongside RTX options.<br>
+          ✅ <strong>Search model-line names, not specific SKUs.</strong> Leo's approach works: HP Victus 15, CyberPowerPC Gamer Xtreme, Skytech Shiva are stable product families even when specific SKUs change.<br>
+          ✅ <strong>Honesty about limitations beats confident errors.</strong> Leo's admission that it can't check live inventory is more useful than several AIs that confidently returned wrong, stale, or fictional products.<br>
+          ⚠️ <strong>Watch for the RTX 3050 6GB VRAM trap</strong> (GLM, Example 23). When searching by model line, filter by VRAM explicitly — the 8GB variant is required for UE5 games.<br>
+          ⚠️ <strong>Keyboard/mouse inclusion varies by retailer and listing.</strong> Leo's peripheral note is accurate — always check the product page, not just the search result headline.
+        </p>
       </div>
     </div>
   </div>

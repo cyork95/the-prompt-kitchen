@@ -102,6 +102,7 @@
     <li><a href="#kimi">Kimi (Moonshot AI)</a></li>
     <li><a href="#glm">GLM (Zhipu AI)</a></li>
     <li><a href="#pi">Pi (Inflection AI)</a></li>
+    <li><a href="#brave-leo">Brave Leo AI</a></li>
     <li><a href="#free-vs-paid">Free vs. paid — what's actually different?</a></li>
     <li><a href="#comparison-table">Quick comparison table</a></li>
   </ol>
@@ -1115,6 +1116,67 @@
   </div>
 </section>
 
+<!-- BRAVE LEO AI -->
+<section id="brave-leo" style="margin-bottom: var(--s12);">
+  <h2>Brave Leo AI</h2>
+  <div class="model-card">
+    <div class="model-card-header">
+      <div class="model-card-icon">🦁</div>
+      <div>
+        <h3 style="margin:0;">Leo AI (Brave Browser)</h3>
+        <p style="margin:0; color: var(--text-3); font-size: var(--text-sm);">brave.com/leo · Built into Brave browser · Free with Brave</p>
+      </div>
+    </div>
+    <div class="model-card-body">
+      <p>Leo is Brave's built-in AI assistant, accessible directly from the browser sidebar. Unlike standalone AI tools, Leo is deeply integrated with the browser — it can read and summarise the current web page, help you understand content as you browse, and answer questions in context. It's the only AI in this guide that lives inside your browser rather than as a separate tab.</p>
+      <p>Leo runs multiple model options through a single interface. The default free model rotates, and Brave Leo Premium unlocks access to more powerful models. The Qwen VL variant adds multimodal capability — the ability to analyse images and visual content alongside text.</p>
+
+      <h4 style="margin-top: var(--s5);">Available models</h4>
+      <ul style="font-size: var(--text-sm); margin-top: var(--s2);">
+        <li><strong>Llama 3.1 8B</strong> — default free model, fast and general-purpose.</li>
+        <li><strong>Mixtral 8x7B</strong> — available on free tier, better for complex tasks.</li>
+        <li><strong>Claude 3 Haiku</strong> — available via Leo Premium, faster Claude model.</li>
+        <li><strong>Qwen VL</strong> — multimodal variant; accepts images and visual content alongside text prompts. Useful for analysing screenshots, product images, or visual data.</li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Key capability: reading the current page</h4>
+      <p style="font-size: var(--text-sm);">Leo's most distinctive feature is that it can read the webpage you currently have open. Ask it to summarise the article you're reading, extract key information from a product page, compare specs across two tabs, or answer questions about what's on screen. This is different from web search — Leo reads <em>your current browser context</em>, not the wider internet.</p>
+
+      <h4 style="margin-top: var(--s5);">Privacy model</h4>
+      <p style="font-size: var(--text-sm);">Conversations with Leo are not stored or used for training. Brave does not sell data to advertisers. Consistent with Brave's core privacy-first browser philosophy.</p>
+
+      <h4 style="margin-top: var(--s5);">Free tier</h4>
+      <p>Leo is free with the <a href="https://brave.com" rel="noopener" target="_blank">Brave browser</a>. No account required for basic use. Leo Premium (~$15/month) unlocks higher-tier models including Claude variants.</p>
+
+      <h4 style="margin-top: var(--s5);">Strengths</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Reads current browser page</span></li>
+        <li><span class="strength-tag">Multimodal via Qwen VL (image + text)</span></li>
+        <li><span class="strength-tag">Privacy-first, no conversation storage</span></li>
+        <li><span class="strength-tag">Multiple model options in one sidebar</span></li>
+        <li><span class="strength-tag">No separate account needed</span></li>
+        <li><span class="strength-tag">Honest about browsing limitations</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Cannot browse live retailer inventory in real-time</span></li>
+        <li><span class="weakness-tag">Best models require Leo Premium subscription</span></li>
+        <li><span class="weakness-tag">Requires Brave browser (not standalone)</span></li>
+        <li><span class="weakness-tag">Default free model less capable than Claude/GPT-4o</span></li>
+      </ul>
+
+      <div class="callout callout-tip" style="margin-top: var(--s5);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>When Leo is the right tool</h4>
+          <p>Leo is at its best when used <em>while browsing</em> — summarising a long article, extracting specs from a product page, asking questions about what you're reading, or comparing information across tabs. For research tasks that require browsing live retailer inventory, Leo will tell you honestly that it can't do that in real-time. Use it with Qwen VL to analyse product images or screenshots alongside your query.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FREE VS PAID -->
 <section id="free-vs-paid" style="margin-bottom: var(--s12);">
   <h2>Free vs. paid — what's actually different?</h2>
@@ -1323,6 +1385,14 @@
           <td><span class="partial">Limited / inaccurate</span></td>
           <td><span class="cross">✗</span></td>
           <td>Free only</td>
+        </tr>
+        <tr>
+          <td><strong>Brave Leo AI</strong></td>
+          <td>In-browser page reading, privacy-first, image analysis via Qwen VL</td>
+          <td><span class="check">✓ Free with Brave</span></td>
+          <td><span class="partial">Current page only</span></td>
+          <td><span class="partial">Via Qwen VL</span></td>
+          <td>Leo Premium ~$15/mo</td>
         </tr>
       </tbody>
     </table>
