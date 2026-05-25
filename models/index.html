@@ -97,6 +97,7 @@
     <li><a href="#poe">Poe (Quora)</a></li>
     <li><a href="#youcom">You.com</a></li>
     <li><a href="#duckduckgo">DuckDuckGo Duck.AI</a></li>
+    <li><a href="#qwen">Qwen Studio (Alibaba)</a></li>
     <li><a href="#free-vs-paid">Free vs. paid — what's actually different?</a></li>
     <li><a href="#comparison-table">Quick comparison table</a></li>
   </ol>
@@ -823,6 +824,64 @@
   </div>
 </section>
 
+<!-- QWEN STUDIO -->
+<section id="qwen" style="margin-bottom: var(--s12);">
+  <h2>Qwen Studio (Alibaba)</h2>
+  <div class="model-card">
+    <div class="model-card-header">
+      <div class="model-card-icon">🌐</div>
+      <div>
+        <h3 style="margin:0;">Qwen Studio</h3>
+        <p style="margin:0; color: var(--text-3); font-size: var(--text-sm);">chat.qwen.ai · Alibaba Cloud · Free tier available</p>
+      </div>
+    </div>
+    <div class="model-card-body">
+      <p>Qwen is Alibaba's AI assistant, built on the Qwen3 model family. It's one of the most capable publicly accessible models for structured tasks — especially strong at research summaries, comparison tables, and technical writing. The flagship Qwen3-235B-A22B is a mixture-of-experts model that rivals the top Western models on benchmarks, and the open-weights versions can be self-hosted.</p>
+      <p>Qwen Studio stands out for the depth and structure of its responses. For research-heavy prompts, it tends to return organised tables, cited sources, and actionable summaries rather than plain prose — closer to a structured report than a chat reply.</p>
+
+      <h4 style="margin-top: var(--s5);">Model lineup</h4>
+      <ul style="font-size: var(--text-sm); margin-top: var(--s2);">
+        <li><strong>Qwen3-235B-A22B</strong> — flagship mixture-of-experts model, highest capability, available on API and some interfaces.</li>
+        <li><strong>Qwen3-Plus</strong> — strong balance of speed and capability; available on the free tier at chat.qwen.ai.</li>
+        <li><strong>Qwen3-Turbo</strong> — fastest, best for quick tasks; available on the free tier.</li>
+        <li><strong>Qwen3-32B / 72B</strong> — open-weights versions available for self-hosting via Hugging Face or Ollama.</li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Thinking mode</h4>
+      <p style="font-size: var(--text-sm);">Like DeepSeek-R1, Qwen3 supports a <strong>thinking mode</strong> that shows its chain-of-reasoning before giving an answer. Enable it for math, logic, and complex research tasks — it trades speed for noticeably better accuracy on hard problems.</p>
+
+      <h4 style="margin-top: var(--s5);">Free tier</h4>
+      <p>Free access to Qwen3-Plus and Qwen3-Turbo at <a href="https://chat.qwen.ai" rel="noopener" target="_blank">chat.qwen.ai</a>. No credit card required. Daily usage limits apply but are generous for individual use. The open-weights models are free to run locally — no account needed at all.</p>
+
+      <h4 style="margin-top: var(--s5);">Strengths</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Structured, table-heavy responses</span></li>
+        <li><span class="strength-tag">Source citations included</span></li>
+        <li><span class="strength-tag">Strong at coding and math</span></li>
+        <li><span class="strength-tag">Multilingual (especially Chinese)</span></li>
+        <li><span class="strength-tag">Thinking mode for hard problems</span></li>
+        <li><span class="strength-tag">Open weights available for self-hosting</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Chinese company — data sovereignty concerns similar to DeepSeek</span></li>
+        <li><span class="weakness-tag">Structured output can over-format simple questions</span></li>
+        <li><span class="weakness-tag">Interface less polished than Claude or ChatGPT</span></li>
+        <li><span class="weakness-tag">Web search results may lag behind Perplexity / You.com</span></li>
+      </ul>
+
+      <div class="callout callout-tip" style="margin-top: var(--s5);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>When Qwen is the right tool</h4>
+          <p>Use Qwen when you need a <strong>structured research output</strong> — comparison tables, referenced summaries, technical breakdowns. Its default formatting is closer to a professional report than a casual chat reply. For quick conversational tasks or creative writing, Claude or ChatGPT will feel more natural. For complex logic and math, enable thinking mode.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FREE VS PAID -->
 <section id="free-vs-paid" style="margin-bottom: var(--s12);">
   <h2>Free vs. paid — what's actually different?</h2>
@@ -991,6 +1050,14 @@
           <td><span class="cross">✗</span></td>
           <td><span class="cross">✗</span></td>
           <td>Free only</td>
+        </tr>
+        <tr>
+          <td><strong>Qwen Studio</strong></td>
+          <td>Structured research, comparison tables, coding, math, multilingual</td>
+          <td><span class="check">✓ Generous</span></td>
+          <td><span class="partial">Limited</span></td>
+          <td><span class="cross">✗</span></td>
+          <td>API pricing (Alibaba Cloud)</td>
         </tr>
       </tbody>
     </table>

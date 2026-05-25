@@ -1194,18 +1194,85 @@ Nice to have: keyboard and mouse bundle included.</pre>
       </div>
 
       <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--r3); padding: var(--s5);">
-        <h4>Thirteen-AI final consensus — the full picture</h4>
-        <p>After running the same shopping prompt through thirteen different AI tools, the signal is clear:</p>
+        <h4>Series consensus so far (thirteen AIs)</h4>
         <p style="margin-top: var(--s3);">
           ✅ <strong>RTX 4060 is the GPU sweet spot</strong> — appeared in 8 of 13 AIs as a top pick. Duck.AI was one of the few to miss it.<br>
           ✅ <strong>16GB RAM + 1TB NVMe SSD</strong> — requested by the brief and upheld by 12 of 13. Only Duck.AI consistently returned 8GB picks.<br>
           ✅ <strong>Ryzen 5 5600 / i5-12400F / i5-13400F</strong> — the CPU tier that appeared most reliably across the series.<br>
           ✅ <strong>Walmart and Amazon beat Best Buy</strong> for value at this budget — confirmed independently by multiple AIs.<br>
           ✅ <strong>$699–$799 is the real sweet spot</strong> — the very top of the budget buys a meaningfully better GPU.<br>
-          ⚠️ <strong>Read the brief carefully.</strong> Three AIs returned out-of-budget picks without flagging it. Two missed the RAM spec. One cited a third-party Shopify store as "Amazon." The AI's output is only as reliable as how well it understood your constraints.<br>
-          ⚠️ <strong>Always verify: prices, stock, and the actual retailer domain</strong> before buying.
+          ⚠️ <strong>Read the brief carefully.</strong> Three AIs returned out-of-budget picks without flagging it. Two missed the RAM spec. One cited a third-party Shopify store as "Amazon."
         </p>
-        <p style="margin-top: var(--s3);">This series started as one shopping prompt. Thirteen AI tools later, you have a clearer picture than any single AI could provide — and a repeatable technique you can apply to any research decision.</p>
+        <p style="margin-top: var(--s3);"><em>The series continues — see Example 21 (Qwen Studio) for the fourteenth AI and the full final consensus.</em></p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════
+     EXAMPLE 21 — Same prompt, Qwen Studio / Qwen3-Plus (intermediate / everyday)
+     ═══════════════════════════════════════════════ -->
+<details class="recipe-card" id="example-21" style="margin-bottom: var(--s6);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="badge badge-intermediate">Intermediate</span>
+      <span class="text-sm text-3">Model: Qwen Studio (Qwen3-Plus) · Task: Same budget gaming PC prompt — fourteenth AI, most structured response in the series, honest about Best Buy, no RTX 4060</span>
+      <h3>The same shopping prompt on Qwen Studio — the most structured response in the series, with performance tables and cited sources</h3>
+    </div>
+    <span class="recipe-chevron">▶</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-section">
+      <h4>The prompt (same as all previous examples)</h4>
+      <div class="prompt-block">I'm looking for a pre-built gaming PC that can run Arc Raiders well, within a budget of $400–$800. Please check Best Buy first, then Walmart, then Amazon. The PC should have at least 16GB of RAM, an NVMe SSD, and a modern GPU (RTX 3060 or better). Give me your top picks from each retailer.</div>
+    </div>
+
+    <div class="recipe-section">
+      <h5>Qwen Studio Output (Qwen3-Plus)</h5>
+      <p>Qwen returned four picks with a full Arc Raiders system requirements reference table, expected FPS estimates, and numbered source citations — the most formally structured response in the entire series.</p>
+
+      <p><strong>Amazon (2 picks):</strong> Skytech Nebula with RTX 3050 6GB + Ryzen 5 5600 at $779.99 — 16GB RAM, 1TB NVMe SSD, 650W Gold PSU, no keyboard/mouse. Gaming PC with RTX 3050 8GB + Ryzen 5 5500 at $749.99 — 16GB RAM, 512GB NVMe SSD, some listings include a basic bundle.</p>
+
+      <p><strong>Walmart (2 picks):</strong> STGAubron with RX 580 8GB at $530–$570 — 16GB RAM, 512GB SSD, RGB keyboard and mouse included, Xeon CPU (flagged as an older server chip). WIWB with RX 6500 XT 4GB + Ryzen 5 5500 at $689.79 — 16GB RAM, 512GB SSD, WiFi 6; 4GB VRAM limitation noted by Qwen itself.</p>
+
+      <p><strong>Best Buy:</strong> No actual pick recommended. Qwen explicitly stated that most new gaming desktops at Best Buy start around $1,099+ and directed the user to check open-box and clearance sections in-store or online, filtering by RTX 3050 or RX 6600.</p>
+
+      <div class="callout callout-tip" style="margin-top: var(--s4);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>What Qwen did uniquely well</h4>
+          <p><strong>Most structured response in the series.</strong> Qwen opened with a formatted Arc Raiders system requirements table (minimum vs. recommended), included a performance comparison table with estimated FPS per system, and added a numbered buying tips section. No other AI in the series came close to this level of report-style formatting.</p>
+          <p style="margin-top: var(--s2);"><strong>Cited its sources.</strong> References appeared as numbered footnotes [1], [7], [30] — the only AI in the series to show explicit citation markers rather than unnamed "according to" attributions.</p>
+          <p style="margin-top: var(--s2);"><strong>All picks met the 16GB RAM requirement.</strong> Unlike two other AIs that missed this, every Qwen recommendation had 16GB DDR4.</p>
+          <p style="margin-top: var(--s2);"><strong>Most honest Best Buy assessment.</strong> Rather than forcing picks or ignoring the retailer, Qwen stated plainly that Best Buy's price floor is around $1,099 for this GPU tier — more direct than any other AI in the series.</p>
+          <p style="margin-top: var(--s2);"><strong>Noted the Xeon CPU caveat.</strong> The STGAubron uses an Intel Xeon (a repurposed server chip), which Qwen correctly flagged as older and less efficient than a modern Ryzen 5 — a nuance that most AIs missed.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-warning" style="margin-top: var(--s4);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>What Qwen got wrong — the GPU gap</h4>
+          <p><strong>None of the picks meet the brief's GPU spec.</strong> The brief asked for an RTX 3060 or better. Qwen's highest GPU recommendation is the RTX 3050 — one tier below. The other picks (RX 580, RX 6500 XT 4GB) are further below. This is the same miss as DuckDuckGo in Example 20.</p>
+          <p style="margin-top: var(--s2);"><strong>No RTX 4060.</strong> Eight of the previous thirteen AIs identified the RTX 4060 as the sweet spot at this budget. Qwen did not surface it. Its highest Amazon pick ($779.99) costs nearly as much as RTX 4060 systems found by other AIs — but delivers less GPU performance.</p>
+          <p style="margin-top: var(--s2);"><strong>RX 6500 XT 4GB — self-noted but still recommended.</strong> Qwen acknowledged the 4GB VRAM limitation in its own write-up, but included it anyway. When an AI flags a problem with a pick it's recommending, that's a signal to research further before buying.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--r3); padding: var(--s5);">
+        <h4>Fourteen-AI final consensus — what the full series tells you</h4>
+        <p>After running the same shopping prompt through fourteen different AI tools, the signal is clear:</p>
+        <p style="margin-top: var(--s3);">
+          ✅ <strong>RTX 4060 is the GPU sweet spot</strong> — appeared in 8 of 14 AIs as a top pick. The 6 that missed it tended to surface RTX 3050 or older AMD cards instead.<br>
+          ✅ <strong>16GB RAM + 1TB NVMe SSD</strong> — upheld by 13 of 14. Only DuckDuckGo's Llama 4 Scout consistently returned 8GB picks.<br>
+          ✅ <strong>Ryzen 5 5600 / i5-12400F / i5-13400F</strong> — the CPU tier that appeared most reliably. Avoid picks with Xeon or very old i5/i7 generations.<br>
+          ✅ <strong>Walmart and Amazon beat Best Buy</strong> at this budget — now confirmed by 10+ AIs across the series, including Qwen's explicit statement.<br>
+          ✅ <strong>$699–$799 is the real sweet spot</strong> — the very top of the $800 budget gets you a meaningfully better GPU.<br>
+          ✅ <strong>The most structured AI isn't always the most accurate.</strong> Qwen produced the best-formatted response in the series — tables, citations, FPS estimates — but still missed the brief's GPU requirement. Format ≠ accuracy.<br>
+          ⚠️ <strong>Read the brief back at the AI.</strong> Four AIs missed the 16GB RAM spec or the RTX 3060 floor. One cited a Shopify store as "Amazon." Always check that recommendations actually match what you asked for.<br>
+          ⚠️ <strong>Verify prices, stock, and retailer domain</strong> before buying. AI product data goes stale fast.
+        </p>
+        <p style="margin-top: var(--s3);">This series started as one shopping prompt. Fourteen AI tools later, you have a clearer picture than any single AI could provide — and a repeatable method you can apply to any research decision. Run the same prompt everywhere. Compare the overlap. Trust the consensus, not the outliers.</p>
       </div>
     </div>
   </div>
