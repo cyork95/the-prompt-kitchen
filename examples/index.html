@@ -1741,7 +1741,69 @@ Nice to have: keyboard and mouse bundle included.</pre>
           ✅ <strong>16GB RAM + NVMe SSD is the correct spec floor.</strong> SambaNova is one of the few AIs to get every pick right on this. When comparing AI responses, filter first for RAM — it's the easiest requirement to spot and the most commonly missed.<br>
           ✅ <strong>Correct system requirements = better picks.</strong> SambaNova cited RTX 4060 in the recommended tier; that foundation led to recommendations that actually met the brief. AIs that cited lower requirements (GTX 1650 = "recommended") gave lower-tier picks.<br>
           ⚠️ <strong>Budget ceiling picks need price monitoring.</strong> $799 at Best Buy is tight. PC prices change daily — the SkyTech Azure 2 has been seen at $750 on sale, which is a meaningfully better deal.<br>
-          ⚠️ <strong>Always verify storage size.</strong> 512GB fills up. If Arc Raiders plus Windows plus other games leaves you under 100GB free, expect performance degradation. 1TB NVMe is the right target.
+          ⚠️ <strong>Always verify storage size.</strong> 512GB fills up. 1TB NVMe is the right target.
+        </p>
+        <p style="margin-top: var(--s3);"><em>The series continues — see Example 29 (Phind AI) for the twenty-second AI.</em></p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════
+     EXAMPLE 29 — Same prompt, Phind AI (intermediate / everyday)
+     ═══════════════════════════════════════════════ -->
+<details class="recipe-card" id="example-29" style="margin-bottom: var(--s6);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="badge badge-intermediate">Intermediate</span>
+      <span class="text-sm text-3">Model: Phind AI · Task: Same budget gaming PC prompt — twenty-second AI, response truncated after one pick, coding-focused tool used for shopping research</span>
+      <h3>The same shopping prompt on Phind — a developer search engine outside its element, response cut off after one pick</h3>
+    </div>
+    <span class="recipe-chevron">▶</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-section">
+      <h4>The prompt (same as all previous examples)</h4>
+      <div class="prompt-block">I'm looking for a pre-built gaming PC that can run Arc Raiders well, within a budget of $400–$800. Please check Best Buy first, then Walmart, then Amazon. The PC should have at least 16GB of RAM, an NVMe SSD, and a modern GPU (RTX 3060 or better). Give me your top picks from each retailer.</div>
+    </div>
+
+    <div class="recipe-section">
+      <h5>Phind Output</h5>
+      <p>Phind started a structured response — Arc Raiders estimated specs, then a picks list — but the response was truncated after a single partial Best Buy recommendation. Walmart and Amazon picks were not received.</p>
+
+      <p><strong>Estimated specs cited (reasonable):</strong> Minimum: Ryzen 5 3600 / GTX 1660, 16GB RAM, SSD. Recommended: Ryzen 5 5600X / RTX 2060, 16GB RAM, SSD.</p>
+
+      <p><strong>Best Buy pick (partial):</strong> HP Pavilion TG01-2170m — ~$650 — Ryzen 5 5600G, GTX 1650, 8GB RAM, 256GB SSD. Phind correctly noted the GPU and RAM fall short: "Meets minimum CPU, but GPU and RAM are below recommended. Upgrade RAM to 16GB ($30–40) for smoother play."</p>
+
+      <p>The response ended there. No Walmart or Amazon picks were returned.</p>
+
+      <div class="callout callout-warning" style="margin-top: var(--s4);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>Why this response is incomplete — and what that tells you</h4>
+          <p><strong>Phind is a coding search engine, not a shopping assistant.</strong> It's built to search technical documentation, GitHub, and Stack Overflow. A multi-retailer shopping brief is outside its design intent — similar to Pi and Character.AI in this series, the tool's response quality reflects that mismatch.</p>
+          <p style="margin-top: var(--s2);"><strong>The partial pick has the same recurring issues:</strong> 8GB RAM (brief asked for 16GB), GTX 1650 (brief asked for RTX 3060 or better), 256GB SSD (undersized). Phind at least flagged the RAM and GPU issues — "below recommended, upgrade RAM to 16GB" — which is better than several AIs that returned the same specs without comment.</p>
+          <p style="margin-top: var(--s2);"><strong>A truncated response is itself useful data.</strong> When an AI cuts off before completing a task, that's a signal: either the tool hit a limit, or the task doesn't fit the tool's intended workflow. Phind is optimised for technical Q&amp;A, not structured multi-retailer comparison prompts.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-tip" style="margin-top: var(--s4);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>Where Phind actually excels</h4>
+          <p>Ask Phind "how do I install CUDA drivers on Ubuntu" or "what's the difference between useEffect and useLayoutEffect in React" and you'll get a cited, sourced, code-block-formatted answer that draws from official documentation and real Stack Overflow discussions. That's what it's built for. Shopping prompts aren't.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--r3); padding: var(--s5);">
+        <h4>Running consensus — twenty-two AIs in</h4>
+        <p style="margin-top: var(--s3);">
+          ✅ <strong>RTX 4060 is the confirmed GPU sweet spot.</strong> The series consensus holds: 8+ AIs recommended it as the primary pick at $749–$799.<br>
+          ✅ <strong>16GB RAM + 1TB NVMe SSD is the spec floor</strong> — met cleanly by SambaNova (Example 28) and several others. Every AI that missed these requirements gave worse recommendations.<br>
+          ✅ <strong>The right tool for the right task.</strong> Phind (coding), Pi (emotional support), Character.AI (roleplay), Brave Leo (browser context) — all gave incomplete or inaccurate responses on a shopping brief. Research tools (Perplexity, You.com, Claude, SambaNova) consistently outperformed.<br>
+          ✅ <strong>Flagging known issues is better than hiding them.</strong> Phind at least noted the GTX 1650 and 8GB RAM were below recommended. That transparency — even in a partial response — is more useful than a confident wrong answer.<br>
+          ⚠️ <strong>A truncated response is a signal, not just an inconvenience.</strong> If an AI cuts off mid-task, switch to a different tool rather than trying to prompt-engineer a completion out of one that isn't suited to the task.<br>
+          ⚠️ <strong>GTX 1650 + 8GB RAM keeps appearing.</strong> This combination has shown up in six or more AIs in the series despite both failing the brief. Always verify the first pick in any AI response — if it misses the spec floor, the rest of the response is likely to as well.
         </p>
       </div>
     </div>
