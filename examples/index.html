@@ -1544,6 +1544,73 @@ Nice to have: keyboard and mouse bundle included.</pre>
           ⚠️ <strong>Watch for the RTX 3050 6GB VRAM trap</strong> (GLM, Example 23). When searching by model line, filter by VRAM explicitly — the 8GB variant is required for UE5 games.<br>
           ⚠️ <strong>Keyboard/mouse inclusion varies by retailer and listing.</strong> Leo's peripheral note is accurate — always check the product page, not just the search result headline.
         </p>
+        <p style="margin-top: var(--s3);"><em>The series continues — see Example 26 (Character.AI) for the nineteenth AI.</em></p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════
+     EXAMPLE 26 — Same prompt, Character.AI / Elon Reeves Musk character (intermediate / everyday)
+     ═══════════════════════════════════════════════ -->
+<details class="recipe-card" id="example-26" style="margin-bottom: var(--s6);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="badge badge-intermediate">Intermediate</span>
+      <span class="text-sm text-3">Model: Character.AI (Elon Reeves Musk character) · Task: Same budget gaming PC prompt — nineteenth AI, recommended a laptop, response cut off, roleplay platform used for research</span>
+      <h3>The same shopping prompt on Character.AI — the platform isn't designed for this, and the response shows it</h3>
+    </div>
+    <span class="recipe-chevron">▶</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-section">
+      <h4>The prompt (same as all previous examples)</h4>
+      <div class="prompt-block">I'm looking for a pre-built gaming PC that can run Arc Raiders well, within a budget of $400–$800. Please check Best Buy first, then Walmart, then Amazon. The PC should have at least 16GB of RAM, an NVMe SSD, and a modern GPU (RTX 3060 or better). Give me your top picks from each retailer.</div>
+    </div>
+
+    <div class="recipe-section">
+      <h5>Character.AI Output (Elon Reeves Musk character)</h5>
+      <p>The response came from the "Elon Reeves Musk" character on Character.AI — a community-created persona modelled after Elon Musk, not a research AI. It gave one partial recommendation before the response cut off.</p>
+
+      <p><strong>Only recommendation (Best Buy, incomplete):</strong> Acer Aspire 5 A515-46-R84K — $699 — AMD Ryzen 7 5700U, integrated Radeon Graphics + NVIDIA GeForce MX570 2GB GDDR6. The character acknowledged "not ideal for high-end games" but said it was "sufficient for light gaming like Arc Raiders." The response then started to offer a second recommendation ("For something slightly cheaper or bundled differently…") and cut off before completing it.</p>
+
+      <div class="callout callout-warning" style="margin-top: var(--s4);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>What went wrong — and why</h4>
+          <p><strong>The Acer Aspire 5 A515-46-R84K is a laptop, not a desktop PC.</strong> The brief asked for a pre-built gaming desktop. This is the most fundamental category error in the entire series — and it happened because Character.AI characters aren't equipped to do accurate product research. They respond in character, not in facts.</p>
+          <p style="margin-top: var(--s2);"><strong>The MX570 with 2GB GDDR6 cannot run Arc Raiders well.</strong> The MX570 is a thin-and-light laptop GPU with 2GB of VRAM — it doesn't appear in Arc Raiders' system requirements at all. The minimum requirement is a GTX 1050 Ti / RX 580 (4–8GB VRAM). The brief asked for an RTX 3060 or better. The MX570 is several generations below the game's minimum, let alone the brief's floor.</p>
+          <p style="margin-top: var(--s2);"><strong>The character acknowledged the GPU wasn't ideal — then still recommended it.</strong> "Not ideal for high-end games but sufficient for light gaming like Arc Raiders" — Arc Raiders is not light gaming. It's a competitive Unreal Engine 5 extraction shooter. This is the character doing its best in an unfamiliar context, not a research tool making an informed judgment.</p>
+          <p style="margin-top: var(--s2);"><strong>The response was incomplete.</strong> It cut off mid-sentence before giving Walmart or Amazon picks. This may reflect a response length limit, a session timeout, or the character shifting topics — Character.AI doesn't guarantee task completion the way a research AI does.</p>
+          <p style="margin-top: var(--s2);"><strong>The "Elon Reeves Musk" character is not Elon Musk.</strong> It's a community-created AI persona. Whatever it recommends reflects the character's training and the platform's model — not expertise, not web search, and not Elon Musk's actual opinions.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-tip" style="margin-top: var(--s4);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>The final lesson of the series</h4>
+          <p>This example closes the loop on the most important lesson from all nineteen AIs: <strong>the tool matters as much as the prompt.</strong></p>
+          <p style="margin-top: var(--s2);">The exact same prompt produced an accurate RTX 4060 desktop recommendation from Claude Extended Thinking (Example 8) and a laptop with a 2GB mobile GPU from a roleplay character (this example). The prompt didn't change. The tool changed everything.</p>
+          <p style="margin-top: var(--s2);">Character.AI is genuinely excellent for what it's built to do — creative roleplay, fictional conversations, language practice, entertainment. Used that way, it's one of the most distinctive and enjoyable AI experiences available. But a roleplay platform cannot replace a research assistant, and a celebrity character cannot replace product expertise.</p>
+          <p style="margin-top: var(--s2);">When you ask the right question to the wrong tool, you get an answer that feels like a response but doesn't actually help you. Knowing which tool to reach for is the skill this series was built to teach.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--r3); padding: var(--s5);">
+        <h4>Series wrap-up — nineteen AIs, one prompt</h4>
+        <p>After running the same shopping prompt through nineteen different AI tools, here's what the series tells you:</p>
+        <p style="margin-top: var(--s3);">
+          ✅ <strong>RTX 4060 is the GPU sweet spot at this budget</strong> — appeared in 8+ AIs as a top pick. Consistently $699–$799 on Amazon. The clearest consensus finding.<br>
+          ✅ <strong>16GB RAM + 1TB NVMe SSD</strong> — the spec floor upheld by every well-performing AI in the series.<br>
+          ✅ <strong>RTX 3050 8GB and RX 6600 are the viable runner-up tier</strong> — good at $550–$700. Avoid the RTX 3050 6GB (UE5 texture streaming needs 8GB VRAM).<br>
+          ✅ <strong>Amazon and Walmart beat Best Buy at this budget</strong> — confirmed by a dozen-plus AIs. Best Buy's budget gaming PC inventory is genuinely thinner at $400–$800.<br>
+          ✅ <strong>The right tool matters as much as the right prompt.</strong> Research AIs (Perplexity, You.com, Claude, Grok) outperformed conversation tools, roleplay platforms, and privacy-first AIs that lack live inventory access.<br>
+          ✅ <strong>Model-line names age better than SKUs.</strong> Search for "HP Victus 15," "CyberPowerPC Gamer Xtreme," or "Skytech Shiva" and filter on the product page rather than trusting AI-reported specific configurations.<br>
+          ⚠️ <strong>Verify GPU VRAM before buying.</strong> RTX 3050 comes in 6GB and 8GB variants. The 6GB will stutter in UE5 games. Always check the product page spec sheet.<br>
+          ⚠️ <strong>Always check that the AI recommended a desktop, not a laptop.</strong> One AI in this series recommended a laptop with a 2GB mobile GPU in response to a desktop PC request.<br>
+          ⚠️ <strong>Verify prices, stock, and the retailer domain</strong> before ordering. AI product data goes stale fast, and one AI in this series linked to a third-party Shopify store as "Amazon."
+        </p>
       </div>
     </div>
   </div>
