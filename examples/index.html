@@ -1881,6 +1881,254 @@ Nice to have: keyboard and mouse bundle included.</pre>
           ⚠️ <strong>Privacy-first platforms trade data safety for real-time web access.</strong> Venice doesn't search live retailer listings — picks are from training data. Prices and availability should always be verified before purchase.<br>
           ⚠️ <strong>Spec compliance varies even when format is strong.</strong> Venice's organised output masked a core miss: four of six picks failed the GPU requirement. A tidy table isn't the same as a correct answer.
         </p>
+        <p style="margin-top: var(--s3);"><em>The series continues — see Example 31 (ERNIE AI) for the twenty-fourth AI.</em></p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════
+     EXAMPLE 31 — Same prompt, ERNIE AI (intermediate / everyday)
+     ═══════════════════════════════════════════════ -->
+<details class="recipe-card" id="example-31" style="margin-bottom: var(--s6);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="badge badge-intermediate">Intermediate</span>
+      <span class="text-sm text-3">Model: ERNIE AI (Baidu) · Task: Same budget gaming PC prompt — twenty-fourth AI, RTX 4060 across all three picks, strong structured output</span>
+      <h3>The same shopping prompt on ERNIE AI — Baidu's flagship delivers RTX 4060 picks across all three retailers with a clean comparison table</h3>
+    </div>
+    <span class="recipe-chevron">▶</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-section">
+      <h4>The prompt (same as all previous examples)</h4>
+      <div class="prompt-block">I'm looking for a pre-built gaming PC that can run Arc Raiders well, within a budget of $400–$800. Please check Best Buy first, then Walmart, then Amazon. The PC should have at least 16GB of RAM, an NVMe SSD, and a modern GPU (RTX 3060 or better). Give me your top picks from each retailer.</div>
+    </div>
+
+    <div class="recipe-section">
+      <h5>ERNIE AI Output</h5>
+      <p>ERNIE AI returned one of the strongest responses in the series: three picks, one per retailer, all featuring RTX 4060 or better GPUs, all meeting the 16GB RAM requirement, with a full comparison table and a clear "my #1 pick overall" verdict.</p>
+
+      <p><strong>Walmart pick — #1 Budget Pick (~$480–$550):</strong> Acer Nitro N50 — i5-12400F, RTX 4060 8GB, 16GB DDR4, 512GB NVMe SSD. ERNIE called this the best price-to-performance ratio in the sub-$550 range and correctly noted that the RTX 4060 is approximately 2× faster than the GTX 1070 (Arc Raiders' recommended GPU), with DLSS enabling 80–100+ FPS at 1080p High/Ultra.</p>
+
+      <p><strong>Best Buy pick — #2 Value Sweet Spot (~$600–$700):</strong> HP Pavilion Gaming Desktop TG01 — i5-14400F, RTX 4060 8GB, 16GB DDR5, 1TB NVMe SSD. ERNIE named this its #1 overall pick for the use case: the current-gen i5-14400F, DDR5 RAM, and 1TB storage make it well-rounded; the Best Buy listing often includes a bundled HP gaming keyboard and mouse.</p>
+
+      <p><strong>Amazon pick — #3 Best Performance (~$700–$800):</strong> ABS Stratos Micro (or iBUYPOWER TraceMesh on sale) — Ryzen 5 7600, RTX 4060 Ti 8GB (or RX 7700 XT 12GB on some configs), 16GB DDR5, 1TB NVMe SSD. ERNIE correctly noted that the RTX 4060 Ti is ~40% faster than the RTX 4060, and highlighted the RX 7700 XT 12GB variant's VRAM advantage and the Ryzen 5 7600 AM5 platform's upgrade path to Ryzen 9000 series.</p>
+
+      <div class="callout callout-tip" style="margin-top: var(--s4);">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <h4>ERNIE nailed the spec floor — one of the cleanest responses in the series</h4>
+          <p>RTX 4060 or better on all three picks. 16GB RAM on all three. NVMe SSD on all three. The response included DLSS reasoning (quantifying the performance uplift), a per-retailer comparison table, and an explicit "my #1 pick overall" verdict on the HP Pavilion. The one minor gap: the Walmart pick has a 512GB SSD rather than 1TB — but the brief had no explicit storage-size requirement, so this is a preference note rather than a spec miss. ERNIE's output ranks among the top five in the entire series.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-warning" style="margin-top: var(--s4);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>Data sovereignty — ERNIE is Baidu's AI, a Chinese company</h4>
+          <p>ERNIE AI is operated by Baidu, China's largest search engine. Conversations are processed on Baidu's servers subject to Chinese data regulations. ERNIE performs well on research tasks — but if data privacy is a concern, consider a Western-hosted model or a privacy-first platform like Venice.ai or DuckDuckGo Duck.AI for sensitive queries.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--r3); padding: var(--s5);">
+        <h4>Running consensus — twenty-four AIs in</h4>
+        <p style="margin-top: var(--s3);">
+          ✅ <strong>RTX 4060 is the confirmed GPU sweet spot — ERNIE proves it again.</strong> ERNIE put an RTX 4060 or better in every single pick, with the RTX 4060 Ti and RX 7700 XT 12GB as the performance-tier option. Now 10+ AIs in the series have converged on this GPU at $749–$799.<br>
+          ✅ <strong>16GB RAM + NVMe SSD is the spec floor.</strong> ERNIE met both on all three picks. The only note: the Walmart pick has 512GB storage, not 1TB — acceptable for a budget pick but worth knowing.<br>
+          ✅ <strong>The HP Pavilion TG01 (i5-14400F + RTX 4060) is the consensus best-overall pick.</strong> ERNIE, Cerebras (Example 27), SambaNova (Example 28), and others all converge on this system or its spec equivalent as the best value in the $600–$700 range.<br>
+          ✅ <strong>DLSS is a real-world differentiator on RTX cards.</strong> ERNIE's explicit DLSS reasoning (80–100+ FPS at 1080p High/Ultra on the RTX 4060) is a useful prompt for users — DLSS can push a mid-range card past the apparent spec ceiling of a game.<br>
+          ⚠️ <strong>Chinese AI models keep delivering strong technical outputs.</strong> DeepSeek (Example 10), Qwen (Example 21), Kimi (Example 22), GLM (Example 23), and now ERNIE all performed well on structured research tasks — often matching or exceeding Western frontier models. The data sovereignty trade-off is a separate concern from output quality.<br>
+          ⚠️ <strong>Prices and stock in any AI response need verification.</strong> ERNIE's picks — like all training-data-based picks in this series — reflect past listings. Always cross-check current prices before purchasing.
+        </p>
+        <p style="margin-top: var(--s3);"><em>The series continues — see Example 32 (Cohere Playground) for the twenty-fifth AI.</em></p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════
+     EXAMPLE 32 — Same prompt, Cohere Playground (intermediate / everyday)
+     ═══════════════════════════════════════════════ -->
+<details class="recipe-card" id="example-32" style="margin-bottom: var(--s6);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="badge badge-intermediate">Intermediate</span>
+      <span class="text-sm text-3">Model: Cohere Playground (command-a-plus-05-2026) · Task: Same budget gaming PC prompt — twenty-fifth AI, outdated requirements, a laptop recommended as a desktop pick</span>
+      <h3>The same shopping prompt on Cohere Playground — an enterprise NLP tool outside its element, with one pick that isn't a desktop PC</h3>
+    </div>
+    <span class="recipe-chevron">▶</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-section">
+      <h4>The prompt (same as all previous examples)</h4>
+      <div class="prompt-block">I'm looking for a pre-built gaming PC that can run Arc Raiders well, within a budget of $400–$800. Please check Best Buy first, then Walmart, then Amazon. The PC should have at least 16GB of RAM, an NVMe SSD, and a modern GPU (RTX 3060 or better). Give me your top picks from each retailer.</div>
+    </div>
+
+    <div class="recipe-section">
+      <h5>Cohere Playground Output</h5>
+      <p>Cohere returned five picks with an organised table format — but the response has significant accuracy issues that illustrate why an enterprise document-processing tool can struggle on consumer shopping briefs.</p>
+
+      <p><strong>Best Buy pick #1 — CyberPowerPC GXiVR8060A (~$749.99):</strong> Ryzen 5 5600G, GTX 1660 Super 6GB, 16GB DDR4, 512GB NVMe. The GTX 1660 Super is below the RTX 3060 threshold the brief asked for. RAM and SSD format are correct.</p>
+
+      <p><strong>Best Buy pick #2 — Acer Nitro 5 (AN515-44) (~$699.99):</strong> Ryzen 5 5600H, GTX 1650 Ti 4GB, 8GB DDR4, 256GB NVMe. This is a laptop, not a desktop PC. The Acer Nitro 5 AN515-44 is a 15.6″ gaming laptop. The brief asked for a pre-built gaming PC, not a laptop. Additionally: 8GB RAM (below the 16GB floor), GTX 1650 Ti 4GB (below spec), 256GB SSD (undersized).</p>
+
+      <p><strong>Walmart pick #1 — iBUYPOWER Shooter SC 850i (~$799.99):</strong> i5-12400F, RTX 3050 8GB, 12GB DDR4, 512GB NVMe. RTX 3050 is below RTX 3060; 12GB RAM is below the 16GB floor.</p>
+
+      <p><strong>Walmart pick #2 — CyberPowerPC GXiXT8500B (~$649.99):</strong> i5-8400, GTX 1060 3GB, 8GB DDR4, 256GB NVMe + 1TB HDD. A heavily outdated build: the i5-8400 is from 2018, 8GB RAM misses the floor, GTX 1060 3GB is far below spec.</p>
+
+      <p><strong>Amazon pick — Skytech Shadow 3.0 (~$749.99):</strong> Ryzen 5 5600G, GTX 1660 Super 6GB, 16GB DDR4, 512GB NVMe. Similar to the first Best Buy pick — correct RAM, but GTX 1660 Super doesn't meet RTX 3060 threshold.</p>
+
+      <div class="callout callout-warning" style="margin-top: var(--s4);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>Three distinct failure modes in one response</h4>
+          <p><strong>1. Wrong form factor:</strong> The Acer Nitro 5 (AN515-44) is a laptop. The brief asked for a pre-built PC. This is one of the clearest form-factor mismatches in the entire series — a laptop has different thermals, upgradeability, and use-case profile than a desktop. Always verify the form factor of any pick an AI returns, especially on Best Buy where laptops and desktops appear in the same search results.</p>
+          <p style="margin-top: var(--s2);"><strong>2. Outdated GPU specifications:</strong> Cohere cited Arc Raiders minimum GPU as "GTX 1050 Ti 4GB" and recommended as "GTX 1060 3GB" — these are significantly lower than the actual published requirements and far below what the brief requested (RTX 3060 or better). None of the five picks meet the RTX 3060 threshold.</p>
+          <p style="margin-top: var(--s2);"><strong>3. Missing the RAM floor:</strong> Three of five picks return 8GB or 12GB RAM, both below the 16GB floor the brief specified. The Walmart pick at $649.99 with 8GB RAM on a GTX 1060 3GB system is the weakest pick in the entire 25-AI series.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-tip" style="margin-top: var(--s4);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>Why Cohere struggled — and what it's actually excellent at</h4>
+          <p>Cohere's Command model is built for enterprise document tasks: RAG pipelines, document classification, structured information extraction from large text corpora, and semantic search. Its training prioritises those patterns — not general consumer product research. When a shopping prompt requires reasoning about current GPU tiers, form factor (laptop vs desktop), and retailer-specific availability, a model optimised for enterprise NLP doesn't have the same grounding. For developer API integration, enterprise text pipelines, or embedding-based search, Cohere is a top-tier choice. For shopping research, use Claude, Gemini, or Perplexity.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--r3); padding: var(--s5);">
+        <h4>Running consensus — twenty-five AIs in</h4>
+        <p style="margin-top: var(--s3);">
+          ✅ <strong>RTX 4060 is the series consensus GPU sweet spot.</strong> Cohere's best pick is a GTX 1660 Super — underscoring how far below the confirmed sweet spot the series' weaker responses fall. The gap between top performers (ERNIE, SambaNova, Claude) and weaker ones (Cohere, Character.AI, Phind) has never been wider.<br>
+          ✅ <strong>Form factor verification is now a required step.</strong> The Acer Nitro 5 laptop pick is the first clear form-factor error in the series. When an AI returns a Best Buy gaming PC pick, always confirm it's a desktop before proceeding — laptop and desktop results appear in the same listings.<br>
+          ✅ <strong>Specialist tools consistently underperform on shopping briefs.</strong> Phind (coding), Pi (conversation), Character.AI (roleplay), Brave Leo (browser context), and now Cohere (enterprise NLP) — five distinct specialist tools, all failing the brief in different ways. The pattern is consistent: task-model mismatch leads to spec misses, wrong formats, or truncated responses.<br>
+          ⚠️ <strong>GPU tier drift is a serious accuracy risk.</strong> Cohere cited GTX 1060 3GB as "recommended" for Arc Raiders — multiple GPU generations behind the actual published requirement. Always cross-reference GPU picks against the game's official system requirements page.<br>
+          ⚠️ <strong>RAM floor misses are still widespread.</strong> 8GB RAM has now appeared in 10+ AI picks in this series despite every prompt specifying 16GB minimum. Always treat 8GB RAM picks as spec failures, not close calls.
+        </p>
+        <p style="margin-top: var(--s3);"><em>The series continues — see Example 33 (AI21 Studio Jamba Mini) for the twenty-sixth AI.</em></p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════
+     EXAMPLE 33 — Same prompt, AI21 Studio Jamba Mini (intermediate / everyday)
+     ═══════════════════════════════════════════════ -->
+<details class="recipe-card" id="example-33" style="margin-bottom: var(--s6);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="badge badge-intermediate">Intermediate</span>
+      <span class="text-sm text-3">Model: AI21 Studio Jamba Mini · Task: Same budget gaming PC prompt — twenty-sixth AI, no picks meet RTX 3060 floor, GPU tier misses across all three retailers</span>
+      <h3>The same shopping prompt on AI21 Studio Jamba Mini — a hybrid-architecture model that produces clean format but misses the GPU requirement on every pick</h3>
+    </div>
+    <span class="recipe-chevron">▶</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-section">
+      <h4>The prompt (same as all previous examples)</h4>
+      <div class="prompt-block">I'm looking for a pre-built gaming PC that can run Arc Raiders well, within a budget of $400–$800. Please check Best Buy first, then Walmart, then Amazon. The PC should have at least 16GB of RAM, an NVMe SSD, and a modern GPU (RTX 3060 or better). Give me your top picks from each retailer.</div>
+    </div>
+
+    <div class="recipe-section">
+      <h5>AI21 Studio Jamba Mini Output</h5>
+      <p>Jamba Mini returned three well-structured picks — one per retailer — with clear spec tables and reasoning for each. The format is clean and readable. The GPU picks, however, all fall below the RTX 3060 floor the brief specified.</p>
+
+      <p><strong>Best Buy pick — HP Pavilion Gaming Desktop (~$699.99):</strong> Ryzen 5 5600G, Radeon RX 5500 XT 4GB, 16GB DDR4, 512GB SSD. The RX 5500 XT is a 2019 entry-level card significantly below the RTX 3060 threshold. The 5600G is a CPU with integrated graphics — the presence of a discrete RX 5500 XT alongside it is an unusual spec combination that may reflect a training-data mixup.</p>
+
+      <p><strong>Walmart pick — Acer Nitro V Gaming Desktop (~$599.99):</strong> i5-12400F, GTX 1660 Super 6GB, 16GB DDR4, 512GB SSD. The GTX 1660 Super is a generation behind the RTX 3060 and lacks hardware ray tracing. 16GB RAM and the i5-12400F are both solid, but the GPU misses the brief's threshold.</p>
+
+      <p><strong>Amazon pick — Skytech Archangel (~$749.99):</strong> Ryzen 5 5600G, GTX 1650 Super 4GB, 16GB DDR4, 512GB SSD. The GTX 1650 Super is an entry-level 2019 card at the bottom of the budget gaming tier — two full GPU generations below the RTX 3060, with 4GB VRAM that falls far short of UE5's recommended 8GB+. At $749.99, this is the weakest GPU-to-price ratio in the series.</p>
+
+      <div class="callout callout-warning" style="margin-top: var(--s4);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>Clean format, consistent GPU misses — all three picks fall below the brief's RTX 3060 floor</h4>
+          <p>The brief was explicit: "RTX 3060 or better." Jamba Mini returned an RX 5500 XT, a GTX 1660 Super, and a GTX 1650 Super — all GPU-generation misses. The GTX 1650 Super at $749.99 on Amazon is the most extreme value-gap in the series: a 2019 entry card at near-$750 pricing. The Amazon pick also uses the Ryzen 5 5600G (an APU), which may have contributed to the GPU tier confusion in training data. Clean formatting does not compensate for incorrect spec compliance — a well-presented wrong answer is still wrong.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-tip" style="margin-top: var(--s4);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>Where Jamba's architecture actually shines</h4>
+          <p>Jamba Mini's hybrid Mamba/Transformer architecture is designed for long-context efficiency — processing 100,000+ token documents with lower memory requirements than equivalent Transformer models. That's where it genuinely differentiates from other small models. If you're summarising a long legal contract, analysing a research paper corpus, or building a document pipeline, Jamba is worth evaluating. For shopping research and multi-retailer product comparisons, Claude, Gemini, or Perplexity — all with stronger real-world grounding — will give more accurate results.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--r3); padding: var(--s5);">
+        <h4>Running consensus — twenty-six AIs in</h4>
+        <p style="margin-top: var(--s3);">
+          ✅ <strong>RTX 4060 is the confirmed sweet spot — and the gap to the series floor is widening.</strong> ERNIE (Example 31) put RTX 4060s in all three picks. Jamba Mini returned a GTX 1650 Super, GTX 1660 Super, and RX 5500 XT. The difference between the series' best and worst GPU picks is now three full GPU generations.<br>
+          ✅ <strong>Format quality and answer quality are independent variables.</strong> Jamba Mini's response is well-structured — clean tables, per-pick reasoning, one pick per retailer. The format is good. The specs are wrong. A tidy answer with wrong specs is worse than a messy answer with correct ones.<br>
+          ✅ <strong>GTX 1650-class GPUs keep appearing despite being far below spec.</strong> The GTX 1650, 1650 Super, and 1650 Ti have now appeared in multiple picks across the series (Cohere, Jamba Mini, Phind, Character.AI) despite being 2019 entry-level cards. Any pick with a GTX 1650 variant should be immediately flagged as a brief miss.<br>
+          ⚠️ <strong>The Ryzen 5 5600G (APU) is appearing in wrong-spec picks frequently.</strong> The 5600G is a processor with integrated graphics — it's designed for systems that don't have a discrete GPU. Several AIs in this series have paired the 5600G with a low-end discrete GPU in ways that suggest training-data confusion about which specs go together. If you see the 5600G in a pick, check the discrete GPU spec carefully.<br>
+          ⚠️ <strong>Specialist and niche tools continue to underperform on shopping briefs.</strong> Six distinct specialist tools (Phind, Pi, Character.AI, Brave Leo, Cohere, Jamba Mini) have now all returned picks that miss the GPU, RAM, or form-factor requirements. The pattern is consistent across every AI category that isn't a general-purpose research tool.
+        </p>
+        <p style="margin-top: var(--s3);"><em>The series continues — see Example 34 (MiniMax M2.7) for the twenty-seventh AI.</em></p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════
+     EXAMPLE 34 — Same prompt, MiniMax M2.7 (intermediate / everyday)
+     ═══════════════════════════════════════════════ -->
+<details class="recipe-card" id="example-34" style="margin-bottom: var(--s6);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="badge badge-intermediate">Intermediate</span>
+      <span class="text-sm text-3">Model: MiniMax M2.7 · Task: Same budget gaming PC prompt — twenty-seventh AI, web search enabled, three of five picks meet RTX 3060+ floor</span>
+      <h3>The same shopping prompt on MiniMax M2.7 — a Chinese AI with web search returns five picks, three of which meet the GPU requirement</h3>
+    </div>
+    <span class="recipe-chevron">▶</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-section">
+      <h4>The prompt (same as all previous examples)</h4>
+      <div class="prompt-block">I'm looking for a pre-built gaming PC that can run Arc Raiders well, within a budget of $400–$800. Please check Best Buy first, then Walmart, then Amazon. The PC should have at least 16GB of RAM, an NVMe SSD, and a modern GPU (RTX 3060 or better). Give me your top picks from each retailer.</div>
+    </div>
+
+    <div class="recipe-section">
+      <h5>MiniMax M2.7 Output</h5>
+      <p>MiniMax M2.7 searched the web before responding — visible in its thinking blocks. It returned five picks across the three retailers with a summary comparison table. Three of five picks meet the RTX 3060 or better GPU requirement; two do not.</p>
+
+      <p><strong>Walmart pick #1 — STGAubron Gaming Desktop (~$629.99):</strong> Ryzen 5 5500, RTX 3060 12GB, 16GB DDR4, 512GB NVMe. Top pick by MiniMax. RTX 3060 12GB meets the brief's GPU floor, and the 12GB VRAM variant is the better choice for UE5 titles (the standard RTX 3060 comes in 8GB and 12GB; the 12GB has a wider 192-bit memory bus). Solid pick with correct RAM.</p>
+
+      <p><strong>Walmart pick #2 — NSX Gaming Tomcat (~$559.99):</strong> Ryzen 5 5500, RTX 3050 6GB, 16GB DDR4, 512GB SSD. RTX 3050 6GB — this variant is below the RTX 3060 floor and carries the 6GB VRAM risk flagged by GLM (Example 23). Miss on the GPU requirement.</p>
+
+      <p><strong>Best Buy pick — SAAV X8 (~$699.99):</strong> Ryzen 5 5500, RTX 3050 6GB, 16GB DDR4, 512GB NVMe. Same RTX 3050 6GB issue. SAAV is also a less-established brand in this space; availability and support may vary. GPU miss.</p>
+
+      <p><strong>Walmart premium pick — HP Pavilion Gaming Desktop (~$799.99):</strong> Ryzen 5 5600G, RTX 3060, 16GB DDR4, 512GB SSD + 1TB HDD. RTX 3060 meets the floor. At $799.99 this is at the very top of the budget, and the 5600G (an APU) is an unusual pairing for a system with a discrete RTX 3060. Dual storage is a plus.</p>
+
+      <p><strong>Amazon pick — STGAubron with RTX 3060 Ti (~$749.99):</strong> Intel Core i7 (8th Gen), RTX 3060 Ti 8GB, 16GB DDR4, 512GB NVMe + 1TB HDD, keyboard + mouse included. RTX 3060 Ti meets and exceeds the floor. However: the "Intel Core i7 8th Gen" spec is a notable flag — 8th-Gen Intel chips are from 2017–2018, pairing an older CPU with a newer GPU is an unusual configuration that can create CPU bottleneck in GPU-heavy titles. Bundle includes keyboard and mouse.</p>
+
+      <div class="callout callout-tip" style="margin-top: var(--s4);">
+        <span class="callout-icon">🔍</span>
+        <div class="callout-body">
+          <h4>Web search helps — but doesn't guarantee spec compliance</h4>
+          <p>MiniMax's web search capability gave it an advantage over training-data-only models in this series: three of five picks meet the RTX 3060+ floor, compared to zero from Cohere and zero from Jamba Mini. The STGAubron RTX 3060 12GB is a genuine strong pick — RTX 3060 12GB, 16GB RAM, correct format, reasonable price. Web-augmented research is genuinely better than static training data for product comparisons. That said, the two RTX 3050 6GB picks show that web search doesn't automatically produce spec-compliant results — the model still needs to apply the brief's constraints correctly to what it finds.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-warning" style="margin-top: var(--s4);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>CPU age mismatch on the Amazon pick — and a data sovereignty note</h4>
+          <p><strong>Intel i7 8th Gen (2017–2018) + RTX 3060 Ti (2020) is a mismatched build.</strong> The 8th-Gen i7 is five CPU generations old. In CPU-intensive tasks and games that use background processing (like Arc Raiders' extraction shooter mechanics), an older CPU paired with a mid-range 2020 GPU can create a performance ceiling that the GPU alone can't overcome. Verify the specific CPU model before purchasing any build listing a vague "i7 8th Gen."</p>
+          <p style="margin-top: var(--s2);"><strong>MiniMax is a Chinese company (Shanghai).</strong> Like DeepSeek, Kimi, Qwen, GLM, and ERNIE in this series, conversations are processed on servers subject to Chinese data regulations. Apply standard data hygiene for sensitive queries.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--r3); padding: var(--s5);">
+        <h4>Running consensus — twenty-seven AIs in</h4>
+        <p style="margin-top: var(--s3);">
+          ✅ <strong>RTX 4060 is the confirmed sweet spot; RTX 3060 12GB is the runner-up.</strong> MiniMax's top pick (STGAubron RTX 3060 12GB at $629.99) is the first sub-$700 pick in the series to land an RTX 3060 12GB as the primary recommendation — a wider memory bus and better VRAM headroom than the standard 8GB variant.<br>
+          ✅ <strong>Web search capability is a meaningful advantage for product research.</strong> MiniMax (3 of 5 picks meeting spec), You.com (Example 12, agentic web search), and Perplexity (Example 11, live citations) consistently outperform training-data-only models on product briefs. If you're doing shopping research with an AI, prefer tools that can actually search the web.<br>
+          ✅ <strong>RTX 3050 6GB continues to appear despite being below spec.</strong> Both of MiniMax's non-compliant picks use the RTX 3050 6GB — the same variant flagged by GLM (Example 23) for UE5 VRAM risk. This card has now appeared in picks from Venice (4 picks), MiniMax (2 picks), and others. Treat any RTX 3050 6GB pick as a miss against the brief.<br>
+          ⚠️ <strong>CPU age is now an active accuracy risk.</strong> The MiniMax Amazon pick lists "Intel i7 8th Gen" — a 2017–2018 chip paired with a 2020 GPU. CPU generation gaps create real performance bottlenecks. Always verify the specific CPU model and its generation, not just the GPU.<br>
+          ⚠️ <strong>Six Chinese AI models have appeared in this series (DeepSeek, Qwen, Kimi, GLM, ERNIE, MiniMax).</strong> Performance has ranged from excellent (DeepSeek, ERNIE, Qwen) to mixed (MiniMax) to limited by tool design (other factors). Data sovereignty considerations apply to all six regardless of output quality.
+        </p>
       </div>
     </div>
   </div>

@@ -109,6 +109,10 @@
     <li><a href="#sambanova">SambaNova</a></li>
     <li><a href="#phind">Phind AI</a></li>
     <li><a href="#venice">Venice.ai</a></li>
+    <li><a href="#ernie">ERNIE AI (Baidu)</a></li>
+    <li><a href="#cohere">Cohere Playground</a></li>
+    <li><a href="#ai21">AI21 Studio (Jamba Mini)</a></li>
+    <li><a href="#minimax">MiniMax</a></li>
     <li><a href="#free-vs-paid">Free vs. paid — what's actually different?</a></li>
     <li><a href="#comparison-table">Quick comparison table</a></li>
   </ol>
@@ -1499,6 +1503,190 @@
   </div>
 </section>
 
+<!-- ERNIE AI -->
+<section id="ernie" style="margin-bottom: var(--s12);">
+  <h2>ERNIE AI (Baidu)</h2>
+  <div class="model-card">
+    <div class="model-card-header">
+      <div class="model-card-icon">🔵</div>
+      <div>
+        <h3 style="margin:0;">ERNIE AI</h3>
+        <p style="margin:0; color: var(--text-3); font-size: var(--text-sm);">yiyan.baidu.com · Free tier available · Baidu's flagship AI assistant</p>
+      </div>
+    </div>
+    <div class="model-card-body">
+      <p>ERNIE AI (Enhanced Representation through kNowledge Integration) is Baidu's flagship AI assistant, built on the ERNIE series of large language models developed by China's largest search engine company. ERNIE has gone through multiple generations and is one of China's most widely used AI assistants, competitive with Western frontier models on structured reasoning, product research, and comparison tasks.</p>
+      <p>For Western users, ERNIE is accessible via Baidu's international interfaces, though the primary product is primarily optimised for Chinese-language users. Despite this, ERNIE performs well on English-language structured tasks — its shopping comparison output, for example, is among the more thorough in multi-AI comparison tests, with clear spec tables, RTX 4060 picks across all retailers, and useful reasoning about DLSS and performance tiers.</p>
+
+      <h4 style="margin-top: var(--s5);">Free tier</h4>
+      <p>Free access available at <a href="https://yiyan.baidu.com" rel="noopener" target="_blank">yiyan.baidu.com</a>. Baidu also provides ERNIE via API (Baidu AI Cloud / Qianfan platform) with a pay-per-token model.</p>
+
+      <h4 style="margin-top: var(--s5);">Strengths</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Strong structured output with comparison tables</span></li>
+        <li><span class="strength-tag">Accurate spec compliance on research tasks</span></li>
+        <li><span class="strength-tag">Detailed GPU tier reasoning (DLSS, VRAM, FPS estimates)</span></li>
+        <li><span class="strength-tag">Clear ranked-pick format with verdict</span></li>
+        <li><span class="strength-tag">Free to use with a Baidu account</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Primarily optimised for Chinese-language users</span></li>
+        <li><span class="weakness-tag">No real-time web access — relies on training data</span></li>
+        <li><span class="weakness-tag">Prices and stock may not reflect current availability</span></li>
+        <li><span class="weakness-tag">Baidu account required; international access can be inconsistent</span></li>
+      </ul>
+
+      <div class="callout callout-warning" style="margin-top: var(--s5);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>Data sovereignty note — Baidu is a Chinese company</h4>
+          <p>ERNIE AI is operated by Baidu, one of China's largest technology companies. Your conversations are processed on Baidu's servers and subject to Chinese data regulations. If you're working with sensitive information — personal, professional, or commercially confidential — consider whether that data should transit Baidu's infrastructure. For general research and everyday tasks, ERNIE performs well; for sensitive work, a privacy-first alternative (Venice.ai, DuckDuckGo Duck.AI) or a Western-hosted model may be more appropriate.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COHERE PLAYGROUND -->
+<section id="cohere" style="margin-bottom: var(--s12);">
+  <h2>Cohere Playground</h2>
+  <div class="model-card">
+    <div class="model-card-header">
+      <div class="model-card-icon">🟣</div>
+      <div>
+        <h3 style="margin:0;">Cohere Playground</h3>
+        <p style="margin:0; color: var(--text-3); font-size: var(--text-sm);">dashboard.cohere.com/playground · Free trial credits · Enterprise-focused text generation</p>
+      </div>
+    </div>
+    <div class="model-card-body">
+      <p>Cohere is a Canadian AI company (Toronto, founded 2019) that specialises in enterprise natural language processing. Their Command model family powers internal search, document summarisation, RAG (retrieval-augmented generation) pipelines, and customer-facing chatbots at large organisations. The Cohere Playground is a browser-based interface for testing their models — primarily intended for developers and enterprise teams evaluating Cohere's API.</p>
+      <p>Cohere's Command A Plus model (command-a-plus-05-2026) is a large, capable model — but its strengths are in structured document tasks, classification, embeddings, and enterprise RAG, not general consumer research. On open-ended product research tasks like multi-retailer shopping comparisons, it can return outdated system requirements, miss brief constraints, and occasionally confuse form factors (recommending a laptop when a desktop was asked for). It is an excellent tool in its intended enterprise context.</p>
+
+      <h4 style="margin-top: var(--s5);">Free tier</h4>
+      <p>Free trial credits available at <a href="https://dashboard.cohere.com/playground" rel="noopener" target="_blank">dashboard.cohere.com/playground</a> after creating an account. Cohere's API is pay-per-token for production use; pricing varies by model.</p>
+
+      <h4 style="margin-top: var(--s5);">Strengths</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Enterprise RAG and document search pipelines</span></li>
+        <li><span class="strength-tag">Best-in-class text embeddings (Embed model)</span></li>
+        <li><span class="strength-tag">Classification and structured extraction from documents</span></li>
+        <li><span class="strength-tag">Strong multilingual enterprise support</span></li>
+        <li><span class="strength-tag">Canadian/US-hosted infrastructure — Western data sovereignty</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Not designed for general consumer research or shopping tasks</span></li>
+        <li><span class="weakness-tag">Can return outdated specifications and system requirements</span></li>
+        <li><span class="weakness-tag">May miss brief constraints (form factor, GPU tier, RAM floor)</span></li>
+        <li><span class="weakness-tag">Playground is a developer tool, not a polished consumer chat interface</span></li>
+      </ul>
+
+      <div class="callout callout-tip" style="margin-top: var(--s5);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>Cohere is a developer and enterprise tool — not a general chat assistant</h4>
+          <p>If you're building a product that needs to search internal documents, classify support tickets, or generate structured summaries from uploaded files, Cohere is one of the best options available. Their Embed model is industry-leading for vector search. Their Command model family is designed for structured enterprise workflows. But if you want a chat assistant for everyday tasks — shopping research, writing help, Q&amp;A — Claude, ChatGPT, or Gemini will serve you better. Cohere's Playground is a testing tool, not a daily-driver interface.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI21 STUDIO -->
+<section id="ai21" style="margin-bottom: var(--s12);">
+  <h2>AI21 Studio (Jamba Mini)</h2>
+  <div class="model-card">
+    <div class="model-card-header">
+      <div class="model-card-icon">🎯</div>
+      <div>
+        <h3 style="margin:0;">AI21 Studio</h3>
+        <p style="margin:0; color: var(--text-3); font-size: var(--text-sm);">studio.ai21.com · Free trial credits · Jamba hybrid architecture, long-context tasks</p>
+      </div>
+    </div>
+    <div class="model-card-body">
+      <p>AI21 Labs is an Israeli AI company (Tel Aviv, founded 2017) known for developing the Jurassic and Jamba model families. Their Jamba architecture is architecturally distinctive: a hybrid of Mamba (state space model) and standard Transformer layers, designed to handle very long contexts efficiently with lower memory requirements than traditional Transformer-only models. Jamba Mini is a smaller, faster version of this architecture.</p>
+      <p>AI21 Studio is their developer playground and API access point. Like Cohere, AI21's models are primarily designed for enterprise document tasks — long-context analysis, document summarisation, structured extraction, and text generation from large corpora. On general consumer research tasks like multi-retailer product comparisons, Jamba Mini can miss brief constraints (GPU tier, RAM floor) and return picks that don't meet the specified requirements.</p>
+
+      <h4 style="margin-top: var(--s5);">Free tier</h4>
+      <p>Free trial credits available at <a href="https://studio.ai21.com" rel="noopener" target="_blank">studio.ai21.com</a> after account creation. Pay-per-token API pricing for production use.</p>
+
+      <h4 style="margin-top: var(--s5);">Strengths</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Jamba hybrid architecture handles very long contexts efficiently</span></li>
+        <li><span class="strength-tag">Lower memory cost than equivalent pure-Transformer models</span></li>
+        <li><span class="strength-tag">Strong on document analysis and long-context summarisation</span></li>
+        <li><span class="strength-tag">Structured output format on research tasks</span></li>
+        <li><span class="strength-tag">Israeli/US-hosted infrastructure</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Jamba Mini may underperform frontier models on complex reasoning</span></li>
+        <li><span class="weakness-tag">Can miss explicit brief constraints (GPU tier, form factor)</span></li>
+        <li><span class="weakness-tag">No real-time web access</span></li>
+        <li><span class="weakness-tag">Developer-focused interface — not a polished chat product</span></li>
+      </ul>
+
+      <div class="callout callout-tip" style="margin-top: var(--s5);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>When Jamba's architecture actually matters</h4>
+          <p>The Jamba architecture's strength is in long-context efficiency: if you need to summarise a 200-page contract, analyse a large codebase, or process a long research paper, Jamba handles those contexts with less computational overhead than equivalent Transformer models. For everyday chat tasks — shopping research, writing help, Q&amp;A — the architectural innovation doesn't translate into noticeable user-facing advantages over Claude, ChatGPT, or Gemini. Use AI21 Studio when you're a developer evaluating long-context capabilities or building a document pipeline.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MINIMAX -->
+<section id="minimax" style="margin-bottom: var(--s12);">
+  <h2>MiniMax</h2>
+  <div class="model-card">
+    <div class="model-card-header">
+      <div class="model-card-icon">🌊</div>
+      <div>
+        <h3 style="margin:0;">MiniMax</h3>
+        <p style="margin:0; color: var(--text-3); font-size: var(--text-sm);">chat.minimax.io · hailuo.ai · Free tier available · Web search + video generation</p>
+      </div>
+    </div>
+    <div class="model-card-body">
+      <p>MiniMax is a Chinese AI company (Shanghai, founded 2021) best known in the West for their Hailuo AI video generation platform. Their M-series text models (including M2.7) are general-purpose assistants with integrated web search capability — distinguishing them from most other Chinese AI models in this guide that rely purely on training data. MiniMax supports text, images, audio, and video generation within a unified platform.</p>
+      <p>The M2.7 model's web search integration means it can retrieve current information from the web before generating a response — similar to Perplexity AI's approach. This gives MiniMax an edge over non-search-capable models for real-world product research, though pick quality still depends on what pages the model reads and how well it synthesises the results.</p>
+
+      <h4 style="margin-top: var(--s5);">Free tier</h4>
+      <p>Free at <a href="https://chat.minimax.io" rel="noopener" target="_blank">chat.minimax.io</a> with rate limits. Hailuo AI video generation also has a free tier at <a href="https://hailuo.ai" rel="noopener" target="_blank">hailuo.ai</a>. MiniMax API is available for developers on a pay-per-token basis.</p>
+
+      <h4 style="margin-top: var(--s5);">Strengths</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Integrated web search for current information</span></li>
+        <li><span class="strength-tag">Multimodal: text, images, audio, video generation</span></li>
+        <li><span class="strength-tag">Hailuo AI video generation is competitive with leading tools</span></li>
+        <li><span class="strength-tag">Structured research outputs with comparison tables</span></li>
+        <li><span class="strength-tag">Free tier available without extensive sign-up friction</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Web search doesn't guarantee spec accuracy — can still miss brief constraints</span></li>
+        <li><span class="weakness-tag">Some model picks may include uncertain or unverifiable brands</span></li>
+        <li><span class="weakness-tag">Less established in Western markets than Chinese competitors like DeepSeek</span></li>
+        <li><span class="weakness-tag">Chinese company — data sovereignty considerations apply</span></li>
+      </ul>
+
+      <div class="callout callout-warning" style="margin-top: var(--s5);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>Data sovereignty note — MiniMax is a Chinese company</h4>
+          <p>MiniMax operates from Shanghai and processes conversations on servers subject to Chinese data regulations. Like DeepSeek, Kimi, Qwen, and GLM in this guide, MiniMax is not an appropriate tool for sensitive, confidential, or commercially private information. For general research tasks and creative work, MiniMax performs well — but apply the same data hygiene you'd use with any Chinese-hosted AI service.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FREE VS PAID -->
 <section id="free-vs-paid" style="margin-bottom: var(--s12);">
   <h2>Free vs. paid — what's actually different?</h2>
@@ -1763,6 +1951,38 @@
           <td><span class="cross">✗</span></td>
           <td><span class="check">✓ Included</span></td>
           <td>Pro ~$9–$13/mo</td>
+        </tr>
+        <tr>
+          <td><strong>ERNIE AI (Baidu)</strong></td>
+          <td>Structured research, comparison tables, Chinese/English bilingual tasks</td>
+          <td><span class="check">✓ Free (Baidu account)</span></td>
+          <td><span class="partial">Limited</span></td>
+          <td><span class="cross">✗</span></td>
+          <td>API (Baidu AI Cloud)</td>
+        </tr>
+        <tr>
+          <td><strong>Cohere Playground</strong></td>
+          <td>Enterprise RAG, document search, text embeddings, classification pipelines</td>
+          <td><span class="check">✓ Trial credits</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td>API pay-per-token</td>
+        </tr>
+        <tr>
+          <td><strong>AI21 Studio (Jamba Mini)</strong></td>
+          <td>Long-context document analysis, Jamba hybrid architecture, developer API</td>
+          <td><span class="check">✓ Trial credits</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="cross">✗</span></td>
+          <td>API pay-per-token</td>
+        </tr>
+        <tr>
+          <td><strong>MiniMax</strong></td>
+          <td>Web search + text, multimodal (video gen via Hailuo), research tasks</td>
+          <td><span class="check">✓ Free tier</span></td>
+          <td><span class="check">✓ Web search</span></td>
+          <td><span class="check">✓ (Hailuo video)</span></td>
+          <td>API pay-per-token</td>
         </tr>
       </tbody>
     </table>
