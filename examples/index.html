@@ -1020,6 +1020,63 @@ Nice to have: keyboard and mouse bundle included.</pre>
   </div>
 </details>
 
+<!-- ==============================
+     EXAMPLE 18 — Same prompt, Poe Free Assistant (intermediate / everyday)
+     ============================== -->
+<details class="example-card" data-tags="intermediate everyday">
+  <summary class="example-card-header">
+    <div class="example-card-tags">
+      <span class="tag tag-intermediate">Intermediate</span>
+      <span class="tag tag-everyday">Everyday</span>
+    </div>
+    <div class="example-summary-title">
+      <span class="text-sm text-3">Model: Poe Free Assistant · Task: Same budget gaming PC prompt — eleventh AI, two Best Buy picks, flagged a discontinued listing, no Amazon</span>
+      <h3>The same shopping prompt on Poe — honest about availability, RTX 3060 across the board, missed Amazon</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="example-card-body">
+    <p class="text-2" style="font-size: var(--text-sm); margin-bottom: var(--s4);">Eleventh AI in the series. Poe's free Assistant (Quora's AI platform that aggregates multiple models) gave two Best Buy picks and one Walmart — no Amazon. It flagged one listing as discontinued before you'd find out yourself, cited Steam directly for requirements, and asked two practical clarifying questions at the end.</p>
+
+    <div class="recipe-section-label">Prompt used</div>
+    <div class="prompt-block">
+      <pre>I'm looking for a budget pre-built PC with the following requirements:
+
+Budget: $400–$800 · Primary use: Light gaming (Arc Raiders) + general computing
+Look up Arc Raiders recommended system requirements.
+Preferred retailers in order: Best Buy → Walmart → Amazon
+Include for each: retailer, price, key specs (CPU, GPU, RAM, storage), why it fits Arc Raiders.
+Nice to have: keyboard and mouse bundle included.</pre>
+    </div>
+
+    <div class="example-output">
+      <h5>Poe Free Assistant Output (condensed)</h5>
+      <p>Poe cited Steam directly for Arc Raiders specs and opened with a useful practical framing: <em>"To run smoothly in a $400–$800 prebuilt, you generally want 16GB RAM, at least an RTX 3060-class GPU (ideally 12GB VRAM), and a 1TB NVMe SSD."</em></p>
+
+      <p><strong>Best Buy #1 — iBUYPOWER SlateMESH2070 (price not captured):</strong> i7-12700F, RTX 3060, 16GB DDR4, 1TB HDD + 500GB NVMe. No K+M. Noted: <em>"This listing mixes HDD + NVMe — prefer a model that's 1TB NVMe only for best responsiveness."</em></p>
+
+      <p><strong>Best Buy #2 — CyberPowerPC Gamer Xtreme (price not captured):</strong> i7-11700F, RTX 3060, 16GB, 1TB HDD + 500GB SSD. K+M included. Honest flag: <em>"This may fail your buy-now requirement — the page says it's no longer available in new condition."</em></p>
+
+      <p><strong>Walmart — iBUYPOWER Slate 6 Mesh ($797):</strong> i5-13600KF, RTX 3060, 16GB, 1TB SSD. Gaming K+M included. The only pick with a confirmed price. "Strong CPU for multiplayer + busy scenes, helps reduce CPU bottlenecks."</p>
+
+      <p><strong>No Amazon pick.</strong> Poe returned two Best Buy options and one Walmart — Amazon wasn't covered, similar to Gemini Flash earlier in the series.</p>
+
+      <p>Closed with two clarifying questions: target resolution/refresh rate (1080p 60fps vs higher), and new-only vs open-box acceptable.</p>
+    </div>
+
+    <div class="callout callout-tip" style="margin-top: var(--s4);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>What Poe did differently — and what Poe actually is</h4>
+        <p><strong>It flagged a discontinued listing before you clicked it.</strong> The second Best Buy pick was marked "no longer available in new condition" right in the response — saving you the click. Most AIs in this series recommended products without checking whether they were actually in stock.</p>
+        <p style="margin-top: var(--s3);"><strong>It noticed the mixed storage and told you what to do about it.</strong> The first pick had a 1TB HDD + 500GB NVMe combo — Poe flagged this explicitly and advised preferring NVMe-only. That's genuinely useful detail that most AIs skipped.</p>
+        <p style="margin-top: var(--s3);"><strong>What Poe.com actually is:</strong> Poe is Quora's AI aggregator platform — a single interface where you can talk to Claude, ChatGPT, Gemini, Llama, and many others without separate accounts. The "Free Assistant" used here is Poe's own lightweight default bot. The real strength of Poe isn't any single model — it's that you can run the same prompt across multiple AI tools in one tab and compare results directly, which is exactly the technique this whole series is demonstrating.</p>
+        <p style="margin-top: var(--s3);"><strong>The RTX 3060 consensus is now clear.</strong> Across eleven AIs, RTX 3060 appeared more often than any other single GPU recommendation. RTX 4060 appeared more frequently at the top tier. RTX 3050 appeared at lower price points. If you're buying in the $700–$800 range, RTX 3060 (especially the 12GB version) or RTX 4060 are both well-supported choices — the rest is brand and price timing.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
 <div style="background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: var(--r3); padding: var(--s6); text-align: center; margin-top: var(--s10);">
   <h3 style="margin-bottom: var(--s3);">Want to try these patterns yourself?</h3>
   <p class="text-2" style="margin-bottom: var(--s5);">The Recipe Book has all these patterns and more — with copy-and-paste prompts ready to go.</p>
