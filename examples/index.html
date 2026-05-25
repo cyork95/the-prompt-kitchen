@@ -1805,6 +1805,82 @@ Nice to have: keyboard and mouse bundle included.</pre>
           ⚠️ <strong>A truncated response is a signal, not just an inconvenience.</strong> If an AI cuts off mid-task, switch to a different tool rather than trying to prompt-engineer a completion out of one that isn't suited to the task.<br>
           ⚠️ <strong>GTX 1650 + 8GB RAM keeps appearing.</strong> This combination has shown up in six or more AIs in the series despite both failing the brief. Always verify the first pick in any AI response — if it misses the spec floor, the rest of the response is likely to as well.
         </p>
+        <p style="margin-top: var(--s3);"><em>The series continues — see Example 30 (Venice.ai) for the twenty-third AI.</em></p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════
+     EXAMPLE 30 — Same prompt, Venice.ai (intermediate / everyday)
+     ═══════════════════════════════════════════════ -->
+<details class="recipe-card" id="example-30" style="margin-bottom: var(--s6);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="badge badge-intermediate">Intermediate</span>
+      <span class="text-sm text-3">Model: Venice.ai · Task: Same budget gaming PC prompt — twenty-third AI, privacy-first platform, RTX 3050 6GB dominates all six picks</span>
+      <h3>The same shopping prompt on Venice.ai — a privacy-first AI platform that delivers six picks but leans heavily on the RTX 3050 6GB</h3>
+    </div>
+    <span class="recipe-chevron">▶</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-section">
+      <h4>The prompt (same as all previous examples)</h4>
+      <div class="prompt-block">I'm looking for a pre-built gaming PC that can run Arc Raiders well, within a budget of $400–$800. Please check Best Buy first, then Walmart, then Amazon. The PC should have at least 16GB of RAM, an NVMe SSD, and a modern GPU (RTX 3060 or better). Give me your top picks from each retailer.</div>
+    </div>
+
+    <div class="recipe-section">
+      <h5>Venice.ai Output</h5>
+      <p>Venice returned one of the more complete structured responses in the series — six picks across all three retailers (two per retailer), with a ranked summary table and a top pick identified. The response was well-organised and included reasoning for each choice.</p>
+
+      <p><strong>Best Buy picks:</strong></p>
+      <ul style="margin: var(--s2) 0 var(--s3) var(--s5);">
+        <li><strong>iBUYPOWER TraceMR 274i</strong> — ~$799 — i5-13400F, RTX 3060, 16GB DDR4, 1TB NVMe. Meets the GPU floor. Strong pick.</li>
+        <li><strong>HP Pavilion TG01</strong> — ~$450–$550 — i5 CPU, RTX 3050 6GB, 8GB RAM, 512GB SSD. Venice flagged the 8GB RAM as needing an upgrade.</li>
+      </ul>
+
+      <p><strong>Walmart picks:</strong></p>
+      <ul style="margin: var(--s2) 0 var(--s3) var(--s5);">
+        <li><strong>Acer Nitro 50</strong> — ~$720 — i5-14400F, RTX 3050 6GB, 16GB DDR5, 1TB NVMe. Named as Venice's top overall pick.</li>
+        <li><strong>SkyTech Blaze II</strong> — ~$650 — Ryzen 5 5600X, RTX 3050 6GB, 16GB DDR4, 1TB SSD.</li>
+      </ul>
+
+      <p><strong>Amazon picks:</strong></p>
+      <ul style="margin: var(--s2) 0 var(--s3) var(--s5);">
+        <li><strong>SkyTech Archangel</strong> — ~$700 — Ryzen 5 5600X, RTX 3050 6GB, 16GB DDR4, 1TB NVMe.</li>
+        <li><strong>CyberpowerPC Gamer Xtreme</strong> — ~$750 — i5-13400F, RTX 3050 8GB, 16GB DDR4, 1TB SSD. The only pick with 8GB VRAM.</li>
+      </ul>
+
+      <p>Venice identified the Acer Nitro 50 as its top overall pick, citing DDR5 memory and the current-gen i5-14400F processor. The ranked summary table was a helpful structural element not all AIs in this series provided.</p>
+
+      <div class="callout callout-warning" style="margin-top: var(--s4);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>The RTX 3050 6GB problem — four of six picks use a GPU that may not meet UE5 VRAM requirements</h4>
+          <p><strong>The brief asked for RTX 3060 or better.</strong> Of Venice's six picks, four use the RTX 3050 6GB — a card the brief explicitly excludes. Only the iBUYPOWER TraceMR and CyberpowerPC Gamer Xtreme avoid the RTX 3050 6GB (with RTX 3060 and RTX 3050 8GB respectively).</p>
+          <p style="margin-top: var(--s2);"><strong>GLM (Example 23) flagged this variant specifically:</strong> Arc Raiders uses Unreal Engine 5, which benefits significantly from 8GB+ VRAM. The RTX 3050 6GB sits below that threshold. At high settings in UE5 titles, 6GB VRAM can cause stuttering, texture pop-in, and frame drops. If your priority is actually running Arc Raiders at a playable quality level, the RTX 3050 6GB is a meaningful risk — especially as the game receives post-launch updates.</p>
+          <p style="margin-top: var(--s2);"><strong>Venice's top pick (Acer Nitro 50) falls into this category.</strong> The i5-14400F and DDR5 RAM are genuine strengths, but the 6GB VRAM card on a ~$720 system is a constraint worth knowing before buying.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-tip" style="margin-top: var(--s4);">
+        <span class="callout-icon">🔒</span>
+        <div class="callout-body">
+          <h4>What Venice.ai brings to the table that others don't</h4>
+          <p>Venice's structured output — six picks, ranked table, top pick identified — is one of the better formats in this series. The HP Pavilion RAM flag (8GB needs upgrade) was correctly called out. Venice's distinctive value isn't primarily its shopping ability; it's the privacy guarantee. Conversations aren't stored or used for training. For anyone doing sensitive research — medical, financial, legal, or personal — that's a meaningful differentiator that no amount of prompt engineering can replicate on a standard AI platform.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--r3); padding: var(--s5);">
+        <h4>Running consensus — twenty-three AIs in</h4>
+        <p style="margin-top: var(--s3);">
+          ✅ <strong>RTX 4060 remains the confirmed GPU sweet spot — and Venice shows why.</strong> 8+ AIs recommended the RTX 4060 at $749–$799. Venice's heaviest RTX 4060 alternative is the RTX 3050 6GB across four of six picks — underscoring how rare a well-priced RTX 4060 system is and why it gets recommended so often when available.<br>
+          ✅ <strong>16GB RAM + 1TB NVMe SSD is the spec floor.</strong> Venice met this on five of six picks (flagging the HP Pavilion 8GB RAM issue). Four of those five still used the RTX 3050 6GB.<br>
+          ✅ <strong>The RTX 3050 6GB VRAM trap is now confirmed across multiple AIs.</strong> GLM (Example 23) first raised the 6GB VRAM risk for UE5 titles like Arc Raiders. Venice sent four of six picks through that exact variant. The brief asked for RTX 3060 or better — treat any RTX 3050 6GB pick as a miss against spec, not a borderline call.<br>
+          ✅ <strong>Structured outputs (ranked tables, top pick identified) are consistently more useful.</strong> Venice, Qwen (Example 21), and SambaNova (Example 28) all used structured formats that made their reasoning easy to follow. This matters more when evaluating multiple picks.<br>
+          ⚠️ <strong>Privacy-first platforms trade data safety for real-time web access.</strong> Venice doesn't search live retailer listings — picks are from training data. Prices and availability should always be verified before purchase.<br>
+          ⚠️ <strong>Spec compliance varies even when format is strong.</strong> Venice's organised output masked a core miss: four of six picks failed the GPU requirement. A tidy table isn't the same as a correct answer.
+        </p>
       </div>
     </div>
   </div>
