@@ -100,6 +100,7 @@
     <li><a href="#qwen">Qwen Studio (Alibaba)</a></li>
     <li><a href="#huggingchat">Hugging Chat (HuggingFace)</a></li>
     <li><a href="#kimi">Kimi (Moonshot AI)</a></li>
+    <li><a href="#glm">GLM (Zhipu AI)</a></li>
     <li><a href="#free-vs-paid">Free vs. paid — what's actually different?</a></li>
     <li><a href="#comparison-table">Quick comparison table</a></li>
   </ol>
@@ -997,6 +998,60 @@
   </div>
 </section>
 
+<!-- GLM (ZHIPU AI) -->
+<section id="glm" style="margin-bottom: var(--s12);">
+  <h2>GLM (Zhipu AI)</h2>
+  <div class="model-card">
+    <div class="model-card-header">
+      <div class="model-card-icon">🔬</div>
+      <div>
+        <h3 style="margin:0;">GLM — ChatGLM</h3>
+        <p style="margin:0; color: var(--text-3); font-size: var(--text-sm);">bigmodel.cn/chat · Zhipu AI · Free tier available</p>
+      </div>
+    </div>
+    <div class="model-card-body">
+      <p>GLM (General Language Model) is the flagship model series from Zhipu AI, a Chinese AI research company spun out of Tsinghua University. ChatGLM is the chat interface built on top of this model family and is one of the most capable Chinese-language AI assistants available, with strong bilingual (Chinese/English) performance.</p>
+      <p>The GLM-4 generation (including GLM-4.7 and GLM-4V for multimodal tasks) is well-suited for structured research, product analysis, and technical explanations. It tends to think carefully about caveats before answering — when official specs aren't finalized, for example, GLM will say so explicitly rather than guessing silently.</p>
+
+      <h4 style="margin-top: var(--s5);">Model lineup</h4>
+      <ul style="font-size: var(--text-sm); margin-top: var(--s2);">
+        <li><strong>GLM-4.7</strong> — current flagship text model, strong at research and structured outputs.</li>
+        <li><strong>GLM-4V</strong> — multimodal variant, accepts image and text inputs.</li>
+        <li><strong>GLM-4 Air / Flash</strong> — faster, lighter variants for everyday tasks.</li>
+        <li><strong>CogVideoX / CogView</strong> — Zhipu's image and video generation models, accessible via the same platform.</li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Free tier</h4>
+      <p>Free access available at <a href="https://bigmodel.cn/chat" rel="noopener" target="_blank">bigmodel.cn/chat</a> (international). The Chinese interface is at chatglm.cn. A free Zhipu account is required. API access uses a credit system — new accounts receive free credits on sign-up.</p>
+
+      <h4 style="margin-top: var(--s5);">Strengths</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Strong bilingual Chinese/English</span></li>
+        <li><span class="strength-tag">Explicit about uncertainty and caveats</span></li>
+        <li><span class="strength-tag">Multimodal via GLM-4V</span></li>
+        <li><span class="strength-tag">Structured, practical buyer advice</span></li>
+        <li><span class="strength-tag">Tsinghua University research lineage</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Chinese company — data sovereignty considerations</span></li>
+        <li><span class="weakness-tag">International interface less polished than Chinese version</span></li>
+        <li><span class="weakness-tag">May miss brief-specific GPU/RAM floors on shopping tasks</span></li>
+        <li><span class="weakness-tag">Less established in Western markets than Claude or ChatGPT</span></li>
+      </ul>
+
+      <div class="callout callout-tip" style="margin-top: var(--s5);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>When GLM is the right tool</h4>
+          <p>GLM is a strong choice for bilingual workflows, Chinese-language tasks, or when you want an AI that is upfront about what it doesn't know. Its tendency to flag caveats (like unfinished official specs) before diving into recommendations makes it more reliable for research where precision matters. For creative writing and casual conversation, Claude or ChatGPT will feel more natural.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FREE VS PAID -->
 <section id="free-vs-paid" style="margin-bottom: var(--s12);">
   <h2>Free vs. paid — what's actually different?</h2>
@@ -1189,6 +1244,14 @@
           <td><span class="partial">Limited</span></td>
           <td><span class="cross">✗</span></td>
           <td>Paid API available</td>
+        </tr>
+        <tr>
+          <td><strong>GLM (Zhipu AI)</strong></td>
+          <td>Bilingual Chinese/English, structured research, caveat-aware outputs</td>
+          <td><span class="check">✓ Yes</span></td>
+          <td><span class="partial">Limited</span></td>
+          <td><span class="partial">Via CogView</span></td>
+          <td>API credits (Zhipu Cloud)</td>
         </tr>
       </tbody>
     </table>

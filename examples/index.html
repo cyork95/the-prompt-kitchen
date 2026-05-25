@@ -1331,12 +1331,78 @@ Nice to have: keyboard and mouse bundle included.</pre>
         <h4>Running consensus — fifteen AIs in</h4>
         <p style="margin-top: var(--s3);">
           ✅ <strong>RTX 4060 is the GPU sweet spot</strong> — appeared in 8+ AIs as a top pick. Kimi flagged it but priced it over budget.<br>
-          ✅ <strong>16GB RAM + NVMe SSD</strong> — met by most strong picks. Two AIs (DuckDuckGo, Kimi's Best Buy picks) returned 8GB systems — one without flagging it, one flagging it with an upgrade path.<br>
-          ✅ <strong>RTX 2060 / RTX 2060 Super is the budget runner-up tier</strong> — a pattern emerging in AIs that miss the RTX 4060 but stay close to the $800 ceiling.<br>
-          ✅ <strong>Walmart's STGAubron at ~$570 is a recurring pick</strong> — surfaced by Kimi, Qwen, and others. Worth researching current stock and reviews if it keeps appearing.<br>
-          ✅ <strong>Amazon and Walmart beat Best Buy at this budget</strong> — now consistent across 12+ AIs.<br>
-          ⚠️ <strong>AI hardware comparisons can be wrong.</strong> Kimi's GTX 1660 Super vs. RTX 2070 claim is a reminder to spot-check any specific performance claims against a trusted source like <a href="https://www.gpucheck.com" rel="noopener" target="_blank">GPU benchmark sites</a> before making a purchase.<br>
-          ⚠️ <strong>More picks doesn't mean better picks.</strong> Kimi returned the most options of any AI — but its top recommendation missed the brief's GPU floor. Breadth and accuracy are different things.
+          ✅ <strong>16GB RAM + NVMe SSD</strong> — met by most strong picks.<br>
+          ✅ <strong>RTX 2060 / RTX 2060 Super is the budget runner-up tier</strong> — a pattern in AIs that miss the RTX 4060 but stay near the $800 ceiling.<br>
+          ✅ <strong>Amazon and Walmart beat Best Buy at this budget</strong> — consistent across 12+ AIs.<br>
+          ⚠️ <strong>AI hardware comparisons can be wrong.</strong> Spot-check GPU performance claims against benchmark sites before buying.<br>
+          ⚠️ <strong>More picks doesn't mean better picks.</strong> Breadth and accuracy are different things.
+        </p>
+        <p style="margin-top: var(--s3);"><em>The series continues — see Example 23 (GLM / Zhipu AI) for the sixteenth AI.</em></p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════
+     EXAMPLE 23 — Same prompt, GLM 4.7 (Zhipu AI) (intermediate / everyday)
+     ═══════════════════════════════════════════════ -->
+<details class="recipe-card" id="example-23" style="margin-bottom: var(--s6);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="badge badge-intermediate">Intermediate</span>
+      <span class="text-sm text-3">Model: GLM 4.7 (Zhipu AI) · Task: Same budget gaming PC prompt — sixteenth AI, one pick per retailer, best buyer warning in the series (RTX 3050 6GB vs 8GB VRAM)</span>
+      <h3>The same shopping prompt on GLM — one clean pick per retailer and the best hardware warning in the series</h3>
+    </div>
+    <span class="recipe-chevron">▶</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-section">
+      <h4>The prompt (same as all previous examples)</h4>
+      <div class="prompt-block">I'm looking for a pre-built gaming PC that can run Arc Raiders well, within a budget of $400–$800. Please check Best Buy first, then Walmart, then Amazon. The PC should have at least 16GB of RAM, an NVMe SSD, and a modern GPU (RTX 3060 or better). Give me your top picks from each retailer.</div>
+    </div>
+
+    <div class="recipe-section">
+      <h5>GLM 4.7 Output (Zhipu AI)</h5>
+      <p>GLM returned exactly one pick per retailer, all with 16GB RAM and NVMe SSDs, plus a buyer warning section that no other AI in the series matched for specificity.</p>
+
+      <p>GLM opened by noting that Arc Raiders' official specs weren't finalized at time of writing and provided estimated requirements based on comparable UE5 games: RTX 3050 (8GB) or RX 6600, 16GB RAM, 512GB NVMe SSD, modern 6-core CPU. It also warned upfront that "big-box retailers rotate exact SKUs weekly."</p>
+
+      <p><strong>Best Buy:</strong> HP Victus 15L Desktop or Lenovo IdeaCentre Gaming 5 — ~$699–$749 — RTX 3050 8GB + Ryzen 5 5600G (or i5-12400F), 16GB RAM, 512GB NVMe SSD. Keyboard and mouse bundle included.</p>
+
+      <p><strong>Walmart:</strong> CyberpowerPC Gamer Xtreme VR — ~$699–$749 — RTX 3050 8GB + i5-12400F, 16GB RAM, 1TB NVMe SSD. RGB gaming keyboard and mouse bundle included. Noted the storage advantage over the Best Buy pick as the key differentiator.</p>
+
+      <p><strong>Amazon:</strong> Skytech Chronos — ~$749–$799 — RX 6600 8GB + Ryzen 5 5600X, 16GB RAM, 500GB–1TB NVMe. Keyboard and mouse bundle included. Cited the RX 6600 as 15–20% better than the RTX 3050 and called it the "best performance option" if budget allows.</p>
+
+      <div class="callout callout-tip" style="margin-top: var(--s4);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>GLM's buyer warning — the best practical tip in the series</h4>
+          <p>GLM added a "Crucial Buyer Warning" section that no other AI in the series matched for specificity:</p>
+          <p style="margin-top: var(--s2);">In the $600–$800 range, you'll encounter many systems with the <strong>RTX 3050 6GB</strong> — and GLM explicitly said: <em>do not buy the 6GB RTX 3050 for Arc Raiders.</em> Unreal Engine 5 uses aggressive texture streaming, which requires at least 8GB of VRAM to avoid stuttering and frame drops. The 6GB variant will hit this wall in gameplay. The RTX 3050 8GB and RX 6600 both have sufficient VRAM; the 6GB version doesn't.</p>
+          <p style="margin-top: var(--s2);">This is actionable, correct, and practically useful — and it's the kind of trap that catches buyers who filter by "RTX 3050" without checking the VRAM variant. Bookmarking this tip alone is worth the visit.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-warning" style="margin-top: var(--s4);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>What GLM missed — no RTX 4060</h4>
+          <p><strong>The brief asked for RTX 3060 or better.</strong> GLM's top picks use RTX 3050 8GB — one tier below. This is the same miss as several other AIs in the series. The RX 6600 Amazon pick is the closest to matching the brief's GPU floor.</p>
+          <p style="margin-top: var(--s2);"><strong>No RTX 4060 surfaced.</strong> Eight previous AIs identified the RTX 4060 as the sweet spot within the $800 budget. GLM didn't. Given that RTX 4060 systems exist at $749–$799 on Amazon, this is a gap — though GLM's focus on 8GB VRAM as a hard floor is a useful constraint regardless of GPU model.</p>
+          <p style="margin-top: var(--s2);"><strong>Best Buy pick gives two options, not one.</strong> "HP Victus 15L or Lenovo IdeaCentre Gaming 5" — GLM hedged on which to buy, which is honest but less actionable than a single recommendation. The SKU rotation caveat explains the hedge.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--r3); padding: var(--s5);">
+        <h4>Running consensus — sixteen AIs in</h4>
+        <p style="margin-top: var(--s3);">
+          ✅ <strong>RTX 4060 is the GPU sweet spot</strong> — appeared in 8+ AIs as a top pick. GLM didn't surface it, but its 8GB VRAM floor reasoning applies equally to the RTX 4060.<br>
+          ✅ <strong>8GB VRAM is the real minimum for UE5 games</strong> — GLM made this explicit; it's consistent with the RTX 4060 consensus (which also has 8GB VRAM).<br>
+          ✅ <strong>16GB RAM + NVMe SSD</strong> — upheld by all three GLM picks, consistent with the series consensus.<br>
+          ✅ <strong>RX 6600 is a legitimate alternative to RTX 3060-tier GPUs</strong> — surfaced by GLM and confirmed in other AIs. Worth checking alongside RTX options.<br>
+          ✅ <strong>Amazon and Walmart beat Best Buy at this budget</strong> — GLM's Best Buy pick includes a hedge ("or Lenovo"), while Walmart and Amazon picks are decisive. Consistent with the broader series pattern.<br>
+          ⚠️ <strong>Watch for the RTX 3050 6GB trap.</strong> This is now the clearest, most actionable warning to come out of the entire series. When filtering for "RTX 3050," always verify you're looking at the 8GB variant, not the 6GB one.<br>
+          ⚠️ <strong>SKU rotation is real.</strong> GLM's upfront caveat about weekly SKU changes at big-box retailers is accurate — always confirm specs on the actual product page before ordering.
         </p>
       </div>
     </div>
