@@ -601,6 +601,61 @@ Nice to have: keyboard and mouse bundle included.</pre>
   </div>
 </details>
 
+<!-- ==============================
+     EXAMPLE 11 — Same prompt, Grok (intermediate / everyday)
+     ============================== -->
+<details class="example-card" data-tags="intermediate everyday">
+  <summary class="example-card-header">
+    <div class="example-card-tags">
+      <span class="tag tag-intermediate">Intermediate</span>
+      <span class="tag tag-everyday">Everyday</span>
+    </div>
+    <div class="example-summary-title">
+      <span class="text-sm text-3">Model: Grok (xAI) · Task: Same budget gaming PC prompt — fourth AI, most general answer</span>
+      <h3>The same shopping prompt on Grok — strong advice, lighter on specific products</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="example-card-body">
+    <p class="text-2" style="font-size: var(--text-sm); margin-bottom: var(--s4);">Same prompt, fourth AI. Grok gave the strongest general buying advice of the group — what specs to prioritise, what to avoid, what the budget reality is — but was the least specific on individual products. Where Claude, Meta AI, and DeepSeek named exact SKUs and prices, Grok described categories and typical specs.</p>
+
+    <div class="recipe-section-label">Prompt used</div>
+    <div class="prompt-block">
+      <pre>I'm looking for a budget pre-built PC with the following requirements:
+
+Budget: $400–$800 · Primary use: Light gaming (Arc Raiders) + general computing
+Look up Arc Raiders recommended system requirements.
+Preferred retailers in order: Best Buy → Walmart → Amazon
+Include for each: retailer, price, key specs (CPU, GPU, RAM, storage), why it fits Arc Raiders.
+Nice to have: keyboard and mouse bundle included.</pre>
+    </div>
+
+    <div class="example-output">
+      <h5>Grok Output (condensed)</h5>
+      <p>Grok opened with the clearest spec target summary of all four responses: <em>"Aim for at least Ryzen 5 3600 / i5-9600K level CPU, 16GB RAM, and RTX 2070 / RX 5700 XT GPU. For smooth play and future-proofing, target RTX 3060/4060."</em></p>
+
+      <p><strong>Amazon — Skytech Nebula or similar RTX 4060 build (~$700–$800):</strong> i5-13400F, RTX 4060 8GB, 16GB DDR4, 1TB NVMe. "The RTX 4060 exceeds recommended GPU performance — better than RTX 2070 in efficiency with DLSS/Frame Gen support." No K+M bundle guaranteed.</p>
+
+      <p><strong>Walmart — "Various RTX 3060/4060 pre-builts" ($550–$750):</strong> Grok named iBUYPOWER, STGAubron, or CyberPower as examples rather than committing to a model. "Many include RGB K+M bundles." This was the least specific recommendation of any AI in the series.</p>
+
+      <p><strong>Best Buy — "Entry-level gaming desktops" ($600–$800):</strong> MSI, Dell, or HP listed as examples. RTX 3050/4060 typical. "Reliable support/warranty through Best Buy." Again, no specific SKU.</p>
+
+      <p><strong>Bonus advice:</strong> Suggested checking for Memorial Day sales, noted K+M bundles are more common at Walmart/Amazon than Best Buy, flagged PSU quality as something to check in pre-built reviews — a practical detail none of the other AIs mentioned.</p>
+    </div>
+
+    <div class="callout callout-tip" style="margin-top: var(--s4);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>What Grok did differently — and what this series reveals overall</h4>
+        <p><strong>Grok gave advice, not a shopping list.</strong> Its response is more like asking an experienced friend what to look for than asking a sales assistant what to buy. The spec guidance is solid and the PSU quality warning is genuinely useful — but if you need a link to click, the other AIs served that better.</p>
+        <p style="margin-top: var(--s3);"><strong>Where all four agreed:</strong> RTX 4060 is the right GPU at this budget. 16GB RAM is non-negotiable. An NVMe SSD is required. The Skytech and CyberPowerPC brands came up across multiple AIs independently. These overlaps are where you can be most confident.</p>
+        <p style="margin-top: var(--s3);"><strong>Where they diverged:</strong> GPU generation (RTX 4060 vs RTX 3060 12GB), which exact products to recommend at each retailer, and how honest to be when a retailer slot doesn't have a great option at this budget.</p>
+        <p style="margin-top: var(--s3);"><strong>Now run the synthesis.</strong> With four responses collected, paste them all into one AI and ask: <em>"Here are four AI responses to the same PC-buying brief. Where do they agree? Where do they conflict? Which has the strongest reasoning for each point of disagreement? Give me a single consolidated final recommendation."</em> That synthesis is the most reliable output you can get — and it's only possible because you ran the same prompt across multiple tools.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
 <div style="background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: var(--r3); padding: var(--s6); text-align: center; margin-top: var(--s10);">
   <h3 style="margin-bottom: var(--s3);">Want to try these patterns yourself?</h3>
   <p class="text-2" style="margin-bottom: var(--s5);">The Recipe Book has all these patterns and more — with copy-and-paste prompts ready to go.</p>
