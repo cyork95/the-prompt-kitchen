@@ -545,6 +545,62 @@ Nice to have: keyboard and mouse bundle included.</pre>
   </div>
 </details>
 
+<!-- ==============================
+     EXAMPLE 10 — Same prompt, DeepSeek (intermediate / everyday)
+     ============================== -->
+<details class="example-card" data-tags="intermediate everyday">
+  <summary class="example-card-header">
+    <div class="example-card-tags">
+      <span class="tag tag-intermediate">Intermediate</span>
+      <span class="tag tag-everyday">Everyday</span>
+    </div>
+    <div class="example-summary-title">
+      <span class="text-sm text-3">Model: DeepSeek · Task: Same budget gaming PC prompt — third AI, most skeptical answer</span>
+      <h3>The same shopping prompt on DeepSeek — more cautious, more critical, different picks</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="example-card-body">
+    <p class="text-2" style="font-size: var(--text-sm); margin-bottom: var(--s4);">Same prompt, third AI. DeepSeek was the most critical of the three — it flagged a product as something to actively avoid, was honest that Arc Raiders stretches this budget, and surfaced a different "sweet spot" pick than either Claude or Meta AI.</p>
+
+    <div class="recipe-section-label">Prompt used</div>
+    <div class="prompt-block">
+      <pre>I'm looking for a budget pre-built PC with the following requirements:
+
+Budget: $400–$800 · Primary use: Light gaming (Arc Raiders) + general computing
+Look up Arc Raiders recommended system requirements.
+Preferred retailers in order: Best Buy → Walmart → Amazon
+Include for each: retailer, price, key specs (CPU, GPU, RAM, storage), why it fits Arc Raiders.
+Nice to have: keyboard and mouse bundle included.</pre>
+    </div>
+
+    <div class="example-output">
+      <h5>DeepSeek Output (condensed)</h5>
+
+      <p>DeepSeek opened with a specs table (minimum vs. recommended) and a frank summary: <em>"At $400–800, you are looking at RTX 3050 / RX 6600 on the higher end, or GTX 1650 / RX 6400 at bare minimum."</em></p>
+
+      <p><strong>Best Buy — CyberPowerPC GMA2600A (~$730):</strong> Ryzen 5 5500, RX 6600 8GB, 16GB DDR4, 500GB NVMe. No K+M bundle. "RX 6600 performs close to RTX 2070 — 1080p Medium/High, 60–80+ FPS. Ryzen 5 5500 is slightly below recommended CPU but no bottleneck at 1080p."</p>
+
+      <p><strong>Walmart — HP Victus 15L (~$599):</strong> i5-12400F, GTX 1650 4GB, 16GB DDR4, 512GB NVMe. K+M included. Honest verdict: <em>"GTX 1650 is minimum spec. You'll run Arc Raiders at 1080p Low ~50–60 FPS, Medium ~35–45 FPS. Playable but not smooth."</em> Recommended only if keyboard/mouse bundle is essential.</p>
+
+      <p><strong>Amazon — STGAubron (~$499):</strong> i7-3770 (3rd gen), RX 580 8GB, 16GB DDR3. K+M included. Verdict: <em>"GPU is minimum, CPU is below minimum — i7-3770 is much slower than i5-8400. You will get stuttering. Avoid for Arc Raiders."</em> Listed only as the sole sub-$550 option with a dedicated GPU.</p>
+
+      <p><strong>DeepSeek's actual pick (outside the retailer brief):</strong> Skytech Archangel 3.0 on Amazon — Ryzen 5 5600X, RTX 3060 12GB, 16GB DDR4, $790. <em>"Exceeds recommended specs in both CPU and GPU. Best price-to-performance for your specific game at 1080p High 70–80 FPS."</em> No K+M bundle.</p>
+    </div>
+
+    <div class="callout callout-tip" style="margin-top: var(--s4);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>What DeepSeek did differently from Claude and Meta AI</h4>
+        <p><strong>It actively warned against one of its own picks.</strong> DeepSeek surfaced the $499 STGAubron for Amazon but immediately told you to avoid it for Arc Raiders specifically — giving you the full picture rather than presenting all three options as equally viable. Claude and Meta AI both recommended only machines they'd actually endorse.</p>
+        <p style="margin-top: var(--s3);"><strong>It broke the retailer brief.</strong> Rather than forcing a good recommendation into the Amazon slot, DeepSeek flagged the Amazon pick as a warning and offered a separate "best for your actual game" pick. That's a more honest response, even if it doesn't follow the format precisely.</p>
+        <p style="margin-top: var(--s3);"><strong>Different GPU tier from Claude.</strong> Claude recommended RTX 4060 across all three retailers (~$799). DeepSeek's top pick was RTX 3060 at $790 — a previous generation with 12GB VRAM vs. 8GB. Both are defensible; the extra VRAM on the 3060 is genuinely useful at 1440p. This is the kind of trade-off a synthesis prompt can help you reason through.</p>
+        <p style="margin-top: var(--s3);"><strong>Running the synthesis:</strong> With three responses now in hand, paste all three into any AI and ask: <em>"Here are three AI recommendations for the same PC-buying brief. Where do they agree? Where do they conflict, and which reasoning is stronger? Give me a final consolidated recommendation."</em></p>
+      </div>
+    </div>
+  </div>
+</details>
+
 <div style="background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: var(--r3); padding: var(--s6); text-align: center; margin-top: var(--s10);">
   <h3 style="margin-bottom: var(--s3);">Want to try these patterns yourself?</h3>
   <p class="text-2" style="margin-bottom: var(--s5);">The Recipe Book has all these patterns and more — with copy-and-paste prompts ready to go.</p>
