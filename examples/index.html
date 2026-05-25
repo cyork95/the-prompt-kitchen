@@ -712,6 +712,69 @@ Nice to have: keyboard and mouse bundle included.</pre>
   </div>
 </details>
 
+<!-- ==============================
+     EXAMPLE 13 — Same prompt, Gemini Flash (intermediate / everyday)
+     ============================== -->
+<details class="example-card" data-tags="intermediate everyday">
+  <summary class="example-card-header">
+    <div class="example-card-tags">
+      <span class="tag tag-intermediate">Intermediate</span>
+      <span class="tag tag-everyday">Everyday</span>
+    </div>
+    <div class="example-summary-title">
+      <span class="text-sm text-3">Model: Gemini Flash · Task: Same budget gaming PC prompt — sixth AI, missed Amazon, recommended lower GPU tier</span>
+      <h3>The same shopping prompt on Gemini Flash — recommended RTX 3050 twice and forgot Amazon</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="example-card-body">
+    <p class="text-2" style="font-size: var(--text-sm); margin-bottom: var(--s4);">Sixth AI in the series. Gemini Flash (Google's faster, lighter model) followed the format cleanly but missed two things: it picked Walmart twice and never recommended an Amazon option, and it recommended RTX 3050 in two of three picks — a lower GPU tier than most other AIs suggested at this budget.</p>
+
+    <div class="recipe-section-label">Prompt used</div>
+    <div class="prompt-block">
+      <pre>I'm looking for a budget pre-built PC with the following requirements:
+
+Budget: $400–$800 · Primary use: Light gaming (Arc Raiders) + general computing
+Look up Arc Raiders recommended system requirements.
+Preferred retailers in order: Best Buy → Walmart → Amazon
+Include for each: retailer, price, key specs (CPU, GPU, RAM, storage), why it fits Arc Raiders.
+Nice to have: keyboard and mouse bundle included.</pre>
+    </div>
+
+    <div class="example-output">
+      <h5>Gemini Flash Output (condensed)</h5>
+
+      <p><strong>Best Buy — Lenovo LOQ Tower 17IRR9 (~$889.99, frequently on sale under $800):</strong> i5-14400F, RTX 4060 8GB, 16GB DDR5, 512GB NVMe. "Completely crushes the recommended specs — High-to-Ultra settings at 60+ FPS with DLSS 3." No K+M bundle. <em>Note: listed at $889.99, slightly over the $800 ceiling.</em></p>
+
+      <p><strong>Walmart — MXZ Gaming Desktop (~$699.90):</strong> i5-9400F, RTX 3050, 16GB DDR4, 500GB NVMe. RGB K+M included. "RTX 3050 outpaces the minimum GTX 1050 Ti by a large margin." <em>Caution: i5-9400F is at or just below the game's recommended i5-9600K tier — the missing 'K' matters.</em></p>
+
+      <p><strong>Walmart — NSX Gaming Tomcat (~$690):</strong> Ryzen 5 5500, RTX 3050, 16GB DDR4, 512GB NVMe. Gaming K+M included. "1080p Medium-to-High settings, comfortable for the game." Note: two of the three picks are Walmart — Amazon was not recommended despite being third in the brief.</p>
+
+      <p><strong>Unique offer:</strong> Gemini Flash ended by offering to track down open-box pricing on the Lenovo LOQ at Best Buy to bring it under $800 — the only AI in the series to proactively offer a follow-up action.</p>
+    </div>
+
+    <div class="callout callout-tip" style="margin-top: var(--s4);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>What Gemini Flash did differently — and what six responses together tell you</h4>
+        <p><strong>It missed a retailer and didn't flag it.</strong> The brief asked for Best Buy → Walmart → Amazon in order. Gemini Flash returned Best Buy + Walmart + Walmart — no Amazon pick — without acknowledging the gap. Worth checking: did the AI follow your constraints, or quietly skip one?</p>
+        <p style="margin-top: var(--s3);"><strong>It recommended a lower GPU tier.</strong> Two of three picks used an RTX 3050, while Claude, Meta AI, and Grok all converged on RTX 4060 as the right target at this budget. RTX 3050 is playable for Arc Raiders, but it's closer to minimum than recommended. Flash vs. Pro matters — lighter models sometimes optimise for "playable" rather than "smooth."</p>
+        <p style="margin-top: var(--s3);"><strong>It was the most conversational at the end.</strong> Offering to "keep an eye out for open-box deals" is a natural follow-up that none of the other AIs initiated. That's a useful instinct — if a pick is slightly over budget, asking the AI to help find a discount version is a good next prompt.</p>
+        <p style="margin-top: var(--s3);">
+          <strong>The six-AI consensus — what you can now trust:</strong><br>
+          ✅ <strong>RTX 4060</strong> — 4 of 6 AIs recommended it as the right GPU. When the majority agree, lean in.<br>
+          ✅ <strong>16GB RAM</strong> — unanimous across all six.<br>
+          ✅ <strong>NVMe SSD</strong> — unanimous across all six.<br>
+          ✅ <strong>iBUYPOWER and CyberPowerPC</strong> — surfaced by multiple AIs independently.<br>
+          ⚠️ <strong>GPU tier</strong> — RTX 3050 vs RTX 3060 vs RTX 4060 is where they diverged most. This is the single most important decision in the build.<br>
+          ⚠️ <strong>Retailer compliance</strong> — two AIs broke the brief (ChatGPT used PzDeals, Gemini skipped Amazon). Always check.
+        </p>
+        <p style="margin-top: var(--s3);"><strong>Run the synthesis now.</strong> You have six data points. Paste them all into one AI and ask: <em>"Here are six AI responses to the same PC-buying brief. Where do they all agree? Where do they conflict, and which reasoning is strongest? Flag any picks that look questionable. Give me one final consolidated recommendation."</em></p>
+      </div>
+    </div>
+  </div>
+</details>
+
 <div style="background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: var(--r3); padding: var(--s6); text-align: center; margin-top: var(--s10);">
   <h3 style="margin-bottom: var(--s3);">Want to try these patterns yourself?</h3>
   <p class="text-2" style="margin-bottom: var(--s5);">The Recipe Book has all these patterns and more — with copy-and-paste prompts ready to go.</p>
