@@ -839,6 +839,67 @@ Nice to have: keyboard and mouse bundle included.</pre>
   </div>
 </details>
 
+<!-- ==============================
+     EXAMPLE 15 — Same prompt, Copilot Smart (intermediate / everyday)
+     ============================== -->
+<details class="example-card" data-tags="intermediate everyday">
+  <summary class="example-card-header">
+    <div class="example-card-tags">
+      <span class="tag tag-intermediate">Intermediate</span>
+      <span class="tag tag-everyday">Everyday</span>
+    </div>
+    <div class="example-summary-title">
+      <span class="text-sm text-3">Model: Microsoft Copilot (Smart mode) · Task: Same budget gaming PC prompt — eighth AI, refused to recommend over-budget results, asked a clarifying question instead</span>
+      <h3>The same shopping prompt on Copilot — it wouldn't fake an answer when its search came back over budget</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="example-card-body">
+    <p class="text-2" style="font-size: var(--text-sm); margin-bottom: var(--s4);">Eighth and final AI in the series — and the most unusual response. Copilot's live shopping search returned a $1,027 CyberPowerPC and a $1,399 Skytech Nebula — both well over the $800 ceiling. Rather than recommending them anyway, Copilot stopped, explained why it wouldn't, and asked a single targeted question before continuing.</p>
+
+    <div class="recipe-section-label">Prompt used</div>
+    <div class="prompt-block">
+      <pre>I'm looking for a budget pre-built PC with the following requirements:
+
+Budget: $400–$800 · Primary use: Light gaming (Arc Raiders) + general computing
+Look up Arc Raiders recommended system requirements.
+Preferred retailers in order: Best Buy → Walmart → Amazon
+Include for each: retailer, price, key specs (CPU, GPU, RAM, storage), why it fits Arc Raiders.
+Nice to have: keyboard and mouse bundle included.</pre>
+    </div>
+
+    <div class="example-output">
+      <h5>Copilot Smart Output</h5>
+      <p>Copilot ran a live shopping search and was honest about what it found: <em>"The shopping search returned a $1,027 CyberPowerPC and a $1,399 Skytech Nebula. Both are well above your $800 ceiling, so I'm not going to pretend they're viable options."</em></p>
+
+      <p>Instead of recommending out-of-budget machines, Copilot explained what hardware actually meets Arc Raiders' requirements at the $400–$800 price point:</p>
+      <ul style="font-size: var(--text-sm); color: var(--text-2);">
+        <li>GPU: GTX 1650, GTX 1660, RX 580, RX 5500 XT, or Intel Arc A380/A580</li>
+        <li>CPU: Ryzen 5 3600 or Intel i5 10th–12th gen</li>
+        <li>16GB RAM, 500GB+ SSD</li>
+      </ul>
+
+      <p>Then it paused and asked one clarifying question before fetching real results: <em>"Which GPU tier are you comfortable with? GTX 1650/RX 580 (cheapest), GTX 1660/RX 5500 XT (ideal balance), or Intel Arc A580/RTX 3050 (best performance)? Pick one and I'll fetch real, in-budget, retailer-specific PCs."</em></p>
+
+      <p>The response never got to specific product recommendations — it was waiting for the follow-up answer before continuing.</p>
+    </div>
+
+    <div class="callout callout-tip" style="margin-top: var(--s4);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>What Copilot did that no other AI in this series did</h4>
+        <p><strong>It refused to hallucinate.</strong> Every other AI produced specific product recommendations regardless of whether its search returned usable results. Copilot's search came back over budget, so it stopped rather than inventing in-budget picks or recommending out-of-budget machines with a disclaimer. That's the right call — and it's rare.</p>
+        <p style="margin-top: var(--s3);"><strong>It asked before assuming.</strong> Rather than picking a GPU tier on your behalf, Copilot asked which tier you actually wanted. This slows down the conversation but produces a more accurate answer. In a real purchase decision, that trade-off is worth it.</p>
+        <p style="margin-top: var(--s3);"><strong>The spec framing was slightly off.</strong> Copilot listed GTX 1060 / RX 580 as the "recommended" GPU — but those are closer to minimum. The actual recommended tier is RTX 2070 / RX 5700 XT. Even the AI that paused to be careful still misread a spec. Always verify the requirements yourself from the official source.</p>
+        <p style="margin-top: var(--s3);">
+          <strong>Eight-AI final scorecard — what this whole series proves:</strong><br>
+          Every AI had something different to offer. Claude gave clean, structured picks. Meta AI added warnings. DeepSeek flagged a bad pick. Grok gave the best general advice. ChatGPT cited sources but broke the brief. Gemini Flash missed a retailer. LumoAI personalized the answer. Copilot refused to fake results. No single AI did everything right — and that's exactly the point. Running the same prompt across multiple tools, then synthesizing the results, is more reliable than trusting any one answer. That's a skill. Practice it.
+        </p>
+      </div>
+    </div>
+  </div>
+</details>
+
 <div style="background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: var(--r3); padding: var(--s6); text-align: center; margin-top: var(--s10);">
   <h3 style="margin-bottom: var(--s3);">Want to try these patterns yourself?</h3>
   <p class="text-2" style="margin-bottom: var(--s5);">The Recipe Book has all these patterns and more — with copy-and-paste prompts ready to go.</p>
