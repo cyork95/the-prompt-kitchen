@@ -423,6 +423,73 @@ Please give me 5 specific, creative suggestions — not generic "gift experience
   </div>
 </details>
 
+<!-- ==============================
+     EXAMPLE 8 — Product research with constraints (intermediate / everyday)
+     ============================== -->
+<details class="example-card" data-tags="intermediate everyday">
+  <summary class="example-card-header">
+    <div class="example-card-tags">
+      <span class="tag tag-intermediate">Intermediate</span>
+      <span class="tag tag-everyday">Everyday</span>
+    </div>
+    <div class="example-summary-title">
+      <span class="text-sm text-3">Model: Claude Sonnet 4.6 (Extended Thinking) · Task: Research + shopping recommendation</span>
+      <h3>Finding the best budget gaming PC for a specific game across multiple retailers</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="example-card-body">
+    <p class="text-2" style="font-size: var(--text-sm); margin-bottom: var(--s4);">A buyer needed a pre-built gaming PC under $800 that could run a specific upcoming game. The prompt gave precise constraints — budget, game, retailers in priority order, and exact output format — and got back real product links, a comparison table, and a concrete pick.</p>
+
+    <div class="recipe-section-label">Prompt used</div>
+    <div class="prompt-block">
+      <pre>I'm looking for a budget pre-built PC with the following requirements:
+
+Budget: $400–$800
+
+Primary Use Cases:
+- Light gaming (main game: Arc Raiders)
+- General computing tasks
+
+Hardware Priorities:
+- Specs capable of running Arc Raiders smoothly (look up recommended system requirements)
+- Good price-to-performance ratio within budget
+
+Nice to Have:
+- Keyboard and mouse bundle included
+
+Preferred Retailers (in order of preference):
+- Best Buy
+- Walmart
+- Amazon
+
+Please include for each recommendation: the retailer, price, key specs (CPU, GPU, RAM, storage), and why it fits Arc Raiders specifically.</pre>
+    </div>
+
+    <div class="example-output">
+      <h5>AI Output (Claude Sonnet 4.6 with Extended Thinking — condensed)</h5>
+      <p>The model first confirmed Arc Raiders' recommended specs from official sources (RTX 2070 / RX 5700 XT, i5-9600K / Ryzen 5 3600, 16GB RAM) before evaluating any PCs — then surfaced three options, one per retailer:</p>
+
+      <p><strong>Best Buy — iBUYPOWER Scale (~$799, watch for sales to $699):</strong> RTX 4060, i5-14400F, 16GB DDR5, 1TB NVMe. RGB keyboard &amp; mouse included. "RTX 4060 brings DLSS 3 support — Arc Raiders supports DLSS, with DLSS 4 Multi Frame Generation boosting FPS significantly for RTX users."</p>
+
+      <p><strong>Walmart — Skytech Shadow (~$799):</strong> RTX 4060, i5-12400F (12th gen), 16GB DDR5, 1TB NVMe. Gaming K+M included, 1-year warranty. Best value if the iBUYPOWER is over budget at time of purchase.</p>
+
+      <p><strong>Amazon — CyberPowerPC Gamer Xtreme (~$799–$849):</strong> RTX 4060, i5-14400F, 16GB DDR5, <em>2TB</em> NVMe (double the others). K+M included, lifetime tech support. Best pick if storage is a priority.</p>
+
+      <p><strong>Final recommendation:</strong> "If the iBUYPOWER Scale is $799 or less at Best Buy at time of purchase, grab it — Best Buy's return policy and in-store support is hard to beat. If it's sitting at full $999, the Walmart Skytech Shadow at $799 is essentially the same gaming experience for less."</p>
+    </div>
+
+    <div class="callout callout-tip" style="margin-top: var(--s4);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Why this worked — and how to take it further</h4>
+        <p>Three things made this prompt unusually effective: <strong>structured constraints</strong> (budget range, ranked retailers, specific game) gave the model a clear brief rather than an open-ended question. <strong>Asking it to look up requirements first</strong> meant the recommendations were grounded in real specs rather than guesses. And <strong>requesting a specific output format</strong> (retailer, price, key specs, game-specific reasoning) ensured the answer was scannable rather than a wall of text.</p>
+        <p style="margin-top: var(--s3);">For high-stakes purchases, consider running the <em>same prompt across multiple AI tools</em> — Claude, ChatGPT, Gemini — and comparing results. Where they agree, you can be confident. Where they disagree, dig into why. You can even paste all three responses back into one AI and ask it to synthesise a final consensus recommendation.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
 <div style="background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: var(--r3); padding: var(--s6); text-align: center; margin-top: var(--s10);">
   <h3 style="margin-bottom: var(--s3);">Want to try these patterns yourself?</h3>
   <p class="text-2" style="margin-bottom: var(--s5);">The Recipe Book has all these patterns and more — with copy-and-paste prompts ready to go.</p>
