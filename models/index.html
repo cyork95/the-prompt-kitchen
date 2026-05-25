@@ -93,6 +93,7 @@
     <li><a href="#meta-ai">Meta AI</a></li>
     <li><a href="#deepseek">DeepSeek</a></li>
     <li><a href="#lumo">LumoAI (Proton)</a></li>
+    <li><a href="#mistral">Mistral Le Chat</a></li>
     <li><a href="#free-vs-paid">Free vs. paid — what's actually different?</a></li>
     <li><a href="#comparison-table">Quick comparison table</a></li>
   </ol>
@@ -605,6 +606,62 @@
   </div>
 </section>
 
+<!-- MISTRAL -->
+<section id="mistral" style="margin-bottom: var(--s12);">
+  <h2>Mistral Le Chat</h2>
+  <div class="model-card">
+    <div class="model-card-header">
+      <div class="model-logo">🌬️</div>
+      <div>
+        <h3 style="margin:0;">Mistral Le Chat</h3>
+        <p class="model-tagline">Made in France by Mistral AI · chat.mistral.ai · Free tier available</p>
+      </div>
+    </div>
+    <div class="model-card-body">
+      <p>Mistral AI is Europe's leading AI company, founded in Paris in 2023. Le Chat ("The Cat") is their consumer chat interface — fast, capable, and genuinely competitive with GPT-4o for most everyday tasks. Mistral's models are particularly strong at following structured instructions precisely, multilingual tasks, and coding.</p>
+      <p>What sets Mistral apart from US counterparts is its open-weights approach — many of their models are freely downloadable and can be run locally. Le Chat itself is the polished hosted version, but the underlying models power a wide range of third-party apps and local deployments.</p>
+
+      <p><strong>Best at:</strong></p>
+      <div class="model-strengths">
+        <span class="strength-tag">Structured instruction following</span>
+        <span class="strength-tag">Multilingual (especially European languages)</span>
+        <span class="strength-tag">Coding &amp; technical tasks</span>
+        <span class="strength-tag">Open-weights models available</span>
+        <span class="strength-tag">GDPR-compliant, EU-based</span>
+        <span class="strength-tag">Fast responses</span>
+      </div>
+
+      <p><strong>Worth knowing:</strong></p>
+      <div class="model-weaknesses">
+        <span class="weakness-tag">Less well-known than US models — fewer tutorials and community resources</span>
+        <span class="weakness-tag">Image generation not built in (text-only by default)</span>
+        <span class="weakness-tag">Smaller ecosystem than OpenAI or Google</span>
+      </div>
+
+      <p><strong>Free tier:</strong> Yes — <a href="https://chat.mistral.ai" target="_blank" rel="noopener">chat.mistral.ai</a> is free with generous usage. Includes access to Mistral Small and Medium models.</p>
+      <p><strong>Paid:</strong> Mistral Pro (~$14.99/month) unlocks Mistral Large, their most capable model, plus higher usage limits. API access available for developers at competitive rates.</p>
+
+      <details style="margin-top: var(--s4);">
+        <summary>Mistral model lineup — which to use?</summary>
+        <div style="padding: var(--s3) 0 var(--s3) var(--s4);">
+          <p><strong>Mistral Small</strong> — fast and efficient, free on Le Chat. Great for quick tasks, summarising, drafting.</p>
+          <p><strong>Mistral Medium</strong> — better reasoning and instruction following. Available free on Le Chat.</p>
+          <p><strong>Mistral Large</strong> — their flagship model, competitive with GPT-4o. Requires paid plan or API.</p>
+          <p><strong>Mixtral (open-weights)</strong> — a mixture-of-experts model you can download and run locally for free. Popular with developers who want no usage limits and full control.</p>
+        </div>
+      </details>
+
+      <div class="callout callout-tip" style="margin-top: var(--s5);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>Why Mistral is worth trying</h4>
+          <p>If data privacy and European regulation compliance matter to your work — GDPR, EU AI Act, healthcare, legal — Mistral is the strongest option. It's also worth trying as a Claude/ChatGPT alternative for structured tasks: it tends to follow formats and output templates very precisely, which makes it useful when you need clean, consistent output.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FREE VS PAID -->
 <section id="free-vs-paid" style="margin-bottom: var(--s12);">
   <h2>Free vs. paid — what's actually different?</h2>
@@ -741,6 +798,14 @@
           <td><span class="partial">Proton ecosystem</span></td>
           <td><span class="cross">✗</span></td>
           <td>Proton Unlimited ~$10/mo</td>
+        </tr>
+        <tr>
+          <td><strong>Mistral Le Chat</strong></td>
+          <td>Structured tasks, multilingual, coding, EU compliance</td>
+          <td><span class="check">✓ Generous</span></td>
+          <td><span class="partial">Limited</span></td>
+          <td><span class="cross">✗</span></td>
+          <td>Pro ~$15/mo (Mistral Large)</td>
         </tr>
       </tbody>
     </table>

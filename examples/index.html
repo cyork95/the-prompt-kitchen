@@ -900,6 +900,66 @@ Nice to have: keyboard and mouse bundle included.</pre>
   </div>
 </details>
 
+<!-- ==============================
+     EXAMPLE 16 — Same prompt, Mistral Le Chat (intermediate / everyday)
+     ============================== -->
+<details class="example-card" data-tags="intermediate everyday">
+  <summary class="example-card-header">
+    <div class="example-card-tags">
+      <span class="tag tag-intermediate">Intermediate</span>
+      <span class="tag tag-everyday">Everyday</span>
+    </div>
+    <div class="example-summary-title">
+      <span class="text-sm text-3">Model: Mistral Le Chat · Task: Same budget gaming PC prompt — ninth AI, best brief compliance, matched official GPU spec exactly</span>
+      <h3>The same shopping prompt on Mistral Le Chat — followed the format perfectly, but recommended older hardware</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="example-card-body">
+    <p class="text-2" style="font-size: var(--text-sm); margin-bottom: var(--s4);">Ninth AI in the series. Mistral Le Chat was one of the most format-compliant responses — it followed the retailer order, included direct product links, provided a summary table, and found K+M bundles at two of three retailers. But it recommended older-generation hardware (2019–2020 era) where most other AIs targeted newer GPU generations.</p>
+
+    <div class="recipe-section-label">Prompt used</div>
+    <div class="prompt-block">
+      <pre>I'm looking for a budget pre-built PC with the following requirements:
+
+Budget: $400–$800 · Primary use: Light gaming (Arc Raiders) + general computing
+Look up Arc Raiders recommended system requirements.
+Preferred retailers in order: Best Buy → Walmart → Amazon
+Include for each: retailer, price, key specs (CPU, GPU, RAM, storage), why it fits Arc Raiders.
+Nice to have: keyboard and mouse bundle included.</pre>
+    </div>
+
+    <div class="example-output">
+      <h5>Mistral Le Chat Output (condensed)</h5>
+      <p>Mistral correctly identified the recommended specs (RTX 2070/RX 5700 XT, Ryzen 5 3600/i5-9600K, 16GB RAM) and then recommended machines that matched that spec tier exactly — rather than overshooting to RTX 4060 like most other AIs.</p>
+
+      <p><strong>Best Buy — CyberPowerPC Gamer Supreme (~$799.99):</strong> Ryzen 7 3700X, RX 5700 XT 8GB, 16GB DDR4, 1TB NVMe. WiFi, RGB, liquid cooling. No K+M bundle. "RX 5700 XT matches recommended GPU. Ryzen 7 3700X outperforms recommended i5-9600K."</p>
+
+      <p><strong>Walmart — STGAubron Gaming PC (~$799.99):</strong> Intel i7 (up to 3.9GHz — generation unspecified), RX 5700 XT 8GB, 32GB DDR4, 1TB SSD. RGB fans. <strong>K+M included.</strong> <em>Caution: "Intel i7 up to 3.9GHz" without a generation number is a red flag — this could be an older chip similar to the i7-3770 DeepSeek warned against earlier in this series.</em></p>
+
+      <p><strong>Amazon — CyberPowerPC Gamer Master (~$799.99):</strong> Ryzen 9 3900X, RX 5700 XT 8GB, 16GB DDR4, 1TB NVMe. <strong>K+M included.</strong> "Ryzen 9 3900X and RX 5700 XT well above recommended specs." <em>Note: Ryzen 9 3900X is a 2019 server-grade CPU — strong but old. Great for multitasking, less efficient for pure gaming than a newer i5.</em></p>
+    </div>
+
+    <div class="callout callout-tip" style="margin-top: var(--s4);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>What Mistral did differently — and the full nine-AI picture</h4>
+        <p><strong>Best format compliance in the series.</strong> Mistral followed the retailer order, included product links, found K+M bundles at two retailers, and produced a clean summary table — ticking every box in the brief. If you're evaluating AI on instruction-following, this response scored highest.</p>
+        <p style="margin-top: var(--s3);"><strong>It matched the official spec, not the market sweet spot.</strong> Most AIs recommended RTX 4060 as the right GPU at this budget. Mistral recommended RX 5700 XT — exactly what the game's official recommended spec says. Both are defensible: the official spec is the floor for "smooth gameplay," but an RTX 4060 gives you two extra years of headroom. Mistral answered the question asked; other AIs answered the question they thought you should have asked.</p>
+        <p style="margin-top: var(--s3);"><strong>The unspecified i7 at Walmart is worth flagging.</strong> "Intel Core i7 up to 3.9GHz" without a generation number is the same pattern DeepSeek caught on the STGAubron earlier — it could be a 2012-era chip. Always look up the full CPU model before buying, not just the family name.</p>
+        <p style="margin-top: var(--s3);">
+          <strong>Nine-AI series — what's settled and what isn't:</strong><br>
+          ✅ <strong>16GB RAM + NVMe SSD</strong> — unanimous across all nine.<br>
+          ✅ <strong>Dedicated GPU required</strong> — unanimous across all nine.<br>
+          ✅ <strong>CyberPowerPC and Skytech</strong> — surfaced by seven of nine AIs independently.<br>
+          ⚠️ <strong>GPU tier</strong> — ranged from RX 5700 XT (Mistral) to RTX 3050 (Gemini) to RTX 4060 (most) to RTX 5060 (LumoAI). This single decision drives most of the value difference.<br>
+          ⚠️ <strong>CPU transparency</strong> — three AIs (ChatGPT, Gemini, Mistral) either recommended older chips or didn't specify generations. Always verify the full CPU model name.
+        </p>
+      </div>
+    </div>
+  </div>
+</details>
+
 <div style="background: var(--accent-light); border: 1px solid var(--accent-border); border-radius: var(--r3); padding: var(--s6); text-align: center; margin-top: var(--s10);">
   <h3 style="margin-bottom: var(--s3);">Want to try these patterns yourself?</h3>
   <p class="text-2" style="margin-bottom: var(--s5);">The Recipe Book has all these patterns and more — with copy-and-paste prompts ready to go.</p>
