@@ -98,6 +98,8 @@
     <li><a href="#youcom">You.com</a></li>
     <li><a href="#duckduckgo">DuckDuckGo Duck.AI</a></li>
     <li><a href="#qwen">Qwen Studio (Alibaba)</a></li>
+    <li><a href="#huggingchat">Hugging Chat (HuggingFace)</a></li>
+    <li><a href="#kimi">Kimi (Moonshot AI)</a></li>
     <li><a href="#free-vs-paid">Free vs. paid — what's actually different?</a></li>
     <li><a href="#comparison-table">Quick comparison table</a></li>
   </ol>
@@ -882,6 +884,119 @@
   </div>
 </section>
 
+<!-- HUGGING CHAT -->
+<section id="huggingchat" style="margin-bottom: var(--s12);">
+  <h2>Hugging Chat (HuggingFace)</h2>
+  <div class="model-card">
+    <div class="model-card-header">
+      <div class="model-card-icon">🤗</div>
+      <div>
+        <h3 style="margin:0;">Hugging Chat</h3>
+        <p style="margin:0; color: var(--text-3); font-size: var(--text-sm);">huggingface.co/chat · Open-source model hub · Free</p>
+      </div>
+    </div>
+    <div class="model-card-body">
+      <p>Hugging Chat is HuggingFace's interface for running open-source language models directly in your browser. Unlike most AI tools that lock you into one proprietary model, Hugging Chat lets you switch between many different open-source models — Llama, Mistral, Qwen, Command R, and others — all in the same chat interface. It's the best single destination for exploring the open-source AI ecosystem without self-hosting anything.</p>
+      <p><strong>Hugging Chat Omni</strong> refers to their multimodal capability, allowing some models to accept image inputs alongside text — useful for image analysis, document reading, and visual question-answering tasks.</p>
+
+      <h4 style="margin-top: var(--s5);">Available models (rotating)</h4>
+      <p style="font-size: var(--text-sm);">The available model list changes as HuggingFace updates the platform. Common options include Meta Llama 3.3 70B, Qwen2.5 72B, Mistral 7B, Command R+, and various specialised models. Check huggingface.co/chat for the current lineup.</p>
+
+      <h4 style="margin-top: var(--s5);">Free tier</h4>
+      <p>Hugging Chat is free and requires no account for basic use. Creating a free HuggingFace account unlocks conversation history and higher rate limits. Rate limits can be aggressive on popular models — if you hit a limit, try switching to a less-loaded model or coming back later.</p>
+
+      <div class="callout callout-warning" style="margin-top: var(--s5);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>Rate limits and blank responses</h4>
+          <p>Hugging Chat can return blank responses or error silently when it hits capacity limits — especially on larger models during peak hours. If you get no response, try refreshing, switching models, or returning later. Creating a free account typically gives you more reliable access than anonymous use.</p>
+        </div>
+      </div>
+
+      <h4 style="margin-top: var(--s5);">Strengths</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Access many open-source models in one place</span></li>
+        <li><span class="strength-tag">Multimodal via Omni (image + text)</span></li>
+        <li><span class="strength-tag">No proprietary lock-in</span></li>
+        <li><span class="strength-tag">Free, no credit card</span></li>
+        <li><span class="strength-tag">Open-source transparency</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Aggressive rate limits on popular models</span></li>
+        <li><span class="weakness-tag">Can return blank responses at capacity</span></li>
+        <li><span class="weakness-tag">Model availability changes without notice</span></li>
+        <li><span class="weakness-tag">No built-in web search</span></li>
+        <li><span class="weakness-tag">Quality varies widely by model chosen</span></li>
+      </ul>
+
+      <div class="callout callout-tip" style="margin-top: var(--s5);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>When Hugging Chat is the right tool</h4>
+          <p>Use Hugging Chat when you want to experiment with open-source models without self-hosting, compare how different model families respond to the same prompt, or use multimodal Omni features for free. It's also a good fallback when proprietary tools are down or you've hit your daily limits elsewhere.</p>
+        </div>
+      </div>
+
+      <p style="margin-top: var(--s5);"><strong>Access at:</strong> <a href="https://huggingface.co/chat" rel="noopener" target="_blank">huggingface.co/chat</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- KIMI -->
+<section id="kimi" style="margin-bottom: var(--s12);">
+  <h2>Kimi (Moonshot AI)</h2>
+  <div class="model-card">
+    <div class="model-card-header">
+      <div class="model-card-icon">🌙</div>
+      <div>
+        <h3 style="margin:0;">Kimi</h3>
+        <p style="margin:0; color: var(--text-3); font-size: var(--text-sm);">kimi.ai · Moonshot AI · Free tier available</p>
+      </div>
+    </div>
+    <div class="model-card-body">
+      <p>Kimi is Moonshot AI's flagship assistant, built on the Kimi K2 model — a 1-trillion-parameter mixture-of-experts model with 32 billion active parameters at inference time. It's designed for long-context tasks and agentic research workflows, with a context window up to 1 million tokens (one of the largest available). Kimi excels at tasks that require reading and synthesising very long documents — contracts, research papers, extensive codebases.</p>
+      <p>The K2 series is optimised for coding and agentic tasks. Kimi tends to produce comprehensive, structured responses with ranked summaries and comparison tables — similar in style to Qwen but from a different Chinese AI lab.</p>
+
+      <h4 style="margin-top: var(--s5);">Model lineup</h4>
+      <ul style="font-size: var(--text-sm); margin-top: var(--s2);">
+        <li><strong>Kimi K2</strong> — flagship model, 1T parameter MoE, 32B active. Strong at coding, long-context, and agentic tasks.</li>
+        <li><strong>Kimi K1.5</strong> — previous generation, still available, good at reasoning tasks.</li>
+        <li><strong>Kimi k2.6</strong> — updated K2 variant with improved instruction following and research capabilities.</li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Free tier</h4>
+      <p>Free tier available at <a href="https://kimi.ai" rel="noopener" target="_blank">kimi.ai</a> with daily usage limits. No credit card required. Paid plans unlock higher limits and API access.</p>
+
+      <h4 style="margin-top: var(--s5);">Strengths</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">1M token context window</span></li>
+        <li><span class="strength-tag">Excellent for very long documents</span></li>
+        <li><span class="strength-tag">Comprehensive, ranked responses</span></li>
+        <li><span class="strength-tag">Strong at coding and agentic tasks</span></li>
+        <li><span class="strength-tag">Includes keyboard/mouse bundle awareness in shopping tasks</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Chinese company — data sovereignty considerations</span></li>
+        <li><span class="weakness-tag">Can miss brief constraints (GPU spec, budget floor)</span></li>
+        <li><span class="weakness-tag">Occasional factual errors on hardware comparisons</span></li>
+        <li><span class="weakness-tag">Interface less polished than Claude or ChatGPT</span></li>
+      </ul>
+
+      <div class="callout callout-tip" style="margin-top: var(--s5);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>When Kimi is the right tool</h4>
+          <p>Kimi's 1M context window makes it the strongest option for tasks that involve very long source material — reading an entire book, analysing a large codebase, or processing a lengthy legal or financial document. For shopping research and comparisons, it returns well-ranked, thorough outputs — but always verify GPU and RAM specs against your original brief, as it may under-shoot hardware requirements.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FREE VS PAID -->
 <section id="free-vs-paid" style="margin-bottom: var(--s12);">
   <h2>Free vs. paid — what's actually different?</h2>
@@ -1058,6 +1173,22 @@
           <td><span class="partial">Limited</span></td>
           <td><span class="cross">✗</span></td>
           <td>API pricing (Alibaba Cloud)</td>
+        </tr>
+        <tr>
+          <td><strong>Hugging Chat</strong></td>
+          <td>Exploring open-source models, multimodal (Omni), no lock-in</td>
+          <td><span class="check">✓ Free</span></td>
+          <td><span class="cross">✗</span></td>
+          <td><span class="partial">Via Omni models</span></td>
+          <td>Free only</td>
+        </tr>
+        <tr>
+          <td><strong>Kimi (Moonshot AI)</strong></td>
+          <td>Very long documents, 1M context, coding, agentic research</td>
+          <td><span class="check">✓ Yes</span></td>
+          <td><span class="partial">Limited</span></td>
+          <td><span class="cross">✗</span></td>
+          <td>Paid API available</td>
         </tr>
       </tbody>
     </table>
