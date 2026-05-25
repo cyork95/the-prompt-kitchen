@@ -2129,7 +2129,180 @@ Nice to have: keyboard and mouse bundle included.</pre>
           ⚠️ <strong>CPU age is now an active accuracy risk.</strong> The MiniMax Amazon pick lists "Intel i7 8th Gen" — a 2017–2018 chip paired with a 2020 GPU. CPU generation gaps create real performance bottlenecks. Always verify the specific CPU model and its generation, not just the GPU.<br>
           ⚠️ <strong>Six Chinese AI models have appeared in this series (DeepSeek, Qwen, Kimi, GLM, ERNIE, MiniMax).</strong> Performance has ranged from excellent (DeepSeek, ERNIE, Qwen) to mixed (MiniMax) to limited by tool design (other factors). Data sovereignty considerations apply to all six regardless of output quality.
         </p>
+        <p style="margin-top: var(--s3);"><em>The series concludes — see Example 35 for Claude Sonnet 4.6's final synthesis across all 27 AIs.</em></p>
       </div>
+    </div>
+  </div>
+</details>
+
+<!-- ═══════════════════════════════════════════════
+     EXAMPLE 35 — Final synthesis, Claude Sonnet 4.6 (advanced)
+     ═══════════════════════════════════════════════ -->
+<details class="recipe-card" id="example-35" style="margin-bottom: var(--s6);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="badge badge-advanced">Advanced</span>
+      <span class="text-sm text-3">Model: Claude Sonnet 4.6 · Task: Final synthesis — definitive hardware verdict and pattern analysis across all 27 AIs in the series</span>
+      <h3>The 27-AI final verdict — Claude Sonnet 4.6 synthesizes the entire series: what to buy, which AIs to trust, and what the failures teach us</h3>
+    </div>
+    <span class="recipe-chevron">▶</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-section">
+      <h4>The synthesis prompt</h4>
+      <div class="prompt-block">You've now seen the same gaming PC shopping prompt run through 27 different AI tools — from Claude and ChatGPT to ERNIE, MiniMax, Character.AI, and Cohere. Synthesize everything: What's the definitive hardware recommendation for someone who actually wants to buy? Which AIs performed best and worst, and why? What patterns explain the failures? What should a prompt engineer take away from this whole series?</div>
+    </div>
+
+    <div class="recipe-section">
+      <h5>Claude Sonnet 4.6 — Series Final Verdict</h5>
+
+      <h4 style="margin-top: var(--s4);">The definitive hardware answer</h4>
+      <p>After 27 AI responses to the same prompt, the consensus is clear. If you're buying a pre-built gaming PC for Arc Raiders in the $400–$800 range today, these three picks represent the distilled wisdom of the series:</p>
+
+      <div style="overflow-x: auto; margin: var(--s4) 0;">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Priority</th>
+              <th>System</th>
+              <th>Retailer</th>
+              <th>Price</th>
+              <th>CPU</th>
+              <th>GPU</th>
+              <th>RAM / Storage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>🏆 Best overall value</strong></td>
+              <td>HP Pavilion Gaming Desktop TG01</td>
+              <td>Best Buy</td>
+              <td>~$649–699</td>
+              <td>i5-14400F (10C, 4.7GHz)</td>
+              <td>RTX 4060 8GB</td>
+              <td>16GB DDR5 · 1TB NVMe</td>
+            </tr>
+            <tr>
+              <td><strong>💰 Tightest budget</strong></td>
+              <td>Acer Nitro N50</td>
+              <td>Walmart</td>
+              <td>~$480–550</td>
+              <td>i5-12400F (6C, 4.4GHz)</td>
+              <td>RTX 4060 8GB</td>
+              <td>16GB DDR4 · 512GB NVMe</td>
+            </tr>
+            <tr>
+              <td><strong>⚡ Best performance</strong></td>
+              <td>ABS Stratos / iBUYPOWER TraceMesh</td>
+              <td>Amazon</td>
+              <td>~$749–799</td>
+              <td>Ryzen 5 7600 (AM5)</td>
+              <td>RTX 4060 Ti 8GB</td>
+              <td>16GB DDR5 · 1TB NVMe</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>The HP Pavilion TG01 is the consensus series winner</strong> — named as the primary or top pick by eight or more AIs including Claude (Example 8), ERNIE (Example 31), Cerebras (Example 27), and SambaNova (Example 28). The i5-14400F + RTX 4060 combination is the gold standard for 1080p gaming in 2026; DDR5 RAM and a 1TB NVMe SSD future-proof it beyond Arc Raiders. Best Buy often includes a keyboard and mouse bundle with this model.</p>
+
+      <h4 style="margin-top: var(--s5);">GPU hierarchy for Arc Raiders — what the series proved</h4>
+      <p>Arc Raiders uses Unreal Engine 5. GLM (Example 23) was the first AI in the series to flag this explicitly: UE5 benefits from 8GB+ VRAM, and the RTX 3050 6GB sits below that threshold. This proved prescient — the RTX 3050 6GB appeared in multiple AI responses and represents the most common GPU spec error in the series.</p>
+
+      <div style="overflow-x: auto; margin: var(--s4) 0;">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>GPU</th>
+              <th>Verdict</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>RTX 4060 Ti 8GB / RX 7700 XT 12GB</strong></td>
+              <td><span class="check">✓ Best in budget</span></td>
+              <td>~40% faster than RTX 4060; RX 7700 XT has 12GB VRAM advantage</td>
+            </tr>
+            <tr>
+              <td><strong>RTX 4060 8GB</strong></td>
+              <td><span class="check">✓ Sweet spot</span></td>
+              <td>DLSS 3, 1080p Ultra easily, consensus series pick</td>
+            </tr>
+            <tr>
+              <td><strong>RTX 3060 12GB</strong></td>
+              <td><span class="check">✓ Acceptable</span></td>
+              <td>12GB VRAM is a genuine plus for UE5; wide memory bus</td>
+            </tr>
+            <tr>
+              <td><strong>RTX 3060 8GB / RTX 3050 8GB</strong></td>
+              <td><span class="partial">⚠ Spec floor</span></td>
+              <td>Meets the brief minimum; limited headroom for future titles</td>
+            </tr>
+            <tr>
+              <td><strong>RTX 3050 6GB</strong></td>
+              <td><span class="cross">✗ VRAM risk</span></td>
+              <td>Brief excluded it (RTX 3060+); 6GB below UE5 8GB+ recommendation</td>
+            </tr>
+            <tr>
+              <td><strong>GTX 1660 Super / GTX 1650 / RX 5500 XT</strong></td>
+              <td><span class="cross">✗ Below spec</span></td>
+              <td>Below the brief floor; appeared in weak AI responses throughout series</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 style="margin-top: var(--s5);">How the 27 AIs ranked — and why</h4>
+
+      <div class="callout callout-tip" style="margin-top: var(--s4);">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <h4>Tier 1 — Got it right (RTX 4060+, 16GB RAM, correct form factor)</h4>
+          <p><strong>Claude · ChatGPT · Gemini · Grok · Microsoft Copilot · Perplexity · You.com · Meta AI · Mistral Le Chat · Poe · DeepSeek · Qwen · Kimi · GLM · SambaNova · ERNIE</strong></p>
+          <p style="margin-top: var(--s2);">Sixteen AIs — more than half the series — returned spec-compliant picks with RTX 4060-class GPUs, 16GB RAM, and NVMe SSDs. The prompt works. A well-structured brief with explicit constraints (GPU tier, RAM floor, retailer priority) returns good results across a wide range of general-purpose AI tools.</p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top: var(--s4); background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--r3); padding: var(--s5);">
+        <h4>Tier 2 — Mostly right, notable caveats</h4>
+        <p style="margin-top: var(--s2);"><strong>LumoAI · DuckDuckGo Duck.AI · Cerebras · Venice.ai · MiniMax</strong></p>
+        <p style="margin-top: var(--s2);">Five AIs returned responses that were broadly correct in structure but had meaningful spec gaps — RTX 3050 6GB on multiple picks (Venice, MiniMax), slightly below-spec GPUs (Duck.AI), or formatting that looked thorough but hid compliance misses. These tools are capable of good research; the errors reflect platform-specific limitations or training-data gaps rather than fundamental tool-task mismatch.</p>
+      </div>
+
+      <div class="callout callout-warning" style="margin-top: var(--s4);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>Tier 3 — Wrong tool for the task</h4>
+          <p><strong>Pi AI · Brave Leo AI · Character.AI · Phind AI · Cohere Playground · AI21 Studio Jamba Mini</strong></p>
+          <p style="margin-top: var(--s2);">Six AIs failed the brief significantly — truncated responses (Phind), laptops recommended as desktops (Character.AI, Cohere), conversation-only tools on a research task (Pi), browser-context tools without web access (Brave Leo), and enterprise NLP tools on a consumer shopping brief (Cohere, Jamba Mini). The failures weren't random — they followed directly from tool-task mismatch. Every one of these tools excels in its intended domain. None of them were designed for structured multi-retailer product research.</p>
+        </div>
+      </div>
+
+      <h4 style="margin-top: var(--s5);">The seven lessons this series actually teaches</h4>
+
+      <p><strong>1. The prompt travels further than the model.</strong> The same brief — with explicit GPU tier, RAM floor, retailer priority order, and form factor (pre-built PC) — produced spec-compliant results on 16 of 27 AIs. Prompt quality is more portable than model quality. A well-structured prompt on a free model usually beats a vague prompt on a premium one.</p>
+
+      <p><strong>2. Web search capability is a measurable advantage.</strong> Perplexity (live citations), You.com (agentic web search), and MiniMax (M2.7 search) all outperformed training-data-only models on current product availability. When the task requires real-world pricing or stock, an AI with live web access is categorically better than one without it.</p>
+
+      <p><strong>3. Specialist tools fail predictably outside their domain.</strong> Every Tier 3 failure was predictable from the tool's design. Pi is a conversation AI. Phind is a coding search engine. Character.AI is a roleplay platform. Cohere is an enterprise NLP API. None of them were built for multi-retailer shopping research. The lesson isn't that these tools are bad — it's that using the right tool for the right task matters more than using a "smarter" tool for the wrong one.</p>
+
+      <p><strong>4. Chinese AI models are competitive on structured research — data sovereignty is a separate question.</strong> DeepSeek, Qwen, Kimi, GLM, and ERNIE all placed in Tier 1. MiniMax placed in Tier 2. Six Chinese AI models in the series outperformed or matched six Western specialist tools. The data sovereignty concern (Chinese server infrastructure, Chinese data regulations) is real and worth weighing — but it's independent of output quality.</p>
+
+      <p><strong>5. Format quality and answer quality are independent.</strong> Venice.ai, AI21 Studio, and Cohere all returned well-organised tables with clean structure. All three had significant spec misses underneath the formatting. A tidy response is not a correct response. Always check the GPU model, RAM, and form factor — don't let a clean layout substitute for spec verification.</p>
+
+      <p><strong>6. Some spec errors are predictable enough to check by reflex.</strong> Across 27 AIs, four errors appeared repeatedly: (a) 8GB RAM despite a 16GB floor, (b) RTX 3050 6GB despite an RTX 3060+ requirement, (c) GTX 1650/1660-class GPUs despite the series floor, (d) laptops in desktop searches. These four checks should be automatic whenever you use an AI for product research.</p>
+
+      <p><strong>7. The brief's constraints need to be explicit — and even then, not all AIs honour them.</strong> The prompt specified "RTX 3060 or better" and "at least 16GB of RAM" in plain English. Those constraints were missed by 11 of 27 AIs at least once. Explicit isn't failsafe. The lesson is to verify, not to assume that naming a requirement means every AI will apply it.</p>
+
+      <div class="callout callout-tip" style="margin-top: var(--s5);">
+        <span class="callout-icon">🍳</span>
+        <div class="callout-body">
+          <h4>What this series proves about the Prompt Kitchen's core thesis</h4>
+          <p>The Prompt Kitchen's central claim is that a good prompt in a free AI usually beats a vague prompt in an expensive one. This series is a 27-AI proof of concept. The same structured brief worked across Claude, ChatGPT, Gemini, Grok, DeepSeek, Qwen, ERNIE, SambaNova, and a dozen others — all free tiers. The failures came not from model capability gaps, but from tool-task mismatch and under-specified output constraints. The recipe matters more than the appliance. That's what The Prompt Kitchen is here to show.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </details>
