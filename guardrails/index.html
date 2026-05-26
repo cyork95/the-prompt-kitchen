@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kitchen Guardrails — Practical AI Safety | The Prompt Kitchen</title>
+  <meta name="description" content="8 practical guides for using AI responsibly. How to avoid hallucinations, verify output, protect your privacy, spot bias, and know when to trust AI — and when not to." />
+  <meta property="og:title"       content="Kitchen Guardrails — Practical AI Safety | The Prompt Kitchen" />
+  <meta property="og:description" content="Practical, no-jargon guides for staying safe and sane with AI. Like food safety rules — not exciting, but you'll be glad you know them." />
+  <meta property="og:url"         content="https://thepromptkitchen.fyi/guardrails/" />
+  <link rel="canonical" href="https://thepromptkitchen.fyi/guardrails/" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    /* ── Kitchen Guardrails Styles ── */
+
+    /* Hero */
+    .gr-hero {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--r4);
+      padding: var(--s8);
+      margin-bottom: var(--s8);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: var(--s6);
+      align-items: start;
+    }
+    @media (max-width: 580px) {
+      .gr-hero { grid-template-columns: 1fr; }
+      .gr-hero-icon { display: none; }
+    }
+    .gr-hero-icon { font-size: 4rem; line-height: 1; }
+    .gr-hero h2 { font-size: var(--text-2xl); font-weight: 800; margin: 0 0 var(--s3); }
+    .gr-hero p  { font-size: var(--text-base); color: var(--text-2); line-height: 1.7; margin: 0 0 var(--s3); }
+    .gr-hero p:last-child { margin-bottom: 0; }
+
+    /* Safety promise strip */
+    .gr-promise {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--s5);
+      margin-bottom: var(--s10);
+    }
+    @media (max-width: 680px) { .gr-promise { grid-template-columns: 1fr; } }
+    .gr-promise-card {
+      padding: var(--s5);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      display: flex;
+      gap: var(--s4);
+      align-items: flex-start;
+    }
+    .gr-promise-icon { font-size: 1.5rem; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+    .gr-promise-card h4 { font-size: var(--text-sm); font-weight: 700; margin: 0 0 var(--s1); }
+    .gr-promise-card p  { font-size: var(--text-sm); color: var(--text-2); line-height: 1.5; margin: 0; }
+
+    /* ToC */
+    .gr-toc {
+      margin-bottom: var(--s8);
+      padding: var(--s5);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+    }
+    .gr-toc h4 {
+      font-size: var(--text-xs); font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--text-3); font-family: var(--font-mono);
+      margin: 0 0 var(--s3);
+    }
+    .gr-toc ol {
+      margin: 0; padding-left: var(--s5);
+      display: grid; grid-template-columns: 1fr 1fr; gap: var(--s1) var(--s6);
+    }
+    @media (max-width: 580px) { .gr-toc ol { grid-template-columns: 1fr; } }
+    .gr-toc a { font-size: var(--text-sm); color: var(--text-2); }
+    .gr-toc a:hover { color: var(--accent); }
+
+    /* Guide card */
+    .gr-card {
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      background: var(--bg);
+      margin-bottom: var(--s6);
+      overflow: hidden;
+      transition: box-shadow .2s, border-color .2s;
+    }
+    .gr-card:hover  { border-color: var(--accent-border); box-shadow: var(--shadow-md); }
+    .gr-card[open]  { border-color: var(--accent-border); box-shadow: 0 0 0 3px var(--accent-border); }
+    .gr-card > summary::before { display: none !important; }
+
+    .gr-card-header {
+      list-style: none;
+      padding: var(--s5) var(--s6);
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--s4);
+      user-select: none;
+    }
+    .gr-card-header::-webkit-details-marker { display: none; }
+    .gr-card-header::marker { display: none; }
+
+    .gr-card-left { flex: 1; min-width: 0; }
+    .gr-card-top {
+      display: flex; align-items: center; flex-wrap: wrap;
+      gap: var(--s2); margin-bottom: var(--s2);
+    }
+
+    /* Category tag */
+    .gr-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; padding: 2px 8px; border-radius: var(--r-full);
+      white-space: nowrap;
+    }
+    .gr-tag-accuracy    { background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-border); }
+    .gr-tag-trust       { background: #FDF3DC; color: #A07820; border: 1px solid #E6C97A; }
+    .gr-tag-privacy     { background: #E0EEFF; color: #2B63B0; border: 1px solid #93C5FD; }
+    .gr-tag-bias        { background: #EDE8FF; color: #6B4EBB; border: 1px solid #C4B5FD; }
+    .gr-tag-safety      { background: var(--green-light); color: var(--green); border: 1px solid var(--green); }
+    [data-theme="dark"] .gr-tag-trust   { background: #2A220A; color: #D4A83A; border-color: #7A5C10; }
+    [data-theme="dark"] .gr-tag-privacy { background: #0F2540; color: #93C5FD; border-color: #2B5EA7; }
+    [data-theme="dark"] .gr-tag-bias    { background: #2A1F45; color: #B89FFF; border-color: #5C3DB3; }
+
+    .gr-card-title {
+      font-size: var(--text-lg); font-weight: 800; font-family: var(--font-display);
+      color: var(--text-1); margin: 0 0 var(--s1); line-height: 1.25;
+    }
+    .gr-card-analogy {
+      font-size: var(--text-sm); color: var(--text-2); font-style: italic; margin: 0; line-height: 1.45;
+    }
+    .gr-card-chevron {
+      font-size: 1.1rem; color: var(--text-3); flex-shrink: 0; margin-top: 6px; transition: transform .2s;
+    }
+    .gr-card[open] .gr-card-chevron { transform: rotate(180deg); }
+
+    /* Card body */
+    .gr-card-body {
+      padding: var(--s5) var(--s6) var(--s6);
+      border-top: 1px solid var(--border);
+    }
+
+    /* Problem box */
+    .gr-problem {
+      display: flex; gap: var(--s3); align-items: flex-start;
+      padding: var(--s4) var(--s5); background: var(--bg-alt);
+      border: 1px solid var(--border); border-radius: var(--r2);
+      margin-bottom: var(--s5);
+    }
+    .gr-problem-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+    .gr-problem p { font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; margin: 0; }
+
+    /* Section labels */
+    .gr-section-label {
+      font-size: var(--text-xs); font-weight: 700; font-family: var(--font-mono);
+      text-transform: uppercase; letter-spacing: .08em; color: var(--text-3);
+      margin: var(--s5) 0 var(--s3);
+    }
+
+    /* Techniques list */
+    .gr-techniques {
+      margin: 0; padding: 0; list-style: none;
+      display: flex; flex-direction: column; gap: var(--s3);
+    }
+    .gr-technique {
+      display: flex; gap: var(--s3); align-items: flex-start;
+      padding: var(--s3) var(--s4); background: var(--bg);
+      border: 1px solid var(--border); border-radius: var(--r2);
+    }
+    .gr-technique-num {
+      font-size: var(--text-xs); font-weight: 900; font-family: var(--font-mono);
+      color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent-border);
+      border-radius: var(--r-full); min-width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .gr-technique-text { font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
+    .gr-technique-text strong { color: var(--text-1); }
+
+    /* Red flags */
+    .gr-redflags {
+      margin: 0; padding: var(--s4) var(--s5);
+      background: #FFF5F5; border: 1px solid #FECACA; border-radius: var(--r2);
+      list-style: none; display: flex; flex-direction: column; gap: var(--s2);
+    }
+    [data-theme="dark"] .gr-redflags { background: #2A0A0A; border-color: #7F1D1D; }
+    .gr-redflags li {
+      display: flex; gap: var(--s2); align-items: flex-start;
+      font-size: var(--text-sm); color: var(--text-2); line-height: 1.55;
+    }
+    .gr-redflags li::before {
+      content: '🚩'; flex-shrink: 0; font-size: 0.75rem; margin-top: 2px;
+    }
+
+    /* Kitchen tip */
+    .gr-tip {
+      margin-top: var(--s5); padding: var(--s4) var(--s5);
+      background: var(--bg-alt);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 var(--r2) var(--r2) 0;
+    }
+    .gr-tip-label {
+      font-size: var(--text-xs); font-weight: 700; font-family: var(--font-mono);
+      text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin-bottom: var(--s2);
+    }
+    .gr-tip p { font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; margin: 0; }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo" aria-label="The Prompt Kitchen — Home">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../prompts/">📖 Recipe Book</a></li>
+      <li><a href="../context/">🧑‍🍳 Kitchen Prep</a></li>
+      <li><a href="../meal-prep/">🍱 Meal Prep</a></li>
+      <li><a href="../guardrails/">🛡️ Guardrails</a></li>
+      <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+      <li><a href="../models/">🍳 Appliance Guide</a></li>
+      <li><a href="../model-tester/">🧪 Test Kitchen</a></li>
+      <li class="nav-more">
+        <button class="nav-more-btn" aria-haspopup="true" aria-expanded="false">More <span class="nav-more-chevron">▾</span></button>
+        <ul class="nav-dropdown" role="menu">
+          <li><a href="../spice-rack/">🌶️ Spice Rack</a></li>
+          <li><a href="../pantry/">🥫 The Pantry</a></li>
+          <li><a href="../cookbooks/">📚 Cookbooks</a></li>
+          <li><a href="../meal-prep/">🍱 Meal Prep</a></li>
+          <li><a href="../guardrails/">🛡️ Guardrails</a></li>
+          <li><a href="../audio/">🎵 Kitchen Radio</a></li>
+          <li><a href="../video/">🎬 Kitchen Cinema</a></li>
+          <li><a href="../quiz/">👨‍🍳 Ask the Chef</a></li>
+          <li><a href="../challenges/">🏆 Cook-Off</a></li>
+          <li class="nav-dropdown-divider" role="separator"></li>
+          <li><a href="../fails/">🔥 Kitchen Disasters</a></li>
+          <li><a href="../daily/">⭐ Daily Specials</a></li>
+          <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
+          <li><a href="../gallery/">🍽️ The Table Spread</a></li>
+          <li><a href="../support.html">♥ Tip Jar</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark" aria-hidden="true">☾</span>
+        <span class="theme-icon-light" aria-hidden="true">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../prompts/">📖 Recipe Book</a></li>
+    <li><a href="../guardrails/">🛡️ Guardrails</a></li>
+    <li><a href="../meal-prep/">🍱 Meal Prep</a></li>
+    <li><a href="../cookbooks/">📚 Cookbooks</a></li>
+    <li><a href="../pantry/">🥫 The Pantry</a></li>
+    <li><a href="../spice-rack/">🌶️ Spice Rack</a></li>
+    <li><a href="../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../model-tester/">🧪 Test Kitchen</a></li>
+    <li><a href="../audio/">🎵 Kitchen Radio</a></li>
+    <li><a href="../fails/">🔥 Kitchen Disasters</a></li>
+    <li><a href="../support.html">♥ Tip Jar</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">›</span><span class="current">Kitchen Guardrails</span>
+    </nav>
+    <h1>🛡️ Kitchen Guardrails</h1>
+    <p class="lead">Practical, no-lectures guidance for using AI without shooting yourself in the foot.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container">
+
+<div class="gr-hero">
+  <span class="gr-hero-icon">🛡️</span>
+  <div>
+    <h2>The food safety rules of AI.</h2>
+    <p>Every kitchen has a few ground rules — wash your hands, don't cross-contaminate, check your expiry dates. Not because cooking is dangerous, but because a little care makes the difference between a great meal and a very bad night.</p>
+    <p>Same deal with AI. These eight guides aren't warnings. They're practical habits from people who've watched what goes wrong and figured out how to avoid it. Read them once, keep the good bits, and you'll avoid most of the common mistakes.</p>
+    <p>No corporate safety theater here. No moralizing. Just the stuff that actually helps.</p>
+  </div>
+</div>
+
+<div class="gr-promise">
+  <div class="gr-promise-card">
+    <span class="gr-promise-icon">🎯</span>
+    <div>
+      <h4>Practical, not preachy</h4>
+      <p>These guides focus on what you can do, not long lectures about what AI can't do. Actionable techniques you can use today.</p>
+    </div>
+  </div>
+  <div class="gr-promise-card">
+    <span class="gr-promise-icon">🔪</span>
+    <div>
+      <h4>Learn the knife, use the knife</h4>
+      <p>Knowing the risks doesn't mean avoiding the tool. It means using it better, with fewer surprises.</p>
+    </div>
+  </div>
+  <div class="gr-promise-card">
+    <span class="gr-promise-icon">🧑‍🍳</span>
+    <div>
+      <h4>Built from real mistakes</h4>
+      <p>Every guide here came from patterns we've actually seen go wrong — hallucinated facts, leaked data, misplaced trust.</p>
+    </div>
+  </div>
+</div>
+
+<div class="gr-toc">
+  <h4>Jump to a guide</h4>
+  <ol>
+    <li><a href="#hallucinations">How to Avoid Hallucinations</a></li>
+    <li><a href="#verify">How to Verify AI Output</a></li>
+    <li><a href="#overtrust">How to Avoid Overtrusting AI</a></li>
+    <li><a href="#privacy">How to Protect Your Privacy</a></li>
+    <li><a href="#bias">How to Spot Biased Output</a></li>
+    <li><a href="#sensitive">How to Handle Sensitive Topics</a></li>
+    <li><a href="#when-to-trust">When to Trust AI — and When Not To</a></li>
+    <li><a href="#fact-check">How to Fact-Check AI Creatively</a></li>
+  </ol>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     1. HOW TO AVOID HALLUCINATIONS
+     ══════════════════════════════════════════ -->
+<details id="hallucinations" class="gr-card">
+  <summary class="gr-card-header">
+    <div class="gr-card-left">
+      <div class="gr-card-top">
+        <span class="gr-tag gr-tag-accuracy">🎯 Accuracy</span>
+      </div>
+      <p class="gr-card-title">How to Avoid Hallucinations</p>
+      <p class="gr-card-analogy">Like a chef who fills every gap in the menu with something that sounds like it belongs — whether they've made it before or not.</p>
+    </div>
+    <span class="gr-card-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="gr-card-body">
+    <div class="gr-problem">
+      <span class="gr-problem-icon">🔍</span>
+      <p><strong>The problem:</strong> AI models generate text by predicting what word or phrase fits next — not by consulting a database of verified facts. When they don't know something, they rarely say so. Instead, they produce something that sounds plausible: a convincing-looking citation, a confident statistic, a confident quote that was never said. This is called hallucination, and it happens even with the best models.</p>
+    </div>
+
+    <div class="gr-section-label">Practical Techniques</div>
+    <ul class="gr-techniques">
+      <li class="gr-technique">
+        <span class="gr-technique-num">1</span>
+        <span class="gr-technique-text"><strong>Ask for sources — then verify them.</strong> Requesting citations helps, but AI will sometimes invent plausible-sounding ones. Always check that a cited paper, article, or quote actually exists before relying on it.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">2</span>
+        <span class="gr-technique-text"><strong>Test with something you already know.</strong> Before trusting AI on an unfamiliar topic, ask it something you can verify. How it handles known facts tells you a lot about how far to trust it on unknown ones.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">3</span>
+        <span class="gr-technique-text"><strong>Ask "How confident are you in this?"</strong> A good model will flag genuine uncertainty when directly asked. If it responds with total confidence on a matter that should have nuance, that's useful information.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">4</span>
+        <span class="gr-technique-text"><strong>Use AI to synthesize, not to recall.</strong> AI is much more reliable when working with information you've given it (summarize this document, find the pattern across these notes) than when asked to retrieve facts from memory.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">5</span>
+        <span class="gr-technique-text"><strong>Be suspicious of suspiciously perfect answers.</strong> If the AI gives you an exact figure, a clean quote, or a perfectly formatted citation with no caveats, slow down. Real sources are messy; hallucinated ones are oddly tidy.</span>
+      </li>
+    </ul>
+
+    <div class="gr-section-label">Red Flags</div>
+    <ul class="gr-redflags">
+      <li>Very specific numbers or statistics with no indication of where they came from</li>
+      <li>Citations with plausible-sounding journal names or publication dates that feel slightly off</li>
+      <li>Confident quotes attributed to real people that you can't find anywhere else</li>
+      <li>Answers to obscure questions that come back fast, clean, and without any "I'm not certain"</li>
+      <li>Historical details that are almost right but slightly wrong in ways that are hard to notice</li>
+    </ul>
+
+    <div class="gr-tip">
+      <div class="gr-tip-label">🔪 Kitchen Tip</div>
+      <p>Think of AI like a brilliant prep cook who's read every cookbook ever written but has never actually verified the recipes. Use their knowledge for brainstorming, structure, and synthesis — but before you serve any dish to guests, taste it yourself.</p>
+    </div>
+  </div>
+</details>
+
+
+<!-- ══════════════════════════════════════════
+     2. HOW TO VERIFY AI OUTPUT
+     ══════════════════════════════════════════ -->
+<details id="verify" class="gr-card">
+  <summary class="gr-card-header">
+    <div class="gr-card-left">
+      <div class="gr-card-top">
+        <span class="gr-tag gr-tag-accuracy">🎯 Accuracy</span>
+      </div>
+      <p class="gr-card-title">How to Verify AI Output</p>
+      <p class="gr-card-analogy">Every good cook tastes before serving — not because they expect to have gotten it wrong, but because that's how you catch the moment you did.</p>
+    </div>
+    <span class="gr-card-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="gr-card-body">
+    <div class="gr-problem">
+      <span class="gr-problem-icon">🔍</span>
+      <p><strong>The problem:</strong> AI output can be wrong in ways that are hard to spot — not obviously wrong, but subtly off. A date slightly transposed, a nuance reversed, a missing caveat that changes the meaning. Verification isn't about distrust; it's about having a process for the moments when the output matters.</p>
+    </div>
+
+    <div class="gr-section-label">Practical Techniques</div>
+    <ul class="gr-techniques">
+      <li class="gr-technique">
+        <span class="gr-technique-num">1</span>
+        <span class="gr-technique-text"><strong>Calibrate your verification effort to the stakes.</strong> A brainstormed list of blog topics doesn't need fact-checking. A medical summary, a legal argument, or something you're about to publish does. Match the verification effort to what happens if you're wrong.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">2</span>
+        <span class="gr-technique-text"><strong>Ask AI to critique its own output.</strong> Paste the response back and ask: "What could be wrong or misleading in this? What am I not being told?" AI is often good at catching its own gaps when explicitly asked.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">3</span>
+        <span class="gr-technique-text"><strong>Cross-reference with a second source.</strong> Not a second AI — a different kind of source entirely. A primary document, a news article, a subject-matter expert. If the AI got something wrong, another AI might get it wrong the same way.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">4</span>
+        <span class="gr-technique-text"><strong>Ask for the other side.</strong> If AI gives you a confident conclusion, ask "What's the strongest argument against this?" Verification isn't just checking facts — it's checking whether the framing itself is complete.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">5</span>
+        <span class="gr-technique-text"><strong>Read what you're about to send.</strong> The simplest verification: actually read the AI-drafted email, report, or message before you hit send. Not skim — read. AI is good at sounding right while being slightly off.</span>
+      </li>
+    </ul>
+
+    <div class="gr-section-label">Red Flags</div>
+    <ul class="gr-redflags">
+      <li>You're about to send or publish something important that you haven't actually read carefully</li>
+      <li>The output is much more confident than you'd expect from a human expert on the same topic</li>
+      <li>All the sources or evidence are internal to the AI's output — no external anchors</li>
+      <li>The conclusion conveniently confirms what you already believed</li>
+    </ul>
+
+    <div class="gr-tip">
+      <div class="gr-tip-label">🔪 Kitchen Tip</div>
+      <p>Build one verification habit rather than trying to fact-check everything: before you share any AI-assisted work with someone who matters, read it out loud once. Your ears catch what your eyes skip over, and you'll notice when something doesn't sound quite right.</p>
+    </div>
+  </div>
+</details>
+
+
+<!-- ══════════════════════════════════════════
+     3. HOW TO AVOID OVERTRUSTING AI
+     ══════════════════════════════════════════ -->
+<details id="overtrust" class="gr-card">
+  <summary class="gr-card-header">
+    <div class="gr-card-left">
+      <div class="gr-card-top">
+        <span class="gr-tag gr-tag-trust">⚖️ Trust</span>
+      </div>
+      <p class="gr-card-title">How to Avoid Overtrusting AI</p>
+      <p class="gr-card-analogy">Following a printed recipe without tasting once — because the book said so, it must be right.</p>
+    </div>
+    <span class="gr-card-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="gr-card-body">
+    <div class="gr-problem">
+      <span class="gr-problem-icon">🔍</span>
+      <p><strong>The problem:</strong> AI is fluent, confident, and rarely says "I don't know." That combination is socially persuasive — we're wired to trust sources that sound authoritative. Over time, regular AI users often stop questioning the output because it's usually good. That's exactly when the unusual errors slip through unchallenged.</p>
+    </div>
+
+    <div class="gr-section-label">Practical Techniques</div>
+    <ul class="gr-techniques">
+      <li class="gr-technique">
+        <span class="gr-technique-num">1</span>
+        <span class="gr-technique-text"><strong>Keep a "this came from AI" mental label.</strong> When AI gives you information you didn't know before, tag it as provisional. It might be right — but it's different from something you verified independently. Treat it accordingly.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">2</span>
+        <span class="gr-technique-text"><strong>Notice when AI agrees with you suspiciously fast.</strong> Well-designed AI tries not to be sycophantic, but it still tends toward agreement. If AI consistently validates your positions without pushback, you might be in a feedback loop, not a real exchange.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">3</span>
+        <span class="gr-technique-text"><strong>Deliberately seek disagreement.</strong> Ask AI "What's wrong with my plan?" or "What would a skeptic say about this?" Getting the AI to argue against you is a good way to test whether your idea is actually solid.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">4</span>
+        <span class="gr-technique-text"><strong>Keep your own skills sharp.</strong> If you use AI for writing, still write some things yourself. If you use it for analysis, still do some analysis manually. Fluency atrophies if you outsource everything — and you won't notice until you need it.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">5</span>
+        <span class="gr-technique-text"><strong>Separate what AI does from what you decide.</strong> AI can inform every decision. It shouldn't make them. The moment you find yourself outsourcing a consequential judgment call entirely to AI, pause and ask why you're not in the driver's seat.</span>
+      </li>
+    </ul>
+
+    <div class="gr-section-label">Red Flags</div>
+    <ul class="gr-redflags">
+      <li>You're forwarding or publishing AI output without a meaningful read-through first</li>
+      <li>You feel mildly surprised when AI is wrong about something — it should feel normal, not exceptional</li>
+      <li>You've stopped forming an opinion before asking AI what to think</li>
+      <li>AI's answer changed your mind on something important and you can't quite articulate why</li>
+    </ul>
+
+    <div class="gr-tip">
+      <div class="gr-tip-label">🔪 Kitchen Tip</div>
+      <p>The best chefs use every tool available — immersion circulators, thermometers, kitchen scales — but they still know how to cook without them. Let AI handle the tedious and the fast. Keep the judgement, the taste, and the final call for yourself.</p>
+    </div>
+  </div>
+</details>
+
+
+<!-- ══════════════════════════════════════════
+     4. HOW TO PROTECT YOUR PRIVACY
+     ══════════════════════════════════════════ -->
+<details id="privacy" class="gr-card">
+  <summary class="gr-card-header">
+    <div class="gr-card-left">
+      <div class="gr-card-top">
+        <span class="gr-tag gr-tag-privacy">🔒 Privacy</span>
+      </div>
+      <p class="gr-card-title">How to Protect Your Privacy</p>
+      <p class="gr-card-analogy">Don't paste your secret family recipe into a public cookbook — especially not one with a "we may use submissions for training" clause in the fine print.</p>
+    </div>
+    <span class="gr-card-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="gr-card-body">
+    <div class="gr-problem">
+      <span class="gr-problem-icon">🔍</span>
+      <p><strong>The problem:</strong> When you use an AI tool, your conversations may be stored, reviewed by humans for safety, or used to improve the model — depending on the service and your settings. Most people don't read the terms. That's fine until they paste something sensitive and wonder later where it went.</p>
+    </div>
+
+    <div class="gr-section-label">Practical Techniques</div>
+    <ul class="gr-techniques">
+      <li class="gr-technique">
+        <span class="gr-technique-num">1</span>
+        <span class="gr-technique-text"><strong>Treat every AI chat like a postcard, not a sealed letter.</strong> Assume it's readable by the service provider. If you wouldn't write something on a postcard, don't paste it into a chat window without knowing the privacy settings.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">2</span>
+        <span class="gr-technique-text"><strong>Anonymize before sharing.</strong> If you need help with a real email, document, or situation involving other people, replace names, specifics, and identifying details with placeholders before pasting. "My colleague Alex" becomes "a colleague." The advice doesn't need the real name.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">3</span>
+        <span class="gr-technique-text"><strong>Check your platform's data settings.</strong> Most major AI services let you opt out of training data collection, disable chat history, or use an API key which has different retention policies. Spend five minutes in Settings — it's worth it.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">4</span>
+        <span class="gr-technique-text"><strong>Never paste passwords, API keys, or financial account details.</strong> Not even to "help me debug this." Mask sensitive values first (replace with X's or "REDACTED") and explain the structure without exposing the actual data.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">5</span>
+        <span class="gr-technique-text"><strong>Use local or private models for truly sensitive work.</strong> Self-hosted models like Ollama, or API-mode with strict data retention settings, give you more control. If your work involves genuinely confidential data, it's worth the setup.</span>
+      </li>
+    </ul>
+
+    <div class="gr-section-label">Red Flags</div>
+    <ul class="gr-redflags">
+      <li>Pasting a full document containing real customer data, medical records, or legal filings</li>
+      <li>Using a work laptop to access personal AI tools that may sync to employer monitoring</li>
+      <li>Not knowing whether your AI provider stores conversations and for how long</li>
+      <li>Sharing other people's private information without their knowledge to get advice about them</li>
+    </ul>
+
+    <div class="gr-tip">
+      <div class="gr-tip-label">🔪 Kitchen Tip</div>
+      <p>The "would I be comfortable if this conversation was read by someone else?" test works well. If the answer is no, anonymize it first. Most AI tasks don't actually require the real, specific, sensitive version of the thing — they just need the shape of it.</p>
+    </div>
+  </div>
+</details>
+
+
+<!-- ══════════════════════════════════════════
+     5. HOW TO SPOT BIASED OR MANIPULATIVE OUTPUT
+     ══════════════════════════════════════════ -->
+<details id="bias" class="gr-card">
+  <summary class="gr-card-header">
+    <div class="gr-card-left">
+      <div class="gr-card-top">
+        <span class="gr-tag gr-tag-bias">🔎 Bias</span>
+      </div>
+      <p class="gr-card-title">How to Spot Biased or Manipulative Output</p>
+      <p class="gr-card-analogy">Some cookbooks are written by people trying to sell you their branded ingredients. The recipes work, but every third line nudges you toward a specific product.</p>
+    </div>
+    <span class="gr-card-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="gr-card-body">
+    <div class="gr-problem">
+      <span class="gr-problem-icon">🔍</span>
+      <p><strong>The problem:</strong> AI models are trained on human-generated text, which contains human biases — political, cultural, commercial, and demographic. Models also have their own design-level choices about what to say, what to emphasize, and what to avoid. None of this is necessarily sinister, but it means AI outputs carry a perspective even when they sound neutral.</p>
+    </div>
+
+    <div class="gr-section-label">Practical Techniques</div>
+    <ul class="gr-techniques">
+      <li class="gr-technique">
+        <span class="gr-technique-num">1</span>
+        <span class="gr-technique-text"><strong>Ask the same question from the other direction.</strong> If AI gives you an argument for X, ask it to argue for not-X. If the second response is thin or reluctant, the model may have a lean you should account for.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">2</span>
+        <span class="gr-technique-text"><strong>Notice what's missing, not just what's said.</strong> Bias often operates through omission — what's not mentioned, whose perspective isn't included, which counterarguments are absent. Ask: "What perspectives does this not represent?"</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">3</span>
+        <span class="gr-technique-text"><strong>Watch for framing that primes a conclusion.</strong> Language like "obviously," "clearly," "it's widely agreed," or "most people believe" is doing persuasive work dressed as neutral reporting. Authoritative framing is not the same as correct framing.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">4</span>
+        <span class="gr-technique-text"><strong>Try different models on contested questions.</strong> Claude, ChatGPT, Grok, and Gemini have different training approaches and design choices. Significant disagreement between them is a good signal that a question has real complexity or genuine value-based differences.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">5</span>
+        <span class="gr-technique-text"><strong>Be extra careful when AI confirms something you already believed.</strong> Confirmation bias works on AI too — what you ask shapes what you get. If the AI always agrees with your political, professional, or cultural priors, ask yourself whether you're asking leading questions.</span>
+      </li>
+    </ul>
+
+    <div class="gr-section-label">Red Flags</div>
+    <ul class="gr-redflags">
+      <li>Responses that consistently frame one side of a contested issue as the obvious, neutral, or default position</li>
+      <li>Demographic or cultural assumptions built into examples, defaults, or "typical" scenarios</li>
+      <li>Resistance or extra caveats when asked to engage with one side of a topic vs. the other</li>
+      <li>Historical or political framing that feels subtly tilted — not wrong, just curated</li>
+    </ul>
+
+    <div class="gr-tip">
+      <div class="gr-tip-label">🔪 Kitchen Tip</div>
+      <p>Every AI model has a personality shaped by how it was trained and tuned. The useful habit isn't to search for a "neutral" model — there isn't one. It's to know roughly what biases your model of choice tends toward, so you can compensate for them consciously.</p>
+    </div>
+  </div>
+</details>
+
+
+<!-- ══════════════════════════════════════════
+     6. HOW TO HANDLE SENSITIVE OR RISKY TOPICS
+     ══════════════════════════════════════════ -->
+<details id="sensitive" class="gr-card">
+  <summary class="gr-card-header">
+    <div class="gr-card-left">
+      <div class="gr-card-top">
+        <span class="gr-tag gr-tag-safety">🧯 Safety</span>
+      </div>
+      <p class="gr-card-title">How to Handle Sensitive or Risky Topics</p>
+      <p class="gr-card-analogy">A sharp knife is more useful than a dull one — and requires more care. That's not a warning to put it down; it's a reminder to hold it correctly.</p>
+    </div>
+    <span class="gr-card-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="gr-card-body">
+    <div class="gr-problem">
+      <span class="gr-problem-icon">🔍</span>
+      <p><strong>The problem:</strong> Some topics — health decisions, legal advice, mental health, financial choices, politically charged subjects — carry real consequences if the AI gets it wrong or you take its output at face value. AI can be genuinely useful in these areas, but as a thinking partner and starting point, not as the final word.</p>
+    </div>
+
+    <div class="gr-section-label">Practical Techniques</div>
+    <ul class="gr-techniques">
+      <li class="gr-technique">
+        <span class="gr-technique-num">1</span>
+        <span class="gr-technique-text"><strong>Use AI to get smarter about the question, not to answer it.</strong> For medical, legal, or financial topics, AI is excellent at helping you understand the landscape — what questions to ask, what terms mean, what options exist — before you talk to a real professional.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">2</span>
+        <span class="gr-technique-text"><strong>State your purpose clearly.</strong> "I'm researching X for a novel" and "I'm trying to do X myself" are very different requests. Being honest about your purpose tends to produce more useful and appropriately calibrated responses.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">3</span>
+        <span class="gr-technique-text"><strong>Know when you've hit the limit of what AI should handle.</strong> If someone is in crisis, in genuine legal jeopardy, or making a high-stakes medical decision, AI is not the right tool for the final answer. It can help you get to the right human faster — that's genuinely useful and about as far as it goes.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">4</span>
+        <span class="gr-technique-text"><strong>Treat AI's risk-aversion as data, not a verdict.</strong> AI often adds excessive caveats to sensitive topics. "I can't provide medical advice" when you asked a simple factual question is overcalibrated. Note when a model seems to be following a blanket policy rather than engaging with your actual situation.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">5</span>
+        <span class="gr-technique-text"><strong>For mental health topics, use AI as a bridge, not a destination.</strong> AI can be a surprisingly good listener for processing difficult feelings, but it doesn't replace real human support. If AI is your only outlet for something that matters, that's worth noticing.</span>
+      </li>
+    </ul>
+
+    <div class="gr-section-label">Red Flags</div>
+    <ul class="gr-redflags">
+      <li>Making a significant health, legal, or financial decision based primarily on AI output without a human professional involved</li>
+      <li>Relying on AI for crisis support without any real human contact</li>
+      <li>Treating AI's excessive caution as a reason to seek a less cautious model that will just tell you what you want to hear</li>
+      <li>Using AI to avoid a difficult conversation you should be having with an actual person</li>
+    </ul>
+
+    <div class="gr-tip">
+      <div class="gr-tip-label">🔪 Kitchen Tip</div>
+      <p>The most useful reframe: AI is a knowledgeable friend who's read widely and thinks carefully — not a licensed professional. A knowledgeable friend can help you walk into a doctor's appointment or lawyer's meeting much better prepared. That's genuinely valuable. Use it for that.</p>
+    </div>
+  </div>
+</details>
+
+
+<!-- ══════════════════════════════════════════
+     7. WHEN TO TRUST AI — AND WHEN NOT TO
+     ══════════════════════════════════════════ -->
+<details id="when-to-trust" class="gr-card">
+  <summary class="gr-card-header">
+    <div class="gr-card-left">
+      <div class="gr-card-top">
+        <span class="gr-tag gr-tag-trust">⚖️ Trust</span>
+      </div>
+      <p class="gr-card-title">When to Trust AI — and When Not To</p>
+      <p class="gr-card-analogy">A kitchen thermometer is the most reliable thing in the room for one specific job. For everything else, you still need a cook.</p>
+    </div>
+    <span class="gr-card-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="gr-card-body">
+    <div class="gr-problem">
+      <span class="gr-problem-icon">🔍</span>
+      <p><strong>The problem:</strong> AI is genuinely excellent at some things and genuinely unreliable at others — and it presents both with the same confident tone. The skill isn't blanket trust or blanket skepticism. It's calibration: knowing which tasks are AI's strong suit and which ones need human oversight.</p>
+    </div>
+
+    <div class="gr-section-label">Trust AI readily for…</div>
+    <ul class="gr-techniques">
+      <li class="gr-technique">
+        <span class="gr-technique-num">✓</span>
+        <span class="gr-technique-text"><strong>Writing and editing.</strong> Drafting, restructuring, improving tone, fixing grammar — AI is excellent here. The risk is style drift, not factual error. Easy to spot, easy to fix.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">✓</span>
+        <span class="gr-technique-text"><strong>Brainstorming and ideation.</strong> Generating options, exploring angles, breaking out of creative ruts — AI is genuinely useful. You still pick which ideas are good; the volume is the gift.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">✓</span>
+        <span class="gr-technique-text"><strong>Summarizing material you've provided.</strong> When you paste a document and ask for a summary, AI is working with your source. The risk of hallucination drops dramatically because there's a ground truth to stay tethered to.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">✓</span>
+        <span class="gr-technique-text"><strong>Code in well-established languages and frameworks.</strong> For common patterns in Python, JavaScript, SQL, etc., AI code is usually correct and worth trusting as a starting point — still needs testing, but the error rate is low.</span>
+      </li>
+    </ul>
+
+    <div class="gr-section-label">Be cautious with…</div>
+    <ul class="gr-techniques">
+      <li class="gr-technique">
+        <span class="gr-technique-num">⚠</span>
+        <span class="gr-technique-text"><strong>Specific factual claims, especially recent ones.</strong> Dates, statistics, names, events after the training cutoff — all need independent verification. The more specific and recent, the more careful.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">⚠</span>
+        <span class="gr-technique-text"><strong>Professional advice in specialized domains.</strong> Medicine, law, finance, mental health — AI can help you understand the territory, but the final call needs a qualified human who knows your actual situation.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">⚠</span>
+        <span class="gr-technique-text"><strong>Ethical or values-based judgments.</strong> AI can lay out considerations, but it has no stake in your values. Consequential decisions about people's lives, relationships, or careers shouldn't be outsourced to a model.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">⚠</span>
+        <span class="gr-technique-text"><strong>Anything involving real-time or local information.</strong> Current prices, local businesses, today's news, what's in stock, the latest version of anything — AI's training data has a cutoff, and it may not tell you when it does.</span>
+      </li>
+    </ul>
+
+    <div class="gr-section-label">Red Flags</div>
+    <ul class="gr-redflags">
+      <li>Applying the same level of trust to "fix my email" as to "tell me about my medication interactions"</li>
+      <li>Not knowing (or checking) when the model's training data ends</li>
+      <li>Trusting AI on a topic where you have no independent ability to evaluate correctness</li>
+    </ul>
+
+    <div class="gr-tip">
+      <div class="gr-tip-label">🔪 Kitchen Tip</div>
+      <p>A simple rule of thumb: the more the task is about language, the more you can trust AI. The more it's about specific real-world facts, professional judgment, or things that happened recently, the more you verify. Language is AI's home turf; facts about the world are slippery ground.</p>
+    </div>
+  </div>
+</details>
+
+
+<!-- ══════════════════════════════════════════
+     8. HOW TO FACT-CHECK AI CREATIVELY
+     ══════════════════════════════════════════ -->
+<details id="fact-check" class="gr-card">
+  <summary class="gr-card-header">
+    <div class="gr-card-left">
+      <div class="gr-card-top">
+        <span class="gr-tag gr-tag-accuracy">🎯 Accuracy</span>
+      </div>
+      <p class="gr-card-title">How to Fact-Check AI Creatively</p>
+      <p class="gr-card-analogy">Cross-referencing three cookbooks before committing to a technique — because if all three agree, you're probably on solid ground.</p>
+    </div>
+    <span class="gr-card-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="gr-card-body">
+    <div class="gr-problem">
+      <span class="gr-problem-icon">🔍</span>
+      <p><strong>The problem:</strong> Traditional fact-checking ("Google it") works fine for obvious claims, but AI often produces errors that are subtle, plausible, and hard to know to check. The creative fact-checking techniques below are about developing an instinct for where errors hide and how to surface them efficiently — without verifying every single word.</p>
+    </div>
+
+    <div class="gr-section-label">Practical Techniques</div>
+    <ul class="gr-techniques">
+      <li class="gr-technique">
+        <span class="gr-technique-num">1</span>
+        <span class="gr-technique-text"><strong>Ask AI to self-audit.</strong> Paste its own response back and ask: "Identify any claims in this that you're less than fully confident about." Then check those specifically. You don't need to check everything — just the uncertain parts.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">2</span>
+        <span class="gr-technique-text"><strong>Use a different AI as a peer reviewer.</strong> Paste the output into a different model and ask "Is anything here factually questionable?" Models have different training data and different blindspots — disagreement is a useful signal.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">3</span>
+        <span class="gr-technique-text"><strong>Check the edges, not the middle.</strong> The broad strokes are usually right. Errors cluster at the edges: exact dates, precise statistics, full names, obscure details, recent developments. Spot-check those rather than the general claims.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">4</span>
+        <span class="gr-technique-text"><strong>Run the Google sniff test on specific claims.</strong> Pick the two or three most specific and consequential facts in an AI response and search them directly. Ten minutes of targeted searching catches most meaningful errors.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">5</span>
+        <span class="gr-technique-text"><strong>Ask "who said this first?"</strong> For anything that looks like a quote, statistic, or named finding, track it to a primary source. "Studies show" is not a source. Neither is "experts believe." Find the study, find the expert.</span>
+      </li>
+      <li class="gr-technique">
+        <span class="gr-technique-num">6</span>
+        <span class="gr-technique-text"><strong>Use Wikipedia's references, not Wikipedia itself.</strong> Wikipedia is a useful starting point, but the citations at the bottom are the real value. If AI cites something that appears in Wikipedia, go to the primary source linked there — that's verifiable; Wikipedia itself isn't.</span>
+      </li>
+    </ul>
+
+    <div class="gr-section-label">Red Flags</div>
+    <ul class="gr-redflags">
+      <li>A statistic with no indication of where it came from and no way to trace it back</li>
+      <li>A direct quote from a public figure that you can't find in any other source</li>
+      <li>A "recent study" with no journal, date, author, or institution attached</li>
+      <li>An AI that refuses to flag any uncertainty when you ask it to self-audit</li>
+    </ul>
+
+    <div class="gr-tip">
+      <div class="gr-tip-label">🔪 Kitchen Tip</div>
+      <p>You don't need to fact-check everything — that would take longer than just researching it yourself. Develop a fast triage: most AI output is fine; specific claims at the edges need a quick check; and anything you're about to stake your reputation on deserves real sourcing. That's it.</p>
+    </div>
+  </div>
+</details>
+
+
+<!-- Bottom nav -->
+<div style="margin-top: var(--s12); padding-top: var(--s8); border-top: 1px solid var(--border); display: flex; gap: var(--s4); flex-wrap: wrap;">
+  <a href="../context/" class="btn btn-outline">← Kitchen Prep</a>
+  <a href="../meal-prep/" class="btn btn-outline">Meal Prep</a>
+  <a href="../prompts/" class="btn btn-outline">Browse the Recipe Book →</a>
+</div>
+
+</div></div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../" class="nav-logo" style="margin-bottom:var(--s3);display:inline-flex;" aria-label="Home">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="16" r="3" fill="currentColor"/></svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI. Free, open, and always will be.</p>
+      </div>
+      <div class="footer-col"><h4>Learn</h4><ul>
+        <li><a href="../prompts/">Recipe Book</a></li>
+        <li><a href="../pantry/">The Pantry</a></li>
+        <li><a href="../cookbooks/">Cookbooks</a></li>
+        <li><a href="../meal-prep/">Meal Prep</a></li>
+        <li><a href="../guardrails/">Kitchen Guardrails</a></li>
+        <li><a href="../daily/">Daily Specials</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Tools</h4><ul>
+        <li><a href="../spice-rack/">Spice Rack</a></li>
+        <li><a href="../model-tester/">Test Kitchen</a></li>
+        <li><a href="../models/">Appliance Guide</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Explore</h4><ul>
+        <li><a href="../examples/">Tasting Menu</a></li>
+        <li><a href="../fails/">Kitchen Disasters</a></li>
+        <li><a href="../gallery/">The Table Spread</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Site</h4><ul>
+        <li><a href="../support.html">Tip Jar</a></li>
+        <li><a href="https://github.com/cyork95/the-prompt-kitchen" rel="noopener">GitHub</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <span>Developed with ♥ by <a href="https://yorkdevelops.com" rel="noopener" style="color:inherit">York.Dev</a></span>
+      <div class="footer-privacy"><span class="privacy-dot"></span><span>No tracking · No cookies · No ads · No account needed</span></div>
+    </div>
+  </div>
+</footer>
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+<script src="../js/main.js"></script>
+</body>
+</html>
