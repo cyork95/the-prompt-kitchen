@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Model Tester — Run Any Prompt Across Multiple AI Tools | The Prompt Kitchen</title>
+  <meta name="description" content="Design a test session, run the same prompt through 1, 3, 5, or 10 free-tier AI tools, record results, and export formatted HTML for The Prompt Kitchen gallery." />
+  <link rel="canonical" href="https://thepromptkitchen.fyi/model-tester/" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    /* ── Model Tester Styles ── */
+    .tester-step {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      padding: var(--s6);
+      margin-bottom: var(--s6);
+    }
+    .tester-step h2 {
+      margin: 0 0 var(--s4);
+      font-size: var(--text-lg);
+      display: flex;
+      align-items: center;
+      gap: var(--s3);
+    }
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: var(--text-sm);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .step-number.done { background: var(--success, #22c55e); }
+    .step-number.locked { background: var(--border); color: var(--text-3); }
+
+    /* Prompt cards */
+    .prompt-category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--s3);
+      margin-bottom: var(--s4);
+    }
+    .prompt-category-btn {
+      padding: var(--s3) var(--s4);
+      border: 2px solid var(--border);
+      border-radius: var(--r2);
+      background: var(--bg);
+      cursor: pointer;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--text-1);
+      text-align: left;
+      transition: border-color .15s, background .15s;
+    }
+    .prompt-category-btn:hover { border-color: var(--accent); }
+    .prompt-category-btn.active { border-color: var(--accent); background: var(--accent-light); }
+    .prompt-display {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      padding: var(--s4);
+      font-family: var(--font-mono, monospace);
+      font-size: var(--text-sm);
+      line-height: 1.6;
+      min-height: 80px;
+      white-space: pre-wrap;
+      color: var(--text-1);
+      margin: var(--s3) 0;
+    }
+    .prompt-controls { display: flex; gap: var(--s2); flex-wrap: wrap; margin-top: var(--s3); }
+
+    /* Model grid */
+    .model-preset-row { display: flex; gap: var(--s2); flex-wrap: wrap; margin-bottom: var(--s4); align-items: center; }
+    .preset-label { font-size: var(--text-sm); color: var(--text-3); margin-right: var(--s1); }
+    .model-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: var(--s3);
+      margin-top: var(--s4);
+    }
+    .model-card-check {
+      border: 2px solid var(--border);
+      border-radius: var(--r2);
+      padding: var(--s3) var(--s4);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--s3);
+      transition: border-color .15s, background .15s;
+      user-select: none;
+    }
+    .model-card-check:hover { border-color: var(--accent); }
+    .model-card-check.selected { border-color: var(--accent); background: var(--accent-light); }
+    .model-card-check input[type="checkbox"] { display: none; }
+    .model-check-box {
+      width: 1.25rem;
+      height: 1.25rem;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      transition: border-color .15s, background .15s;
+    }
+    .model-card-check.selected .model-check-box {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+    .model-card-check.selected .model-check-box::after { content: '✓'; }
+    .model-card-info { min-width: 0; }
+    .model-card-name { font-weight: 600; font-size: var(--text-sm); }
+    .model-card-meta { font-size: 0.75rem; color: var(--text-3); }
+    .model-tag { display: inline-block; font-size: 0.65rem; padding: 1px 5px; border-radius: 3px; background: var(--bg-alt); border: 1px solid var(--border); color: var(--text-3); }
+
+    /* Test queue */
+    .test-queue { display: flex; flex-direction: column; gap: var(--s3); }
+    .test-queue-item {
+      display: flex;
+      align-items: center;
+      gap: var(--s3);
+      padding: var(--s3) var(--s4);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      background: var(--bg);
+    }
+    .test-queue-item.tested { border-color: #22c55e; background: rgba(34,197,94,.05); }
+    .test-done-btn {
+      margin-left: auto;
+      padding: var(--s1) var(--s3);
+      border-radius: var(--r1);
+      border: 1px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+      font-size: var(--text-sm);
+      white-space: nowrap;
+    }
+    .test-done-btn.done { background: #22c55e; color: #fff; border-color: #22c55e; }
+
+    /* Result areas */
+    .result-areas { display: flex; flex-direction: column; gap: var(--s5); }
+    .result-block { border: 1px solid var(--border); border-radius: var(--r2); overflow: hidden; }
+    .result-block-header {
+      padding: var(--s3) var(--s4);
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: var(--s3);
+      font-weight: 600;
+      font-size: var(--text-sm);
+    }
+    .result-block textarea {
+      width: 100%;
+      min-height: 180px;
+      padding: var(--s4);
+      border: none;
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: var(--text-sm);
+      line-height: 1.6;
+      resize: vertical;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+    .result-block textarea:focus { outline: none; box-shadow: inset 0 0 0 2px var(--accent); }
+
+    /* Export output */
+    .export-output {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      padding: var(--s4);
+      font-family: var(--font-mono, monospace);
+      font-size: 0.75rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-all;
+      max-height: 400px;
+      overflow-y: auto;
+      color: var(--text-2);
+    }
+
+    /* Session summary bar */
+    .session-bar {
+      position: sticky;
+      top: 60px;
+      z-index: 10;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: var(--s3) 0;
+      margin-bottom: var(--s6);
+    }
+    .session-bar-inner {
+      display: flex;
+      align-items: center;
+      gap: var(--s4);
+      flex-wrap: wrap;
+      font-size: var(--text-sm);
+      color: var(--text-2);
+    }
+    .session-bar-pill {
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: var(--accent-light);
+      border: 1px solid var(--accent-border);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .tester-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: var(--s6) 0;
+    }
+
+    /* Category filter pills */
+    .model-filter-row { display: flex; gap: var(--s2); flex-wrap: wrap; margin-bottom: var(--s3); }
+    .model-filter-btn {
+      padding: var(--s1) var(--s3);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--bg);
+      cursor: pointer;
+      font-size: var(--text-sm);
+      color: var(--text-2);
+    }
+    .model-filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    .hidden-model { display: none !important; }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../prompts/">Recipe Book</a></li>
+      <li><a href="../context/">Kitchen Prep</a></li>
+      <li><a href="../models/">Appliance Guide</a></li>
+      <li><a href="../daily/">Daily Specials</a></li>
+      <li><a href="../examples/">Tasting Menu</a></li>
+      <li><a href="../image-video/">Image &amp; Video</a></li>
+      <li><a href="../gallery/">Gallery</a></li>
+      <li><a href="../model-tester/" class="active">Model Tester</a></li>
+      <li><a href="../support.html">Support <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;display:inline-block;margin-left:1px" aria-hidden="true"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg></a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark">☾</span><span class="theme-icon-light">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../prompts/">📖 Recipe Book</a></li>
+    <li><a href="../context/">🧑‍🍳 Kitchen Prep</a></li>
+    <li><a href="../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../daily/">⭐ Daily Specials</a></li>
+    <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+    <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
+    <li><a href="../gallery/">🖼️ Gallery</a></li>
+    <li><a href="../model-tester/">🧪 Model Tester</a></li>
+    <li><a href="../support.html">♥ Support</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">›</span><span class="current">Model Tester</span>
+    </nav>
+    <h1>🧪 The Model Tester</h1>
+    <p class="lead">Design a test session, run the same prompt through 1, 3, 5, or 10 free-tier AI tools, record your results, and export a formatted snippet to add to the Tasting Menu.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container">
+
+  <!-- Session summary bar (appears after session is configured) -->
+  <div class="session-bar" id="session-bar" style="display:none;">
+    <div class="container session-bar-inner">
+      <span>🧪 Active session:</span>
+      <span class="session-bar-pill" id="bar-prompt-label">No prompt selected</span>
+      <span>→</span>
+      <span class="session-bar-pill" id="bar-models-label">0 models</span>
+      <span id="bar-progress-label" style="color:var(--text-3);"></span>
+    </div>
+  </div>
+
+  <!-- ── STEP 1: PROMPT ── -->
+  <section class="tester-step" id="step-1">
+    <h2><span class="step-number" id="step1-num">1</span> Choose your prompt</h2>
+
+    <div class="prompt-category-grid" id="prompt-category-grid">
+      <!-- rendered by JS -->
+    </div>
+
+    <div id="prompt-display-area" style="display:none;">
+      <div class="prompt-display" id="prompt-display">Select a category above to see a prompt.</div>
+      <div class="prompt-controls">
+        <button class="btn btn-secondary" id="btn-random-prompt" onclick="randomPromptInCategory()">🎲 Different prompt</button>
+        <button class="btn btn-secondary" id="btn-custom-prompt" onclick="toggleCustomPrompt()">✏️ Write my own</button>
+        <button class="btn btn-primary" id="btn-use-prompt" onclick="lockPrompt()">Use this prompt →</button>
+      </div>
+      <div id="custom-prompt-area" style="display:none; margin-top:var(--s3);">
+        <textarea id="custom-prompt-text" rows="5" placeholder="Type or paste your own prompt here…" style="width:100%; padding:var(--s3); border:1px solid var(--border); border-radius:var(--r2); background:var(--bg); color:var(--text-1); font-size:var(--text-sm); resize:vertical; box-sizing:border-box;"></textarea>
+        <div style="margin-top:var(--s2); display:flex; gap:var(--s2);">
+          <button class="btn btn-primary btn-sm" onclick="useCustomPrompt()">Use custom prompt →</button>
+          <button class="btn btn-secondary btn-sm" onclick="toggleCustomPrompt()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="prompt-locked-display" style="display:none; margin-top:var(--s3);">
+      <div class="callout callout-tip">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">
+          <h4 id="prompt-locked-label">Prompt set</h4>
+          <p id="prompt-locked-text" style="font-family:monospace; font-size:var(--text-sm);"></p>
+          <button class="btn btn-secondary btn-sm" style="margin-top:var(--s2);" onclick="resetPrompt()">Change prompt</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STEP 2: MODELS ── -->
+  <section class="tester-step" id="step-2">
+    <h2><span class="step-number locked" id="step2-num">2</span> Select AI tools to test</h2>
+    <div id="step2-locked-msg" style="color:var(--text-3); font-size:var(--text-sm);">Complete Step 1 first.</div>
+    <div id="step2-content" style="display:none;">
+      <div class="model-preset-row">
+        <span class="preset-label">Quick select:</span>
+        <button class="btn btn-secondary btn-sm" onclick="selectRandom(1)">🎲 1 random</button>
+        <button class="btn btn-secondary btn-sm" onclick="selectRandom(3)">🎲 3 random</button>
+        <button class="btn btn-secondary btn-sm" onclick="selectRandom(5)">🎲 5 random</button>
+        <button class="btn btn-secondary btn-sm" onclick="selectRandom(10)">🎲 10 random</button>
+        <button class="btn btn-secondary btn-sm" onclick="clearModels()">✕ Clear</button>
+        <span style="margin-left:auto; font-size:var(--text-sm); color:var(--text-3);" id="model-count-label">0 selected</span>
+      </div>
+
+      <div class="model-filter-row" id="model-filter-row">
+        <button class="model-filter-btn active" data-cat="all" onclick="filterModels('all', this)">All</button>
+        <button class="model-filter-btn" data-cat="frontier" onclick="filterModels('frontier', this)">Frontier</button>
+        <button class="model-filter-btn" data-cat="search" onclick="filterModels('search', this)">Has web search</button>
+        <button class="model-filter-btn" data-cat="chinese" onclick="filterModels('chinese', this)">Chinese AI</button>
+        <button class="model-filter-btn" data-cat="privacy" onclick="filterModels('privacy', this)">Privacy-first</button>
+        <button class="model-filter-btn" data-cat="speed" onclick="filterModels('speed', this)">Ultra-fast inference</button>
+        <button class="model-filter-btn" data-cat="specialist" onclick="filterModels('specialist', this)">Specialist</button>
+      </div>
+
+      <div class="model-grid" id="model-grid">
+        <!-- rendered by JS -->
+      </div>
+
+      <div style="margin-top:var(--s4);">
+        <button class="btn btn-primary" id="btn-lock-models" onclick="lockModels()" disabled>Start testing with selected models →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STEP 3: TEST ── -->
+  <section class="tester-step" id="step-3">
+    <h2><span class="step-number locked" id="step3-num">3</span> Run your tests</h2>
+    <div id="step3-locked-msg" style="color:var(--text-3); font-size:var(--text-sm);">Complete Steps 1 and 2 first.</div>
+    <div id="step3-content" style="display:none;">
+      <p style="color:var(--text-2); margin-bottom:var(--s4);">Open each AI tool, paste the prompt, and mark it done when you have a result. Copy-paste results into Step 4.</p>
+
+      <div class="callout callout-tip" style="margin-bottom:var(--s4);">
+        <span class="callout-icon">📋</span>
+        <div class="callout-body">
+          <h4>Your prompt — click to copy</h4>
+          <p id="step3-prompt-display" style="font-family:monospace; font-size:var(--text-sm); cursor:pointer;" onclick="copyPrompt()" title="Click to copy"></p>
+          <button class="btn btn-secondary btn-sm" style="margin-top:var(--s2);" onclick="copyPrompt()">Copy prompt to clipboard</button>
+          <span id="copy-confirm" style="font-size:var(--text-sm); color:#22c55e; margin-left:var(--s3); display:none;">Copied!</span>
+        </div>
+      </div>
+
+      <div class="test-queue" id="test-queue">
+        <!-- rendered by JS -->
+      </div>
+
+      <div style="margin-top:var(--s5);">
+        <button class="btn btn-primary" id="btn-to-results" onclick="showResults()" disabled>I've got my results — record them →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STEP 4: RESULTS ── -->
+  <section class="tester-step" id="step-4">
+    <h2><span class="step-number locked" id="step4-num">4</span> Record results</h2>
+    <div id="step4-locked-msg" style="color:var(--text-3); font-size:var(--text-sm);">Complete Steps 1–3 first.</div>
+    <div id="step4-content" style="display:none;">
+      <p style="color:var(--text-2); margin-bottom:var(--s4);">Paste each AI's full response below. Brief notes about what worked or what was wrong are helpful too.</p>
+      <div class="result-areas" id="result-areas">
+        <!-- rendered by JS -->
+      </div>
+      <div style="margin-top:var(--s5);">
+        <button class="btn btn-primary" onclick="generateExport()">Generate export for the site →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STEP 5: EXPORT ── -->
+  <section class="tester-step" id="step-5">
+    <h2><span class="step-number locked" id="step5-num">5</span> Export for the site</h2>
+    <div id="step5-locked-msg" style="color:var(--text-3); font-size:var(--text-sm);">Complete Steps 1–4 first.</div>
+    <div id="step5-content" style="display:none;">
+      <p style="color:var(--text-2); margin-bottom:var(--s4);">Your session data is formatted below. Copy it and paste into <code>examples/index.html</code> before the "Want to try these patterns?" callout — or use the JSON to build your own format.</p>
+
+      <div style="display:flex; gap:var(--s3); margin-bottom:var(--s4); flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="copyExport('html')">Copy HTML snippet</button>
+        <button class="btn btn-secondary" onclick="copyExport('json')">Copy JSON data</button>
+        <button class="btn btn-secondary" onclick="downloadExport()">Download JSON file</button>
+        <button class="btn btn-secondary" onclick="resetAll()">🔄 Start new session</button>
+      </div>
+
+      <div id="export-format-tabs" style="display:flex; gap:var(--s2); margin-bottom:var(--s3);">
+        <button class="model-filter-btn active" onclick="switchExportTab('html', this)">HTML</button>
+        <button class="model-filter-btn" onclick="switchExportTab('json', this)">JSON</button>
+      </div>
+      <div class="export-output" id="export-output">
+        <!-- generated by JS -->
+      </div>
+      <span id="export-copy-confirm" style="font-size:var(--text-sm); color:#22c55e; display:none; margin-top:var(--s2); display:block;">Copied to clipboard!</span>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ── -->
+  <hr class="tester-divider" />
+  <div class="callout callout-tip" style="margin-top:var(--s6);">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body">
+      <h4>How this tester works</h4>
+      <p><strong>Step 1</strong> — Choose a prompt from the library (research, creative, coding, etc.) or write your own. <strong>Step 2</strong> — Pick which AI tools to test (or let the tester choose randomly). <strong>Step 3</strong> — Open each tool with a direct link, paste the prompt, and mark it done. <strong>Step 4</strong> — Paste the AI responses back here. <strong>Step 5</strong> — Export formatted HTML to add to the Tasting Menu, or JSON to store elsewhere.</p>
+      <p style="margin-top:var(--s2);">Sessions are auto-saved to your browser (localStorage) so you can close and come back. No account required. Nothing leaves your browser.</p>
+    </div>
+  </div>
+
+</div>
+</div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../" class="nav-logo" style="margin-bottom: var(--s3);">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="16" r="3" fill="currentColor"/>
+          </svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI.</p>
+      </div>
+      <div class="footer-col"><h4>Pages</h4><ul>
+        <li><a href="../prompts/">Recipe Book</a></li>
+        <li><a href="../context/">Kitchen Prep</a></li>
+        <li><a href="../daily/">Daily Playbook</a></li>
+        <li><a href="../models/">Model Guide</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>More</h4><ul>
+        <li><a href="../image-video/">Image &amp; Video</a></li>
+        <li><a href="../examples/">Tasting Menu</a></li>
+        <li><a href="../model-tester/">Model Tester</a></li>
+        <li><a href="../support.html">Support</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Site</h4><ul>
+        <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
+        <li><a href="../CONTRIBUTING.md">Contributing</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <div class="footer-privacy"><span class="privacy-dot"></span><span>No tracking · No cookies · No ads</span></div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+
+<script src="../js/main.js"></script>
+<script>
+/* ═══════════════════════════════════════════
+   MODEL TESTER — Data & Logic
+   ═══════════════════════════════════════════ */
+
+/* ── Prompt Library ── */
+const PROMPT_CATEGORIES = [
+  {
+    id: 'shopping',
+    label: '🛒 Shopping research',
+    prompts: [
+      "I'm looking for a pre-built gaming PC that can run Arc Raiders well, within a budget of $400–$800. Please check Best Buy first, then Walmart, then Amazon. The PC should have at least 16GB of RAM, an NVMe SSD, and a modern GPU (RTX 3060 or better). Give me your top picks from each retailer.",
+      "I need a new laptop for college under $600. My priorities: 8+ hours battery life, at least 16GB RAM, fast SSD. I'll use it for note-taking, web browsing, some light video editing, and Python coding. Compare options from Best Buy, Amazon, and B&H.",
+      "What's the best robot vacuum under $300 that works well on pet hair and hardwood floors? Check Amazon and Walmart. I need a model that actually docks and recharges itself and has a good dustbin capacity.",
+      "I'm shopping for a standing desk for a home office, budget $300–$600. It needs to have an electric height adjustment motor, a 60-inch or wider surface, good cable management, and strong customer reviews. Compare Amazon and Wayfair.",
+      "Find me a high-quality espresso machine under $500. I want something for home use, milk frother included, and durable enough to use daily for 5+ years. Compare Amazon, Williams-Sonoma, and Best Buy options."
+    ]
+  },
+  {
+    id: 'explain',
+    label: '📚 Explain & teach',
+    prompts: [
+      "Explain how transformer neural networks work to someone who understands basic programming but has never studied machine learning. Use an analogy, then describe the key components (attention, encoders, decoders) plainly. Keep it under 400 words.",
+      "I'm 14 years old and just heard about compound interest for the first time. Can you explain it with a real-life example that shows why starting to save early matters so much? Make it feel exciting, not like a school lesson.",
+      "What is retrieval-augmented generation (RAG) and why does it matter for building AI applications? Assume I'm a software developer who knows Python and has used APIs before but hasn't built anything with LLMs yet.",
+      "Explain the difference between supervised learning, unsupervised learning, and reinforcement learning in AI — with a practical example of where each is used in the real world. No jargon unless you explain it.",
+      "What is the difference between a CPU, GPU, and NPU in a modern computer? Explain what each one is optimised for and why modern AI workloads benefit from GPUs or NPUs specifically."
+    ]
+  },
+  {
+    id: 'creative',
+    label: '✍️ Creative writing',
+    prompts: [
+      "Write the opening paragraph of a science fiction short story set on a generation ship 400 years into a journey to Proxima Centauri. The ship's AI has just noticed something impossible on the long-range scanners. The tone should be quiet dread, not action-thriller.",
+      "Write a product description for a fictional artisan hot sauce called 'Ancestor's Wrath' that's made in small batches in New Mexico. The description should make it sound genuinely terrifying to eat but also deeply compelling. About 150 words.",
+      "Write a resignation letter from a burnt-out high school English teacher who has decided to become a professional competitive axe-thrower. The letter should be professional on the surface but with a clear undercurrent of 'I am done with this'.",
+      "A retired astronaut is teaching her 7-year-old granddaughter how to make pancakes. Write the scene — what they talk about, what the kitchen feels like, what the granddaughter asks about space. About 250 words.",
+      "Write three different taglines for a startup that makes AI-powered noise-cancelling headphones designed specifically for people with ADHD. Each tagline should take a completely different emotional angle."
+    ]
+  },
+  {
+    id: 'coding',
+    label: '💻 Coding & debug',
+    prompts: [
+      "I have a Python function that reads a CSV file and returns a list of dictionaries, but it's crashing on files with inconsistent column headers. Write a robust version that handles missing columns gracefully, strips whitespace from values, and returns an empty list (not an exception) if the file doesn't exist.",
+      "Write a JavaScript function that debounces an async API call. It should wait 300ms after the last input before firing, cancel any in-flight request if a new one starts, and return a promise that resolves with the result or null if cancelled.",
+      "I need a simple SQLite schema for a personal book-tracking app. I want to track: books (title, author, year, ISBN), reading sessions (which book, date started, date finished, rating 1-5, notes), and a tags system for genres. Write the CREATE TABLE statements with appropriate indexes.",
+      "Explain what's wrong with this React component: it fetches user data on mount, but the fetch keeps running in an infinite loop even though I have useEffect with a dependency array. Here's the component: [paste your component]. What's the bug and how do I fix it?",
+      "Write a bash script that: (1) finds all .jpg files in a given directory recursively, (2) resizes any file over 2MB to max 1920px width using ImageMagick, (3) logs what it changed to a resize_log.txt file, (4) skips files it can't write to and logs those as errors."
+    ]
+  },
+  {
+    id: 'analysis',
+    label: '🔍 Analysis & research',
+    prompts: [
+      "What are the most significant ways that large language models have changed knowledge work in 2024–2025? Focus on concrete changes in actual workflows — not speculation about the future. Cite specific examples of how writing, coding, research, and customer support have actually changed.",
+      "Compare and contrast three approaches to managing personal finances: the 50/30/20 budget rule, zero-based budgeting, and the 'pay yourself first' approach. Who is each method best suited for? What are the practical failure modes of each?",
+      "I'm trying to decide between learning Rust and Go as my second language after Python. I work in data engineering and occasionally build internal tools. Give me a structured comparison: learning curve, ecosystem maturity, job market, and which is more useful in my specific context.",
+      "What are the strongest arguments for and against a four-day work week from an employer's perspective? Present the best case on each side — not a wishy-washy 'it depends', but the strongest real-world evidence available on both sides.",
+      "Summarise what we currently know about the long-term health effects of ultra-processed foods. What does the research show with high confidence? What remains genuinely uncertain? What's the most useful practical guidance a non-scientist should take away?"
+    ]
+  },
+  {
+    id: 'everyday',
+    label: '🏠 Everyday tasks',
+    prompts: [
+      "Write a professional but warm email to my landlord asking if I can get a cat. I've lived here 3 years, always paid on time, and kept the apartment in great condition. I want to offer a pet deposit and suggest we do a 3-month trial. Keep it under 200 words.",
+      "I have 45 minutes to cook dinner tonight and these ingredients: chicken thighs, frozen broccoli, garlic, ginger, soy sauce, sesame oil, rice, and one lime. Give me a simple recipe with clear steps and realistic timing.",
+      "Help me write a performance review for myself for the following achievements: launched a new onboarding system that reduced new-hire ramp time by 30%, led a team of 4 through a product launch with zero critical bugs post-launch, and volunteered to mentor two junior team members. Keep it professional and confident, not boastful.",
+      "I'm packing for a 10-day trip to Japan in October covering Tokyo, Kyoto, and Osaka. I want to travel light with just a carry-on. Give me a practical packing list that covers: clothing, toiletries, tech, and any Japan-specific items I might not think of.",
+      "My neighbour has been parking in my assigned spot repeatedly. Write a note to leave on their windshield that is firm and clear about the problem but doesn't escalate into a conflict. I want to resolve this amicably if possible."
+    ]
+  }
+];
+
+/* ── Model Library ── */
+const MODELS = [
+  { id: 'claude',       name: 'Claude',               provider: 'Anthropic',        url: 'https://claude.ai',                              cats: ['frontier'],                    emoji: '🟠', note: 'claude.ai — free tier' },
+  { id: 'chatgpt',      name: 'ChatGPT',              provider: 'OpenAI',           url: 'https://chat.openai.com',                        cats: ['frontier'],                    emoji: '🟢', note: 'chat.openai.com — free GPT-4o' },
+  { id: 'gemini',       name: 'Gemini',               provider: 'Google',           url: 'https://gemini.google.com',                      cats: ['frontier', 'search'],          emoji: '🔵', note: 'gemini.google.com — free' },
+  { id: 'grok',         name: 'Grok',                 provider: 'xAI',              url: 'https://grok.com',                               cats: ['frontier', 'search'],          emoji: '⚫', note: 'grok.com — free' },
+  { id: 'copilot',      name: 'Microsoft Copilot',    provider: 'Microsoft',        url: 'https://copilot.microsoft.com',                  cats: ['frontier', 'search'],          emoji: '🔷', note: 'copilot.microsoft.com — free' },
+  { id: 'perplexity',   name: 'Perplexity',           provider: 'Perplexity AI',    url: 'https://perplexity.ai',                          cats: ['frontier', 'search'],          emoji: '🟣', note: 'perplexity.ai — free tier' },
+  { id: 'metaai',       name: 'Meta AI',              provider: 'Meta',             url: 'https://meta.ai',                                cats: ['frontier', 'search'],          emoji: '🔵', note: 'meta.ai — free' },
+  { id: 'deepseek',     name: 'DeepSeek',             provider: 'DeepSeek',         url: 'https://chat.deepseek.com',                      cats: ['frontier', 'chinese'],         emoji: '🐋', note: 'chat.deepseek.com — free' },
+  { id: 'mistral',      name: 'Mistral Le Chat',      provider: 'Mistral AI',       url: 'https://chat.mistral.ai',                        cats: ['frontier'],                    emoji: '🟡', note: 'chat.mistral.ai — free' },
+  { id: 'youcom',       name: 'You.com',              provider: 'You.com',          url: 'https://you.com',                                cats: ['search'],                      emoji: '🟠', note: 'you.com — free agentic search' },
+  { id: 'poe',          name: 'Poe',                  provider: 'Quora',            url: 'https://poe.com',                                cats: ['frontier'],                    emoji: '⚪', note: 'poe.com — free daily points' },
+  { id: 'duckai',       name: 'DuckDuckGo Duck.AI',   provider: 'DuckDuckGo',       url: 'https://duckduckgo.com/?q=DuckAssist',            cats: ['privacy'],                     emoji: '🦆', note: 'duckduckgo.com — free, no account' },
+  { id: 'venice',       name: 'Venice.ai',            provider: 'Venice',           url: 'https://venice.ai',                              cats: ['privacy'],                     emoji: '🔒', note: 'venice.ai — free, no storage' },
+  { id: 'lumo',         name: 'LumoAI (Proton)',       provider: 'Proton',           url: 'https://lumo.proton.me',                         cats: ['privacy'],                     emoji: '🔐', note: 'lumo.proton.me — free with Proton' },
+  { id: 'qwen',         name: 'Qwen Studio',          provider: 'Alibaba',          url: 'https://chat.qwenlm.ai',                         cats: ['chinese'],                     emoji: '🌐', note: 'chat.qwenlm.ai — free' },
+  { id: 'kimi',         name: 'Kimi',                 provider: 'Moonshot AI',      url: 'https://kimi.ai',                                cats: ['chinese'],                     emoji: '🌙', note: 'kimi.ai — free' },
+  { id: 'glm',          name: 'GLM (Zhipu AI)',        provider: 'Zhipu AI',         url: 'https://chatglm.cn',                             cats: ['chinese'],                     emoji: '🔬', note: 'chatglm.cn — free' },
+  { id: 'ernie',        name: 'ERNIE AI (Baidu)',      provider: 'Baidu',            url: 'https://yiyan.baidu.com',                        cats: ['chinese'],                     emoji: '🔵', note: 'yiyan.baidu.com — free with Baidu account' },
+  { id: 'minimax',      name: 'MiniMax',              provider: 'MiniMax',          url: 'https://chat.minimax.io',                        cats: ['chinese', 'search'],           emoji: '🌊', note: 'chat.minimax.io — free' },
+  { id: 'sambanova',    name: 'SambaNova',            provider: 'SambaNova',        url: 'https://cloud.sambanova.ai',                     cats: ['speed'],                       emoji: '🔴', note: 'cloud.sambanova.ai — free API credits' },
+  { id: 'cerebras',     name: 'Cerebras AI',          provider: 'Cerebras',         url: 'https://inference.cerebras.ai',                  cats: ['speed'],                       emoji: '⚡', note: 'inference.cerebras.ai — free tier' },
+  { id: 'groq',         name: 'Groq',                 provider: 'Groq Inc.',        url: 'https://console.groq.com',                       cats: ['speed'],                       emoji: '⚡', note: 'console.groq.com — free tier' },
+  { id: 'huggingchat',  name: 'Hugging Chat',         provider: 'HuggingFace',      url: 'https://huggingface.co/chat',                    cats: ['specialist'],                  emoji: '🤗', note: 'huggingface.co/chat — free, open models' },
+  { id: 'pi',           name: 'Pi AI',                provider: 'Inflection AI',    url: 'https://pi.ai',                                  cats: ['specialist'],                  emoji: 'π', note: 'pi.ai — free, best for conversation' },
+  { id: 'phind',        name: 'Phind AI',             provider: 'Phind',            url: 'https://phind.com',                              cats: ['specialist'],                  emoji: '🔍', note: 'phind.com — free, best for coding' },
+  { id: 'cohere',       name: 'Cohere Playground',    provider: 'Cohere',           url: 'https://dashboard.cohere.com/playground',        cats: ['specialist'],                  emoji: '🟣', note: 'dashboard.cohere.com — free trial' },
+  { id: 'ai21',         name: 'AI21 Studio',          provider: 'AI21 Labs',        url: 'https://studio.ai21.com',                        cats: ['specialist'],                  emoji: '🎯', note: 'studio.ai21.com — free trial' },
+  { id: 'characterai',  name: 'Character.AI',         provider: 'Character.AI',     url: 'https://character.ai',                           cats: ['specialist'],                  emoji: '🎭', note: 'character.ai — free, roleplay' },
+];
+
+/* ── State ── */
+let state = {
+  prompt: null,
+  promptCategory: null,
+  promptLocked: false,
+  selectedModels: [],
+  modelsLocked: false,
+  testedModels: new Set(),
+  results: {},
+  exportHtml: '',
+  exportJson: '',
+  currentExportTab: 'html',
+};
+
+/* Restore from localStorage */
+(function restoreState() {
+  try {
+    const saved = localStorage.getItem('pk-tester-state');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // Only restore non-locked state cleanly
+      state = { ...state, ...parsed, testedModels: new Set(parsed.testedModels || []) };
+    }
+  } catch(e) {}
+})();
+
+function saveState() {
+  try {
+    localStorage.setItem('pk-tester-state', JSON.stringify({
+      ...state,
+      testedModels: [...state.testedModels],
+    }));
+  } catch(e) {}
+}
+
+/* ── Init ── */
+document.addEventListener('DOMContentLoaded', function() {
+  renderPromptCategories();
+  renderModelGrid();
+  restoreUI();
+});
+
+function restoreUI() {
+  if (state.promptLocked) {
+    showLockedPrompt();
+    unlockStep2();
+    if (state.modelsLocked) {
+      showLockedModels();
+      unlockStep3();
+      renderTestQueue();
+    }
+    // Re-render model selections
+    state.selectedModels.forEach(id => {
+      const el = document.querySelector(`[data-model-id="${id}"]`);
+      if (el) el.classList.add('selected');
+    });
+    updateModelCount();
+  }
+}
+
+/* ── Prompt ── */
+function renderPromptCategories() {
+  const grid = document.getElementById('prompt-category-grid');
+  grid.innerHTML = PROMPT_CATEGORIES.map(cat => `
+    <button class="prompt-category-btn" data-cat-id="${cat.id}" onclick="selectCategory('${cat.id}')">${cat.label}</button>
+  `).join('');
+}
+
+let currentCategoryId = null;
+let currentPromptIndex = 0;
+
+function selectCategory(catId) {
+  document.querySelectorAll('.prompt-category-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`[data-cat-id="${catId}"]`).classList.add('active');
+  currentCategoryId = catId;
+  currentPromptIndex = 0;
+  const cat = PROMPT_CATEGORIES.find(c => c.id === catId);
+  showPrompt(cat.prompts[0]);
+  document.getElementById('prompt-display-area').style.display = '';
+  document.getElementById('custom-prompt-area').style.display = 'none';
+}
+
+function showPrompt(text) {
+  document.getElementById('prompt-display').textContent = text;
+  state.prompt = text;
+}
+
+function randomPromptInCategory() {
+  if (!currentCategoryId) return;
+  const cat = PROMPT_CATEGORIES.find(c => c.id === currentCategoryId);
+  currentPromptIndex = (currentPromptIndex + 1) % cat.prompts.length;
+  showPrompt(cat.prompts[currentPromptIndex]);
+}
+
+function toggleCustomPrompt() {
+  const area = document.getElementById('custom-prompt-area');
+  area.style.display = area.style.display === 'none' ? '' : 'none';
+}
+
+function useCustomPrompt() {
+  const text = document.getElementById('custom-prompt-text').value.trim();
+  if (!text) return;
+  state.prompt = text;
+  state.promptCategory = 'custom';
+  document.getElementById('prompt-display').textContent = text;
+  document.getElementById('custom-prompt-area').style.display = 'none';
+  lockPrompt();
+}
+
+function lockPrompt() {
+  if (!state.prompt) return;
+  state.promptLocked = true;
+  state.promptCategory = currentCategoryId || 'custom';
+  showLockedPrompt();
+  unlockStep2();
+  saveState();
+}
+
+function showLockedPrompt() {
+  document.getElementById('prompt-display-area').style.display = 'none';
+  document.getElementById('prompt-locked-display').style.display = '';
+  document.getElementById('prompt-category-grid').style.display = 'none';
+  const label = PROMPT_CATEGORIES.find(c => c.id === state.promptCategory);
+  document.getElementById('prompt-locked-label').textContent = label ? label.label + ' prompt' : 'Custom prompt';
+  document.getElementById('prompt-locked-text').textContent = state.prompt.length > 200 ? state.prompt.slice(0, 200) + '…' : state.prompt;
+  document.getElementById('step1-num').classList.add('done');
+  updateSessionBar();
+}
+
+function resetPrompt() {
+  state.prompt = null;
+  state.promptLocked = false;
+  state.modelsLocked = false;
+  state.selectedModels = [];
+  state.testedModels = new Set();
+  state.results = {};
+  document.getElementById('prompt-locked-display').style.display = 'none';
+  document.getElementById('prompt-display-area').style.display = '';
+  document.getElementById('prompt-category-grid').style.display = '';
+  document.getElementById('step1-num').classList.remove('done');
+  lockStep2(); lockStep3(); lockStep4(); lockStep5();
+  document.getElementById('session-bar').style.display = 'none';
+  saveState();
+}
+
+/* ── Models ── */
+function renderModelGrid() {
+  const grid = document.getElementById('model-grid');
+  grid.innerHTML = MODELS.map(m => `
+    <div class="model-card-check" data-model-id="${m.id}" data-cats="${m.cats.join(' ')}" onclick="toggleModel('${m.id}')">
+      <div class="model-check-box"></div>
+      <div class="model-card-info">
+        <div class="model-card-name">${m.emoji} ${m.name}</div>
+        <div class="model-card-meta">${m.note}</div>
+        <div style="margin-top:3px;">${m.cats.map(c => `<span class="model-tag">${c}</span>`).join(' ')}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterModels(cat, btn) {
+  document.querySelectorAll('.model-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('[data-model-id]').forEach(el => {
+    if (cat === 'all') {
+      el.classList.remove('hidden-model');
+    } else {
+      const cats = el.dataset.cats || '';
+      el.classList.toggle('hidden-model', !cats.includes(cat));
+    }
+  });
+}
+
+function toggleModel(id) {
+  if (state.modelsLocked) return;
+  const el = document.querySelector(`[data-model-id="${id}"]`);
+  const idx = state.selectedModels.indexOf(id);
+  if (idx === -1) {
+    state.selectedModels.push(id);
+    el.classList.add('selected');
+  } else {
+    state.selectedModels.splice(idx, 1);
+    el.classList.remove('selected');
+  }
+  updateModelCount();
+  saveState();
+}
+
+function selectRandom(n) {
+  const all = MODELS.map(m => m.id);
+  const shuffled = all.sort(() => Math.random() - 0.5);
+  state.selectedModels = shuffled.slice(0, n);
+  document.querySelectorAll('[data-model-id]').forEach(el => {
+    el.classList.toggle('selected', state.selectedModels.includes(el.dataset.modelId));
+  });
+  updateModelCount();
+  saveState();
+}
+
+function clearModels() {
+  state.selectedModels = [];
+  document.querySelectorAll('[data-model-id]').forEach(el => el.classList.remove('selected'));
+  updateModelCount();
+  saveState();
+}
+
+function updateModelCount() {
+  const n = state.selectedModels.length;
+  document.getElementById('model-count-label').textContent = n === 0 ? '0 selected' : `${n} model${n !== 1 ? 's' : ''} selected`;
+  const lockBtn = document.getElementById('btn-lock-models');
+  if (lockBtn) lockBtn.disabled = n === 0;
+  updateSessionBar();
+}
+
+function lockModels() {
+  if (state.selectedModels.length === 0) return;
+  state.modelsLocked = true;
+  showLockedModels();
+  unlockStep3();
+  renderTestQueue();
+  saveState();
+}
+
+function showLockedModels() {
+  document.getElementById('step2-content').style.display = 'none';
+  document.getElementById('step2-locked-msg').style.display = 'none';
+  document.getElementById('step2-num').classList.add('done');
+  const names = state.selectedModels.map(id => MODELS.find(m => m.id === id)?.name || id).join(', ');
+  const info = document.createElement('div');
+  info.id = 'step2-locked-info';
+  info.className = 'callout callout-tip';
+  info.innerHTML = `<span class="callout-icon">✅</span><div class="callout-body"><h4>${state.selectedModels.length} model${state.selectedModels.length !== 1 ? 's' : ''} selected</h4><p>${names}</p><button class="btn btn-secondary btn-sm" style="margin-top:var(--s2);" onclick="resetModels()">Change models</button></div>`;
+  if (!document.getElementById('step2-locked-info')) {
+    document.getElementById('step-2').appendChild(info);
+  }
+  updateSessionBar();
+}
+
+function resetModels() {
+  state.modelsLocked = false;
+  state.testedModels = new Set();
+  state.results = {};
+  const info = document.getElementById('step2-locked-info');
+  if (info) info.remove();
+  document.getElementById('step2-content').style.display = '';
+  document.getElementById('step2-num').classList.remove('done');
+  lockStep3(); lockStep4(); lockStep5();
+  saveState();
+}
+
+/* ── Test Queue ── */
+function renderTestQueue() {
+  document.getElementById('step3-prompt-display').textContent = state.prompt;
+  const queue = document.getElementById('test-queue');
+  queue.innerHTML = state.selectedModels.map(id => {
+    const model = MODELS.find(m => m.id === id);
+    if (!model) return '';
+    const tested = state.testedModels.has(id);
+    return `
+      <div class="test-queue-item${tested ? ' tested' : ''}" id="queue-item-${id}">
+        <span style="font-size:1.2rem;">${model.emoji}</span>
+        <div>
+          <div style="font-weight:600; font-size:var(--text-sm);">${model.name}</div>
+          <div style="font-size:0.75rem; color:var(--text-3);">${model.note}</div>
+        </div>
+        <a href="${model.url}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="margin-left:auto;">Open →</a>
+        <button class="test-done-btn${tested ? ' done' : ''}" id="done-btn-${id}" onclick="markTested('${id}')">
+          ${tested ? '✓ Done' : 'Mark done'}
+        </button>
+      </div>
+    `;
+  }).join('');
+  updateTestProgress();
+}
+
+function markTested(id) {
+  if (state.testedModels.has(id)) {
+    state.testedModels.delete(id);
+    document.getElementById(`queue-item-${id}`).classList.remove('tested');
+    document.getElementById(`done-btn-${id}`).classList.remove('done');
+    document.getElementById(`done-btn-${id}`).textContent = 'Mark done';
+  } else {
+    state.testedModels.add(id);
+    document.getElementById(`queue-item-${id}`).classList.add('tested');
+    document.getElementById(`done-btn-${id}`).classList.add('done');
+    document.getElementById(`done-btn-${id}`).textContent = '✓ Done';
+  }
+  updateTestProgress();
+  saveState();
+}
+
+function updateTestProgress() {
+  const total = state.selectedModels.length;
+  const done = state.testedModels.size;
+  const btn = document.getElementById('btn-to-results');
+  if (btn) btn.disabled = done === 0;
+  document.getElementById('bar-progress-label').textContent = done > 0 ? `(${done}/${total} tested)` : '';
+}
+
+function copyPrompt() {
+  navigator.clipboard.writeText(state.prompt).then(() => {
+    const el = document.getElementById('copy-confirm');
+    el.style.display = '';
+    setTimeout(() => { el.style.display = 'none'; }, 2000);
+  });
+}
+
+/* ── Results ── */
+function showResults() {
+  unlockStep4();
+  renderResultAreas();
+  document.getElementById('step-4').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('step3-num').classList.add('done');
+  saveState();
+}
+
+function renderResultAreas() {
+  const areas = document.getElementById('result-areas');
+  areas.innerHTML = state.selectedModels.map(id => {
+    const model = MODELS.find(m => m.id === id);
+    if (!model) return '';
+    const saved = state.results[id] || '';
+    return `
+      <div class="result-block">
+        <div class="result-block-header">
+          <span>${model.emoji}</span>
+          <span>${model.name}</span>
+          <span style="margin-left:auto; font-size:0.75rem; color:var(--text-3);">${model.provider}</span>
+        </div>
+        <textarea id="result-${id}" placeholder="Paste ${model.name}'s response here…" oninput="saveResult('${id}')">${saved}</textarea>
+      </div>
+    `;
+  }).join('');
+}
+
+function saveResult(id) {
+  state.results[id] = document.getElementById(`result-${id}`)?.value || '';
+  saveState();
+}
+
+/* ── Export ── */
+function generateExport() {
+  // Collect results
+  state.selectedModels.forEach(id => {
+    const el = document.getElementById(`result-${id}`);
+    if (el) state.results[id] = el.value;
+  });
+
+  const today = new Date().toISOString().split('T')[0];
+  const catLabel = PROMPT_CATEGORIES.find(c => c.id === state.promptCategory)?.label || 'Custom prompt';
+
+  // Generate JSON
+  const jsonData = {
+    session: {
+      date: today,
+      promptCategory: catLabel,
+      prompt: state.prompt,
+      models: state.selectedModels.length,
+    },
+    results: state.selectedModels.map(id => ({
+      model: MODELS.find(m => m.id === id)?.name || id,
+      provider: MODELS.find(m => m.id === id)?.provider || '',
+      response: state.results[id] || '',
+    }))
+  };
+  state.exportJson = JSON.stringify(jsonData, null, 2);
+
+  // Generate HTML snippet
+  let html = `<!-- Model Tester Session — ${today} | ${catLabel} -->\n`;
+  state.selectedModels.forEach((id, i) => {
+    const model = MODELS.find(m => m.id === id);
+    const result = state.results[id] || '(no response recorded)';
+    html += `
+<!-- EXAMPLE — ${model?.name || id} -->
+<details class="recipe-card" style="margin-bottom: var(--s6);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="badge badge-intermediate">Intermediate</span>
+      <span class="text-sm text-3">Model: ${model?.name || id} · Task: ${catLabel}</span>
+      <h3>${model?.name || id} — response to the ${catLabel.toLowerCase()} prompt</h3>
+    </div>
+    <span class="recipe-chevron">▶</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-section">
+      <h4>The prompt</h4>
+      <div class="prompt-block">${escapeHtml(state.prompt)}</div>
+    </div>
+    <div class="recipe-section">
+      <h5>${model?.name || id} Output</h5>
+      <p>${escapeHtml(result)}</p>
+      <!-- TODO: Add callout-tip and callout-warning with your analysis -->
+      <div class="callout callout-tip" style="margin-top: var(--s4);">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <h4>What worked well</h4>
+          <p><!-- Add your analysis here --></p>
+        </div>
+      </div>
+      <div class="callout callout-warning" style="margin-top: var(--s4);">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <h4>What could be improved</h4>
+          <p><!-- Add your analysis here --></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</details>
+`;
+  });
+  state.exportHtml = html;
+
+  unlockStep5();
+  switchExportTab(state.currentExportTab, document.querySelector(`#export-format-tabs .model-filter-btn.active`));
+  document.getElementById('step4-num').classList.add('done');
+  document.getElementById('step-5').scrollIntoView({ behavior: 'smooth' });
+  saveState();
+}
+
+function switchExportTab(tab, btn) {
+  state.currentExportTab = tab;
+  if (btn) {
+    document.querySelectorAll('#export-format-tabs .model-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  document.getElementById('export-output').textContent = tab === 'html' ? state.exportHtml : state.exportJson;
+}
+
+function copyExport(format) {
+  const text = format === 'html' ? state.exportHtml : state.exportJson;
+  navigator.clipboard.writeText(text).then(() => {
+    const el = document.getElementById('export-copy-confirm');
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 2000);
+  });
+}
+
+function downloadExport() {
+  const blob = new Blob([state.exportJson], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `pk-session-${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+}
+
+function resetAll() {
+  if (!confirm('Reset everything and start a new session?')) return;
+  localStorage.removeItem('pk-tester-state');
+  location.reload();
+}
+
+/* ── Helpers ── */
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function unlockStep2() {
+  document.getElementById('step2-locked-msg').style.display = 'none';
+  document.getElementById('step2-content').style.display = '';
+  document.getElementById('step2-num').classList.remove('locked');
+}
+function lockStep2() {
+  document.getElementById('step2-locked-msg').style.display = '';
+  document.getElementById('step2-content').style.display = 'none';
+  document.getElementById('step2-num').classList.add('locked');
+  document.getElementById('step2-num').classList.remove('done');
+  const info = document.getElementById('step2-locked-info');
+  if (info) info.remove();
+}
+function unlockStep3() {
+  document.getElementById('step3-locked-msg').style.display = 'none';
+  document.getElementById('step3-content').style.display = '';
+  document.getElementById('step3-num').classList.remove('locked');
+}
+function lockStep3() {
+  document.getElementById('step3-locked-msg').style.display = '';
+  document.getElementById('step3-content').style.display = 'none';
+  document.getElementById('step3-num').classList.add('locked');
+  document.getElementById('step3-num').classList.remove('done');
+}
+function unlockStep4() {
+  document.getElementById('step4-locked-msg').style.display = 'none';
+  document.getElementById('step4-content').style.display = '';
+  document.getElementById('step4-num').classList.remove('locked');
+}
+function lockStep4() {
+  document.getElementById('step4-locked-msg').style.display = '';
+  document.getElementById('step4-content').style.display = 'none';
+  document.getElementById('step4-num').classList.add('locked');
+  document.getElementById('step4-num').classList.remove('done');
+}
+function unlockStep5() {
+  document.getElementById('step5-locked-msg').style.display = 'none';
+  document.getElementById('step5-content').style.display = '';
+  document.getElementById('step5-num').classList.remove('locked');
+}
+function lockStep5() {
+  document.getElementById('step5-locked-msg').style.display = '';
+  document.getElementById('step5-content').style.display = 'none';
+  document.getElementById('step5-num').classList.add('locked');
+  document.getElementById('step5-num').classList.remove('done');
+}
+
+function updateSessionBar() {
+  const bar = document.getElementById('session-bar');
+  if (!state.promptLocked && state.selectedModels.length === 0) {
+    bar.style.display = 'none';
+    return;
+  }
+  bar.style.display = '';
+  const cat = PROMPT_CATEGORIES.find(c => c.id === state.promptCategory);
+  document.getElementById('bar-prompt-label').textContent = cat ? cat.label : (state.prompt ? 'Custom prompt' : 'No prompt');
+  document.getElementById('bar-models-label').textContent = `${state.selectedModels.length} model${state.selectedModels.length !== 1 ? 's' : ''}`;
+}
+</script>
+</body>
+</html>
