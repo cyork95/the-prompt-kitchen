@@ -131,6 +131,8 @@
     }
     .ingredient-summary::-webkit-details-marker { display: none; }
     .ingredient-summary::marker { display: none; }
+    /* Kill the global details summary::before triangle — we use .ingredient-chevron instead */
+    .ingredient-card > summary::before { display: none !important; }
 
     .ingredient-header {
       display: flex;
