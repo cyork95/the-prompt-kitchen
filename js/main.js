@@ -244,6 +244,36 @@ function setActiveNavLink() {
 // ============================================================
 // 9. GALLERY FILTERING
 // ============================================================
+
+// Model URL map — links model names to their tools in cards and lightbox
+const GALLERY_MODEL_URLS = {
+  'Grok Aurora': 'https://grok.com',
+  'DALL-E 3': 'https://chat.openai.com',
+  'Google Gemini Imagen': 'https://gemini.google.com',
+  'Adobe Firefly 3': 'https://firefly.adobe.com',
+  'Adobe Firefly': 'https://firefly.adobe.com',
+  'Leonardo AI': 'https://leonardo.ai',
+  'Canva AI Image Generator': 'https://canva.com',
+  'Ideogram v2': 'https://ideogram.ai',
+  'Ideogram': 'https://ideogram.ai',
+  'Midjourney': 'https://midjourney.com',
+  'Stable Diffusion': 'https://stability.ai',
+  'Stable Diffusion XL': 'https://stability.ai',
+  'Kling AI': 'https://klingai.com',
+  'Runway': 'https://runwayml.com',
+  'Pika Labs': 'https://pika.art',
+  'Luma Dream Machine': 'https://lumalabs.ai',
+  'Hailuo AI': 'https://hailuoai.video',
+  'Sora': 'https://sora.com',
+};
+
+function galleryModelLink(name) {
+  if (!name) return '';
+  const url = GALLERY_MODEL_URLS[name];
+  if (url) return `<a href="${url}" target="_blank" rel="noopener" class="gallery-model-link">${escHtml(name)}</a>`;
+  return escHtml(name);
+}
+
 function initGallery() {
   const container = document.getElementById('gallery-grid');
   if (!container) return;
@@ -309,7 +339,7 @@ function createGalleryCard(item, index) {
 
   const meta = document.createElement('div');
   meta.className = 'gallery-item-meta';
-  meta.innerHTML = `<div class="gallery-item-model">${escHtml(item.model || '')}</div><div>${escHtml(item.title || '')}</div>`;
+  meta.innerHTML = `<div class="gallery-item-model">${galleryModelLink(item.model)}</div><div>${escHtml(item.title || '')}</div>`;
   overlay.appendChild(meta);
   div.appendChild(overlay);
 
@@ -386,7 +416,7 @@ function openLightbox(item) {
   // Info
   infoEl.innerHTML = `
     <h3>${escHtml(item.title || 'Untitled')}</h3>
-    <span class="lightbox-model-badge">${escHtml(item.model || '')}</span>
+    <span class="lightbox-model-badge">${galleryModelLink(item.model)}</span>
     <div class="lightbox-prompt-label">Prompt</div>
     <div class="prompt-block" style="margin:0 0 var(--s4)">
       <pre id="lb-prompt">${escHtml(item.prompt || '')}</pre>

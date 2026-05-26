@@ -9,6 +9,7 @@
   <meta property="og:description" content="A library of proven prompt patterns for everyday AI use." />
   <meta property="og:url"         content="https://thepromptkitchen.fyi/prompts/" />
   <link rel="canonical" href="https://thepromptkitchen.fyi/prompts/" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css" id="hljs-theme-light" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme-dark" disabled />
@@ -36,6 +37,7 @@
     </a>
     <ul class="nav-links" role="list">
       <li><a href="../prompts/">Recipe Book</a></li>
+    <li><a href="../context/">🧑‍🍳 Kitchen Prep</a></li>
       <li><a href="../examples/">Tasting Menu</a></li>
       <li><a href="../models/">Appliance Guide</a></li>
       <li><a href="../model-tester/">Test Kitchen</a></li>
@@ -48,10 +50,9 @@
           <li><a href="../challenges/">🏆 Cook-Off</a></li>
           <li class="nav-dropdown-divider" role="separator"></li>
           <li><a href="../fails/">🔥 Kitchen Disasters</a></li>
-          <li><a href="../context/">🧑‍🍳 Kitchen Prep</a></li>
           <li><a href="../daily/">⭐ Daily Specials</a></li>
           <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
-          <li><a href="../gallery/">🖼️ Gallery</a></li>
+          <li><a href="../gallery/">🍽️ The Table Spread</a></li>
           <li><a href="../support.html">♥ Tip Jar</a></li>
         </ul>
       </li>
@@ -78,10 +79,9 @@
     <li><a href="../quiz/">👨‍🍳 Ask the Chef</a></li>
     <li><a href="../challenges/">🏆 Cook-Off</a></li>
     <li><a href="../fails/">🔥 Kitchen Disasters</a></li>
-    <li><a href="../context/">🧑‍🍳 Kitchen Prep</a></li>
     <li><a href="../daily/">⭐ Daily Specials</a></li>
     <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
-    <li><a href="../gallery/">🖼️ Gallery</a></li>
+    <li><a href="../gallery/">🍽️ The Table Spread</a></li>
     <li><a href="../support.html">♥ Tip Jar</a></li>
   </ul>
 </div>
@@ -103,21 +103,33 @@
 <div class="container">
 
 <!-- Table of Contents -->
-<div class="toc" style="max-width: 600px; margin-bottom: var(--s10);">
+<div class="toc" style="max-width: 680px; margin-bottom: var(--s10);">
   <h4>Jump to a recipe</h4>
-  <ol>
-    <li><a href="#what-is-a-prompt">What is a prompt?</a></li>
-    <li><a href="#ingredients">The ingredients of a good prompt</a></li>
-    <li><a href="#beginner">🟢 Start here if you're new</a></li>
-    <li><a href="#research-plan">Research → Plan → Implement</a></li>
-    <li><a href="#teach-me">Teach Me Like I'm [level]</a></li>
-    <li><a href="#devils-advocate">Devil's Advocate / Steelman</a></li>
-    <li><a href="#step-by-step">Step-by-Step Breakdown</a></li>
-    <li><a href="#summarize">Summarize for [audience]</a></li>
-    <li><a href="#draft-critique-revise">Draft → Critique → Revise Loop</a></li>
-    <li><a href="#act-as">Act as [Expert]</a></li>
-    <li><a href="#rubber-duck">Rubber Duck Debugging</a></li>
-  </ol>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--s6);">
+    <ol style="margin: 0; padding-left: var(--s5);">
+      <li><a href="#research-plan">Research → Plan → Implement</a></li>
+      <li><a href="#teach-me">Teach Me Like I'm [level]</a></li>
+      <li><a href="#devils-advocate">Devil's Advocate / Steelman</a></li>
+      <li><a href="#step-by-step">Step-by-Step Breakdown</a></li>
+      <li><a href="#summarize">Summarize for [Audience]</a></li>
+      <li><a href="#draft-critique-revise">Draft → Critique → Revise Loop</a></li>
+      <li><a href="#act-as">Act as [Expert]</a></li>
+      <li><a href="#rubber-duck">Rubber Duck Debugging</a></li>
+      <li><a href="#chain-prompts">Chain of Thought</a></li>
+    </ol>
+    <ol start="10" style="margin: 0; padding-left: var(--s5);">
+      <li><a href="#constraints">Constraints & Guardrails</a></li>
+      <li><a href="#compare-options">Compare My Options</a></li>
+      <li><a href="#iterative-refine">Iterative Refinement</a></li>
+      <li><a href="#meeting-notes">Meeting Notes Cleaner</a></li>
+      <li><a href="#code-review">Code Review Partner</a></li>
+      <li><a href="#interview-prep">Interview Prep Coach</a></li>
+      <li><a href="#reframe">Reframe the Problem</a></li>
+      <li><a href="#tone-shift">Tone Shift</a></li>
+      <li><a href="#gap-finder">Gap Finder</a></li>
+    </ol>
+  </div>
+  <p style="font-size: var(--text-xs); color: var(--text-3); margin: var(--s4) 0 0;">New to AI? <a href="#beginner">Start here first →</a></p>
 </div>
 
 <!-- ==============================
@@ -662,6 +674,384 @@ Ask me 3 clarifying questions that might help reveal what I'm missing.</pre>
           <p>Answer the AI's questions honestly and in detail. Then ask it: "Based on what I've told you, what do you think the real problem is?" This works for code bugs, writing blocks, relationship knots, creative dead ends — any situation where being stuck isn't about lack of information but about a blind spot.</p>
         </div>
       </div>
+  </div>
+</details>
+
+<!-- ==============================
+     RECIPE: CHAIN OF THOUGHT
+     ============================== -->
+<details id="chain-prompts" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="recipe-tag">Reasoning</span>
+      <h3 style="margin-top: var(--s2);">Chain of Thought</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>⏱️ When to use: Complex problems that need reasoning, not just an answer</span>
+      <span>🎯 Best for: Math, logic, multi-step analysis, decision-making</span>
+    </div>
+    <p>Left to its own devices, AI jumps to conclusions. Asking it to "think step by step" forces it to show its work — which dramatically improves accuracy on anything that requires multiple steps of reasoning.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>Let's work through this step by step.
+
+[Describe the problem or question]
+
+Before giving me the final answer, show me your reasoning at each step. If you're making assumptions, name them. If there's a place where the answer could go either way, tell me why.</pre></div>
+    <div class="recipe-section-label">Example — Evaluating a business idea</div>
+    <div class="prompt-block"><pre>Let's work through this step by step.
+
+I'm considering starting a small catering business on the side while keeping my full-time job. I currently earn $70k/year, I have weekends free, and I'm a strong home cook. My city has a few established caterers but nothing focused on vegan options.
+
+Before giving me a final recommendation, show me your reasoning at each step: market factors, time/energy requirements, financial viability, and risk. If you're making assumptions, name them. If the answer could go either way at any point, tell me why.</pre></div>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Why this works</h4>
+        <p>AI models (especially <a href="https://claude.ai" rel="noopener">Claude</a> and <a href="https://chat.openai.com" rel="noopener">ChatGPT</a>) are measurably more accurate when forced to reason through steps rather than answer immediately. This is called "chain-of-thought prompting" and it's one of the most well-supported techniques in AI research.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ==============================
+     RECIPE: CONSTRAINTS & GUARDRAILS
+     ============================== -->
+<details id="constraints" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="recipe-tag">Control</span>
+      <h3 style="margin-top: var(--s2);">Constraints &amp; Guardrails</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>⏱️ When to use: Any time you keep editing the AI's output to fix the same problems</span>
+      <span>🎯 Best for: Writing, content creation, any high-stakes output</span>
+    </div>
+    <p>If you find yourself always making the same edits — "too long," "too formal," "don't recommend lawyers" — build those constraints directly into your prompt. Exclusions are just as valuable as inclusions.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>[Your task here]
+
+Constraints:
+- Length: [word count, paragraphs, or "fits in one screen"]
+- Tone: [conversational / professional / direct / warm]
+- Avoid: [jargon / hedging language / lists / passive voice / any specific thing]
+- Do not: [give legal/financial/medical advice / mention competitors / use em dashes]
+- Format: [plain text / bullet points / markdown / no headers]</pre></div>
+    <div class="recipe-section-label">Example — Social media bio</div>
+    <div class="prompt-block"><pre>Write a professional bio for my LinkedIn profile. I'm a senior product manager at a fintech startup, 8 years of experience, previously at two banks, known for shipping products fast and for being easy to work with.
+
+Constraints:
+- Length: Under 150 words
+- Tone: Confident but not braggy. First person.
+- Avoid: Corporate buzzwords ("synergy", "passionate", "results-driven"), generic phrases, lists
+- Do not: Mention specific company names
+- Format: Two short paragraphs, no bullet points</pre></div>
+  </div>
+</details>
+
+<!-- ==============================
+     RECIPE: COMPARE MY OPTIONS
+     ============================== -->
+<details id="compare-options" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="recipe-tag">Decision-Making</span>
+      <h3 style="margin-top: var(--s2);">Compare My Options</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>⏱️ When to use: Choosing between 2–4 real options</span>
+      <span>🎯 Best for: Big purchases, career decisions, software choices, travel plans</span>
+    </div>
+    <p>When you have a shortlist and need to choose, this recipe gets AI to do structured comparison work — not just "both have pros and cons" wishy-washiness, but a clear framework tailored to what you actually care about.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>I need to choose between these options: [A], [B], [and C if applicable].
+
+My situation: [brief context — who you are, what this is for, relevant constraints]
+
+What matters most to me, in order: [1. most important factor, 2. second, 3. third]
+
+Compare them specifically on those factors. Then give me a clear recommendation — not "it depends," but your best assessment given what I've told you, and explain why.</pre></div>
+    <div class="recipe-section-label">Example — Choosing a project management tool</div>
+    <div class="prompt-block"><pre>I need to choose between Notion, Linear, and Trello for my team of 5.
+
+My situation: Small software agency, mostly remote, mix of technical and non-technical people. We currently use a mishmash of Slack threads and spreadsheets. Budget: under $20/person/month.
+
+What matters most to me, in order:
+1. Ease of adoption for non-technical teammates
+2. Flexibility to handle both client projects and internal tasks
+3. Good mobile app
+
+Compare them specifically on those three factors. Then give me a clear recommendation — not "it depends," but your best assessment given what I've told you, and explain why.</pre></div>
+  </div>
+</details>
+
+<!-- ==============================
+     RECIPE: ITERATIVE REFINEMENT
+     ============================== -->
+<details id="iterative-refine" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="recipe-tag">Writing</span>
+      <h3 style="margin-top: var(--s2);">Iterative Refinement</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>⏱️ When to use: When the first draft is close but not quite right</span>
+      <span>🎯 Best for: Any writing that needs to match your exact voice or style</span>
+    </div>
+    <p>Instead of trying to describe your perfect output in one prompt, get a draft first and then be brutally specific about what to change. This works far better than trying to specify everything upfront — you need to see something wrong before you can articulate what right looks like.</p>
+    <div class="recipe-section-label">The Refinement Prompt (use after any first draft)</div>
+    <div class="prompt-block"><pre>Good start, but here's what I need changed:
+
+[Be specific about each issue:]
+1. [Specific thing to change, e.g. "The opening sentence is too generic — start with the main point instead"]
+2. [Another specific change, e.g. "Paragraph 3 is too long — cut it to 2 sentences max"]
+3. [Another specific change, e.g. "Replace the word 'utilize' everywhere — just use 'use'"]
+
+Keep everything else the same. Rewrite the full piece with just these changes.</pre></div>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>The key is specificity</h4>
+        <p>"Make it better" gives the AI permission to change anything. "Cut this paragraph to one sentence and replace the formal opening with something more direct" tells it exactly what's wrong. The more specific your feedback, the more surgical the revision.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ==============================
+     RECIPE: MEETING NOTES CLEANER
+     ============================== -->
+<details id="meeting-notes" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="recipe-tag">Productivity</span>
+      <h3 style="margin-top: var(--s2);">Meeting Notes Cleaner</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>⏱️ When to use: Right after any meeting with rough notes or a transcript</span>
+      <span>🎯 Best for: Team meetings, client calls, interviews, workshops</span>
+    </div>
+    <p>Raw meeting notes are messy, context-dependent, and full of things only you understand. This recipe turns them into a clean, shareable summary in 30 seconds.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>Here are my raw notes from a [type of meeting] with [who was there]:
+
+[paste notes or transcript]
+
+Turn these into a clean meeting summary with:
+1. **Meeting purpose** (one sentence)
+2. **Key decisions made** (bullet list — only actual decisions, not discussion)
+3. **Action items** (each with: task, owner if mentioned, deadline if mentioned)
+4. **Open questions** (things still unresolved)
+5. **Context** (anything a non-attendee would need to know)
+
+Keep it factual — don't add your interpretation, just organize what's there. If something is unclear, flag it with [unclear] rather than guessing.</pre></div>
+    <div class="callout callout-beginner">
+      <span class="callout-icon">🟢</span>
+      <div class="callout-body">
+        <h4>Getting started tip</h4>
+        <p>You don't need polished notes — even rough bullet points, half-sentences, or copied Zoom/Teams transcripts work. Paste whatever you have and let the AI structure it. The output will be far cleaner than your input.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ==============================
+     RECIPE: CODE REVIEW PARTNER
+     ============================== -->
+<details id="code-review" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="recipe-tag">Coding</span>
+      <h3 style="margin-top: var(--s2);">Code Review Partner</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>⏱️ When to use: Before submitting a PR or shipping code</span>
+      <span>🎯 Best for: Any language — logic bugs, edge cases, readability, security</span>
+    </div>
+    <p>AI is a tireless code reviewer that never gets distracted. Use it to catch what you've stopped seeing after staring at the same code for hours. It's especially good at spotting off-by-one errors, unhandled edge cases, and security issues you didn't think about.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>Review this code as a senior [language] developer. Here's what it's supposed to do:
+[brief description of intended behavior]
+
+```[language]
+[paste your code here]
+```
+
+Look for:
+1. Logic errors or bugs
+2. Edge cases I haven't handled (empty input, null values, unexpected types, large inputs)
+3. Security issues (if applicable — injection, auth, data exposure)
+4. Readability problems — anything that would confuse a reader in 6 months
+
+For each issue, tell me: what the problem is, why it matters, and a suggested fix. If something is fine, say so rather than making up issues.</pre></div>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Best models for code review</h4>
+        <p><a href="https://claude.ai" rel="noopener">Claude</a> and <a href="https://chat.openai.com" rel="noopener">ChatGPT</a> are both excellent for code review. <a href="https://phind.com" rel="noopener">Phind</a> is a coding-specialist free tool worth trying for complex logic review.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ==============================
+     RECIPE: INTERVIEW PREP COACH
+     ============================== -->
+<details id="interview-prep" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="recipe-tag">Career</span>
+      <h3 style="margin-top: var(--s2);">Interview Prep Coach</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>⏱️ When to use: 24–48 hours before any job interview</span>
+      <span>🎯 Best for: Technical interviews, behavioural interviews, salary negotiation</span>
+    </div>
+    <p>AI can run mock interviews at any time, give brutally honest feedback on your answers, and help you prepare stories for behavioural questions you haven't thought through yet. It won't get tired or uncomfortable like a friend would.</p>
+    <div class="recipe-section-label">The Recipe — Practice Mode</div>
+    <div class="prompt-block"><pre>I have an interview for [role] at [type of company] in [timeframe]. Act as a tough but fair interviewer for this role.
+
+Ask me one interview question at a time (mix of technical and behavioural). After I answer each one:
+- Tell me what I did well
+- Tell me what was weak or missing
+- Give me a stronger version of my answer as an example
+
+Start with a warm-up question, then get progressively harder. Begin now.</pre></div>
+    <div class="recipe-section-label">The Recipe — Answer Improvement</div>
+    <div class="prompt-block"><pre>I'm preparing for a [role] interview. Here's a behavioural question and my draft answer:
+
+Question: [the question]
+My answer: [your answer]
+
+Critique my answer using the STAR framework (Situation, Task, Action, Result). What's missing? What's vague? What should I cut? Give me a revised version that's concise, specific, and would land well with a hiring manager.</pre></div>
+  </div>
+</details>
+
+<!-- ==============================
+     RECIPE: REFRAME THE PROBLEM
+     ============================== -->
+<details id="reframe" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="recipe-tag">Problem Solving</span>
+      <h3 style="margin-top: var(--s2);">Reframe the Problem</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>⏱️ When to use: When you've been stuck on something for too long</span>
+      <span>🎯 Best for: Creative blocks, business problems, personal dilemmas, recurring frustrations</span>
+    </div>
+    <p>Sometimes the reason you can't solve a problem is that you're solving the wrong problem. This recipe forces a different perspective — asking AI to restate your problem in completely different ways often reveals the actual issue.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>I've been trying to solve this problem: [describe your problem]
+
+Here's how I've been thinking about it: [describe your current framing / approach]
+
+I want you to give me 5 completely different ways to frame or restate this problem. Each reframe should look at it from a different angle — different stakeholder, different timescale, different root cause assumption. After the 5 reframes, tell me which one you think opens up the most interesting new solutions, and why.</pre></div>
+    <div class="recipe-section-label">Example — Low newsletter open rates</div>
+    <div class="prompt-block"><pre>I've been trying to solve this problem: My email newsletter open rates have dropped from 35% to 18% over 6 months.
+
+Here's how I've been thinking about it: I need to write better subject lines and send at better times.
+
+Give me 5 completely different ways to frame or restate this problem. Each reframe should look at it from a different angle. After the 5 reframes, tell me which one you think opens up the most interesting new solutions, and why.</pre></div>
+  </div>
+</details>
+
+<!-- ==============================
+     RECIPE: TONE SHIFT
+     ============================== -->
+<details id="tone-shift" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="recipe-tag">Writing</span>
+      <h3 style="margin-top: var(--s2);">Tone Shift</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>⏱️ When to use: When you have content that needs to work in a different context</span>
+      <span>🎯 Best for: Repurposing content, adapting emails, translating between audiences</span>
+    </div>
+    <p>The same information sounds completely different depending on tone. A technical explanation for engineers sounds wrong in a customer newsletter. A formal policy sounds cold in a team Slack message. This recipe shifts the tone without changing the facts.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>Here's a piece of writing:
+
+[paste original]
+
+Rewrite this in a [target tone] tone for [target audience]. Keep all the factual content exactly the same — don't add or remove information. Change only the language, sentence structure, and register.
+
+Target tone characteristics: [describe what you mean — e.g., "warm and conversational, like a knowledgeable friend, not a corporate document" or "concise and direct, no filler words, assume a busy executive"]</pre></div>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Useful tone pairs</h4>
+        <p>Technical → Plain English · Formal → Conversational · Long-form → TL;DR · Internal memo → Customer-facing · Academic → Accessible · Aggressive → Diplomatic · Safe/hedged → Direct and confident</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<!-- ==============================
+     RECIPE: GAP FINDER
+     ============================== -->
+<details id="gap-finder" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div>
+      <span class="recipe-tag">Review</span>
+      <h3 style="margin-top: var(--s2);">Gap Finder</h3>
+    </div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>⏱️ When to use: Before sending, publishing, or presenting anything important</span>
+      <span>🎯 Best for: Plans, proposals, documentation, arguments, presentations</span>
+    </div>
+    <p>You always have blind spots in your own work. This recipe uses AI to find what you've missed — the objections you haven't addressed, the assumptions you haven't stated, the questions your audience will ask that you haven't answered.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>Here's [a plan / proposal / document / argument] I've written:
+
+[paste content]
+
+I'm going to share this with [audience — e.g., "my manager", "potential customers", "a sceptical technical team"].
+
+Find the gaps. Specifically:
+1. What questions will [audience] have that I haven't answered?
+2. What assumptions am I making that I haven't stated?
+3. What objections will [audience] raise that I haven't addressed?
+4. What's missing that would make this more convincing or complete?
+
+Be direct — I'd rather know the problems now than hear them in the room.</pre></div>
+    <div class="callout callout-beginner">
+      <span class="callout-icon">🟢</span>
+      <div class="callout-body">
+        <h4>When to use this</h4>
+        <p>Use this on anything that matters before it goes out the door: a client proposal, a job application, a performance review, a product spec. It takes 2 minutes and consistently surfaces things you genuinely missed.</p>
+      </div>
+    </div>
   </div>
 </details>
 
