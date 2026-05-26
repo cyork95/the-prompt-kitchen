@@ -2023,8 +2023,8 @@ details[open] > summary .recipe-chevron {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: var(--s8);
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: var(--s6);
   margin-bottom: var(--s8);
 }
 
