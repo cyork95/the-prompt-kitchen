@@ -1,10 +1,10 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Prompt Kitchen — Simple recipes for getting the most out of AI</title>
-  <meta name="description" content="The Prompt Kitchen is a free, friendly guide to using AI tools in your everyday life. No jargon, no hype — just practical recipes that work." />
+  <meta name="description" content="The Prompt Kitchen is a free, friendly guide to using AI tools in everyday life. Prompt recipes, model comparisons, AI music, video, challenges, and more. No jargon." />
   <meta name="author" content="The Prompt Kitchen" />
 
   <!-- Open Graph -->
@@ -22,27 +22,119 @@
   <link rel="canonical" href="https://thepromptkitchen.fyi/" />
   <link rel="stylesheet" href="css/style.css" />
 
-  <!-- highlight.js (one allowed CDN dependency — for code syntax highlighting) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css" id="hljs-theme-light" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" id="hljs-theme-dark" disabled />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
-  <script>document.addEventListener('DOMContentLoaded', () => { if (window.hljs) hljs.highlightAll(); });</script>
-
   <script>
-    // Apply theme before paint to avoid flash
     (function(){
       const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', t);
-      if (t === 'dark') {
-        document.getElementById && document.addEventListener('DOMContentLoaded', function(){
-          const l = document.getElementById('hljs-theme-light');
-          const d = document.getElementById('hljs-theme-dark');
-          if (l) l.disabled = true;
-          if (d) d.disabled = false;
-        });
-      }
     })();
   </script>
+  <style>
+    /* ── Homepage-specific extras ─────────────────────────── */
+    .section-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s5);
+      margin-top: var(--s8);
+    }
+    @media (max-width: 720px) {
+      .section-grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .category-block {
+      margin-bottom: var(--s10);
+    }
+    .category-block-label {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--accent);
+      margin-bottom: var(--s4);
+      display: flex;
+      align-items: center;
+      gap: var(--s2);
+    }
+    .category-block-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .highlight-card {
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      overflow: hidden;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow var(--t-base), border-color var(--t-base);
+      text-decoration: none;
+      color: inherit;
+    }
+    .highlight-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent-border);
+    }
+    .highlight-card-top {
+      padding: var(--s5) var(--s6) var(--s4);
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--border);
+    }
+    .highlight-card-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--accent);
+      margin-bottom: var(--s2);
+    }
+    .highlight-card-top h3 {
+      margin: 0;
+      font-size: var(--text-base);
+      line-height: 1.3;
+    }
+    .highlight-card-body {
+      padding: var(--s4) var(--s6) var(--s5);
+      flex: 1;
+    }
+    .highlight-card-body p {
+      margin: 0;
+      font-size: var(--text-sm);
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+    .highlight-card-footer {
+      padding: var(--s3) var(--s6);
+      border-top: 1px solid var(--border);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .stat-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s6);
+      justify-content: center;
+      margin-top: var(--s8);
+    }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-number {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      font-family: var(--font-display);
+    }
+    .stat-label {
+      font-size: var(--text-sm);
+      color: var(--text-3);
+      margin-top: var(--s1);
+    }
+  </style>
 </head>
 <body>
 
@@ -98,7 +190,6 @@
   </div>
 </nav>
 
-<!-- Mobile Nav -->
 <div class="nav-mobile" id="nav-mobile">
   <ul class="nav-mobile-links" role="list">
     <li><a href="prompts/">📖 Recipe Book</a></li>
@@ -128,46 +219,206 @@
     <h1 class="fade-up">Simple recipes for getting the most out of AI</h1>
     <p class="hero-lead fade-up stagger-1">
       The Prompt Kitchen is a friendly, jargon-free guide to using AI tools in everyday life —
-      whether you want to write better emails, learn something new, or just figure out where to start.
+      prompt recipes, model comparisons, music and video generators, monthly cook-offs, and more.
+      Whether you're brand new or testing your fifteenth AI tool.
     </p>
     <div class="hero-actions fade-up stagger-2">
       <a href="prompts/" class="btn btn-primary btn-lg">Browse the Recipe Book</a>
-      <a href="#how-it-works" class="btn btn-secondary btn-lg">How does this work?</a>
+      <a href="quiz/" class="btn btn-secondary btn-lg">👨‍🍳 Ask the Chef</a>
     </div>
   </div>
 </section>
 
 <!-- ============================================================
-     QUICK START
+     STATS STRIP
      ============================================================ -->
-<section class="section-sm" id="quick-start">
+<section class="section-sm" style="background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="stat-strip">
+      <div class="stat-item">
+        <div class="stat-number">27</div>
+        <div class="stat-label">AI tools compared</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">35+</div>
+        <div class="stat-label">Real examples published</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Prompt recipes</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">5</div>
+        <div class="stat-label">AI music generators tested</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">5</div>
+        <div class="stat-label">AI video tools compared</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">0</div>
+        <div class="stat-label">Ads, trackers, or cookies</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WHAT'S IN THE KITCHEN (full grid, all sections)
+     ============================================================ -->
+<section class="section" id="whats-in-the-kitchen">
   <div class="container">
     <div class="section-header">
-      <span class="section-label">Where would you like to start?</span>
-      <h2>What would you like to do today?</h2>
-      <p>Pick the goal that sounds most like yours. We'll point you to the right recipes.</p>
+      <span class="section-label">What's in the kitchen</span>
+      <h2>Everything, organized by what you want to do</h2>
+      <p>Fourteen sections covering prompt writing, model selection, AI music, video generation, comparisons, challenges, and more.</p>
     </div>
 
-    <div class="quickstart-grid">
-      <a href="daily/#email" class="quickstart-card fade-up stagger-1">
-        <span class="quickstart-card-emoji">✉️</span>
-        <h3>I want to write better emails</h3>
-        <p>Drafts, replies, tone adjustments — get help writing clearly without sounding robotic.</p>
+    <!-- Learn & Write -->
+    <div class="category-block">
+      <div class="category-block-label">📖 Learn &amp; Write</div>
+      <div class="grid-3">
+        <a href="prompts/" class="card">
+          <span class="card-icon">📖</span>
+          <h3>Recipe Book</h3>
+          <p>Prompt patterns that work — organized by task. Copy any recipe with one click and paste it into any AI tool.</p>
+        </a>
+        <a href="context/" class="card">
+          <span class="card-icon">🧑‍🍳</span>
+          <h3>Kitchen Prep</h3>
+          <p>How to give AI the right context so it can actually help you. Like briefing an assistant before a long project.</p>
+        </a>
+        <a href="daily/" class="card">
+          <span class="card-icon">⭐</span>
+          <h3>Daily Specials</h3>
+          <p>Ready-to-use playbooks for everyday tasks: emails, research, learning, writing, and coding help.</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Compare & Choose -->
+    <div class="category-block">
+      <div class="category-block-label">🔬 Compare &amp; Choose</div>
+      <div class="grid-3">
+        <a href="models/" class="card">
+          <span class="card-icon">🍳</span>
+          <h3>Appliance Guide</h3>
+          <p>Claude, ChatGPT, Gemini, Grok, DeepSeek and 22 more — plain English guide to which tool does what best.</p>
+        </a>
+        <a href="quiz/" class="card">
+          <span class="card-icon">👨‍🍳</span>
+          <h3>Ask the Chef</h3>
+          <p>5 quick questions → a personalised AI recommendation with a direct link to get started. Takes 30 seconds.</p>
+        </a>
+        <a href="examples/" class="card">
+          <span class="card-icon">🍽️</span>
+          <h3>Tasting Menu</h3>
+          <p>Real prompts with real outputs. Includes the 27-AI shopping challenge — the same brief, 27 tools, every result documented.</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Test & Challenge -->
+    <div class="category-block">
+      <div class="category-block-label">🏆 Test &amp; Challenge</div>
+      <div class="grid-3">
+        <a href="model-tester/" class="card">
+          <span class="card-icon">🧪</span>
+          <h3>Test Kitchen</h3>
+          <p>Pick a prompt from the library, select 1–10 AI tools to test, paste your results back, and export a comparison card.</p>
+        </a>
+        <a href="challenges/" class="card">
+          <span class="card-icon">🏆</span>
+          <h3>Cook-Off</h3>
+          <p>Monthly prompt challenges: one brief, multiple AI tools, results published here. Try the prompt yourself and compare.</p>
+        </a>
+        <a href="fails/" class="card">
+          <span class="card-icon">🔥</span>
+          <h3>Kitchen Disasters</h3>
+          <p>The most instructive AI failures from the 27-tool series — documented, explained, and actually funny.</p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Creative Tools -->
+    <div class="category-block">
+      <div class="category-block-label">🎨 Creative Tools</div>
+      <div class="grid-3">
+        <a href="audio/" class="card">
+          <span class="card-icon">🎵</span>
+          <h3>Kitchen Radio</h3>
+          <p>Same music prompt through Suno, Udio, Boomy, Meta MusicGen, and Stable Audio. Listen and compare.</p>
+        </a>
+        <a href="video/" class="card">
+          <span class="card-icon">🎬</span>
+          <h3>Kitchen Cinema</h3>
+          <p>Same video prompt through Kling AI, Hailuo, Pika Labs, Luma Dream Machine, and Runway. Side-by-side results.</p>
+        </a>
+        <a href="image-video/" class="card">
+          <span class="card-icon">🎨</span>
+          <h3>Image &amp; Video Studio</h3>
+          <p>Midjourney, DALL-E, Sora, and more — with copy-and-paste prompts for every common image and video type.</p>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURED: 27-AI SHOPPING SERIES
+     ============================================================ -->
+<section class="section" style="background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Featured series</span>
+      <h2>The 27-AI Shopping Challenge</h2>
+      <p>We gave every major AI tool the same gaming PC shopping brief — $400–$800, Arc Raiders, Best Buy first, 16GB RAM minimum, RTX 3060 or better — and documented every single response. 28 examples, 27 tools, one prompt.</p>
+    </div>
+
+    <div class="section-grid-2">
+      <a href="examples/#shopping-series" class="highlight-card">
+        <div class="highlight-card-top">
+          <div class="highlight-card-label">35 examples published</div>
+          <h3>Browse all 27 AI responses side by side</h3>
+        </div>
+        <div class="highlight-card-body">
+          <p>From Claude's RTX 4060 Ti picks to Jamba Mini's GTX 1650 recommendations — every response documented in full, with analysis of what each AI got right, wrong, and why.</p>
+        </div>
+        <div class="highlight-card-footer">Read the full series →</div>
       </a>
-      <a href="daily/#learning" class="quickstart-card fade-up stagger-2">
-        <span class="quickstart-card-emoji">🧠</span>
-        <h3>I want to learn something fast</h3>
-        <p>Use AI as a patient tutor that explains anything in plain language, at your pace.</p>
+
+      <a href="fails/" class="highlight-card">
+        <div class="highlight-card-top">
+          <div class="highlight-card-label">🔥 Kitchen Disasters</div>
+          <h3>The funniest and most instructive AI failures</h3>
+        </div>
+        <div class="highlight-card-body">
+          <p>11 AIs recommended 8GB RAM when the brief said 16GB. Several recommended laptops for a desktop query. One suggested a CPU from 2017. All documented, explained, and a little bit funny.</p>
+        </div>
+        <div class="highlight-card-footer">See what went wrong →</div>
       </a>
-      <a href="image-video/" class="quickstart-card fade-up stagger-3">
-        <span class="quickstart-card-emoji">🎨</span>
-        <h3>I want to create images or video</h3>
-        <p>From photorealistic photos to illustrated concepts — learn how to describe what you want.</p>
+
+      <a href="models/" class="highlight-card">
+        <div class="highlight-card-top">
+          <div class="highlight-card-label">27 tools reviewed</div>
+          <h3>Appliance Guide — plain English model cards</h3>
+        </div>
+        <div class="highlight-card-body">
+          <p>Every AI tool we tested gets a full model card: what it's good at, what it misses, free tier details, and whether it's worth using for your type of task.</p>
+        </div>
+        <div class="highlight-card-footer">Find the right tool for you →</div>
       </a>
-      <a href="prompts/#beginner" class="quickstart-card fade-up stagger-4">
-        <span class="quickstart-card-emoji">👋</span>
-        <h3>I'm totally new — start here</h3>
-        <p>Never used an AI tool before? No problem. We'll walk you through everything from scratch.</p>
+
+      <a href="quiz/" class="highlight-card">
+        <div class="highlight-card-top">
+          <div class="highlight-card-label">👨‍🍳 Ask the Chef</div>
+          <h3>Not sure which AI to use? Answer 5 questions</h3>
+        </div>
+        <div class="highlight-card-body">
+          <p>Tell us what you're trying to do, whether you need live web search, how sensitive the task is, and what kind of output you want. We'll point you to the right tool.</p>
+        </div>
+        <div class="highlight-card-footer">Get your recommendation →</div>
       </a>
     </div>
   </div>
@@ -176,7 +427,7 @@
 <!-- ============================================================
      HOW IT WORKS
      ============================================================ -->
-<section class="section" id="how-it-works" style="background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+<section class="section" id="how-it-works">
   <div class="container">
     <div class="section-header">
       <span class="section-label">The Prompt Kitchen way</span>
@@ -188,27 +439,27 @@
       <div class="step fade-up stagger-1">
         <div class="step-number">1</div>
         <h3>Pick a recipe</h3>
-        <p>Browse our library of prompt patterns organized by what you're trying to do — writing, research, learning, creating.</p>
+        <p>Browse the Recipe Book for prompt patterns organized by what you're trying to do — writing, research, learning, creating.</p>
       </div>
       <div class="step fade-up stagger-2">
         <div class="step-number">2</div>
         <h3>Copy the prompt</h3>
-        <p>Every recipe has a "Copy" button. Click it and the prompt goes straight to your clipboard, ready to use.</p>
+        <p>Every recipe has a Copy button. Click it and the prompt goes straight to your clipboard, ready to use.</p>
       </div>
       <div class="step fade-up stagger-3">
         <div class="step-number">3</div>
         <h3>Paste into any AI</h3>
-        <p>Open ChatGPT, Claude, Gemini, or any other AI tool you like. Paste your prompt and get your result.</p>
+        <p>Open Claude, ChatGPT, Gemini, or any tool you like. Paste your prompt and get your result.</p>
       </div>
       <div class="step fade-up stagger-4">
         <div class="step-number">4</div>
         <h3>Tweak &amp; repeat</h3>
-        <p>Our tips help you adjust the recipe to your situation. The more specific you are, the better your results.</p>
+        <p>Our tips help you adjust the recipe to your situation. The more specific you are, the better the results.</p>
       </div>
     </div>
 
     <div style="margin-top: var(--s8); text-align: center;">
-      <p class="text-2 text-sm">Works with Claude, ChatGPT, Gemini, Grok, Copilot, and any other chat-based AI.</p>
+      <p class="text-2 text-sm">Works with Claude, ChatGPT, Gemini, Grok, Copilot, Perplexity, DeepSeek, and any other chat-based AI.</p>
     </div>
   </div>
 </section>
@@ -216,7 +467,7 @@
 <!-- ============================================================
      FEATURED RECIPES
      ============================================================ -->
-<section class="section" id="featured">
+<section class="section" id="featured" style="background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
   <div class="container">
     <div class="section-header">
       <span class="section-label">Featured recipes</span>
@@ -228,7 +479,7 @@
       <a href="prompts/#teach-me" class="featured-card fade-up stagger-1">
         <div class="featured-card-category">Learning</div>
         <h3>Teach Me Like I'm [level]</h3>
-        <p>Get any concept explained at exactly the right level — from "explain it to a 10-year-old" to "assume I have a PhD."</p>
+        <p>Get any concept explained at exactly the right level — from "explain it like I'm 10" to "assume I have a PhD."</p>
       </a>
       <a href="prompts/#draft-critique-revise" class="featured-card fade-up stagger-2">
         <div class="featured-card-category">Writing</div>
@@ -245,65 +496,20 @@
         <h3>Email Tone Adjustment</h3>
         <p>Paste your rough draft and ask AI to make it warmer, more professional, or shorter. Works every time.</p>
       </a>
-      <a href="prompts/#step-by-step" class="featured-card fade-up stagger-5">
-        <div class="featured-card-category">How-To</div>
-        <h3>Step-by-Step Breakdown</h3>
-        <p>Turn any overwhelming task into a clear, numbered list of manageable steps. Perfect for new projects.</p>
+      <a href="model-tester/" class="featured-card fade-up stagger-5">
+        <div class="featured-card-category">Test Kitchen</div>
+        <h3>Run Your Own Comparison</h3>
+        <p>Pick a prompt, choose up to 10 AI tools, paste the results back, and get a formatted comparison card to share.</p>
       </a>
-      <a href="prompts/#rubber-duck" class="featured-card fade-up stagger-6">
-        <div class="featured-card-category">Problem Solving</div>
-        <h3>Rubber Duck Debugging</h3>
-        <p>Explain your problem out loud to the AI. Half the time, you'll realize the answer before it even responds.</p>
+      <a href="challenges/" class="featured-card fade-up stagger-6">
+        <div class="featured-card-category">Cook-Off</div>
+        <h3>Monthly Challenge Series</h3>
+        <p>One prompt, multiple AI tools, results published every month. Try the challenge yourself and compare your findings.</p>
       </a>
     </div>
 
     <div style="text-align: center; margin-top: var(--s8);">
       <a href="prompts/" class="btn btn-primary">See all recipes →</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     WHAT'S IN THE KITCHEN
-     ============================================================ -->
-<section class="section" style="background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-label">What's in the kitchen</span>
-      <h2>Everything you need, organized by topic</h2>
-    </div>
-
-    <div class="grid-3">
-      <a href="prompts/" class="card">
-        <span class="card-icon">📖</span>
-        <h3>Recipe Book</h3>
-        <p>The big collection of prompt patterns. Each one explains what it's for, shows you an example, and lets you copy it in one click.</p>
-      </a>
-      <a href="context/" class="card">
-        <span class="card-icon">🧑‍🍳</span>
-        <h3>Kitchen Prep</h3>
-        <p>Learn how to give AI the right background information so it can help you properly — like briefing a new assistant before the day starts.</p>
-      </a>
-      <a href="models/" class="card">
-        <span class="card-icon">🍳</span>
-        <h3>Appliance Guide</h3>
-        <p>Claude, ChatGPT, Gemini, Grok — they're all different tools. Find out which one is right for what you're trying to do.</p>
-      </a>
-      <a href="daily/" class="card">
-        <span class="card-icon">⭐</span>
-        <h3>Daily Specials</h3>
-        <p>Ready-to-use playbooks for the things most people use AI for every day: emails, research, learning, writing, and coding.</p>
-      </a>
-      <a href="examples/" class="card">
-        <span class="card-icon">🍽️</span>
-        <h3>Tasting Menu</h3>
-        <p>Real before-and-after examples with full prompts shown. See what good AI use actually looks like in practice.</p>
-      </a>
-      <a href="image-video/" class="card">
-        <span class="card-icon">🎨</span>
-        <h3>Image &amp; Video Studio</h3>
-        <p>A complete guide to Midjourney, DALL-E, Sora, and the rest — with copy-and-paste prompts for every common image and video type.</p>
-      </a>
     </div>
   </div>
 </section>
@@ -350,18 +556,28 @@
         <p>Simple recipes for getting the most out of AI. Free, open, and always will be.</p>
       </div>
       <div class="footer-col">
-        <h4>Recipes</h4>
+        <h4>Learn</h4>
         <ul>
-          <li><a href="prompts/">Prompt Patterns</a></li>
-          <li><a href="context/">Context Engineering</a></li>
-          <li><a href="daily/">Daily Playbook</a></li>
-          <li><a href="examples/">Examples</a></li>
+          <li><a href="prompts/">Recipe Book</a></li>
+          <li><a href="context/">Kitchen Prep</a></li>
+          <li><a href="daily/">Daily Specials</a></li>
+          <li><a href="examples/">Tasting Menu</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Tools</h4>
+        <h4>Compare</h4>
         <ul>
-          <li><a href="models/">Model Guide</a></li>
+          <li><a href="models/">Appliance Guide</a></li>
+          <li><a href="quiz/">Ask the Chef</a></li>
+          <li><a href="model-tester/">Test Kitchen</a></li>
+          <li><a href="challenges/">Cook-Off</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Create</h4>
+        <ul>
+          <li><a href="audio/">Kitchen Radio</a></li>
+          <li><a href="video/">Kitchen Cinema</a></li>
           <li><a href="image-video/">Image &amp; Video</a></li>
           <li><a href="gallery/">Gallery</a></li>
         </ul>
@@ -369,9 +585,9 @@
       <div class="footer-col">
         <h4>Site</h4>
         <ul>
-          <li><a href="support.html">Support the Kitchen</a></li>
+          <li><a href="fails/">Kitchen Disasters</a></li>
+          <li><a href="support.html">Tip Jar</a></li>
           <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
-          <li><a href="CONTRIBUTING.md" rel="noopener">Contributing</a></li>
         </ul>
       </div>
     </div>
@@ -387,8 +603,6 @@
 </footer>
 
 <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
-
 <script src="js/main.js"></script>
-<script src="js/gallery-data.js"></script>
 </body>
 </html>
