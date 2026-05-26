@@ -366,6 +366,89 @@ details[open] summary { margin-bottom: var(--s3); }
   background: var(--accent-light);
 }
 
+/* ── "More" dropdown ───────────────────────────────────── */
+.nav-more {
+  position: relative;
+}
+
+.nav-more-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: var(--s2) var(--s2);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  color: var(--text-2);
+  background: none;
+  border: none;
+  border-radius: var(--r2);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--t-fast), background var(--t-fast);
+  line-height: inherit;
+}
+
+.nav-more-btn:hover,
+.nav-more.open .nav-more-btn,
+.nav-more-btn.active {
+  color: var(--accent);
+  background: var(--accent-light);
+}
+
+.nav-more-chevron {
+  font-size: 0.6rem;
+  transition: transform var(--t-fast);
+  opacity: .6;
+}
+.nav-more.open .nav-more-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 180px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r3);
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  list-style: none;
+  padding: var(--s2);
+  margin: 0;
+  z-index: 200;
+}
+
+.nav-more.open .nav-dropdown {
+  display: block;
+}
+
+.nav-dropdown li { padding: 0; margin: 0; }
+
+.nav-dropdown a {
+  display: block;
+  padding: var(--s2) var(--s3);
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  text-decoration: none;
+  border-radius: var(--r2);
+  transition: color var(--t-fast), background var(--t-fast);
+  white-space: nowrap;
+}
+
+.nav-dropdown a:hover,
+.nav-dropdown a.active {
+  color: var(--accent);
+  background: var(--accent-light);
+}
+
+.nav-dropdown-divider {
+  height: 1px;
+  background: var(--border);
+  margin: var(--s2) 0;
+}
+
 .nav-actions {
   display: flex;
   align-items: center;
@@ -703,7 +786,7 @@ details[open] summary { margin-bottom: var(--s3); }
 .section-header p {
   font-size: var(--text-lg);
   color: var(--text-2);
-  max-width: 52ch;
+  max-width: 75ch;
   margin: 0 auto;
 }
 
@@ -1518,7 +1601,7 @@ details[open] > summary .recipe-chevron {
 .page-header .lead {
   font-size: var(--text-xl);
   color: var(--text-2);
-  max-width: 52ch;
+  max-width: 75ch;
   line-height: 1.5;
 }
 

@@ -29,6 +29,7 @@ function toggleTheme() {
 document.addEventListener('DOMContentLoaded', function () {
   initThemeButton();
   initMobileNav();
+  initNavMore();
   initCopyButtons();
   initBackToTop();
   initSmoothScroll();
@@ -77,7 +78,39 @@ function initMobileNav() {
 }
 
 // ============================================================
-// 5. COPY BUTTONS
+// 5. "MORE" DROPDOWN NAV
+// ============================================================
+function initNavMore() {
+  const navMore = document.querySelector('.nav-more');
+  if (!navMore) return;
+  const btn      = navMore.querySelector('.nav-more-btn');
+  const dropdown = navMore.querySelector('.nav-dropdown');
+  if (!btn || !dropdown) return;
+
+  function open()  { navMore.classList.add('open');    btn.setAttribute('aria-expanded', 'true');  }
+  function close() { navMore.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+  function toggle(){ navMore.classList.contains('open') ? close() : open(); }
+
+  btn.addEventListener('click', function (e) { e.stopPropagation(); toggle(); });
+
+  // Close when clicking outside
+  document.addEventListener('click', function (e) {
+    if (!navMore.contains(e.target)) close();
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+
+  // Close when a dropdown link is clicked
+  dropdown.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', close);
+  });
+}
+
+// ============================================================
+// 6. COPY BUTTONS
 // ============================================================
 function initCopyButtons() {
   // Auto-create copy buttons for .prompt-block elements
@@ -189,17 +222,20 @@ function initSmoothScroll() {
 // ============================================================
 function setActiveNavLink() {
   const path = window.location.pathname.replace(/\/$/, '') || '/';
-  document.querySelectorAll('.nav-links a, .nav-mobile-links a').forEach(function (a) {
+  document.querySelectorAll('.nav-links a, .nav-dropdown a, .nav-mobile-links a').forEach(function (a) {
     const href = a.getAttribute('href');
     if (!href) return;
-    // Resolve href relative to current page
     try {
       const url = new URL(href, window.location.href);
       const linkPath = url.pathname.replace(/\/$/, '') || '/';
-      if (linkPath !== '/' && path.startsWith(linkPath)) {
+      const isActive = (linkPath !== '/' && path.startsWith(linkPath)) || linkPath === path;
+      if (isActive) {
         a.classList.add('active');
-      } else if (linkPath === path) {
-        a.classList.add('active');
+        // If this link is inside the More dropdown, also highlight the More button
+        if (a.closest('.nav-dropdown')) {
+          const navMore = a.closest('.nav-more');
+          if (navMore) navMore.querySelector('.nav-more-btn').classList.add('active');
+        }
       }
     } catch (_) {}
   });
