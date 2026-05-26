@@ -228,7 +228,7 @@ function setActiveNavLink() {
     try {
       const url = new URL(href, window.location.href);
       const linkPath = url.pathname.replace(/\/$/, '') || '/';
-      const isActive = (linkPath !== '/' && path.startsWith(linkPath)) || linkPath === path;
+      const isActive = (linkPath !== '/' && (path === linkPath || path.startsWith(linkPath + '/'))) || linkPath === path;
       if (isActive) {
         a.classList.add('active');
         // If this link is inside the More dropdown, also highlight the More button
