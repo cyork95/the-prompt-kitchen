@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Pantry — Reusable Prompt Ingredients | The Prompt Kitchen</title>
+  <meta name="description" content="A library of modular prompt building blocks. Mix and match Expert Roles, Context Templates, Chain-of-Thought starters, Output Formats, Tone guides, and Guardrails into any AI prompt." />
+  <meta property="og:title"       content="The Pantry — Reusable Prompt Ingredients | The Prompt Kitchen" />
+  <meta property="og:description" content="Modular prompt building blocks you can mix into any recipe. Free to copy." />
+  <meta property="og:url"         content="https://thepromptkitchen.fyi/pantry/" />
+  <link rel="canonical" href="https://thepromptkitchen.fyi/pantry/" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    /* ── Pantry Page Styles ── */
+
+    /* Filter bar */
+    .pantry-filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s2);
+      margin-bottom: var(--s8);
+      align-items: center;
+    }
+    .pantry-filter-label {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-3);
+      margin-right: var(--s1);
+      flex-shrink: 0;
+    }
+    .pantry-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s2);
+      padding: 5px var(--s3);
+      border: 1px solid var(--border);
+      border-radius: var(--r-full);
+      background: var(--bg);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--text-2);
+      cursor: pointer;
+      transition: border-color .15s, background .15s, color .15s;
+      line-height: 1.4;
+      white-space: nowrap;
+    }
+    .pantry-tab:hover { border-color: var(--accent); color: var(--text-1); }
+    .pantry-tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* Shelf (category section) */
+    .pantry-shelf {
+      margin-bottom: var(--s12);
+    }
+    .pantry-shelf-header {
+      display: flex;
+      align-items: center;
+      gap: var(--s3);
+      margin-bottom: var(--s5);
+      padding-bottom: var(--s4);
+      border-bottom: 2px solid var(--border);
+    }
+    .pantry-shelf-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .pantry-shelf-title {
+      font-size: var(--text-xl);
+      font-weight: 800;
+      margin: 0;
+      color: var(--text-1);
+    }
+    .pantry-shelf-desc {
+      font-size: var(--text-sm);
+      color: var(--text-3);
+      margin: 0 0 0 auto;
+      flex-shrink: 0;
+    }
+    @media (max-width: 600px) {
+      .pantry-shelf-desc { display: none; }
+    }
+
+    /* Ingredient grid */
+    .ingredient-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s5);
+    }
+    @media (max-width: 720px) {
+      .ingredient-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Ingredient card */
+    .ingredient-card {
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      background: var(--bg);
+      overflow: hidden;
+      transition: box-shadow .2s, border-color .2s;
+    }
+    .ingredient-card:hover {
+      border-color: var(--accent-border);
+      box-shadow: var(--shadow-md);
+    }
+    .ingredient-card[open] {
+      border-color: var(--accent-border);
+      box-shadow: 0 0 0 3px var(--accent-border);
+    }
+
+    .ingredient-summary {
+      list-style: none;
+      padding: var(--s5);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: var(--s2);
+      user-select: none;
+    }
+    .ingredient-summary::-webkit-details-marker { display: none; }
+    .ingredient-summary::marker { display: none; }
+
+    .ingredient-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--s3);
+    }
+    .ingredient-name {
+      font-size: var(--text-base);
+      font-weight: 800;
+      color: var(--text-1);
+      margin: 0;
+      line-height: 1.3;
+      font-family: var(--font-display);
+    }
+    .ingredient-chevron {
+      font-size: 0.75rem;
+      color: var(--text-3);
+      flex-shrink: 0;
+      margin-top: 4px;
+      transition: transform .2s;
+    }
+    .ingredient-card[open] .ingredient-chevron { transform: rotate(180deg); }
+
+    .ingredient-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: 2px 8px;
+      border-radius: var(--r-full);
+      background: var(--accent-light);
+      border: 1px solid var(--accent-border);
+      color: var(--accent);
+      width: fit-content;
+      margin-bottom: var(--s1);
+    }
+
+    .ingredient-when {
+      font-size: var(--text-sm);
+      color: var(--text-2);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Card body (revealed on open) */
+    .ingredient-body {
+      padding: 0 var(--s5) var(--s5);
+      border-top: 1px solid var(--border);
+      margin-top: 0;
+    }
+    .ingredient-body .prompt-block {
+      margin: var(--s4) 0;
+    }
+    .ingredient-body .prompt-block pre {
+      font-size: var(--text-sm);
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Combine section */
+    .combine-section {
+      margin-top: var(--s4);
+      padding: var(--s4);
+      background: var(--bg-alt);
+      border-radius: var(--r2);
+      border: 1px solid var(--border);
+    }
+    .combine-label {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--accent);
+      margin-bottom: var(--s3);
+      display: flex;
+      align-items: center;
+      gap: var(--s2);
+    }
+    .combine-chips {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--s2);
+      margin-bottom: var(--s3);
+    }
+    .combine-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: var(--r-full);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      background: var(--accent);
+      color: #fff;
+      white-space: nowrap;
+    }
+    .combine-chip.secondary {
+      background: var(--bg);
+      color: var(--text-2);
+      border: 1px solid var(--border);
+    }
+    .combine-plus {
+      font-weight: 900;
+      color: var(--text-3);
+      font-size: var(--text-xs);
+    }
+    .combine-result {
+      font-size: var(--text-sm);
+      color: var(--text-2);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* How-to intro box */
+    .pantry-intro-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--s5);
+      margin: var(--s6) 0 var(--s10);
+    }
+    @media (max-width: 720px) {
+      .pantry-intro-grid { grid-template-columns: 1fr; }
+    }
+    .pantry-intro-card {
+      padding: var(--s5);
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      background: var(--bg);
+    }
+    .pantry-intro-card-icon {
+      font-size: 1.5rem;
+      margin-bottom: var(--s2);
+      display: block;
+    }
+    .pantry-intro-card h4 {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      margin: 0 0 var(--s2);
+      color: var(--accent);
+    }
+    .pantry-intro-card p {
+      font-size: var(--text-sm);
+      color: var(--text-2);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Count badge */
+    .shelf-count {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      color: var(--text-3);
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--r-full);
+      padding: 2px 8px;
+    }
+
+    /* CTA section */
+    .pantry-cta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s5);
+      margin-top: var(--s12);
+    }
+    @media (max-width: 600px) {
+      .pantry-cta { grid-template-columns: 1fr; }
+    }
+    .pantry-cta-card {
+      padding: var(--s6);
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      background: var(--bg);
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow .2s, border-color .2s, transform .15s;
+      display: flex;
+      flex-direction: column;
+      gap: var(--s2);
+    }
+    .pantry-cta-card:hover {
+      border-color: var(--accent-border);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .pantry-cta-card-icon { font-size: 2rem; }
+    .pantry-cta-card h3 { margin: 0; font-size: var(--text-lg); }
+    .pantry-cta-card p { margin: 0; font-size: var(--text-sm); color: var(--text-2); }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo" aria-label="The Prompt Kitchen — Home">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../prompts/">📖 Recipe Book</a></li>
+      <li><a href="../context/">🧑‍🍳 Kitchen Prep</a></li>
+      <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+      <li><a href="../models/">🍳 Appliance Guide</a></li>
+      <li><a href="../model-tester/">🧪 Test Kitchen</a></li>
+      <li class="nav-more">
+        <button class="nav-more-btn" aria-haspopup="true" aria-expanded="false">More <span class="nav-more-chevron">▾</span></button>
+        <ul class="nav-dropdown" role="menu">
+          <li><a href="../spice-rack/">🌶️ Spice Rack</a></li>
+          <li><a href="../pantry/">🥫 The Pantry</a></li>
+          <li><a href="../audio/">🎵 Kitchen Radio</a></li>
+          <li><a href="../video/">🎬 Kitchen Cinema</a></li>
+          <li><a href="../quiz/">👨‍🍳 Ask the Chef</a></li>
+          <li><a href="../challenges/">🏆 Cook-Off</a></li>
+          <li class="nav-dropdown-divider" role="separator"></li>
+          <li><a href="../fails/">🔥 Kitchen Disasters</a></li>
+          <li><a href="../daily/">⭐ Daily Specials</a></li>
+          <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
+          <li><a href="../gallery/">🍽️ The Table Spread</a></li>
+          <li><a href="../support.html">♥ Tip Jar</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark" aria-hidden="true">☾</span>
+        <span class="theme-icon-light" aria-hidden="true">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../prompts/">📖 Recipe Book</a></li>
+    <li><a href="../pantry/">🥫 The Pantry</a></li>
+    <li><a href="../spice-rack/">🌶️ Spice Rack</a></li>
+    <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+    <li><a href="../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../model-tester/">🧪 Test Kitchen</a></li>
+    <li><a href="../audio/">🎵 Kitchen Radio</a></li>
+    <li><a href="../video/">🎬 Kitchen Cinema</a></li>
+    <li><a href="../quiz/">👨‍🍳 Ask the Chef</a></li>
+    <li><a href="../challenges/">🏆 Cook-Off</a></li>
+    <li><a href="../fails/">🔥 Kitchen Disasters</a></li>
+    <li><a href="../daily/">⭐ Daily Specials</a></li>
+    <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
+    <li><a href="../gallery/">🍽️ The Table Spread</a></li>
+    <li><a href="../support.html">♥ Tip Jar</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">›</span><span class="current">The Pantry</span>
+    </nav>
+    <h1>🥫 The Pantry</h1>
+    <p class="lead">Reusable building blocks for better prompts. Mix these modular ingredients into any recipe — or combine them from scratch.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container">
+
+<!-- Intro -->
+<div style="max-width: 700px; margin-bottom: var(--s6);">
+  <p style="font-size: var(--text-base); color: var(--text-2); line-height: 1.7;">
+    Every great kitchen has a well-stocked pantry — olive oil, garlic, salt — things you reach for in almost every recipe.
+    These prompt blocks work the same way. They're not full recipes; they're <strong>reusable fragments</strong> that make any prompt more precise, more useful, and more you.
+    Paste one before your main question, append one to shape the output, or snap two together for something tailored.
+  </p>
+</div>
+
+<!-- How to use explainer -->
+<div class="pantry-intro-grid">
+  <div class="pantry-intro-card">
+    <span class="pantry-intro-card-icon">➕</span>
+    <h4>Prepend it</h4>
+    <p>Paste a Role or Context block <em>before</em> your actual question. It sets the stage before you ask anything.</p>
+  </div>
+  <div class="pantry-intro-card">
+    <span class="pantry-intro-card-icon">📎</span>
+    <h4>Append it</h4>
+    <p>Add an Output Format or Guardrail block <em>after</em> your question. It shapes what comes back without rewriting your ask.</p>
+  </div>
+  <div class="pantry-intro-card">
+    <span class="pantry-intro-card-icon">🔗</span>
+    <h4>Combine two</h4>
+    <p>Stack a Role + a Context block + an Output Format for a fully composed prompt — no recipe needed.</p>
+  </div>
+</div>
+
+<!-- Filter bar -->
+<div class="pantry-filter-bar" id="pantry-filter-bar" role="group" aria-label="Filter by category">
+  <span class="pantry-filter-label">Filter:</span>
+  <button class="pantry-tab active" data-filter="all">All ingredients</button>
+  <button class="pantry-tab" data-filter="role">👤 Expert Role</button>
+  <button class="pantry-tab" data-filter="context">📋 Context</button>
+  <button class="pantry-tab" data-filter="chain">🧠 Chain-of-Thought</button>
+  <button class="pantry-tab" data-filter="format">📐 Output Format</button>
+  <button class="pantry-tab" data-filter="tone">🎨 Tone &amp; Style</button>
+  <button class="pantry-tab" data-filter="constraint">🚧 Constraints</button>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     SHELF 1: EXPERT ROLE STARTERS
+     ══════════════════════════════════════════ -->
+<section class="pantry-shelf" data-shelf="role" id="shelf-role">
+  <div class="pantry-shelf-header">
+    <span class="pantry-shelf-icon">👤</span>
+    <h2 class="pantry-shelf-title">Expert Role Starters</h2>
+    <span class="shelf-count">2 ingredients</span>
+    <span class="pantry-shelf-desc">Give the AI a persona before you ask anything</span>
+  </div>
+
+  <div class="ingredient-grid">
+
+    <!-- ── Ingredient 1: The Trusted Advisor ── -->
+    <details class="ingredient-card" id="ing-trusted-advisor">
+      <summary class="ingredient-summary">
+        <div class="ingredient-header">
+          <h3 class="ingredient-name">The Trusted Advisor</h3>
+          <span class="ingredient-chevron">▾</span>
+        </div>
+        <span class="ingredient-tag">👤 Expert Role</span>
+        <p class="ingredient-when">Use when you want a direct, opinionated expert perspective — not a neutral overview. Good for strategy, decisions, or anything where you want real talk, not hedges.</p>
+      </summary>
+      <div class="ingredient-body">
+        <div class="prompt-block">
+          <pre>Act as a trusted senior advisor with deep expertise in [field]. You have a direct, practical style — you give honest assessments rather than safe, hedged answers. When you don't know something, you say so. You're helping me think through [situation], and I want your real perspective, not a list of generic options.</pre>
+        </div>
+
+        <div class="combine-section">
+          <p class="combine-label">🔗 Try combining with</p>
+          <div class="combine-chips">
+            <span class="combine-chip">👤 Trusted Advisor</span>
+            <span class="combine-plus">+</span>
+            <span class="combine-chip secondary">📋 Situation Brief</span>
+            <span class="combine-plus">+</span>
+            <span class="combine-chip secondary">🚧 The Fence</span>
+          </div>
+          <p class="combine-result">Paste the Trusted Advisor first, then the Situation Brief to give full context, then your question, then The Fence to block generic advice. Result: a deeply contextual, no-fluff consultation.</p>
+        </div>
+      </div>
+    </details>
+
+    <!-- ── Ingredient 2: The Skeptic in the Room ── -->
+    <details class="ingredient-card" id="ing-skeptic">
+      <summary class="ingredient-summary">
+        <div class="ingredient-header">
+          <h3 class="ingredient-name">The Skeptic in the Room</h3>
+          <span class="ingredient-chevron">▾</span>
+        </div>
+        <span class="ingredient-tag">👤 Expert Role</span>
+        <p class="ingredient-when">Use before committing to a plan or pitching an idea. Activates rigorous stress-testing. The AI finds the weak points so your boss, client, or audience doesn't have to.</p>
+      </summary>
+      <div class="ingredient-body">
+        <div class="prompt-block">
+          <pre>For this conversation, play the role of the most rigorous, skeptical expert in [field]. Your job is not to be negative — it's to find the weakest points in any plan or argument I present. You ask the hard questions that someone being polite would skip. Push back on assumptions. Point out what I might be overlooking. Be specific about where the logic breaks down.</pre>
+        </div>
+
+        <div class="combine-section">
+          <p class="combine-label">🔗 Try combining with</p>
+          <div class="combine-chips">
+            <span class="combine-chip">👤 Skeptic in the Room</span>
+            <span class="combine-plus">+</span>
+            <span class="combine-chip secondary">🧠 First Principles Check</span>
+          </div>
+          <p class="combine-result">First use First Principles Check to strip away assumptions in your plan. Then apply the Skeptic to attack what remains. This two-pass approach catches far more holes than either block alone.</p>
+        </div>
+      </div>
+    </details>
+
+  </div><!-- /ingredient-grid -->
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SHELF 2: CONTEXT / BACKGROUND TEMPLATES
+     ══════════════════════════════════════════ -->
+<section class="pantry-shelf" data-shelf="context" id="shelf-context">
+  <div class="pantry-shelf-header">
+    <span class="pantry-shelf-icon">📋</span>
+    <h2 class="pantry-shelf-title">Context &amp; Background Templates</h2>
+    <span class="shelf-count">2 ingredients</span>
+    <span class="pantry-shelf-desc">Tell the AI your situation before you ask</span>
+  </div>
+
+  <div class="ingredient-grid">
+
+    <!-- ── Ingredient 3: The Situation Brief ── -->
+    <details class="ingredient-card" id="ing-situation-brief">
+      <summary class="ingredient-summary">
+        <div class="ingredient-header">
+          <h3 class="ingredient-name">The Situation Brief</h3>
+          <span class="ingredient-chevron">▾</span>
+        </div>
+        <span class="ingredient-tag">📋 Context</span>
+        <p class="ingredient-when">Paste this at the top of any conversation where the default answer would be too generic. The more you fill in, the less you'll need to course-correct later.</p>
+      </summary>
+      <div class="ingredient-body">
+        <div class="prompt-block">
+          <pre>Here's my context before I ask my question:
+- Who I am: [your role or relevant background]
+- What I'm trying to achieve: [goal or desired outcome]
+- What I've already tried or know: [prior attempts, existing knowledge]
+- Constraints I'm working within: [time, budget, skill level, access]
+- What "success" looks like: [specific, concrete outcome]
+
+With that context in mind — [your actual question here].</pre>
+        </div>
+
+        <div class="combine-section">
+          <p class="combine-label">🔗 Try combining with</p>
+          <div class="combine-chips">
+            <span class="combine-chip">📋 Situation Brief</span>
+            <span class="combine-plus">+</span>
+            <span class="combine-chip secondary">👤 Trusted Advisor</span>
+          </div>
+          <p class="combine-result">Open with the Trusted Advisor role, follow with the Situation Brief, then ask your question. The AI knows who it's supposed to be <em>and</em> exactly what you're dealing with — almost no follow-up needed.</p>
+        </div>
+      </div>
+    </details>
+
+    <!-- ── Ingredient 4: The Audience Brief ── -->
+    <details class="ingredient-card" id="ing-audience-brief">
+      <summary class="ingredient-summary">
+        <div class="ingredient-header">
+          <h3 class="ingredient-name">The Audience Brief</h3>
+          <span class="ingredient-chevron">▾</span>
+        </div>
+        <span class="ingredient-tag">📋 Context</span>
+        <p class="ingredient-when">Use whenever you're writing something <em>for</em> others — emails, presentations, documentation, social posts. Prevents the AI from writing for the average person when your audience is anything but.</p>
+      </summary>
+      <div class="ingredient-body">
+        <div class="prompt-block">
+          <pre>Before you write anything, keep this audience in mind:
+- Who they are: [role, background, age range if relevant]
+- What they already know: [assumed knowledge level]
+- What they don't know or often misunderstand: [common gaps or misconceptions]
+- Their biggest concern or objection: [what makes them skeptical or hesitant]
+- The format they respond best to: [casual email / formal report / short bullets / narrative]
+
+Write for them specifically — not for a generic reader.</pre>
+        </div>
+
+        <div class="combine-section">
+          <p class="combine-label">🔗 Try combining with</p>
+          <div class="combine-chips">
+            <span class="combine-chip">📋 Audience Brief</span>
+            <span class="combine-plus">+</span>
+            <span class="combine-chip secondary">📐 The Layered Answer</span>
+          </div>
+          <p class="combine-result">The Audience Brief tells the AI who it's writing for. The Layered Answer gives them a skimmable summary up top and full depth below — perfect for mixed audiences where some people scan and some read everything.</p>
+        </div>
+      </div>
+    </details>
+
+  </div><!-- /ingredient-grid -->
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SHELF 3: CHAIN-OF-THOUGHT STARTERS
+     ══════════════════════════════════════════ -->
+<section class="pantry-shelf" data-shelf="chain" id="shelf-chain">
+  <div class="pantry-shelf-header">
+    <span class="pantry-shelf-icon">🧠</span>
+    <h2 class="pantry-shelf-title">Chain-of-Thought Starters</h2>
+    <span class="shelf-count">2 ingredients</span>
+    <span class="pantry-shelf-desc">Make the AI show its reasoning before it concludes</span>
+  </div>
+
+  <div class="ingredient-grid">
+
+    <!-- ── Ingredient 5: Think Out Loud ── -->
+    <details class="ingredient-card" id="ing-think-out-loud">
+      <summary class="ingredient-summary">
+        <div class="ingredient-header">
+          <h3 class="ingredient-name">Think Out Loud</h3>
+          <span class="ingredient-chevron">▾</span>
+        </div>
+        <span class="ingredient-tag">🧠 Chain-of-Thought</span>
+        <p class="ingredient-when">Use for complex decisions, analysis, or any time you want to understand the reasoning — not just the output. Also catches the AI making bad assumptions before they become bad answers.</p>
+      </summary>
+      <div class="ingredient-body">
+        <div class="prompt-block">
+          <pre>Before you give me a final answer, reason through this step by step. Show your working. Consider:
+- What are the key factors or variables here?
+- What assumptions are you making, and are they justified?
+- What are the main alternatives or approaches?
+- What are you choosing to prioritize, and why?
+- What could go wrong with the approach you're recommending?
+
+Then give me your conclusion and recommendation at the end, clearly labelled.</pre>
+        </div>
+
+        <div class="combine-section">
+          <p class="combine-label">🔗 Try combining with</p>
+          <div class="combine-chips">
+            <span class="combine-chip">🧠 Think Out Loud</span>
+            <span class="combine-plus">+</span>
+            <span class="combine-chip secondary">📐 Executive Brief</span>
+          </div>
+          <p class="combine-result">Let the AI reason fully with Think Out Loud, then ask it to compress the conclusion into an Executive Brief. You get the full reasoning trail for your own understanding, plus a crisp summary you can share with anyone.</p>
+        </div>
+      </div>
+    </details>
+
+    <!-- ── Ingredient 6: First Principles Check ── -->
+    <details class="ingredient-card" id="ing-first-principles">
+      <summary class="ingredient-summary">
+        <div class="ingredient-header">
+          <h3 class="ingredient-name">First Principles Check</h3>
+          <span class="ingredient-chevron">▾</span>
+        </div>
+        <span class="ingredient-tag">🧠 Chain-of-Thought</span>
+        <p class="ingredient-when">Use when you're stuck in conventional thinking, want a fresh angle on a familiar problem, or suspect that "the way it's always done" might not actually be the best way.</p>
+      </summary>
+      <div class="ingredient-body">
+        <div class="prompt-block">
+          <pre>Before you answer, reason from first principles rather than convention. Don't tell me what people usually do. Instead, ask:
+- What is the actual goal here — stripped of assumptions?
+- Which constraints are truly fixed versus just assumed to be fixed?
+- If we were designing this from scratch, with no existing conventions to follow, what would we do?
+- What does the most direct path to the goal look like?
+
+Reason through this, then give me your answer.</pre>
+        </div>
+
+        <div class="combine-section">
+          <p class="combine-label">🔗 Try combining with</p>
+          <div class="combine-chips">
+            <span class="combine-chip">🧠 First Principles Check</span>
+            <span class="combine-plus">+</span>
+            <span class="combine-chip secondary">👤 Skeptic in the Room</span>
+          </div>
+          <p class="combine-result">First, use First Principles to rebuild your approach from scratch without legacy assumptions. Then run the Skeptic to attack what you've come up with. This two-pass combo catches both conventional ruts and logical holes.</p>
+        </div>
+      </div>
+    </details>
+
+  </div><!-- /ingredient-grid -->
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SHELF 4: OUTPUT FORMAT TEMPLATES
+     ══════════════════════════════════════════ -->
+<section class="pantry-shelf" data-shelf="format" id="shelf-format">
+  <div class="pantry-shelf-header">
+    <span class="pantry-shelf-icon">📐</span>
+    <h2 class="pantry-shelf-title">Output Format Templates</h2>
+    <span class="shelf-count">2 ingredients</span>
+    <span class="pantry-shelf-desc">Control exactly what shape the answer takes</span>
+  </div>
+
+  <div class="ingredient-grid">
+
+    <!-- ── Ingredient 7: The Executive Brief ── -->
+    <details class="ingredient-card" id="ing-executive-brief">
+      <summary class="ingredient-summary">
+        <div class="ingredient-header">
+          <h3 class="ingredient-name">The Executive Brief</h3>
+          <span class="ingredient-chevron">▾</span>
+        </div>
+        <span class="ingredient-tag">📐 Output Format</span>
+        <p class="ingredient-when">Use when you need to share output with stakeholders, drop a summary into Slack, or brief someone in under 60 seconds. Forces the AI to prioritize ruthlessly.</p>
+      </summary>
+      <div class="ingredient-body">
+        <div class="prompt-block">
+          <pre>Format your answer as an Executive Brief with exactly these three sections:
+
+1. Bottom Line Up Front (1–2 sentences — the single most important thing)
+2. Key Points (3 bullet points — supporting evidence or key considerations)
+3. Recommended Action (1–2 sentences — what should be done and why)
+
+Maximum 200 words total. Be direct. Cut all filler.</pre>
+        </div>
+
+        <div class="combine-section">
+          <p class="combine-label">🔗 Try combining with</p>
+          <div class="combine-chips">
+            <span class="combine-chip">📐 Executive Brief</span>
+            <span class="combine-plus">+</span>
+            <span class="combine-chip secondary">🧠 Think Out Loud</span>
+          </div>
+          <p class="combine-result">Ask the AI to Think Out Loud first so you see the full reasoning, then append this block: "Now compress your conclusion into an Executive Brief." You get the depth and the summary in one response.</p>
+        </div>
+      </div>
+    </details>
+
+    <!-- ── Ingredient 8: The Layered Answer ── -->
+    <details class="ingredient-card" id="ing-layered-answer">
+      <summary class="ingredient-summary">
+        <div class="ingredient-header">
+          <h3 class="ingredient-name">The Layered Answer</h3>
+          <span class="ingredient-chevron">▾</span>
+        </div>
+        <span class="ingredient-tag">📐 Output Format</span>
+        <p class="ingredient-when">Use when your audience includes both skimmers and deep-readers. The two-layer format means nobody gets either too little or too much. Great for documentation, reports, and team comms.</p>
+      </summary>
+      <div class="ingredient-body">
+        <div class="prompt-block">
+          <pre>Structure your response in two clearly labelled layers:
+
+Layer 1 — The Short Answer:
+2–3 sentences. For someone in a hurry who just needs the key takeaway.
+
+Layer 2 — The Full Picture:
+Full detail, context, nuance, and caveats for someone who wants to go deep.
+
+Label each layer clearly. Don't merge them.</pre>
+        </div>
+
+        <div class="combine-section">
+          <p class="combine-label">🔗 Try combining with</p>
+          <div class="combine-chips">
+            <span class="combine-chip">📐 Layered Answer</span>
+            <span class="combine-plus">+</span>
+            <span class="combine-chip secondary">📋 Audience Brief</span>
+          </div>
+          <p class="combine-result">The Audience Brief tells the AI who it's writing for. Then Layered Answer ensures the busy executive gets the top layer while the detail-hungry analyst gets the second. One response, two audiences served.</p>
+        </div>
+      </div>
+    </details>
+
+  </div><!-- /ingredient-grid -->
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SHELF 5: TONE & STYLE REFERENCES
+     ══════════════════════════════════════════ -->
+<section class="pantry-shelf" data-shelf="tone" id="shelf-tone">
+  <div class="pantry-shelf-header">
+    <span class="pantry-shelf-icon">🎨</span>
+    <h2 class="pantry-shelf-title">Tone &amp; Style References</h2>
+    <span class="shelf-count">2 ingredients</span>
+    <span class="pantry-shelf-desc">Dial in exactly how the output should sound</span>
+  </div>
+
+  <div class="ingredient-grid">
+
+    <!-- ── Ingredient 9: Plain English Please ── -->
+    <details class="ingredient-card" id="ing-plain-english">
+      <summary class="ingredient-summary">
+        <div class="ingredient-header">
+          <h3 class="ingredient-name">Plain English Please</h3>
+          <span class="ingredient-chevron">▾</span>
+        </div>
+        <span class="ingredient-tag">🎨 Tone &amp; Style</span>
+        <p class="ingredient-when">Use for explanations, documentation, or anything reaching non-specialists. Also useful when an AI response has come back sounding like a legal brief when you wanted a friendly summary.</p>
+      </summary>
+      <div class="ingredient-body">
+        <div class="prompt-block">
+          <pre>Write this in plain, clear English. Specific rules:
+- No jargon or acronyms unless you explain them on first use
+- Imagine you're explaining this to a smart friend with no background in the field
+- Short sentences. Active voice. Direct.
+- If there's a simpler word, use it. ("Use" not "utilize." "Help" not "facilitate.")
+- No throat-clearing phrases ("It's worth noting that...", "It is important to understand...")
+
+Clarity over impressiveness, every time.</pre>
+        </div>
+
+        <div class="combine-section">
+          <p class="combine-label">🔗 Try combining with</p>
+          <div class="combine-chips">
+            <span class="combine-chip">🎨 Plain English</span>
+            <span class="combine-plus">+</span>
+            <span class="combine-chip secondary">🚧 Word Budget</span>
+          </div>
+          <p class="combine-result">Plain English strips the fluff, Word Budget enforces a hard limit. Together they're unstoppable for content that needs to be both clear and concise — landing pages, executive summaries, onboarding docs.</p>
+        </div>
+      </div>
+    </details>
+
+    <!-- ── Ingredient 10: The Mentor Voice ── -->
+    <details class="ingredient-card" id="ing-mentor-voice">
+      <summary class="ingredient-summary">
+        <div class="ingredient-header">
+          <h3 class="ingredient-name">The Mentor Voice</h3>
+          <span class="ingredient-chevron">▾</span>
+        </div>
+        <span class="ingredient-tag">🎨 Tone &amp; Style</span>
+        <p class="ingredient-when">Use for feedback requests, code reviews, draft critiques, or learning new skills. Changes the emotional tone of criticism from "here's what's wrong" to "here's how to get better."</p>
+      </summary>
+      <div class="ingredient-body">
+        <div class="prompt-block">
+          <pre>Respond in the tone of a patient, experienced mentor who genuinely wants me to succeed. Specific guidelines:
+- Be honest — don't soften real problems into meaninglessness
+- Frame everything as "here's how to get better," not "here's what's wrong"
+- Be encouraging without being false — I can handle the truth
+- Point out strengths as well as gaps (both matter for improvement)
+- When you spot something good, say so — specific praise lands better than generic
+
+You're not cheerleading. You're coaching.</pre>
+        </div>
+
+        <div class="combine-section">
+          <p class="combine-label">🔗 Try combining with</p>
+          <div class="combine-chips">
+            <span class="combine-chip">🎨 Mentor Voice</span>
+            <span class="combine-plus">+</span>
+            <span class="combine-chip secondary">📖 Draft → Critique → Revise</span>
+          </div>
+          <p class="combine-result">Add the Mentor Voice before using the Draft → Critique → Revise recipe from the Recipe Book. The recipe gives you the structure; the Mentor Voice ensures the critique actually helps you improve rather than making you want to quit.</p>
+        </div>
+      </div>
+    </details>
+
+  </div><!-- /ingredient-grid -->
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SHELF 6: CONSTRAINT & GUARDRAIL PHRASES
+     ══════════════════════════════════════════ -->
+<section class="pantry-shelf" data-shelf="constraint" id="shelf-constraint">
+  <div class="pantry-shelf-header">
+    <span class="pantry-shelf-icon">🚧</span>
+    <h2 class="pantry-shelf-title">Constraint &amp; Guardrail Phrases</h2>
+    <span class="shelf-count">2 ingredients</span>
+    <span class="pantry-shelf-desc">Keep the output on track and within bounds</span>
+  </div>
+
+  <div class="ingredient-grid">
+
+    <!-- ── Ingredient 11: The Fence ── -->
+    <details class="ingredient-card" id="ing-the-fence">
+      <summary class="ingredient-summary">
+        <div class="ingredient-header">
+          <h3 class="ingredient-name">The Fence</h3>
+          <span class="ingredient-chevron">▾</span>
+        </div>
+        <span class="ingredient-tag">🚧 Constraint</span>
+        <p class="ingredient-when">Use any time you've gotten an answer that drifted off-topic, over-caveated, or made wrong assumptions about your resources or situation. Append to any prompt to stake the boundaries.</p>
+      </summary>
+      <div class="ingredient-body">
+        <div class="prompt-block">
+          <pre>As you respond, stay within these guardrails:
+- Do NOT: [specific thing to avoid — e.g., give legal/medical/financial advice — explain the concept instead]
+- Do NOT: assume I have [resource, time, or knowledge you don't have]
+- Do NOT: pad the answer with excessive disclaimers or hedge every statement
+- Do NOT: treat all options as equally valid when some are clearly better for my situation
+- DO: stay focused on the specific ask — don't broaden the scope unless I ask you to
+
+If you're genuinely uncertain about something, say so briefly and move on.</pre>
+        </div>
+
+        <div class="combine-section">
+          <p class="combine-label">🔗 Try combining with</p>
+          <div class="combine-chips">
+            <span class="combine-chip">🚧 The Fence</span>
+            <span class="combine-plus">+</span>
+            <span class="combine-chip secondary">👤 Trusted Advisor</span>
+          </div>
+          <p class="combine-result">The Trusted Advisor sets up an expert persona; The Fence keeps that advisor from retreating into safe, generic guidance. Together they force a direct, contextually relevant response instead of the diplomatic non-answer you'd get otherwise.</p>
+        </div>
+      </div>
+    </details>
+
+    <!-- ── Ingredient 12: The Word Budget ── -->
+    <details class="ingredient-card" id="ing-word-budget">
+      <summary class="ingredient-summary">
+        <div class="ingredient-header">
+          <h3 class="ingredient-name">The Word Budget</h3>
+          <span class="ingredient-chevron">▾</span>
+        </div>
+        <span class="ingredient-tag">🚧 Constraint</span>
+        <p class="ingredient-when">Use for anything going into a tight format — slide decks, email subject lines, social posts, press releases, or anywhere word count is a hard constraint rather than a preference.</p>
+      </summary>
+      <div class="ingredient-body">
+        <div class="prompt-block">
+          <pre>Strict word budget for this response:
+- Maximum total length: [X] words
+- Prioritize cutting detail before cutting clarity
+- Remove all filler phrases: "It's worth noting...", "In conclusion...", "Of course...", "It is important to..."
+- Every sentence must earn its place — if it repeats or hedges unnecessarily, cut it
+- Do not use bullet points just to pad — use them only if they genuinely help structure
+
+If you genuinely cannot cover this topic in [X] words without losing critical meaning, say so in 1 sentence and ask what to prioritize — don't just silently go over budget.</pre>
+        </div>
+
+        <div class="combine-section">
+          <p class="combine-label">🔗 Try combining with</p>
+          <div class="combine-chips">
+            <span class="combine-chip">🚧 Word Budget</span>
+            <span class="combine-plus">+</span>
+            <span class="combine-chip secondary">📐 Executive Brief</span>
+            <span class="combine-plus">+</span>
+            <span class="combine-chip secondary">🎨 Plain English</span>
+          </div>
+          <p class="combine-result">The ultimate tight-output stack. Executive Brief gives the structure, Plain English cuts jargon, Word Budget enforces the hard limit. Use this triple combo when you need to turn a wall of AI text into something a CFO would actually read.</p>
+        </div>
+      </div>
+    </details>
+
+  </div><!-- /ingredient-grid -->
+</section>
+
+
+<!-- Tip callout -->
+<div class="callout callout-tip" style="margin: var(--s8) 0;">
+  <span class="callout-icon">💡</span>
+  <div class="callout-body">
+    <h4>Pro tip: build a personal pantry</h4>
+    <p>Copy your three most-used ingredients into a note or doc you keep open while working. After a few weeks, you'll have a personal starter kit — your own flavour of these blocks, tuned to your field and communication style.</p>
+  </div>
+</div>
+
+
+<!-- CTA section -->
+<div class="pantry-cta">
+  <a href="../prompts/" class="pantry-cta-card">
+    <span class="pantry-cta-card-icon">📖</span>
+    <h3>Recipe Book</h3>
+    <p>26 full prompt recipes you can use immediately. Drop a pantry ingredient into any of them for a custom result.</p>
+  </a>
+  <a href="../spice-rack/" class="pantry-cta-card">
+    <span class="pantry-cta-card-icon">🌶️</span>
+    <h3>Spice Rack</h3>
+    <p>Interactive prompt builder. Pick a recipe, fill in the fields, and generate a ready-to-paste prompt in seconds.</p>
+  </a>
+</div>
+
+</div><!-- /container -->
+</div><!-- /section -->
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../" class="nav-logo" aria-label="The Prompt Kitchen — Home" style="margin-bottom: var(--s3); display: inline-flex;">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="16" r="3" fill="currentColor"/>
+          </svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI. Free, open, and always will be.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="../prompts/">Recipe Book</a></li>
+          <li><a href="../pantry/">The Pantry</a></li>
+          <li><a href="../daily/">Daily Specials</a></li>
+          <li><a href="../examples/">Tasting Menu</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Compare</h4>
+        <ul>
+          <li><a href="../models/">Appliance Guide</a></li>
+          <li><a href="../quiz/">Ask the Chef</a></li>
+          <li><a href="../model-tester/">Test Kitchen</a></li>
+          <li><a href="../challenges/">Cook-Off</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Create</h4>
+        <ul>
+          <li><a href="../spice-rack/">Spice Rack</a></li>
+          <li><a href="../audio/">Kitchen Radio</a></li>
+          <li><a href="../video/">Kitchen Cinema</a></li>
+          <li><a href="../image-video/">Image &amp; Video</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Site</h4>
+        <ul>
+          <li><a href="../fails/">Kitchen Disasters</a></li>
+          <li><a href="../support.html">Tip Jar</a></li>
+          <li><a href="https://github.com/cyork95/the-prompt-kitchen" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <span>Developed with ♥ by <a href="https://yorkdevelops.com" rel="noopener" style="color:inherit">York.Dev</a></span>
+      <div class="footer-privacy">
+        <span class="privacy-dot"></span>
+        <span>No tracking · No cookies · No ads · No account needed</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+
+<script src="../js/main.js"></script>
+<script>
+  // ── Pantry filter tabs ──
+  (function () {
+    const bar  = document.getElementById('pantry-filter-bar');
+    const tabs = bar.querySelectorAll('.pantry-tab');
+    const shelves = document.querySelectorAll('.pantry-shelf');
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        const filter = tab.dataset.filter;
+
+        // Update active tab
+        tabs.forEach(function (t) { t.classList.remove('active'); });
+        tab.classList.add('active');
+
+        // Show / hide shelves
+        shelves.forEach(function (shelf) {
+          if (filter === 'all' || shelf.dataset.shelf === filter) {
+            shelf.style.display = '';
+          } else {
+            shelf.style.display = 'none';
+          }
+        });
+      });
+    });
+  })();
+</script>
+</body>
+</html>
