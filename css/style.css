@@ -833,8 +833,9 @@ details.example-card > summary::-webkit-details-marker {
   display: none;
 }
 
-/* Hide the global ::before triangle on recipe-card headers — we use .recipe-chevron instead */
-details.recipe-card > summary::before {
+/* Hide the global ::before triangle on recipe/example-card headers — we use .recipe-chevron instead */
+details.recipe-card > summary::before,
+details.example-card > summary::before {
   display: none;
 }
 
