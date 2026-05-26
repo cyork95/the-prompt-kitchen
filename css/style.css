@@ -2114,7 +2114,6 @@ details[open] > summary .recipe-chevron {
    Prose (long-form content)
    ============================================================ */
 .prose {
-  max-width: 68ch;
   font-size: var(--text-base);
   line-height: 1.75;
 }
