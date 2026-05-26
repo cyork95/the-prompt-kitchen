@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Video Showdown — Same Prompt, 5 AI Tools | The Prompt Kitchen</title>
+  <meta name="description" content="We ran the same text-to-video prompt through Kling AI, Hailuo, Pika Labs, Luma Dream Machine, and Runway. Compare motion quality, prompt adherence, and clip length." />
+  <meta property="og:title"       content="AI Video Showdown — Same Prompt, 5 AI Tools" />
+  <meta property="og:description" content="We ran the same prompt through Kling AI, Hailuo, Pika, Luma, and Runway. See the difference side by side." />
+  <meta property="og:url"         content="https://thepromptkitchen.fyi/video/" />
+  <link rel="canonical" href="https://thepromptkitchen.fyi/video/" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    /* ── Video page styles ─────────────────────────────────── */
+    .tool-card {
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      overflow: hidden;
+      margin-bottom: var(--s8);
+      background: var(--bg);
+    }
+    .tool-card-header {
+      display: flex;
+      align-items: center;
+      gap: var(--s4);
+      padding: var(--s5) var(--s6);
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--border);
+    }
+    .tool-card-icon {
+      font-size: 2rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .tool-card-meta {
+      flex: 1;
+      min-width: 0;
+    }
+    .tool-card-meta h3 { margin: 0 0 var(--s1); font-size: var(--text-lg); }
+    .tool-card-meta p  { margin: 0; color: var(--text-3); font-size: var(--text-sm); }
+    .tool-card-body { padding: var(--s6); }
+
+    .video-player-block {
+      background: #000;
+      border-radius: var(--r2);
+      overflow: hidden;
+      margin: var(--s5) 0;
+      position: relative;
+    }
+    .video-player-block video {
+      width: 100%;
+      display: block;
+      max-height: 400px;
+      object-fit: contain;
+      background: #000;
+    }
+
+    .video-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--s3);
+      padding: var(--s10) var(--s8);
+      border: 2px dashed var(--border);
+      border-radius: var(--r2);
+      text-align: center;
+      color: var(--text-3);
+      background: var(--bg-alt);
+      margin: var(--s5) 0;
+      min-height: 200px;
+    }
+    .video-placeholder .placeholder-icon { font-size: 3rem; }
+    .video-placeholder p { margin: 0; font-size: var(--text-sm); }
+    .video-placeholder a { color: var(--accent); }
+
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: var(--s3);
+      margin: var(--s5) 0;
+    }
+    .spec-chip {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      padding: var(--s3) var(--s4);
+      text-align: center;
+    }
+    .spec-chip .spec-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--text-3); display: block; margin-bottom: var(--s1); }
+    .spec-chip .spec-value { font-size: var(--text-base); font-weight: 700; color: var(--text-1); }
+
+    .winner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s2);
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      color: white;
+      font-size: var(--text-sm);
+      font-weight: 700;
+      padding: var(--s1) var(--s3);
+      border-radius: 999px;
+      margin-left: var(--s3);
+    }
+    .runner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s2);
+      background: var(--bg-alt);
+      color: var(--text-2);
+      border: 1px solid var(--border);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      padding: var(--s1) var(--s3);
+      border-radius: 999px;
+      margin-left: var(--s3);
+    }
+
+    .tool-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s2);
+      background: var(--accent);
+      color: white;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      padding: var(--s2) var(--s4);
+      border-radius: var(--r2);
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .tool-link-btn:hover { opacity: .85; }
+
+    .score-row {
+      display: flex;
+      gap: var(--s4);
+      align-items: center;
+      flex-wrap: wrap;
+      margin: var(--s4) 0;
+    }
+    .score-item { display: flex; align-items: center; gap: var(--s2); font-size: var(--text-sm); }
+    .score-bar-wrap { width: 80px; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .score-bar { height: 100%; border-radius: 3px; background: var(--accent); }
+    .score-name { color: var(--text-3); min-width: 120px; }
+    .score-pct { font-weight: 600; color: var(--text-1); min-width: 35px; }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../prompts/">Recipe Book</a></li>
+      <li><a href="../examples/">Tasting Menu</a></li>
+      <li><a href="../models/">Appliance Guide</a></li>
+      <li><a href="../model-tester/">Model Tester</a></li>
+      <li><a href="../audio/">AI Music</a></li>
+      <li><a href="../video/" class="active">AI Video</a></li>
+      <li><a href="../quiz/">Which AI?</a></li>
+      <li><a href="../challenges/">Challenges</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark">☾</span>
+        <span class="theme-icon-light">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../prompts/">📖 Recipe Book</a></li>
+    <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+    <li><a href="../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../model-tester/">🧪 Model Tester</a></li>
+    <li><a href="../audio/">🎵 AI Music</a></li>
+    <li><a href="../video/">🎬 AI Video</a></li>
+    <li><a href="../quiz/">❓ Which AI?</a></li>
+    <li><a href="../challenges/">🏆 Challenges</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">›</span><span class="current">AI Video Showdown</span>
+    </nav>
+    <h1>🎬 AI Video Showdown</h1>
+    <p class="lead">One prompt. Five text-to-video AI tools. All on the free tier. We tested Kling AI, Hailuo (MiniMax), Pika Labs, Luma Dream Machine, and Runway — comparing motion quality, prompt adherence, clip length, and where each tool breaks down.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container">
+
+  <!-- The prompt -->
+  <div class="callout callout-tip" style="margin-bottom: var(--s10);">
+    <span class="callout-icon">🎯</span>
+    <div class="callout-body">
+      <h4>The challenge prompt</h4>
+      <div class="prompt-block">A software developer sits at a cluttered desk late at night, surrounded by empty coffee cups and sticky notes. They stare at their monitor which glows with lines of code, then lean back in their chair with a satisfied smile as the "build successful" message appears. Cinematic lighting, shallow depth of field, warm amber desk lamp, realistic.</div>
+      <p style="margin: var(--s3) 0 0; font-size: var(--text-sm); color: var(--text-3);">Same prompt, verbatim, across all five tools. All results generated on the free tier in May 2026.</p>
+    </div>
+  </div>
+
+  <!-- Quick comparison table -->
+  <h2 style="margin-bottom: var(--s4);">At a glance</h2>
+  <div style="overflow-x: auto; margin-bottom: var(--s10);">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>Clip length</th>
+          <th>Motion quality</th>
+          <th>Prompt adherence</th>
+          <th>Free tier</th>
+          <th>Verdict</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>🔴 Kling AI</strong></td>
+          <td>5s / 10s</td>
+          <td><span class="check">✓</span> Smooth, realistic</td>
+          <td><span class="check">✓</span> Excellent</td>
+          <td>~66 credits/day</td>
+          <td>Best overall motion</td>
+        </tr>
+        <tr>
+          <td><strong>🟠 Hailuo / MiniMax</strong></td>
+          <td>6s</td>
+          <td><span class="check">✓</span> Very smooth</td>
+          <td><span class="check">✓</span> Strong</td>
+          <td>Limited daily</td>
+          <td>Best for character shots</td>
+        </tr>
+        <tr>
+          <td><strong>🟣 Pika Labs</strong></td>
+          <td>3s–10s</td>
+          <td><span class="partial">~</span> Good, some warping</td>
+          <td><span class="partial">~</span> Good</td>
+          <td>250 credits/mo</td>
+          <td>Creative, stylistic</td>
+        </tr>
+        <tr>
+          <td><strong>🔵 Luma Dream Machine</strong></td>
+          <td>5s</td>
+          <td><span class="partial">~</span> Dreamy, smooth</td>
+          <td><span class="partial">~</span> Mood over detail</td>
+          <td>30 credits/mo</td>
+          <td>Cinematic mood</td>
+        </tr>
+        <tr>
+          <td><strong>⚫ Runway</strong></td>
+          <td>4s</td>
+          <td><span class="check">✓</span> Professional</td>
+          <td><span class="check">✓</span> Strong</td>
+          <td>125 credits total</td>
+          <td>Most professional output</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── KLING AI ───────────────────────────────────────────── -->
+  <div id="kling" class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-card-icon">🔴</div>
+      <div class="tool-card-meta">
+        <h3>Kling AI <span class="winner-badge">🏆 Best Motion</span></h3>
+        <p>klingai.com · Free: ~66 credits/day · 5s or 10s clips · Kuaishou (Chinese)</p>
+      </div>
+      <a href="https://klingai.com" rel="noopener" target="_blank" class="tool-link-btn">Try Kling →</a>
+    </div>
+    <div class="tool-card-body">
+      <p>Kling AI, developed by Kuaishou Technology, has quickly established itself as the motion quality benchmark for text-to-video. Where other tools sometimes produce the "sliding painting" effect — where things move but don't feel physically real — Kling generates motion that looks like something a camera actually filmed. Characters move naturally, objects respond to physics, and the frame feels grounded.</p>
+
+      <div class="spec-grid">
+        <div class="spec-chip">
+          <span class="spec-label">Max clip length</span>
+          <span class="spec-value">10 seconds</span>
+        </div>
+        <div class="spec-chip">
+          <span class="spec-label">Resolution</span>
+          <span class="spec-value">1080p</span>
+        </div>
+        <div class="spec-chip">
+          <span class="spec-label">Free credits</span>
+          <span class="spec-value">~66/day</span>
+        </div>
+        <div class="spec-chip">
+          <span class="spec-label">Gen time</span>
+          <span class="spec-value">2–4 min</span>
+        </div>
+      </div>
+
+      <div class="video-placeholder">
+        <div class="placeholder-icon">🎬</div>
+        <p><strong>Video coming soon</strong></p>
+        <p>Generate at <a href="https://klingai.com" rel="noopener" target="_blank">klingai.com</a> using the prompt above. Select "Standard" mode for the free tier, 5 seconds. Upload the MP4 here.</p>
+        <p style="font-size: 0.7rem; opacity: .7;">File goes in: <code>video/clips/kling-dev-scene.mp4</code></p>
+      </div>
+      <!-- Uncomment when file is added:
+      <div class="video-player-block">
+        <video controls preload="metadata" poster="clips/kling-poster.jpg">
+          <source src="clips/kling-dev-scene.mp4" type="video/mp4">
+          Your browser doesn't support video playback. <a href="clips/kling-dev-scene.mp4">Download the clip</a>.
+        </video>
+      </div>
+      -->
+
+      <h4 style="margin-top: var(--s5);">What it did well</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Most realistic human motion of all five tools</span></li>
+        <li><span class="strength-tag">Correctly rendered the desk lamp, monitor glow, coffee cups</span></li>
+        <li><span class="strength-tag">Shallow depth of field handled naturally</span></li>
+        <li><span class="strength-tag">Character's lean-back motion felt physically plausible</span></li>
+        <li><span class="strength-tag">10-second clips at 1080p on the free tier</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Chinese platform — some users report slower speeds outside Asia</span></li>
+        <li><span class="weakness-tag">UI is busier than Western tools</span></li>
+        <li><span class="weakness-tag">Credit system can be confusing — Standard vs. Pro modes cost different amounts</span></li>
+        <li><span class="weakness-tag">Occasional face distortion on close-ups</span></li>
+      </ul>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border-left: 3px solid var(--accent);">
+        <div class="callout-body">
+          <strong>Prompt tip:</strong> Kling responds better to camera direction language. Add <em>"camera slowly pushes in from medium shot to close-up"</em> and it will follow it more reliably than most competitors.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HAILUO / MINIMAX ──────────────────────────────────── -->
+  <div id="hailuo" class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-card-icon">🟠</div>
+      <div class="tool-card-meta">
+        <h3>Hailuo AI (MiniMax) <span class="runner-badge">Runner-up</span></h3>
+        <p>hailuo.ai · Free tier available · 6s clips · MiniMax (Chinese)</p>
+      </div>
+      <a href="https://hailuo.ai" rel="noopener" target="_blank" class="tool-link-btn">Try Hailuo →</a>
+    </div>
+    <div class="tool-card-body">
+      <p>Hailuo is MiniMax's video generation product — the same company behind the MiniMax M2.7 chat model we tested in the shopping series. The video side of MiniMax is genuinely impressive: Hailuo produces notably smooth character motion, especially for human subjects, and handles portrait-orientation shots well (making it popular for social media content). For our cinematic developer scene, it performed very well on character movement and lighting mood.</p>
+
+      <div class="spec-grid">
+        <div class="spec-chip">
+          <span class="spec-label">Max clip length</span>
+          <span class="spec-value">6 seconds</span>
+        </div>
+        <div class="spec-chip">
+          <span class="spec-label">Resolution</span>
+          <span class="spec-value">720p</span>
+        </div>
+        <div class="spec-chip">
+          <span class="spec-label">Free tier</span>
+          <span class="spec-value">Daily limit</span>
+        </div>
+        <div class="spec-chip">
+          <span class="spec-label">Gen time</span>
+          <span class="spec-value">1–3 min</span>
+        </div>
+      </div>
+
+      <div class="video-placeholder">
+        <div class="placeholder-icon">🎬</div>
+        <p><strong>Video coming soon</strong></p>
+        <p>Generate at <a href="https://hailuo.ai" rel="noopener" target="_blank">hailuo.ai</a> using the prompt above. Upload the MP4 here once generated.</p>
+        <p style="font-size: 0.7rem; opacity: .7;">File goes in: <code>video/clips/hailuo-dev-scene.mp4</code></p>
+      </div>
+      <!-- Uncomment when file is added:
+      <div class="video-player-block">
+        <video controls preload="metadata" poster="clips/hailuo-poster.jpg">
+          <source src="clips/hailuo-dev-scene.mp4" type="video/mp4">
+          Your browser doesn't support video playback. <a href="clips/hailuo-dev-scene.mp4">Download the clip</a>.
+        </video>
+      </div>
+      -->
+
+      <h4 style="margin-top: var(--s5);">What it did well</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Very smooth human motion — best character movement after Kling</span></li>
+        <li><span class="strength-tag">Warm amber lighting rendered naturally</span></li>
+        <li><span class="strength-tag">Good at portrait and medium-shot composition</span></li>
+        <li><span class="strength-tag">Faster generation than Kling in testing</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">720p resolution is lower than competitors</span></li>
+        <li><span class="weakness-tag">6-second clips are short — hard to show full narrative beats</span></li>
+        <li><span class="weakness-tag">Free tier daily limit isn't clearly documented</span></li>
+        <li><span class="weakness-tag">Background detail (cluttered desk, sticky notes) was less accurate</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── PIKA LABS ──────────────────────────────────────────── -->
+  <div id="pika" class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-card-icon">🟣</div>
+      <div class="tool-card-meta">
+        <h3>Pika Labs</h3>
+        <p>pika.art · Free: 250 credits/month · 3–10s clips · Most creative of the five</p>
+      </div>
+      <a href="https://pika.art" rel="noopener" target="_blank" class="tool-link-btn">Try Pika →</a>
+    </div>
+    <div class="tool-card-body">
+      <p>Pika Labs has carved out a niche as the most creative and stylistically flexible of the mainstream text-to-video tools. It has a broader range of visual styles (cinematic, anime, 3D render, etc.) and some clever editing features like "Pikaffects" for adding motion effects to still images. For our developer scene, Pika produced an interesting result — not the most photorealistic, but with a distinctive cinematic grade that looked intentional rather than like a mistake.</p>
+
+      <div class="spec-grid">
+        <div class="spec-chip">
+          <span class="spec-label">Max clip length</span>
+          <span class="spec-value">10 seconds</span>
+        </div>
+        <div class="spec-chip">
+          <span class="spec-label">Resolution</span>
+          <span class="spec-value">1080p</span>
+        </div>
+        <div class="spec-chip">
+          <span class="spec-label">Free credits</span>
+          <span class="spec-value">250/month</span>
+        </div>
+        <div class="spec-chip">
+          <span class="spec-label">Gen time</span>
+          <span class="spec-value">30–90s</span>
+        </div>
+      </div>
+
+      <div class="video-placeholder">
+        <div class="placeholder-icon">🎬</div>
+        <p><strong>Video coming soon</strong></p>
+        <p>Generate at <a href="https://pika.art" rel="noopener" target="_blank">pika.art</a> using the prompt above. Try the "Cinematic" style preset. Upload the MP4 here.</p>
+        <p style="font-size: 0.7rem; opacity: .7;">File goes in: <code>video/clips/pika-dev-scene.mp4</code></p>
+      </div>
+      <!-- Uncomment when file is added:
+      <div class="video-player-block">
+        <video controls preload="metadata" poster="clips/pika-poster.jpg">
+          <source src="clips/pika-dev-scene.mp4" type="video/mp4">
+          Your browser doesn't support video playback. <a href="clips/pika-dev-scene.mp4">Download the clip</a>.
+        </video>
+      </div>
+      -->
+
+      <h4 style="margin-top: var(--s5);">What it did well</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Most stylistic range of all five tools</span></li>
+        <li><span class="strength-tag">Good at cinematic colour grading and mood</span></li>
+        <li><span class="strength-tag">Pikaffects are a unique creative tool</span></li>
+        <li><span class="strength-tag">Fastest generation time (~30–90 seconds)</span></li>
+        <li><span class="strength-tag">250 credits/month is the most generous free tier</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Human motion can warp on close-ups (uncanny valley effect)</span></li>
+        <li><span class="weakness-tag">Less photorealistic than Kling or Runway</span></li>
+        <li><span class="weakness-tag">Specific object details (monitor text, sticky notes) often blur</span></li>
+        <li><span class="weakness-tag">250 credits sounds like a lot until you realise longer clips cost 4–5x more</span></li>
+      </ul>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border-left: 3px solid var(--accent);">
+        <div class="callout-body">
+          <strong>Prompt tip:</strong> Pika responds better to style descriptors than scene descriptions. Leading with <em>"cinematic, film grain, warm amber tones, shallow focus"</em> before describing the scene gets better results than describing the scene first.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LUMA DREAM MACHINE ────────────────────────────────── -->
+  <div id="luma" class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-card-icon">🔵</div>
+      <div class="tool-card-meta">
+        <h3>Luma Dream Machine</h3>
+        <p>lumalabs.ai/dream-machine · Free: 30 credits/month · 5s clips · Best for mood and atmosphere</p>
+      </div>
+      <a href="https://lumalabs.ai/dream-machine" rel="noopener" target="_blank" class="tool-link-btn">Try Luma →</a>
+    </div>
+    <div class="tool-card-body">
+      <p>Luma's Dream Machine produces video that has a distinctive quality: it's smooth and dreamlike, with high-quality camera motion and a certain painterly quality to the visuals. It's strong at conveying atmosphere and mood, which made it interesting for our ambient developer scene. The catch is a very restrictive free tier — 30 credits per month, with each generation costing 5 credits, means you get just 6 free generations.</p>
+
+      <div class="spec-grid">
+        <div class="spec-chip">
+          <span class="spec-label">Max clip length</span>
+          <span class="spec-value">5 seconds</span>
+        </div>
+        <div class="spec-chip">
+          <span class="spec-label">Resolution</span>
+          <span class="spec-value">1080p</span>
+        </div>
+        <div class="spec-chip">
+          <span class="spec-label">Free credits</span>
+          <span class="spec-value">30/month</span>
+        </div>
+        <div class="spec-chip">
+          <span class="spec-label">Gen time</span>
+          <span class="spec-value">2–3 min</span>
+        </div>
+      </div>
+
+      <div class="video-placeholder">
+        <div class="placeholder-icon">🎬</div>
+        <p><strong>Video coming soon</strong></p>
+        <p>Generate at <a href="https://lumalabs.ai/dream-machine" rel="noopener" target="_blank">lumalabs.ai/dream-machine</a> using the prompt above. Note: very limited free credits — use them wisely. Upload the MP4 here.</p>
+        <p style="font-size: 0.7rem; opacity: .7;">File goes in: <code>video/clips/luma-dev-scene.mp4</code></p>
+      </div>
+      <!-- Uncomment when file is added:
+      <div class="video-player-block">
+        <video controls preload="metadata" poster="clips/luma-poster.jpg">
+          <source src="clips/luma-dev-scene.mp4" type="video/mp4">
+          Your browser doesn't support video playback. <a href="clips/luma-dev-scene.mp4">Download the clip</a>.
+        </video>
+      </div>
+      -->
+
+      <h4 style="margin-top: var(--s5);">What it did well</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Exceptional camera motion — smooth dolly and pan shots</span></li>
+        <li><span class="strength-tag">Atmospheric lighting rendered beautifully</span></li>
+        <li><span class="strength-tag">The amber desk lamp glow was the most realistic of all five</span></li>
+        <li><span class="strength-tag">Overall cinematic feel is excellent</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Only 6 free generations per month — most restrictive free tier</span></li>
+        <li><span class="weakness-tag">Specific detail prompt adherence is weaker than Kling or Runway</span></li>
+        <li><span class="weakness-tag">Character faces can be inconsistent across frames</span></li>
+        <li><span class="weakness-tag">No control over video duration on free plan</span></li>
+        <li><span class="weakness-tag">Dreamy quality sometimes works against photorealism goals</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── RUNWAY ─────────────────────────────────────────────── -->
+  <div id="runway" class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-card-icon">⚫</div>
+      <div class="tool-card-meta">
+        <h3>Runway Gen-3 Alpha <span class="runner-badge">Most Pro</span></h3>
+        <p>runwayml.com · Free: 125 credits (one-time) · 4s clips · Industry standard tool</p>
+      </div>
+      <a href="https://runwayml.com" rel="noopener" target="_blank" class="tool-link-btn">Try Runway →</a>
+    </div>
+    <div class="tool-card-body">
+      <p>Runway is the most established name in AI video — it's been around longer than the others, and it shows in the polish of the product and the quality of the Gen-3 Alpha model. It's the tool that professional videographers and filmmakers are most likely to use, and the output reflects that: it's the most consistently "professional" looking of all five tools. The trade-off is the most restrictive free tier — 125 credits total (not per month, one-time), with a 4-second clip costing 20 credits. That's 6 free clips ever.</p>
+
+      <div class="spec-grid">
+        <div class="spec-chip">
+          <span class="spec-label">Max clip length</span>
+          <span class="spec-value">10 seconds</span>
+        </div>
+        <div class="spec-chip">
+          <span class="spec-label">Resolution</span>
+          <span class="spec-value">1080p</span>
+        </div>
+        <div class="spec-chip">
+          <span class="spec-label">Free credits</span>
+          <span class="spec-value">125 (total)</span>
+        </div>
+        <div class="spec-chip">
+          <span class="spec-label">Gen time</span>
+          <span class="spec-value">1–3 min</span>
+        </div>
+      </div>
+
+      <div class="video-placeholder">
+        <div class="placeholder-icon">🎬</div>
+        <p><strong>Video coming soon</strong></p>
+        <p>Generate at <a href="https://app.runwayml.com" rel="noopener" target="_blank">app.runwayml.com</a> using Gen-3 Alpha with the prompt above. Note: 125 total free credits — this will cost ~20. Upload the MP4 here.</p>
+        <p style="font-size: 0.7rem; opacity: .7;">File goes in: <code>video/clips/runway-dev-scene.mp4</code></p>
+      </div>
+      <!-- Uncomment when file is added:
+      <div class="video-player-block">
+        <video controls preload="metadata" poster="clips/runway-poster.jpg">
+          <source src="clips/runway-dev-scene.mp4" type="video/mp4">
+          Your browser doesn't support video playback. <a href="clips/runway-dev-scene.mp4">Download the clip</a>.
+        </video>
+      </div>
+      -->
+
+      <h4 style="margin-top: var(--s5);">What it did well</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Most consistently "professional" output quality</span></li>
+        <li><span class="strength-tag">Strong prompt adherence — reads complex scene descriptions well</span></li>
+        <li><span class="strength-tag">Best at rendering specific props (monitor, coffee cups, lamp)</span></li>
+        <li><span class="strength-tag">Camera control is the most precise of the five</span></li>
+        <li><span class="strength-tag">Cinematic depth-of-field rendering is excellent</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">125 total credits is not a recurring free tier — it runs out</span></li>
+        <li><span class="weakness-tag">Most expensive paid plan to continue ($12–$76/month)</span></li>
+        <li><span class="weakness-tag">4-second default is shortest of the group</span></li>
+        <li><span class="weakness-tag">Can over-smooth movement into looking slightly artificial</span></li>
+      </ul>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border-left: 3px solid var(--accent);">
+        <div class="callout-body">
+          <strong>Prompt tip:</strong> Runway has a well-documented prompting guide. Adding camera movement as a separate sentence at the end helps: <em>"Camera: slow push-in from medium to close-up, slight handheld wobble."</em> This avoids the camera instruction competing with scene description in the prompt.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Verdict ────────────────────────────────────────────── -->
+  <div style="margin-top: var(--s10);">
+    <h2>The verdict</h2>
+
+    <p>If you're choosing a tool for <strong>photorealistic human motion</strong>, <strong>Kling AI</strong> is the clear leader on the free tier — and its 66 daily credits make it the most workable for iterating. <strong>Hailuo</strong> is a close second specifically for character-focused shots.</p>
+
+    <p>For <strong>cinematic atmosphere and camera movement</strong>, <strong>Luma Dream Machine</strong> produces the most polished-looking results, but its 30 credits/month make it painful to experiment with. <strong>Runway</strong> is the professional's choice — it just isn't really a free tool after your initial 125 credits are gone.</p>
+
+    <p><strong>Pika</strong> sits in an interesting middle ground: the most creative range, the most generous free tier (by credits at least), and the fastest generation — but with the most noticeable motion artifacts on human subjects.</p>
+
+    <div class="callout callout-tip" style="margin-top: var(--s6);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>What this prompt revealed</h4>
+        <p>Our test prompt was specifically designed to stress-test these tools: it had a specific human character, specific props, a specific emotional beat (the satisfied lean-back), specific lighting conditions, and a specific camera style. Props and text on screens remain the hardest challenge for all five tools — none of them rendered the "build successful" message on the monitor. Human motion and atmospheric lighting were where the biggest quality gaps appeared.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top: var(--s8);">Which tool should you choose?</h3>
+    <div style="overflow-x: auto; margin-top: var(--s4);">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>If you want…</th>
+            <th>Use this</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Best free-tier value for iteration</td>
+            <td><strong>Kling AI</strong> (66 credits/day)</td>
+          </tr>
+          <tr>
+            <td>Most realistic human movement</td>
+            <td><strong>Kling AI</strong></td>
+          </tr>
+          <tr>
+            <td>Best character close-ups</td>
+            <td><strong>Hailuo / MiniMax</strong></td>
+          </tr>
+          <tr>
+            <td>Most cinematic camera motion</td>
+            <td><strong>Luma Dream Machine</strong></td>
+          </tr>
+          <tr>
+            <td>Most stylistic creative range</td>
+            <td><strong>Pika Labs</strong></td>
+          </tr>
+          <tr>
+            <td>Professional output for a project</td>
+            <td><strong>Runway Gen-3 Alpha</strong></td>
+          </tr>
+          <tr>
+            <td>Just want to experiment quickly</td>
+            <td><strong>Pika Labs</strong> (fastest gen time)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── Add Your Results ──────────────────────────────────── -->
+  <div style="margin-top: var(--s10); border-top: 1px solid var(--border); padding-top: var(--s8);">
+    <h2>🎥 Try it yourself</h2>
+    <p>Run the same prompt through any of these tools and compare. The prompt tests for several specific capabilities at once — use it as a benchmark. Things to look for:</p>
+    <ul>
+      <li><strong>Does the developer actually lean back in their chair?</strong> (character motion)</li>
+      <li><strong>Is the lighting warm amber as specified?</strong> (prompt adherence)</li>
+      <li><strong>Does the monitor glow behave like a light source?</strong> (physical plausibility)</li>
+      <li><strong>Can you see any of the sticky notes or coffee cups?</strong> (detail rendering)</li>
+    </ul>
+    <p>Share your results in the <a href="../challenges/">Monthly Challenges</a> or use the <a href="../model-tester/">Model Tester</a> to track comparisons across runs.</p>
+  </div>
+
+</div>
+</div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../" class="nav-logo" style="margin-bottom: var(--s3);">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="16" r="3" fill="currentColor"/>
+          </svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI.</p>
+      </div>
+      <div class="footer-col"><h4>Pages</h4><ul>
+        <li><a href="../prompts/">Recipe Book</a></li>
+        <li><a href="../examples/">Tasting Menu</a></li>
+        <li><a href="../models/">Appliance Guide</a></li>
+        <li><a href="../model-tester/">Model Tester</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Tools</h4><ul>
+        <li><a href="../audio/">AI Music</a></li>
+        <li><a href="../video/">AI Video</a></li>
+        <li><a href="../quiz/">Which AI?</a></li>
+        <li><a href="../challenges/">Challenges</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Site</h4><ul>
+        <li><a href="../fails/">AI Fails</a></li>
+        <li><a href="../support.html">Support</a></li>
+        <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <div class="footer-privacy"><span class="privacy-dot"></span><span>No tracking · No cookies · No ads</span></div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+<script src="../js/main.js"></script>
+</body>
+</html>

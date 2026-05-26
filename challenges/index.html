@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monthly AI Challenges | The Prompt Kitchen</title>
+  <meta name="description" content="Each month we run the same prompt through 5+ AI tools and publish the results. See how different AIs handle identical tasks — and try the challenge yourself." />
+  <meta property="og:title"       content="Monthly AI Challenges | The Prompt Kitchen" />
+  <meta property="og:description" content="One prompt. Multiple AI tools. Every month. Compare the results side by side." />
+  <meta property="og:url"         content="https://thepromptkitchen.fyi/challenges/" />
+  <link rel="canonical" href="https://thepromptkitchen.fyi/challenges/" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    .challenge-card {
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      overflow: hidden;
+      background: var(--bg);
+      transition: box-shadow .15s, border-color .15s;
+      display: flex;
+      flex-direction: column;
+    }
+    .challenge-card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,.08);
+      border-color: var(--accent-border);
+    }
+    .challenge-card-header {
+      padding: var(--s5) var(--s6);
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--border);
+    }
+    .challenge-card-header .month-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--accent);
+      margin-bottom: var(--s2);
+    }
+    .challenge-card-header h3 {
+      margin: 0 0 var(--s2);
+      font-size: var(--text-lg);
+    }
+    .challenge-card-header .category-pill {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      border: 1px solid var(--accent-border);
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 2px var(--s3);
+      border-radius: 999px;
+    }
+    .challenge-card-body {
+      padding: var(--s5) var(--s6);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--s4);
+    }
+    .challenge-card-body .prompt-snippet {
+      font-size: var(--text-sm);
+      color: var(--text-2);
+      background: var(--bg-alt);
+      border-left: 3px solid var(--accent);
+      padding: var(--s3) var(--s4);
+      border-radius: 0 var(--r2) var(--r2) 0;
+      font-style: italic;
+      margin: 0;
+      -webkit-line-clamp: 3;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .challenge-card-body .tools-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s2);
+      align-items: center;
+      font-size: var(--text-sm);
+      color: var(--text-3);
+    }
+    .challenge-card-footer {
+      padding: var(--s4) var(--s6);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--s3);
+    }
+    .challenge-card-footer .status-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s2);
+      font-size: var(--text-sm);
+      color: var(--text-3);
+    }
+    .status-dot::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+    .status-dot.upcoming::before { background: #f59e0b; }
+
+    .challenges-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--s6);
+      margin: var(--s8) 0;
+    }
+
+    .coming-soon-card {
+      border: 2px dashed var(--border);
+      border-radius: var(--r3);
+      padding: var(--s8);
+      text-align: center;
+      color: var(--text-3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--s3);
+    }
+    .coming-soon-card .icon { font-size: 2rem; }
+    .coming-soon-card h3 { margin: 0; color: var(--text-2); }
+    .coming-soon-card p { margin: 0; font-size: var(--text-sm); }
+
+    .how-it-works {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--s5);
+      margin: var(--s6) 0;
+    }
+    .step-card {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      padding: var(--s5);
+      text-align: center;
+    }
+    .step-card .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      font-weight: 700;
+      font-size: var(--text-sm);
+      margin-bottom: var(--s3);
+    }
+    .step-card h4 { margin: 0 0 var(--s2); font-size: var(--text-sm); }
+    .step-card p { margin: 0; font-size: var(--text-sm); color: var(--text-3); }
+
+    .category-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s2);
+      margin-bottom: var(--s6);
+    }
+    .filter-btn {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: var(--s2) var(--s4);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--text-2);
+      transition: all .15s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../prompts/">Recipe Book</a></li>
+      <li><a href="../examples/">Tasting Menu</a></li>
+      <li><a href="../models/">Appliance Guide</a></li>
+      <li><a href="../model-tester/">Model Tester</a></li>
+      <li><a href="../audio/">AI Music</a></li>
+      <li><a href="../video/">AI Video</a></li>
+      <li><a href="../quiz/">Which AI?</a></li>
+      <li><a href="../challenges/" class="active">Challenges</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark">☾</span>
+        <span class="theme-icon-light">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../prompts/">📖 Recipe Book</a></li>
+    <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+    <li><a href="../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../model-tester/">🧪 Model Tester</a></li>
+    <li><a href="../audio/">🎵 AI Music</a></li>
+    <li><a href="../video/">🎬 AI Video</a></li>
+    <li><a href="../quiz/">❓ Which AI?</a></li>
+    <li><a href="../challenges/">🏆 Challenges</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">›</span><span class="current">Monthly Challenges</span>
+    </nav>
+    <h1>🏆 Monthly AI Challenges</h1>
+    <p class="lead">Every month, one prompt. Run through 5–10 AI tools. Results published here so you can compare what different models actually do with the same input. Try the prompt yourself and see where your results land.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container">
+
+  <!-- How it works -->
+  <h2>How it works</h2>
+  <div class="how-it-works">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h4>One prompt</h4>
+      <p>Each month we write a single prompt targeting a specific category — shopping, writing, coding, research, or creative tasks.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h4>5+ tools tested</h4>
+      <p>We run the exact same prompt through multiple AI tools, capturing raw unedited output from each one.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h4>Results published</h4>
+      <p>Full side-by-side results go live here. We note what worked, what didn't, and what surprised us.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <h4>You try it</h4>
+      <p>Copy the prompt, run it yourself, and see how your results compare. Use the <a href="../model-tester/">Model Tester</a> to track your runs.</p>
+    </div>
+  </div>
+
+  <!-- Category filter -->
+  <h2 style="margin-top: var(--s10);">All challenges</h2>
+  <div class="category-filter" role="group" aria-label="Filter by category">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="shopping">🛒 Shopping</button>
+    <button class="filter-btn" data-filter="creative">✍️ Creative writing</button>
+    <button class="filter-btn" data-filter="coding">💻 Coding</button>
+    <button class="filter-btn" data-filter="research">🔬 Research</button>
+    <button class="filter-btn" data-filter="everyday">📋 Everyday tasks</button>
+  </div>
+
+  <!-- Challenges grid -->
+  <div class="challenges-grid" id="challenges-grid">
+
+    <!-- ── CHALLENGE 1: The 27-AI Shopping Series ─────────── -->
+    <div class="challenge-card" data-category="shopping">
+      <div class="challenge-card-header">
+        <div class="month-label">Series · 27 AI Tools</div>
+        <h3>The 27-AI Shopping Challenge</h3>
+        <span class="category-pill">🛒 Shopping &amp; product research</span>
+      </div>
+      <div class="challenge-card-body">
+        <p class="prompt-snippet">"I'm looking to build a gaming PC focused on FPS games… budget $400–$800… start at Best Buy, then Walmart, then Amazon… 16GB RAM minimum… NVMe SSD… RTX 3060 or better…"</p>
+        <div class="tools-row">
+          <span>27 AI tools tested:</span>
+          <span>Claude · ChatGPT · Gemini · Grok · Copilot · Perplexity · DeepSeek · Meta AI · and 19 more</span>
+        </div>
+      </div>
+      <div class="challenge-card-footer">
+        <span class="status-dot">Results published</span>
+        <a href="../examples/#shopping-series" class="btn btn-sm">View all 28 examples →</a>
+      </div>
+    </div>
+
+    <!-- ── Coming soon cards ──────────────────────────────── -->
+    <div class="coming-soon-card" data-category="creative">
+      <div class="icon">✍️</div>
+      <h3>June 2026 Challenge</h3>
+      <p>Creative writing · Results coming June 2026</p>
+      <p style="font-size: 0.7rem; margin-top: var(--s2);">Use the <a href="../model-tester/">Model Tester</a> to run your own tests while you wait.</p>
+    </div>
+
+    <div class="coming-soon-card" data-category="coding">
+      <div class="icon">💻</div>
+      <h3>July 2026 Challenge</h3>
+      <p>Coding &amp; debugging · Prompt TBD</p>
+    </div>
+
+  </div>
+
+  <!-- Suggest a prompt -->
+  <div style="margin-top: var(--s10); border-top: 1px solid var(--border); padding-top: var(--s8);">
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Can't wait? Run the shopping challenge yourself</h4>
+        <p>The 27-AI shopping series prompt is right there in the <a href="../examples/#shopping-series">Tasting Menu</a>. Copy it, run it through any AI tool, and compare your result to the 27 we already published. The prompt is stable — it was designed to produce meaningfully different results across tools.</p>
+        <p style="margin-top: var(--s3);">Or try the <a href="../model-tester/">Model Tester</a> — it has a curated library of challenge-style prompts across 6 categories, ready to run through any combination of models.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- How challenges are built -->
+  <div style="margin-top: var(--s10);">
+    <h2>How we pick challenge prompts</h2>
+    <p>A good challenge prompt has to work differently across tools — if every AI gives the same answer, it's not a useful comparison. We look for prompts that:</p>
+    <ul>
+      <li><strong>Have objective right/wrong elements</strong> — spec constraints, factual requirements, or format rules that can be clearly met or missed</li>
+      <li><strong>Have subjective creative elements</strong> — so there's meaningful variation even when tools get the basics right</li>
+      <li><strong>Stress-test common failure modes</strong> — things like following multi-part instructions, sticking to a budget, or applying specific constraints consistently</li>
+      <li><strong>Are repeatable</strong> — you should be able to run the same prompt weeks later and still get a useful result</li>
+    </ul>
+    <p>The shopping series was a perfect example: it had hard constraints (RTX 3060 or better, 16GB RAM min, $400–$800, specific store order) that many tools ignored or misread, plus enough complexity that the better tools could shine. Twenty-seven AIs, and still only a handful fully met the brief.</p>
+  </div>
+
+  <!-- GitHub Actions note -->
+  <div style="margin-top: var(--s8);">
+    <div class="callout" style="background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--r3); padding: var(--s6);">
+      <div class="callout-body">
+        <h4>⚙️ New challenge pages are auto-generated</h4>
+        <p>Each monthly challenge page is created automatically from a GitHub Actions workflow — no manual HTML editing required. The workflow takes a month name, category, and prompt as inputs and publishes a ready-to-fill challenge page at <code>/challenges/{slug}/</code>.</p>
+        <p style="margin-top: var(--s3); font-size: var(--text-sm); color: var(--text-3);">See the workflow: <a href="https://github.com/" rel="noopener" target="_blank">.github/workflows/new-challenge.yml</a></p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../" class="nav-logo" style="margin-bottom: var(--s3);">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="16" r="3" fill="currentColor"/>
+          </svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI.</p>
+      </div>
+      <div class="footer-col"><h4>Pages</h4><ul>
+        <li><a href="../prompts/">Recipe Book</a></li>
+        <li><a href="../examples/">Tasting Menu</a></li>
+        <li><a href="../models/">Appliance Guide</a></li>
+        <li><a href="../model-tester/">Model Tester</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Tools</h4><ul>
+        <li><a href="../audio/">AI Music</a></li>
+        <li><a href="../video/">AI Video</a></li>
+        <li><a href="../quiz/">Which AI?</a></li>
+        <li><a href="../challenges/">Challenges</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Site</h4><ul>
+        <li><a href="../fails/">AI Fails</a></li>
+        <li><a href="../support.html">Support</a></li>
+        <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <div class="footer-privacy"><span class="privacy-dot"></span><span>No tracking · No cookies · No ads</span></div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+<script>
+  // Category filter
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('#challenges-grid [data-category]').forEach(card => {
+        card.style.display = (filter === 'all' || card.dataset.category === filter) ? '' : 'none';
+      });
+    });
+  });
+</script>
+<script src="../js/main.js"></script>
+</body>
+</html>

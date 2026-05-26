@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Fails Hall of Fame — The Prompt Kitchen</title>
+  <meta name="description" content="The most instructive AI errors from The Prompt Kitchen's 27-AI shopping series — laptops recommended as desktops, 8GB RAM despite explicit 16GB requirements, GPUs three generations out of date, and more." />
+  <link rel="canonical" href="https://thepromptkitchen.fyi/fails/" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    .fail-card {
+      border: 2px solid var(--border);
+      border-radius: var(--r3);
+      overflow: hidden;
+      margin-bottom: var(--s6);
+    }
+    .fail-card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--s4);
+      padding: var(--s5) var(--s6);
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--border);
+    }
+    .fail-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .fail-badge-form   { background: #fef3c7; color: #92400e; }
+    .fail-badge-spec   { background: #fee2e2; color: #991b1b; }
+    .fail-badge-tool   { background: #ede9fe; color: #4c1d95; }
+    .fail-badge-age    { background: #fce7f3; color: #831843; }
+    .fail-card-body { padding: var(--s5) var(--s6); }
+    .fail-quote {
+      font-family: var(--font-mono, monospace);
+      font-size: var(--text-sm);
+      background: var(--bg-alt);
+      border-left: 3px solid var(--border);
+      padding: var(--s3) var(--s4);
+      margin: var(--s3) 0;
+      color: var(--text-2);
+    }
+    .fail-vs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s4);
+      margin: var(--s4) 0;
+    }
+    @media (max-width: 600px) { .fail-vs { grid-template-columns: 1fr; } }
+    .fail-col {
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      padding: var(--s4);
+    }
+    .fail-col-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: var(--s2);
+    }
+    .fail-col-label.bad  { color: #ef4444; }
+    .fail-col-label.good { color: #22c55e; }
+    .fail-stat {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: var(--s2);
+    }
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: var(--s3);
+      margin-bottom: var(--s10);
+    }
+    .toc-card {
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      padding: var(--s4);
+      text-decoration: none;
+      color: var(--text-1);
+      display: block;
+      transition: border-color .15s, background .15s;
+    }
+    .toc-card:hover { border-color: var(--accent); background: var(--accent-light); }
+    .toc-card-emoji { font-size: 1.6rem; margin-bottom: var(--s2); }
+    .toc-card h4 { margin: 0 0 var(--s1); font-size: var(--text-sm); }
+    .toc-card p  { margin: 0; font-size: 0.75rem; color: var(--text-3); }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../examples/">Tasting Menu</a></li>
+      <li><a href="../models/">Appliance Guide</a></li>
+      <li><a href="../quiz/">Which AI?</a></li>
+      <li><a href="../fails/" class="active">Fails</a></li>
+      <li><a href="../support.html">Support</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark">☾</span><span class="theme-icon-light">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+    <li><a href="../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../quiz/">🤔 Which AI?</a></li>
+    <li><a href="../fails/">💥 Fails</a></li>
+    <li><a href="../support.html">♥ Support</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">›</span><span class="current">AI Fails Hall of Fame</span>
+    </nav>
+    <h1>💥 AI Fails Hall of Fame</h1>
+    <p class="lead">The most instructive AI errors from our 27-AI shopping series. These aren't bugs — they're patterns. Understanding why they happen makes you a better prompter.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container">
+
+  <div class="callout callout-tip" style="margin-bottom:var(--s8);">
+    <span class="callout-icon">🎓</span>
+    <div class="callout-body">
+      <h4>Why document AI failures?</h4>
+      <p>Every failure here is a lesson. The same prompt was run through 27 AI tools, and the same errors kept appearing — often in the same ways. Recognising these patterns in your own AI responses means you can catch them before they matter. The errors aren't random; they're predictable, and predictable means preventable.</p>
+    </div>
+  </div>
+
+  <!-- TOC -->
+  <h2 style="margin-bottom:var(--s5);">The hall of fame</h2>
+  <div class="toc-grid">
+    <a href="#fail-laptop" class="toc-card"><div class="toc-card-emoji">💻</div><h4>The Laptop-as-Desktop Incident</h4><p>Cohere & Character.AI · Form factor fail</p></a>
+    <a href="#fail-8gb" class="toc-card"><div class="toc-card-emoji">🧠</div><h4>The 8GB RAM Repeat Offender</h4><p>11+ AI responses · Spec floor ignored</p></a>
+    <a href="#fail-gpu" class="toc-card"><div class="toc-card-emoji">🎮</div><h4>The GPU Time Machine</h4><p>Multiple AIs · Cards from 2019 at 2026 prices</p></a>
+    <a href="#fail-vram" class="toc-card"><div class="toc-card-emoji">⚠️</div><h4>The RTX 3050 6GB Trap</h4><p>Venice, MiniMax & others · Silent VRAM risk</p></a>
+    <a href="#fail-tool" class="toc-card"><div class="toc-card-emoji">🔧</div><h4>The Wrong Tool Problem</h4><p>Pi, Phind, Brave Leo · Specialist tool, wrong job</p></a>
+    <a href="#fail-format" class="toc-card"><div class="toc-card-emoji">📋</div><h4>Clean Table, Wrong Answer</h4><p>AI21 & Cohere · Format ≠ correctness</p></a>
+    <a href="#fail-cpu" class="toc-card"><div class="toc-card-emoji">🖥️</div><h4>The CPU Time Warp</h4><p>MiniMax · 2017 CPU + 2020 GPU = bottleneck</p></a>
+  </div>
+
+  <hr style="border:none; border-top:1px solid var(--border); margin:var(--s8) 0;" />
+
+  <!-- FAIL 1: Laptop as desktop -->
+  <div class="fail-card" id="fail-laptop">
+    <div class="fail-card-header">
+      <span class="fail-badge fail-badge-form">Form factor</span>
+      <div>
+        <h3 style="margin:0 0 var(--s1);">💻 The Laptop-as-Desktop Incident</h3>
+        <p style="margin:0; color:var(--text-3); font-size:var(--text-sm);">Cohere Playground (Example 32) · Character.AI (Example 26) · The brief said "pre-built gaming PC"</p>
+      </div>
+    </div>
+    <div class="fail-card-body">
+      <p>The prompt asked for a <strong>pre-built gaming PC</strong>. Two AI tools recommended laptops instead.</p>
+
+      <div class="fail-vs">
+        <div class="fail-col">
+          <div class="fail-col-label bad">❌ What was returned</div>
+          <div class="fail-quote">Acer Nitro 5 (AN515-44) — $699.99 — 15.6" gaming laptop · Ryzen 5 5600H · GTX 1650 Ti 4GB · 8GB DDR4</div>
+          <p style="font-size:var(--text-sm); margin-top:var(--s2);">Cohere Playground returned this as a Best Buy PC pick. It's a laptop with 8GB RAM and a GPU two generations below the RTX 3060 floor.</p>
+        </div>
+        <div class="fail-col">
+          <div class="fail-col-label good">✅ What was asked for</div>
+          <div class="fail-quote">A pre-built gaming PC… Best Buy first… RTX 3060 or better… 16GB RAM minimum</div>
+          <p style="font-size:var(--text-sm); margin-top:var(--s2);">A desktop tower with an RTX 4060 and 16GB DDR4/DDR5, typically at Best Buy for $650–$750.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-warning" style="margin-top:var(--s4);">
+        <span class="callout-icon">🎓</span>
+        <div class="callout-body">
+          <h4>Why it happens — and the fix</h4>
+          <p><strong>Why:</strong> On Best Buy's website, gaming laptops and gaming desktops appear in the same search results for "gaming PC." Training data includes both. When an AI retrieves "gaming PC at Best Buy," it doesn't always apply the desktop constraint correctly.</p>
+          <p style="margin-top:var(--s2);"><strong>Fix:</strong> Add "desktop tower" or "desktop form factor — not a laptop" explicitly to your prompt. "Pre-built gaming PC" alone isn't always sufficient. Also: always verify the model number — "AN515" is a dead giveaway for the Acer Nitro 5 laptop line.</p>
+        </div>
+      </div>
+
+      <p style="font-size:var(--text-sm); color:var(--text-3); margin-top:var(--s4);">📖 See the full responses: <a href="../examples/#example-32">Example 32 (Cohere)</a> · <a href="../examples/#example-26">Example 26 (Character.AI)</a></p>
+    </div>
+  </div>
+
+  <!-- FAIL 2: 8GB RAM -->
+  <div class="fail-card" id="fail-8gb">
+    <div class="fail-card-header">
+      <span class="fail-badge fail-badge-spec">Spec miss</span>
+      <div>
+        <h3 style="margin:0 0 var(--s1);">🧠 The 8GB RAM Repeat Offender</h3>
+        <p style="margin:0; color:var(--text-3); font-size:var(--text-sm);">11+ responses across the series · The brief explicitly said "at least 16GB of RAM"</p>
+      </div>
+    </div>
+    <div class="fail-card-body">
+      <div style="display:flex; gap:var(--s8); flex-wrap:wrap; margin-bottom:var(--s5);">
+        <div>
+          <div class="fail-stat" style="color:#ef4444;">11+</div>
+          <div style="font-size:var(--text-sm); color:var(--text-3);">AI responses with 8GB picks<br>despite explicit 16GB floor</div>
+        </div>
+        <div>
+          <div class="fail-stat" style="color:#22c55e;">16GB</div>
+          <div style="font-size:var(--text-sm); color:var(--text-3);">What the brief asked for<br>every single time</div>
+        </div>
+      </div>
+
+      <p>The prompt said <strong>"at least 16GB of RAM"</strong> in plain English. Eleven or more AI responses returned at least one pick with 8GB RAM. This is the single most common spec error in the series.</p>
+
+      <div class="fail-quote">
+        "HP Pavilion Gaming Desktop — $699.99 — Ryzen 5 5600G, 8GB DDR4…"
+        <br>— AI21 Studio Jamba Mini (Best Buy pick, Example 33)
+      </div>
+
+      <div class="fail-quote">
+        "Acer Nitro 5 — $699.99 — 8GB DDR4…"
+        <br>— Cohere Playground (Best Buy pick #2, Example 32)
+      </div>
+
+      <div class="fail-quote">
+        "CyberPowerPC GXiXT8500B — $649.99 — 8GB DDR4…"
+        <br>— Cohere Playground (Walmart pick, Example 32)
+      </div>
+
+      <div class="callout callout-warning" style="margin-top:var(--s4);">
+        <span class="callout-icon">🎓</span>
+        <div class="callout-body">
+          <h4>Why it keeps happening</h4>
+          <p><strong>Why:</strong> The HP Pavilion series and many budget gaming PCs are commonly sold with 8GB RAM as a base configuration. AI training data includes these listings as common "budget gaming PC" results. When an AI retrieves a system name, it may attach the base-tier specs rather than the upgraded version that actually exists in the price range.</p>
+          <p style="margin-top:var(--s2);"><strong>Fix:</strong> Always scan the RAM spec on every single pick. 8GB in 2026 is a red flag at any gaming budget. If an AI returns an 8GB pick, ask it to remove any result under 16GB and regenerate. Or add "REJECT any system with less than 16GB RAM" in your prompt.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAIL 3: GPU time machine -->
+  <div class="fail-card" id="fail-gpu">
+    <div class="fail-card-header">
+      <span class="fail-badge fail-badge-age">Outdated specs</span>
+      <div>
+        <h3 style="margin:0 0 var(--s1);">🎮 The GPU Time Machine</h3>
+        <p style="margin:0; color:var(--text-3); font-size:var(--text-sm);">Cohere, AI21, Character.AI & others · 2019 entry-level GPUs recommended at near-$750 pricing</p>
+      </div>
+    </div>
+    <div class="fail-card-body">
+      <p>The brief required <strong>"RTX 3060 or better."</strong> Multiple AIs recommended GPUs released in 2019 — three full GPU generations behind the RTX 4060 sweet spot the series identified.</p>
+
+      <div style="overflow-x:auto;">
+        <table class="comparison-table" style="margin:var(--s4) 0;">
+          <thead>
+            <tr><th>GPU</th><th>Year</th><th>VRAM</th><th>Perf vs RTX 4060</th><th>Appeared in</th><th>Verdict</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>RTX 4060 Ti</td><td>2023</td><td>8GB</td><td>~140%</td><td>Examples 8, 28, 31</td><td><span class="check">✅ Best pick</span></td></tr>
+            <tr><td>RTX 4060</td><td>2023</td><td>8GB</td><td>100% (baseline)</td><td>10+ examples</td><td><span class="check">✅ Sweet spot</span></td></tr>
+            <tr><td>RTX 3060 12GB</td><td>2021</td><td>12GB</td><td>~70%</td><td>Examples 27, 34</td><td><span class="partial">⚠️ Meets floor</span></td></tr>
+            <tr><td>GTX 1660 Super</td><td>2019</td><td>6GB</td><td>~45%</td><td>Examples 32, 33, 34</td><td><span class="cross">❌ Below spec</span></td></tr>
+            <tr><td>GTX 1650 Super/Ti</td><td>2019</td><td>4GB</td><td>~30%</td><td>Examples 25, 29, 32, 33</td><td><span class="cross">❌ Far below spec</span></td></tr>
+            <tr><td>RX 5500 XT</td><td>2019</td><td>4–8GB</td><td>~30%</td><td>Example 33</td><td><span class="cross">❌ Far below spec</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-warning" style="margin-top:var(--s4);">
+        <span class="callout-icon">🎓</span>
+        <div class="callout-body">
+          <h4>Why it happens</h4>
+          <p>AI training data contains massive amounts of budget PC recommendations from 2019–2021 when the GTX 1650 and 1660 Super were the dominant budget options. Those systems are still listed on Amazon and Walmart's long-tail inventory. Models trained on older data, or models that retrieve stale product pages, surface these as "budget gaming PC" results without checking the GPU against current generation equivalents.</p>
+          <p style="margin-top:var(--s2);"><strong>Fix:</strong> State your GPU floor explicitly in the prompt (as this series did), and still verify. If you see any GTX 16xx or 10xx GPU in a 2026 recommendation, treat it as a red flag. GPU model numbers are the most important single spec to check.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAIL 4: RTX 3050 6GB -->
+  <div class="fail-card" id="fail-vram">
+    <div class="fail-card-header">
+      <span class="fail-badge fail-badge-spec">Silent VRAM risk</span>
+      <div>
+        <h3 style="margin:0 0 var(--s1);">⚠️ The RTX 3050 6GB Trap</h3>
+        <p style="margin:0; color:var(--text-3); font-size:var(--text-sm);">Venice.ai (4 picks) · MiniMax (2 picks) · Others — first identified by GLM in Example 23</p>
+      </div>
+    </div>
+    <div class="fail-card-body">
+      <p>The RTX 3050 comes in two variants: 8GB and 6GB. The <strong>6GB variant</strong> is technically in the "RTX 30 series" family — so AIs sometimes include it as meeting an "RTX 3060 or better" spirit even though the brief excludes it. More importantly, Arc Raiders uses Unreal Engine 5, which has a practical VRAM minimum of 8GB for stable high-settings play.</p>
+
+      <div class="fail-quote">
+        "Acer Nitro 50 (~$720) — i5-14400F, RTX 3050 6GB, 16GB DDR5 — Top overall pick"
+        <br>— Venice.ai (Example 30)
+      </div>
+
+      <div class="fail-vs">
+        <div class="fail-col">
+          <div class="fail-col-label bad">❌ RTX 3050 6GB</div>
+          <ul style="font-size:var(--text-sm); margin:var(--s2) 0 0 var(--s4); padding:0;">
+            <li>6GB VRAM — below UE5 8GB+ recommendation</li>
+            <li>Narrower memory bus than the 8GB variant</li>
+            <li>Can cause texture pop-in and stuttering at high settings</li>
+            <li>Explicitly below the RTX 3060 floor the brief asked for</li>
+          </ul>
+        </div>
+        <div class="fail-col">
+          <div class="fail-col-label good">✅ RTX 3050 8GB (minimum acceptable)</div>
+          <ul style="font-size:var(--text-sm); margin:var(--s2) 0 0 var(--s4); padding:0;">
+            <li>8GB VRAM — meets UE5 practical minimum</li>
+            <li>Wider memory bus than the 6GB variant</li>
+            <li>Playable at 1080p medium settings</li>
+            <li>Still below the RTX 3060 floor — but at least meets the VRAM threshold</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-warning" style="margin-top:var(--s4);">
+        <span class="callout-icon">🎓</span>
+        <div class="callout-body">
+          <h4>The lesson: always check the VRAM variant, not just the GPU family</h4>
+          <p>When evaluating a GPU pick, the model name alone (RTX 3050) isn't enough. The variant (6GB vs 8GB) matters significantly for VRAM-intensive titles. Always check the VRAM spec explicitly. For any UE5 game in 2026, treat 8GB VRAM as the practical minimum — not the headline GPU generation.</p>
+        </div>
+      </div>
+
+      <p style="font-size:var(--text-sm); color:var(--text-3); margin-top:var(--s4);">📖 First flagged: <a href="../examples/#example-23">Example 23 (GLM 4.7)</a> · Most instances: <a href="../examples/#example-30">Example 30 (Venice.ai)</a></p>
+    </div>
+  </div>
+
+  <!-- FAIL 5: Wrong tool -->
+  <div class="fail-card" id="fail-tool">
+    <div class="fail-card-header">
+      <span class="fail-badge fail-badge-tool">Tool mismatch</span>
+      <div>
+        <h3 style="margin:0 0 var(--s1);">🔧 The Wrong Tool Problem</h3>
+        <p style="margin:0; color:var(--text-3); font-size:var(--text-sm);">Pi AI · Phind · Brave Leo · Cohere · Character.AI · AI21 Jamba Mini — six specialist tools, one wrong task</p>
+      </div>
+    </div>
+    <div class="fail-card-body">
+      <p>Six AI tools in the series failed the shopping brief — not because they're bad AIs, but because they're <strong>specialist tools used for the wrong job</strong>. Each one is excellent in its intended context.</p>
+
+      <div style="display:grid; gap:var(--s3); margin:var(--s4) 0;">
+        <div style="display:flex; gap:var(--s4); align-items:flex-start; padding:var(--s3) var(--s4); border:1px solid var(--border); border-radius:var(--r2);">
+          <span style="font-size:1.4rem;">π</span>
+          <div><strong>Pi AI</strong> — <em>conversation and emotional support AI</em><br><span style="font-size:var(--text-sm); color:var(--text-3);">Returned a friendly but non-committal response with no specific PC picks. Pi is designed for reflective conversation, not structured research.</span></div>
+        </div>
+        <div style="display:flex; gap:var(--s4); align-items:flex-start; padding:var(--s3) var(--s4); border:1px solid var(--border); border-radius:var(--r2);">
+          <span style="font-size:1.4rem;">🔍</span>
+          <div><strong>Phind AI</strong> — <em>developer search engine for coding questions</em><br><span style="font-size:var(--text-sm); color:var(--text-3);">Response truncated after one partial Best Buy pick. Phind searches technical docs and GitHub — it's not wired for multi-retailer product research.</span></div>
+        </div>
+        <div style="display:flex; gap:var(--s4); align-items:flex-start; padding:var(--s3) var(--s4); border:1px solid var(--border); border-radius:var(--r2);">
+          <span style="font-size:1.4rem;">🦁</span>
+          <div><strong>Brave Leo AI</strong> — <em>in-browser page reading assistant</em><br><span style="font-size:var(--text-sm); color:var(--text-3);">No web access beyond the current page. Spec misses across all picks. Leo excels when you're on a page and want AI to read or summarise it.</span></div>
+        </div>
+        <div style="display:flex; gap:var(--s4); align-items:flex-start; padding:var(--s3) var(--s4); border:1px solid var(--border); border-radius:var(--r2);">
+          <span style="font-size:1.4rem;">🎭</span>
+          <div><strong>Character.AI</strong> — <em>roleplay and creative fiction platform</em><br><span style="font-size:var(--text-sm); color:var(--text-3);">The Elon Musk character recommended a laptop and ignored the budget constraint. Character.AI characters are tuned for personality, not product research accuracy.</span></div>
+        </div>
+      </div>
+
+      <div class="callout callout-tip" style="margin-top:var(--s4);">
+        <span class="callout-icon">🎓</span>
+        <div class="callout-body">
+          <h4>The lesson: task-tool fit matters more than model quality</h4>
+          <p>Every one of these tools is excellent at what it was built for. Pi is outstanding for reflective conversation. Phind is one of the best coding research tools available. The failures don't reflect model capability — they reflect tool-task mismatch. Before you run a prompt, ask: "Is this tool designed for this kind of task?" Use the <a href="../quiz/">Which AI? quiz</a> if you're unsure.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAIL 6: Format vs accuracy -->
+  <div class="fail-card" id="fail-format">
+    <div class="fail-card-header">
+      <span class="fail-badge fail-badge-spec">Format ≠ accuracy</span>
+      <div>
+        <h3 style="margin:0 0 var(--s1);">📋 Clean Table, Wrong Answer</h3>
+        <p style="margin:0; color:var(--text-3); font-size:var(--text-sm);">AI21 Studio Jamba Mini (Example 33) · Cohere Playground (Example 32) · Beautiful formatting, wrong specs</p>
+      </div>
+    </div>
+    <div class="fail-card-body">
+      <p>Both AI21 and Cohere returned well-formatted responses with clean comparison tables, clear section headers, and structured per-pick breakdowns. Both also failed the GPU requirement on every single pick.</p>
+
+      <div class="fail-quote">
+        AI21 Jamba Mini response structure: ✅ Clean h3 headers per retailer · ✅ Formatted spec tables · ✅ "Why it fits" reasoning · ❌ RX 5500 XT (Best Buy) · ❌ GTX 1660 Super (Walmart) · ❌ GTX 1650 Super at $749 (Amazon)
+      </div>
+
+      <div class="callout callout-warning" style="margin-top:var(--s4);">
+        <span class="callout-icon">🎓</span>
+        <div class="callout-body">
+          <h4>The lesson: confident presentation is not a correctness signal</h4>
+          <p>The most dangerous AI error isn't a vague or confused answer — it's a confidently wrong one presented in a polished format. A clean table makes specs easy to read. It doesn't make them accurate. Always verify the GPU model and RAM spec regardless of how well-structured the response looks. A tidy response that misses the spec floor is worse than a messy response that nails it, because the tidy one is more likely to fool you.</p>
+        </div>
+      </div>
+
+      <p style="font-size:var(--text-sm); color:var(--text-3); margin-top:var(--s4);">📖 Full examples: <a href="../examples/#example-33">Example 33 (AI21)</a> · <a href="../examples/#example-32">Example 32 (Cohere)</a></p>
+    </div>
+  </div>
+
+  <!-- FAIL 7: CPU time warp -->
+  <div class="fail-card" id="fail-cpu">
+    <div class="fail-card-header">
+      <span class="fail-badge fail-badge-age">CPU age mismatch</span>
+      <div>
+        <h3 style="margin:0 0 var(--s1);">🖥️ The CPU Time Warp</h3>
+        <p style="margin:0; color:var(--text-3); font-size:var(--text-sm);">MiniMax M2.7 (Example 34) · Intel i7 8th Gen (2017) paired with RTX 3060 Ti (2020) at $749</p>
+      </div>
+    </div>
+    <div class="fail-card-body">
+      <p>MiniMax's Amazon pick listed an <strong>"Intel Core i7 8th Gen"</strong> CPU paired with an RTX 3060 Ti. The i7 8th Gen is a 2017–2018 processor — it's five CPU generations old in 2026. Pairing an old CPU with a mid-range GPU creates a performance ceiling that the GPU alone can't overcome.</p>
+
+      <div class="fail-vs">
+        <div class="fail-col">
+          <div class="fail-col-label bad">❌ i7 8th Gen (2017) + RTX 3060 Ti</div>
+          <ul style="font-size:var(--text-sm); margin:var(--s2) 0 0 var(--s4); padding:0;">
+            <li>CPU bottleneck in CPU-intensive games</li>
+            <li>No PCIe 4.0 support (older platform)</li>
+            <li>Limited upgrade path</li>
+            <li>Listed vaguely — "i7 8th Gen" could be any of several chips</li>
+          </ul>
+        </div>
+        <div class="fail-col">
+          <div class="fail-col-label good">✅ Ryzen 5 7600 or i5-13400F (2022–2023)</div>
+          <ul style="font-size:var(--text-sm); margin:var(--s2) 0 0 var(--s4); padding:0;">
+            <li>Modern architecture, PCIe 4.0/5.0 support</li>
+            <li>No CPU bottleneck with RTX 4060-class GPUs</li>
+            <li>AM5 platform (7600) has upgrade path to Ryzen 9000</li>
+            <li>Series consensus CPU pairing for this budget</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-warning" style="margin-top:var(--s4);">
+        <span class="callout-icon">🎓</span>
+        <div class="callout-body">
+          <h4>The lesson: always check both the CPU and GPU generations</h4>
+          <p>GPU generation gets most of the attention in gaming PC research — but the CPU generation matters too. An "i7" label sounds impressive; "i7 8th Gen" is a 2017 chip that predates DDR5, PCIe 4.0, and modern IPC improvements by two full architectural generations. When evaluating any AI pick, check the CPU model number against current release dates. Any Intel CPU below 12th Gen or AMD CPU below Ryzen 5000 series deserves scrutiny in a 2026 purchase.</p>
+        </div>
+      </div>
+
+      <p style="font-size:var(--text-sm); color:var(--text-3); margin-top:var(--s4);">📖 Full example: <a href="../examples/#example-34">Example 34 (MiniMax M2.7)</a></p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div style="background:var(--accent-light); border:1px solid var(--accent-border); border-radius:var(--r3); padding:var(--s6); text-align:center; margin-top:var(--s10);">
+    <h3 style="margin-bottom:var(--s3);">Now see what the best responses looked like</h3>
+    <p class="text-2" style="margin-bottom:var(--s5);">The same prompt produced great results in 16 of 27 AIs. See the full comparison and the final verdict.</p>
+    <div style="display:flex; gap:var(--s3); justify-content:center; flex-wrap:wrap;">
+      <a href="../examples/#shopping-series" class="btn btn-primary">See all 27 AI responses →</a>
+      <a href="../examples/#example-35" class="btn btn-secondary">Jump to the final verdict →</a>
+    </div>
+  </div>
+
+</div>
+</div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <span>© 2026 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <div class="footer-privacy"><span class="privacy-dot"></span><span>No tracking · No cookies · No ads</span></div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+<script src="../js/main.js"></script>
+</body>
+</html>

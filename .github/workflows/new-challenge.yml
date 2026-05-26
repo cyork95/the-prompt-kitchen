@@ -1,0 +1,167 @@
+name: Generate Monthly Challenge Page
+
+on:
+  workflow_dispatch:
+    inputs:
+      month:
+        description: 'Month name (e.g. "July 2026")'
+        required: true
+        type: string
+      slug:
+        description: 'URL slug (e.g. "july-2026") — used as the folder name'
+        required: true
+        type: string
+      category:
+        description: 'Challenge category'
+        required: true
+        type: choice
+        options:
+          - Shopping & product research
+          - Creative writing
+          - Coding & debugging
+          - Explain & teach
+          - Analysis & research
+          - Image generation
+          - Audio & music generation
+          - Video generation
+          - Everyday tasks
+      prompt:
+        description: 'The exact prompt to test across AI tools (paste it here)'
+        required: true
+        type: string
+      ai_count:
+        description: 'Approximate number of AIs to test (for the subtitle)'
+        required: false
+        default: '10'
+        type: string
+
+jobs:
+  create-challenge:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create challenge page from template
+        env:
+          MONTH: ${{ inputs.month }}
+          SLUG: ${{ inputs.slug }}
+          CATEGORY: ${{ inputs.category }}
+          PROMPT: ${{ inputs.prompt }}
+          AI_COUNT: ${{ inputs.ai_count }}
+        run: |
+          mkdir -p "challenges/$SLUG"
+          cat > "challenges/$SLUG/index.html" << 'HTMLEOF'
+          <!DOCTYPE html>
+          <html lang="en" data-theme="light">
+          <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>CHALLENGE_MONTH Monthly Challenge | The Prompt Kitchen</title>
+            <meta name="description" content="CHALLENGE_CATEGORY prompt tested across CHALLENGE_AI_COUNT AI tools. See the results." />
+            <link rel="stylesheet" href="../../css/style.css" />
+            <script>
+              (function(){
+                const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', t);
+              })();
+            </script>
+          </head>
+          <body>
+          <nav class="nav" role="navigation">
+            <div class="nav-inner">
+              <a href="../../" class="nav-logo">
+                <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                  <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="16" cy="16" r="3" fill="currentColor"/>
+                </svg>
+                <span class="nav-logo-text">The Prompt Kitchen</span>
+              </a>
+              <ul class="nav-links" role="list">
+                <li><a href="../../prompts/">Recipe Book</a></li>
+                <li><a href="../../examples/">Tasting Menu</a></li>
+                <li><a href="../../models/">Appliance Guide</a></li>
+                <li><a href="../../model-tester/">Model Tester</a></li>
+                <li><a href="../../challenges/" class="active">Challenges</a></li>
+              </ul>
+            </div>
+          </nav>
+
+          <main id="main-content">
+          <div class="page-header">
+            <div class="container">
+              <nav class="breadcrumbs" aria-label="Breadcrumb">
+                <a href="../../">Home</a><span class="sep">›</span>
+                <a href="../../challenges/">Challenges</a><span class="sep">›</span>
+                <span class="current">CHALLENGE_MONTH</span>
+              </nav>
+              <h1>📅 CHALLENGE_MONTH Monthly Challenge</h1>
+              <p class="lead">Category: CHALLENGE_CATEGORY — tested across CHALLENGE_AI_COUNT AI tools with the same prompt.</p>
+            </div>
+          </div>
+
+          <div class="section">
+          <div class="container">
+
+            <div class="callout callout-tip" style="margin-bottom: var(--s8);">
+              <span class="callout-icon">🎯</span>
+              <div class="callout-body">
+                <h4>The challenge prompt</h4>
+                <div class="prompt-block">CHALLENGE_PROMPT</div>
+              </div>
+            </div>
+
+            <!-- ADD EXAMPLE CARDS BELOW THIS LINE -->
+            <!-- Use the Model Tester to generate HTML snippets: /model-tester/ -->
+            <div class="callout" style="background: var(--bg-alt); border: 2px dashed var(--border); border-radius: var(--r3); padding: var(--s8); text-align: center;">
+              <p style="color: var(--text-3); margin: 0;">Results coming soon — use the <a href="../../model-tester/">Model Tester</a> to generate and add examples here.</p>
+            </div>
+            <!-- END EXAMPLE CARDS -->
+
+          </div>
+          </div>
+          </main>
+
+          <footer class="footer" role="contentinfo">
+            <div class="footer-inner">
+              <div class="footer-bottom">
+                <span>© 2026 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+              </div>
+            </div>
+          </footer>
+
+          <script src="../../js/main.js"></script>
+          </body>
+          </html>
+          HTMLEOF
+
+          # Replace placeholders
+          sed -i "s/CHALLENGE_MONTH/$MONTH/g" "challenges/$SLUG/index.html"
+          sed -i "s/CHALLENGE_CATEGORY/$CATEGORY/g" "challenges/$SLUG/index.html"
+          sed -i "s/CHALLENGE_AI_COUNT/$AI_COUNT/g" "challenges/$SLUG/index.html"
+          sed -i "s|CHALLENGE_PROMPT|$PROMPT|g" "challenges/$SLUG/index.html"
+
+          echo "Created challenges/$SLUG/index.html"
+
+      - name: Commit new challenge page
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add "challenges/${{ inputs.slug }}/index.html"
+          git commit -m "Add ${{ inputs.month }} Monthly Challenge page (${{ inputs.category }})"
+          git push
+
+      - name: Summary
+        run: |
+          echo "## ✅ Challenge page created" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Month:** ${{ inputs.month }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Category:** ${{ inputs.category }}" >> $GITHUB_STEP_SUMMARY
+          echo "**URL:** \`/challenges/${{ inputs.slug }}/\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Next steps: run the Model Tester, select your AI tools, and publish results to the new page." >> $GITHUB_STEP_SUMMARY

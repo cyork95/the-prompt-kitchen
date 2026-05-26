@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Which AI Should I Use? — The Prompt Kitchen</title>
+  <meta name="description" content="Answer 5 quick questions and get a personalised AI tool recommendation with a direct link to try it free." />
+  <link rel="canonical" href="https://thepromptkitchen.fyi/quiz/" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    .quiz-card {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .quiz-question {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      padding: var(--s8);
+      margin-bottom: var(--s4);
+      display: none;
+    }
+    .quiz-question.active { display: block; }
+    .quiz-question h2 {
+      font-size: var(--text-lg);
+      margin: 0 0 var(--s6);
+    }
+    .quiz-q-label {
+      font-size: var(--text-sm);
+      color: var(--text-3);
+      margin-bottom: var(--s2);
+    }
+    .quiz-options { display: flex; flex-direction: column; gap: var(--s3); }
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: var(--s3);
+      padding: var(--s4) var(--s5);
+      border: 2px solid var(--border);
+      border-radius: var(--r2);
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      background: var(--bg);
+      text-align: left;
+      font-size: var(--text-base);
+      color: var(--text-1);
+      width: 100%;
+    }
+    .quiz-option:hover { border-color: var(--accent); background: var(--accent-light); }
+    .quiz-option.selected { border-color: var(--accent); background: var(--accent-light); }
+    .quiz-option-emoji { font-size: 1.4rem; flex-shrink: 0; width: 2rem; text-align: center; }
+    .quiz-option-text { flex: 1; }
+    .quiz-option-title { font-weight: 600; }
+    .quiz-option-desc { font-size: var(--text-sm); color: var(--text-3); margin-top: 2px; }
+
+    .quiz-progress {
+      display: flex;
+      gap: var(--s2);
+      margin-bottom: var(--s6);
+    }
+    .quiz-progress-dot {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border);
+      transition: background .3s;
+    }
+    .quiz-progress-dot.done { background: var(--accent); }
+    .quiz-progress-dot.active { background: var(--accent); opacity: .5; }
+
+    .quiz-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: var(--s5);
+    }
+
+    /* Result card */
+    .result-card {
+      max-width: 680px;
+      margin: 0 auto;
+      display: none;
+    }
+    .result-card.active { display: block; }
+    .result-hero {
+      background: var(--accent-light);
+      border: 2px solid var(--accent-border);
+      border-radius: var(--r3);
+      padding: var(--s8);
+      text-align: center;
+      margin-bottom: var(--s6);
+    }
+    .result-hero-emoji { font-size: 3rem; margin-bottom: var(--s3); }
+    .result-hero h2 { margin: 0 0 var(--s2); }
+    .result-hero p { margin: 0; color: var(--text-2); }
+    .result-runners-up {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      padding: var(--s5);
+      margin-bottom: var(--s5);
+    }
+    .result-runners-up h4 { margin: 0 0 var(--s3); }
+    .runner-up-item {
+      display: flex;
+      align-items: center;
+      gap: var(--s3);
+      padding: var(--s2) 0;
+      border-bottom: 1px solid var(--border);
+      font-size: var(--text-sm);
+    }
+    .runner-up-item:last-child { border-bottom: none; }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../prompts/">Recipe Book</a></li>
+      <li><a href="../models/">Appliance Guide</a></li>
+      <li><a href="../examples/">Tasting Menu</a></li>
+      <li><a href="../model-tester/">Model Tester</a></li>
+      <li><a href="../quiz/" class="active">Which AI?</a></li>
+      <li><a href="../support.html">Support</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark">☾</span><span class="theme-icon-light">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../prompts/">📖 Recipe Book</a></li>
+    <li><a href="../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+    <li><a href="../model-tester/">🧪 Model Tester</a></li>
+    <li><a href="../quiz/">🤔 Which AI?</a></li>
+    <li><a href="../support.html">♥ Support</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">›</span><span class="current">Which AI?</span>
+    </nav>
+    <h1>🤔 Which AI Should I Use?</h1>
+    <p class="lead">5 quick questions → a personalised recommendation with a direct link to try it free. No sign-up required.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container">
+
+  <!-- Progress -->
+  <div class="quiz-card">
+    <div class="quiz-progress" id="quiz-progress">
+      <div class="quiz-progress-dot active" id="dot-0"></div>
+      <div class="quiz-progress-dot" id="dot-1"></div>
+      <div class="quiz-progress-dot" id="dot-2"></div>
+      <div class="quiz-progress-dot" id="dot-3"></div>
+      <div class="quiz-progress-dot" id="dot-4"></div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="quiz-question active" id="q0">
+      <p class="quiz-q-label">Question 1 of 5</p>
+      <h2>What kind of task is this?</h2>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(0,'writing')">
+          <span class="quiz-option-emoji">✍️</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">Writing & editing</div>
+            <div class="quiz-option-desc">Emails, essays, copy, proofreading, rewrites</div>
+          </div>
+        </button>
+        <button class="quiz-option" onclick="answer(0,'coding')">
+          <span class="quiz-option-emoji">💻</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">Coding & technical</div>
+            <div class="quiz-option-desc">Debugging, writing functions, understanding APIs, documentation</div>
+          </div>
+        </button>
+        <button class="quiz-option" onclick="answer(0,'research')">
+          <span class="quiz-option-emoji">🔍</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">Research & fact-finding</div>
+            <div class="quiz-option-desc">Looking things up, comparing options, current events, prices</div>
+          </div>
+        </button>
+        <button class="quiz-option" onclick="answer(0,'creative')">
+          <span class="quiz-option-emoji">🎨</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">Creative & fun</div>
+            <div class="quiz-option-desc">Stories, roleplay, brainstorming, games, conversation</div>
+          </div>
+        </button>
+        <button class="quiz-option" onclick="answer(0,'analysis')">
+          <span class="quiz-option-emoji">📊</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">Analysis & deep thinking</div>
+            <div class="quiz-option-desc">Summarising documents, reasoning through problems, long content</div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-question" id="q1">
+      <p class="quiz-q-label">Question 2 of 5</p>
+      <h2>Do you need real-time information?</h2>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(1,'live')">
+          <span class="quiz-option-emoji">🌐</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">Yes — I need current data</div>
+            <div class="quiz-option-desc">Today's prices, recent news, current stock levels, live web pages</div>
+          </div>
+        </button>
+        <button class="quiz-option" onclick="answer(1,'static')">
+          <span class="quiz-option-emoji">📚</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">No — existing knowledge is fine</div>
+            <div class="quiz-option-desc">Writing, reasoning, coding, explanations from training data</div>
+          </div>
+        </button>
+        <button class="quiz-option" onclick="answer(1,'notsure')">
+          <span class="quiz-option-emoji">🤷</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">Not sure</div>
+            <div class="quiz-option-desc">I'll take whichever is recommended</div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-question" id="q2">
+      <p class="quiz-q-label">Question 3 of 5</p>
+      <h2>How sensitive is this information?</h2>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(2,'public')">
+          <span class="quiz-option-emoji">🌍</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">Public / not sensitive</div>
+            <div class="quiz-option-desc">I don't mind which company processes it</div>
+          </div>
+        </button>
+        <button class="quiz-option" onclick="answer(2,'private')">
+          <span class="quiz-option-emoji">🔒</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">Somewhat private</div>
+            <div class="quiz-option-desc">Personal info, work docs — I'd prefer a reputable Western company</div>
+          </div>
+        </button>
+        <button class="quiz-option" onclick="answer(2,'verysensitive')">
+          <span class="quiz-option-emoji">🛡️</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">Very sensitive</div>
+            <div class="quiz-option-desc">Medical, legal, financial — I want minimal data retention</div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-question" id="q3">
+      <p class="quiz-q-label">Question 4 of 5</p>
+      <h2>How long or detailed does the response need to be?</h2>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(3,'quick')">
+          <span class="quiz-option-emoji">⚡</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">Quick answer — a few sentences</div>
+            <div class="quiz-option-desc">Fast lookup, short summary, quick question</div>
+          </div>
+        </button>
+        <button class="quiz-option" onclick="answer(3,'medium')">
+          <span class="quiz-option-emoji">📝</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">Moderate — a few paragraphs</div>
+            <div class="quiz-option-desc">A proper email draft, a code function, an explanation</div>
+          </div>
+        </button>
+        <button class="quiz-option" onclick="answer(3,'long')">
+          <span class="quiz-option-emoji">📄</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">Long & detailed — a full document</div>
+            <div class="quiz-option-desc">Report, long analysis, entire codebase review, full essay</div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-question" id="q4">
+      <p class="quiz-q-label">Question 5 of 5</p>
+      <h2>Any special requirements?</h2>
+      <div class="quiz-options">
+        <button class="quiz-option" onclick="answer(4,'none')">
+          <span class="quiz-option-emoji">✅</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">Nope — just give me the best option</div>
+            <div class="quiz-option-desc">Happy to create a free account if needed</div>
+          </div>
+        </button>
+        <button class="quiz-option" onclick="answer(4,'noaccount')">
+          <span class="quiz-option-emoji">👤</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">I don't want to create an account</div>
+            <div class="quiz-option-desc">Want to use it immediately without signing up</div>
+          </div>
+        </button>
+        <button class="quiz-option" onclick="answer(4,'browser')">
+          <span class="quiz-option-emoji">🌐</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">I want it built into my browser</div>
+            <div class="quiz-option-desc">A sidebar or extension I can use on any page</div>
+          </div>
+        </button>
+        <button class="quiz-option" onclick="answer(4,'speed')">
+          <span class="quiz-option-emoji">🚀</span>
+          <div class="quiz-option-text">
+            <div class="quiz-option-title">Speed matters above all</div>
+            <div class="quiz-option-desc">I need the fastest possible response, even on long prompts</div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Nav buttons (back only — next auto-advances on selection) -->
+    <div class="quiz-nav" id="quiz-nav" style="display:none;">
+      <button class="btn btn-secondary" onclick="goBack()" id="btn-back">← Back</button>
+      <span id="quiz-nav-hint" style="font-size:var(--text-sm); color:var(--text-3);">Select an option to continue</span>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div class="result-card" id="result-card">
+    <div class="result-hero">
+      <div class="result-hero-emoji" id="result-emoji">🤖</div>
+      <h2 id="result-name">Recommended AI</h2>
+      <p id="result-tagline" style="margin-bottom:var(--s5);"></p>
+      <a id="result-link" href="#" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:1rem; padding:var(--s3) var(--s7);">Try it free →</a>
+    </div>
+
+    <div id="result-why" class="callout callout-tip" style="margin-bottom:var(--s5);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Why this one?</h4>
+        <p id="result-reason"></p>
+      </div>
+    </div>
+
+    <div class="result-runners-up" id="result-runners-up">
+      <h4>Also worth trying</h4>
+      <div id="runners-up-list"></div>
+    </div>
+
+    <div style="text-align:center; margin-top:var(--s6);">
+      <button class="btn btn-secondary" onclick="resetQuiz()">← Take the quiz again</button>
+      <a href="../models/" class="btn btn-secondary" style="margin-left:var(--s3);">Full Appliance Guide →</a>
+    </div>
+  </div>
+
+</div>
+</div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../" class="nav-logo" style="margin-bottom: var(--s3);">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="16" r="3" fill="currentColor"/>
+          </svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI.</p>
+      </div>
+      <div class="footer-col"><h4>Tools</h4><ul>
+        <li><a href="../quiz/">Which AI? Quiz</a></li>
+        <li><a href="../model-tester/">Model Tester</a></li>
+        <li><a href="../models/">Appliance Guide</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <div class="footer-privacy"><span class="privacy-dot"></span><span>No tracking · No cookies · No ads</span></div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+<script src="../js/main.js"></script>
+<script>
+/* ── Quiz Logic ── */
+
+const answers = {};
+let currentQ = 0;
+const totalQ = 5;
+
+const TOOLS = {
+  claude:      { name:'Claude',              emoji:'🟠', url:'https://claude.ai',                   tagline:'Best for writing, analysis & long documents',       desc:'Anthropic · Free tier at claude.ai' },
+  chatgpt:     { name:'ChatGPT',             emoji:'🟢', url:'https://chat.openai.com',              tagline:'Most popular general-purpose AI',                    desc:'OpenAI · Free GPT-4o at chat.openai.com' },
+  gemini:      { name:'Gemini',              emoji:'🔵', url:'https://gemini.google.com',            tagline:'Best for research with Google integration',          desc:'Google · Free, generous limits' },
+  perplexity:  { name:'Perplexity',          emoji:'🟣', url:'https://perplexity.ai',               tagline:'Best AI search engine with live citations',          desc:'Perplexity AI · Free tier at perplexity.ai' },
+  youcom:      { name:'You.com',             emoji:'🟠', url:'https://you.com',                     tagline:'Agentic web search — reads actual pages for you',   desc:'You.com · Free at you.com' },
+  grok:        { name:'Grok',                emoji:'⚫', url:'https://grok.com',                    tagline:'Real-time web + X/Twitter data',                     desc:'xAI · Free at grok.com' },
+  copilot:     { name:'Microsoft Copilot',   emoji:'🔷', url:'https://copilot.microsoft.com',       tagline:'Best for Microsoft 365 and Office users',            desc:'Microsoft · Free at copilot.microsoft.com' },
+  deepseek:    { name:'DeepSeek',            emoji:'🐋', url:'https://chat.deepseek.com',           tagline:'Excellent for coding and math reasoning',            desc:'DeepSeek · Free at chat.deepseek.com' },
+  phind:       { name:'Phind',               emoji:'🔍', url:'https://phind.com',                   tagline:'Purpose-built for coding questions and docs search', desc:'Phind · Free at phind.com' },
+  duckai:      { name:'DuckDuckGo Duck.AI',  emoji:'🦆', url:'https://duckduckgo.com/?q=DuckAssist', tagline:'No account, no tracking, instant access',           desc:'DuckDuckGo · Free, no sign-up' },
+  venice:      { name:'Venice.ai',           emoji:'🔒', url:'https://venice.ai',                  tagline:'Privacy-first — no conversation storage or training',desc:'Venice · Free at venice.ai' },
+  lumo:        { name:'LumoAI (Proton)',      emoji:'🔐', url:'https://lumo.proton.me',              tagline:'Privacy-first, integrates with Proton Mail/Calendar',desc:'Proton · Free with Proton account' },
+  cerebras:    { name:'Cerebras AI',          emoji:'⚡', url:'https://inference.cerebras.ai',       tagline:'Fastest inference available — 1000+ tokens/second',  desc:'Cerebras · Free tier at inference.cerebras.ai' },
+  brave_leo:   { name:'Brave Leo AI',         emoji:'🦁', url:'https://brave.com/leo',              tagline:'Reads the page you\'re on — great for page context', desc:'Brave Browser · Built-in, install Brave' },
+  kimi:        { name:'Kimi',                emoji:'🌙', url:'https://kimi.ai',                     tagline:'1M context window — handles extremely long documents',desc:'Moonshot AI · Free at kimi.ai' },
+  characterai: { name:'Character.AI',         emoji:'🎭', url:'https://character.ai',               tagline:'Best for roleplay, creative fiction and conversation',desc:'Character.AI · Free at character.ai' },
+  meta_ai:     { name:'Meta AI',             emoji:'🔵', url:'https://meta.ai',                    tagline:'Built into WhatsApp, Instagram and Facebook',        desc:'Meta · Free at meta.ai or in Meta apps' },
+};
+
+function score(toolId, points) {
+  return { toolId, points };
+}
+
+function getScores() {
+  const s = {};
+  Object.keys(TOOLS).forEach(id => s[id] = 0);
+
+  const a = answers;
+
+  /* Task type */
+  if (a[0] === 'writing') {
+    s.claude += 5; s.chatgpt += 4; s.gemini += 3; s.copilot += 2;
+  } else if (a[0] === 'coding') {
+    s.deepseek += 5; s.phind += 5; s.claude += 4; s.chatgpt += 3;
+  } else if (a[0] === 'research') {
+    s.perplexity += 6; s.youcom += 5; s.gemini += 4; s.grok += 3; s.copilot += 3;
+  } else if (a[0] === 'creative') {
+    s.characterai += 5; s.claude += 4; s.chatgpt += 3; s.grok += 2;
+  } else if (a[0] === 'analysis') {
+    s.claude += 6; s.chatgpt += 4; s.kimi += 4; s.deepseek += 3;
+  }
+
+  /* Real-time info */
+  if (a[1] === 'live') {
+    s.perplexity += 4; s.youcom += 4; s.grok += 3; s.gemini += 3; s.copilot += 2;
+    // Penalise non-search tools
+    s.characterai -= 3; s.deepseek -= 2; s.venice -= 1;
+  } else if (a[1] === 'static') {
+    s.claude += 2; s.deepseek += 2; s.kimi += 2;
+  }
+
+  /* Sensitivity */
+  if (a[2] === 'verysensitive') {
+    s.venice += 6; s.lumo += 5; s.duckai += 4;
+    // Penalise Chinese-hosted tools
+    s.deepseek -= 3; s.kimi -= 3; s.characterai -= 2;
+  } else if (a[2] === 'private') {
+    s.claude += 2; s.chatgpt += 2; s.gemini += 2; s.lumo += 3;
+  }
+
+  /* Length */
+  if (a[3] === 'quick') {
+    s.duckai += 3; s.gemini += 2; s.grok += 2; s.meta_ai += 2; s.perplexity += 2;
+  } else if (a[3] === 'long') {
+    s.claude += 4; s.kimi += 5; s.deepseek += 3;
+  }
+
+  /* Special requirements */
+  if (a[4] === 'noaccount') {
+    s.duckai += 6; s.venice += 4; s.gemini += 2;
+    s.phind -= 2; s.youcom -= 1;
+  } else if (a[4] === 'browser') {
+    s.brave_leo += 8; s.copilot += 4;
+    // Penalise standalone tools
+    Object.keys(s).forEach(id => { if (id !== 'brave_leo' && id !== 'copilot') s[id] -= 2; });
+  } else if (a[4] === 'speed') {
+    s.cerebras += 8; s.duckai += 3; s.grok += 2;
+  }
+
+  return s;
+}
+
+function getTopN(scores, n) {
+  return Object.entries(scores)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, n)
+    .map(([id]) => id);
+}
+
+function answer(qIndex, value) {
+  answers[qIndex] = value;
+  // Mark option selected
+  document.querySelectorAll(`#q${qIndex} .quiz-option`).forEach(el => el.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+
+  setTimeout(() => {
+    if (qIndex < totalQ - 1) {
+      goToQuestion(qIndex + 1);
+    } else {
+      showResult();
+    }
+  }, 250);
+}
+
+function goToQuestion(n) {
+  document.querySelectorAll('.quiz-question').forEach(el => el.classList.remove('active'));
+  document.getElementById(`q${n}`).classList.add('active');
+  for (let i = 0; i < totalQ; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    dot.classList.remove('done','active');
+    if (i < n) dot.classList.add('done');
+    else if (i === n) dot.classList.add('active');
+  }
+  currentQ = n;
+  document.getElementById('quiz-nav').style.display = n > 0 ? 'flex' : 'none';
+}
+
+function goBack() {
+  if (currentQ > 0) goToQuestion(currentQ - 1);
+}
+
+function showResult() {
+  const scores = getScores();
+  const top = getTopN(scores, 4);
+  const winner = TOOLS[top[0]];
+  const runnersUp = top.slice(1).map(id => TOOLS[id]).filter(Boolean);
+
+  document.getElementById('result-emoji').textContent = winner.emoji;
+  document.getElementById('result-name').textContent = winner.name;
+  document.getElementById('result-tagline').textContent = winner.tagline;
+  document.getElementById('result-link').href = winner.url;
+  document.getElementById('result-link').textContent = `Try ${winner.name} free →`;
+  document.getElementById('result-reason').textContent = buildReason(top[0]);
+
+  const ruList = document.getElementById('runners-up-list');
+  ruList.innerHTML = runnersUp.map(t => `
+    <div class="runner-up-item">
+      <span style="font-size:1.2rem;">${t.emoji}</span>
+      <div style="flex:1;">
+        <strong>${t.name}</strong><br>
+        <span style="color:var(--text-3);">${t.tagline}</span>
+      </div>
+      <a href="${t.url}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">Try →</a>
+    </div>
+  `).join('');
+
+  // Hide quiz, show result
+  document.querySelectorAll('.quiz-question').forEach(el => el.classList.remove('active'));
+  document.getElementById('quiz-nav').style.display = 'none';
+  document.getElementById('quiz-progress').style.display = 'none';
+  document.getElementById('result-card').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function buildReason(winnerId) {
+  const reasons = {
+    claude:      'Claude consistently performs best on long-form writing, nuanced analysis, and detailed instructions. It follows complex multi-part prompts more reliably than most alternatives.',
+    chatgpt:     'ChatGPT is the most widely used AI assistant for good reason — it handles a huge range of tasks reliably, has a polished interface, and a rich plugin/GPT ecosystem.',
+    gemini:      'Gemini combines Google Search integration with strong reasoning, making it ideal when you need current information alongside analytical depth.',
+    perplexity:  'Perplexity is the best AI for research tasks that need current information — it cites live sources so you can verify exactly where each fact came from.',
+    youcom:      'You.com goes further than Perplexity by actually navigating web pages and product listings as an agent, not just searching headlines.',
+    grok:        'Grok has real-time access to the web and X/Twitter data, making it uniquely useful for anything involving recent events or social trends.',
+    copilot:     'Copilot is built into Windows 11 and Microsoft 365 — if you live in Word, Excel or Outlook it integrates more naturally than any external tool.',
+    deepseek:    'DeepSeek is exceptional at coding and mathematical reasoning, often matching or beating GPT-4 class models on technical tasks at no cost.',
+    phind:       'Phind is purpose-built to search technical documentation, GitHub, and Stack Overflow — for coding questions it delivers sourced answers no general AI can match.',
+    duckai:      'DuckDuckGo Duck.AI requires zero sign-up, runs on multiple AI models, and stores nothing about you — the fastest path to a quick answer.',
+    venice:      'Venice explicitly doesn\'t store or train on your conversations. For sensitive queries, this privacy guarantee is the primary differentiator.',
+    lumo:        'LumoAI by Proton is designed for privacy-first users already in the Proton ecosystem — it sees your email/calendar context while keeping data on Proton\'s secure servers.',
+    cerebras:    'Cerebras runs on custom silicon (the WSE chip) delivering 1,000–2,000 tokens per second — orders of magnitude faster than GPU-based APIs for long generation tasks.',
+    brave_leo:   'Brave Leo reads the current page in your browser, making it uniquely useful for summarising articles, debugging web apps, or asking questions about what you\'re viewing.',
+    kimi:        'Kimi\'s 1 million-token context window lets it process entire books, large codebases, or lengthy document sets that would overflow other models.',
+    characterai: 'Character.AI excels at sustained roleplay, creative fiction, and interactive storytelling — it maintains character voice and narrative consistency better than general-purpose AIs.',
+    meta_ai:     'Meta AI is built into WhatsApp, Instagram, and Facebook — if you use any Meta app, it\'s the lowest-friction way to get quick AI answers.',
+  };
+  return reasons[winnerId] || 'Based on your answers, this tool best fits your task type, privacy needs, and workflow.';
+}
+
+function resetQuiz() {
+  Object.keys(answers).forEach(k => delete answers[k]);
+  currentQ = 0;
+  document.getElementById('result-card').classList.remove('active');
+  document.getElementById('quiz-progress').style.display = '';
+  document.getElementById('quiz-nav').style.display = 'none';
+  document.querySelectorAll('.quiz-question').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
+  document.getElementById('q0').classList.add('active');
+  for (let i = 0; i < totalQ; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    dot.classList.remove('done','active');
+    if (i === 0) dot.classList.add('active');
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

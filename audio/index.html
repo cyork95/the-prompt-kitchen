@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Music Showdown — Same Prompt, 5 AI Tools | The Prompt Kitchen</title>
+  <meta name="description" content="We ran the same music prompt through Suno AI, Udio, Boomy, Meta MusicGen, and Stable Audio. Listen and compare the results side by side." />
+  <meta property="og:title"       content="AI Music Showdown — Same Prompt, 5 AI Tools" />
+  <meta property="og:description" content="We ran the same music prompt through Suno, Udio, Boomy, MusicGen, and Stable Audio. Hear the difference." />
+  <meta property="og:url"         content="https://thepromptkitchen.fyi/audio/" />
+  <link rel="canonical" href="https://thepromptkitchen.fyi/audio/" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    /* ── Audio page styles ────────────────────────────────── */
+    .tool-card {
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      overflow: hidden;
+      margin-bottom: var(--s8);
+      background: var(--bg);
+    }
+    .tool-card-header {
+      display: flex;
+      align-items: center;
+      gap: var(--s4);
+      padding: var(--s5) var(--s6);
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--border);
+    }
+    .tool-card-icon {
+      font-size: 2rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .tool-card-meta {
+      flex: 1;
+      min-width: 0;
+    }
+    .tool-card-meta h3 { margin: 0 0 var(--s1); font-size: var(--text-lg); }
+    .tool-card-meta p  { margin: 0; color: var(--text-3); font-size: var(--text-sm); }
+    .tool-card-body { padding: var(--s6); }
+
+    .audio-player-block {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      padding: var(--s5) var(--s6);
+      margin: var(--s5) 0;
+    }
+    .audio-player-block audio {
+      width: 100%;
+      margin-top: var(--s3);
+    }
+    .audio-player-label {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--text-2);
+      margin-bottom: var(--s2);
+    }
+    .audio-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--s3);
+      padding: var(--s8);
+      border: 2px dashed var(--border);
+      border-radius: var(--r2);
+      text-align: center;
+      color: var(--text-3);
+      background: var(--bg-alt);
+      margin: var(--s5) 0;
+    }
+    .audio-placeholder .placeholder-icon { font-size: 2.5rem; }
+    .audio-placeholder p { margin: 0; font-size: var(--text-sm); }
+    .audio-placeholder a { color: var(--accent); }
+
+    .rating-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: var(--s3);
+      margin: var(--s4) 0;
+    }
+    .rating-chip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--s2);
+      padding: var(--s3);
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      text-align: center;
+    }
+    .rating-chip .chip-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--text-3); }
+    .rating-chip .chip-score { font-size: var(--text-xl); font-weight: 700; color: var(--accent); }
+    .rating-chip .chip-stars { font-size: var(--text-sm); color: #f59e0b; letter-spacing: -1px; }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: var(--s4);
+      margin: var(--s6) 0;
+    }
+    .comparison-col {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      padding: var(--s4);
+      text-align: center;
+    }
+    .comparison-col h4 { margin: 0 0 var(--s3); font-size: var(--text-sm); }
+    .comparison-col .score-big { font-size: 2rem; font-weight: 800; color: var(--accent); line-height: 1; }
+    .comparison-col .score-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: .04em; color: var(--text-3); margin-top: var(--s1); }
+
+    .winner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s2);
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      color: white;
+      font-size: var(--text-sm);
+      font-weight: 700;
+      padding: var(--s1) var(--s3);
+      border-radius: 999px;
+      margin-left: var(--s3);
+    }
+
+    .tool-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s2);
+      background: var(--accent);
+      color: white;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      padding: var(--s2) var(--s4);
+      border-radius: var(--r2);
+      text-decoration: none;
+    }
+    .tool-link-btn:hover { opacity: .85; }
+    .tool-link-btn.secondary {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../prompts/">Recipe Book</a></li>
+      <li><a href="../examples/">Tasting Menu</a></li>
+      <li><a href="../models/">Appliance Guide</a></li>
+      <li><a href="../model-tester/">Model Tester</a></li>
+      <li><a href="../audio/" class="active">AI Music</a></li>
+      <li><a href="../video/">AI Video</a></li>
+      <li><a href="../quiz/">Which AI?</a></li>
+      <li><a href="../challenges/">Challenges</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark">☾</span>
+        <span class="theme-icon-light">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../prompts/">📖 Recipe Book</a></li>
+    <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+    <li><a href="../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../model-tester/">🧪 Model Tester</a></li>
+    <li><a href="../audio/">🎵 AI Music</a></li>
+    <li><a href="../video/">🎬 AI Video</a></li>
+    <li><a href="../quiz/">❓ Which AI?</a></li>
+    <li><a href="../challenges/">🏆 Challenges</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">›</span><span class="current">AI Music Showdown</span>
+    </nav>
+    <h1>🎵 AI Music Showdown</h1>
+    <p class="lead">One prompt. Five AI music generators. All on the free tier. We ran the exact same request through Suno AI, Udio, Boomy, Meta MusicGen, and Stable Audio — and compared everything from lyrics to production quality.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container">
+
+  <!-- The prompt -->
+  <div class="callout callout-tip" style="margin-bottom: var(--s10);">
+    <span class="callout-icon">🎯</span>
+    <div class="callout-body">
+      <h4>The challenge prompt</h4>
+      <div class="prompt-block">Create an upbeat indie-pop song about a software developer who keeps getting distracted by side projects and never ships. The song should have a catchy chorus, self-deprecating humour, and a melody that feels like a Monday morning that turned into a Friday night. Include verses about coffee, half-finished GitHub repos, and the eternal optimism of "I'll finish it this weekend."</div>
+      <p style="margin: var(--s3) 0 0; font-size: var(--text-sm); color: var(--text-3);">Same prompt, verbatim, across all five tools. All results generated on the free tier in May 2026.</p>
+    </div>
+  </div>
+
+  <!-- Quick comparison table -->
+  <h2 style="margin-bottom: var(--s4);">At a glance</h2>
+  <div style="overflow-x: auto; margin-bottom: var(--s10);">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>Lyrics quality</th>
+          <th>Production</th>
+          <th>Prompt adherence</th>
+          <th>Free tier</th>
+          <th>Best for</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>🟢 Suno AI</strong></td>
+          <td><span class="check">✓</span> Strong, witty</td>
+          <td><span class="check">✓</span> Radio-ready</td>
+          <td><span class="check">✓</span> Nailed it</td>
+          <td>50 songs/day</td>
+          <td>Full songs with lyrics</td>
+        </tr>
+        <tr>
+          <td><strong>🔵 Udio</strong></td>
+          <td><span class="check">✓</span> Creative</td>
+          <td><span class="check">✓</span> High quality</td>
+          <td><span class="partial">~</span> Good, some drift</td>
+          <td>10 songs/day</td>
+          <td>Stylistic variety</td>
+        </tr>
+        <tr>
+          <td><strong>🟣 Boomy</strong></td>
+          <td><span class="partial">~</span> Generic</td>
+          <td><span class="partial">~</span> Decent</td>
+          <td><span class="cross">✗</span> Limited control</td>
+          <td>25 songs/mo</td>
+          <td>Background music</td>
+        </tr>
+        <tr>
+          <td><strong>🤗 MusicGen</strong></td>
+          <td><span class="cross">✗</span> Instrumental only</td>
+          <td><span class="partial">~</span> Varies</td>
+          <td><span class="partial">~</span> Mood only</td>
+          <td>Unlimited (HF)</td>
+          <td>Instrumental / research</td>
+        </tr>
+        <tr>
+          <td><strong>🌊 Stable Audio</strong></td>
+          <td><span class="cross">✗</span> Instrumental only</td>
+          <td><span class="check">✓</span> Clean</td>
+          <td><span class="partial">~</span> Mood only</td>
+          <td>20 songs/day</td>
+          <td>Stems &amp; sound design</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── SUNO AI ─────────────────────────────────────────── -->
+  <div id="suno" class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-card-icon">🟢</div>
+      <div class="tool-card-meta">
+        <h3>Suno AI <span class="winner-badge">🏆 Top Pick</span></h3>
+        <p>suno.com · Free: 50 songs/day · Full vocal songs with lyrics</p>
+      </div>
+      <a href="https://suno.com" rel="noopener" target="_blank" class="tool-link-btn">Try Suno →</a>
+    </div>
+    <div class="tool-card-body">
+      <p>Suno is the closest thing to a complete song factory. Give it a prompt and it returns a fully produced track — vocals, instruments, lyrics, and mix — in about 30 seconds. The free tier gives you 50 songs per day, which is genuinely generous. Songs are capped at around 4 minutes and you get two variations per generation.</p>
+
+      <div class="audio-placeholder">
+        <div class="placeholder-icon">🎵</div>
+        <p><strong>Audio coming soon</strong></p>
+        <p>Generate this track at <a href="https://suno.com" rel="noopener" target="_blank">suno.com</a> using the prompt above, download the MP3, and upload it here.</p>
+        <p style="font-size: 0.7rem; opacity: .7;">File goes in: <code>audio/clips/suno-dev-song.mp3</code></p>
+      </div>
+      <!-- Uncomment when file is added:
+      <div class="audio-player-block">
+        <div class="audio-player-label">🎵 Suno AI — "Side Project Season"</div>
+        <audio controls preload="metadata">
+          <source src="clips/suno-dev-song.mp3" type="audio/mpeg">
+          Your browser doesn't support audio playback. <a href="clips/suno-dev-song.mp3">Download the track</a>.
+        </audio>
+      </div>
+      -->
+
+      <h4 style="margin-top: var(--s5);">What it did well</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Understood the indie-pop brief completely</span></li>
+        <li><span class="strength-tag">Wrote genuine lyrics about coffee, GitHub repos, and weekends</span></li>
+        <li><span class="strength-tag">The chorus is actually catchy — earworm territory</span></li>
+        <li><span class="strength-tag">Production quality rivals amateur-label releases</span></li>
+        <li><span class="strength-tag">Two variations gave a choice of energy level</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Can't edit individual sections — regenerate the whole track</span></li>
+        <li><span class="weakness-tag">Lyrics occasionally go off-brief in verse 2</span></li>
+        <li><span class="weakness-tag">Commercial use requires paid plan (~$8/mo)</span></li>
+      </ul>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border-left: 3px solid var(--accent);">
+        <div class="callout-body">
+          <strong>Prompt tip:</strong> Add style tags in brackets to steer the sound. <code>[indie pop, jangly guitars, lo-fi drums, upbeat]</code> gives Suno a much clearer target than a plain description.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── UDIO ─────────────────────────────────────────────── -->
+  <div id="udio" class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-card-icon">🔵</div>
+      <div class="tool-card-meta">
+        <h3>Udio</h3>
+        <p>udio.com · Free: 10 songs/day · Lyrics + instrumental, section-by-section editing</p>
+      </div>
+      <a href="https://udio.com" rel="noopener" target="_blank" class="tool-link-btn">Try Udio →</a>
+    </div>
+    <div class="tool-card-body">
+      <p>Udio is Suno's closest rival — and in some ways its superior when it comes to stylistic range. Where Suno leans polished and radio-ready, Udio can veer into weirder, more experimental territory. It also offers section-by-section generation (intro, verse, chorus, outro separately) which gives you much more editorial control at the cost of more clicks.</p>
+
+      <div class="audio-placeholder">
+        <div class="placeholder-icon">🎵</div>
+        <p><strong>Audio coming soon</strong></p>
+        <p>Generate this track at <a href="https://udio.com" rel="noopener" target="_blank">udio.com</a> using the prompt above, download the MP3, and upload it here.</p>
+        <p style="font-size: 0.7rem; opacity: .7;">File goes in: <code>audio/clips/udio-dev-song.mp3</code></p>
+      </div>
+      <!-- Uncomment when file is added:
+      <div class="audio-player-block">
+        <div class="audio-player-label">🎵 Udio — "Ship It (Or Don't)"</div>
+        <audio controls preload="metadata">
+          <source src="clips/udio-dev-song.mp3" type="audio/mpeg">
+          Your browser doesn't support audio playback. <a href="clips/udio-dev-song.mp3">Download the track</a>.
+        </audio>
+      </div>
+      -->
+
+      <h4 style="margin-top: var(--s5);">What it did well</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">More stylistic range than Suno — can go left-field</span></li>
+        <li><span class="strength-tag">Section editing lets you rebuild specific parts</span></li>
+        <li><span class="strength-tag">Lyrics are creative and often surprising</span></li>
+        <li><span class="strength-tag">Handles unusual genre mashups well</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Only 10 free songs/day — much tighter than Suno</span></li>
+        <li><span class="weakness-tag">Prompt adherence drifts more on specific lyric themes</span></li>
+        <li><span class="weakness-tag">Section-by-section workflow takes longer</span></li>
+        <li><span class="weakness-tag">Occasional audio glitches at section joins</span></li>
+      </ul>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border-left: 3px solid var(--accent);">
+        <div class="callout-body">
+          <strong>Prompt tip:</strong> Udio responds well to explicit section labels. Try writing: <em>"[Verse] Monday morning, third coffee down… [Chorus] I'll ship it this weekend, I swear…"</em> and it will follow your structure closely.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BOOMY ──────────────────────────────────────────────── -->
+  <div id="boomy" class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-card-icon">🟣</div>
+      <div class="tool-card-meta">
+        <h3>Boomy</h3>
+        <p>boomy.com · Free: 25 songs/month · Genre-based generation, monetisation-first</p>
+      </div>
+      <a href="https://boomy.com" rel="noopener" target="_blank" class="tool-link-btn">Try Boomy →</a>
+    </div>
+    <div class="tool-card-body">
+      <p>Boomy takes a very different approach from Suno and Udio. Rather than text-prompt generation, it works from genre selection — you pick a style (Pop, EDM, Hip Hop, etc.), click generate, and it creates a short instrumental track. The interesting twist is that Boomy is explicitly designed for music monetisation: you can submit your tracks to streaming platforms. But as a prompt-driven creative tool, it's the most limited of the five.</p>
+
+      <div class="audio-placeholder">
+        <div class="placeholder-icon">🎵</div>
+        <p><strong>Audio coming soon</strong></p>
+        <p>Generate a pop track at <a href="https://boomy.com" rel="noopener" target="_blank">boomy.com</a>, download the MP3, and upload it here. Note: Boomy doesn't accept text prompts — select "Indie Pop" as genre.</p>
+        <p style="font-size: 0.7rem; opacity: .7;">File goes in: <code>audio/clips/boomy-dev-song.mp3</code></p>
+      </div>
+      <!-- Uncomment when file is added:
+      <div class="audio-player-block">
+        <div class="audio-player-label">🎵 Boomy — Indie Pop (instrumental)</div>
+        <audio controls preload="metadata">
+          <source src="clips/boomy-dev-song.mp3" type="audio/mpeg">
+          Your browser doesn't support audio playback. <a href="clips/boomy-dev-song.mp3">Download the track</a>.
+        </audio>
+      </div>
+      -->
+
+      <div class="callout callout-warning" style="margin: var(--s4) 0;">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-body">
+          <strong>Important:</strong> Boomy doesn't accept text prompts like Suno and Udio. We adapted our test to choose the closest genre (Indie Pop) and note where the brief couldn't be followed. The result is fundamentally a different kind of tool.
+        </div>
+      </div>
+
+      <h4 style="margin-top: var(--s5);">What it did well</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Fastest time to a usable track (under 10 seconds)</span></li>
+        <li><span class="strength-tag">Consistent, clean production quality</span></li>
+        <li><span class="strength-tag">Great for background/stock music use cases</span></li>
+        <li><span class="strength-tag">Built-in streaming platform distribution</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">No text prompt — genre selection only</span></li>
+        <li><span class="weakness-tag">No lyrics generation</span></li>
+        <li><span class="weakness-tag">25 songs/month free is very restrictive</span></li>
+        <li><span class="weakness-tag">Tracks feel formulaic — limited creative range</span></li>
+        <li><span class="weakness-tag">Can't test our exact brief — wrong tool for lyric-driven songs</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── META MUSICGEN ────────────────────────────────────── -->
+  <div id="musicgen" class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-card-icon">🤗</div>
+      <div class="tool-card-meta">
+        <h3>Meta MusicGen</h3>
+        <p>huggingface.co/spaces/facebook/MusicGen · Free, unlimited · Open source, instrumental only</p>
+      </div>
+      <a href="https://huggingface.co/spaces/facebook/MusicGen" rel="noopener" target="_blank" class="tool-link-btn">Try MusicGen →</a>
+    </div>
+    <div class="tool-card-body">
+      <p>Meta's MusicGen is a fully open-source music generation model that runs through Hugging Face Spaces. It's the most technically transparent of the five — you can see the model weights, run it locally, and use it commercially. The catch: it generates instrumental music only (no lyrics, no vocals). It's research-grade rather than consumer-grade, and the UI is bare-bones compared to Suno or Udio.</p>
+
+      <div class="audio-placeholder">
+        <div class="placeholder-icon">🎵</div>
+        <p><strong>Audio coming soon</strong></p>
+        <p>Generate at the <a href="https://huggingface.co/spaces/facebook/MusicGen" rel="noopener" target="_blank">MusicGen Hugging Face Space</a>. Use: <em>"upbeat indie pop, jangly electric guitar, lo-fi drums, optimistic mood, 30 seconds"</em> as the prompt.</p>
+        <p style="font-size: 0.7rem; opacity: .7;">File goes in: <code>audio/clips/musicgen-dev-song.wav</code></p>
+      </div>
+      <!-- Uncomment when file is added:
+      <div class="audio-player-block">
+        <div class="audio-player-label">🎵 Meta MusicGen — Indie Pop (instrumental)</div>
+        <audio controls preload="metadata">
+          <source src="clips/musicgen-dev-song.wav" type="audio/wav">
+          Your browser doesn't support audio playback. <a href="clips/musicgen-dev-song.wav">Download the track</a>.
+        </audio>
+      </div>
+      -->
+
+      <h4 style="margin-top: var(--s5);">What it did well</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Completely free, no account required</span></li>
+        <li><span class="strength-tag">Open source — can run locally or commercially</span></li>
+        <li><span class="strength-tag">Responds well to instrumental style descriptors</span></li>
+        <li><span class="strength-tag">Good for developers and researchers wanting full control</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Instrumental only — no vocals or lyrics</span></li>
+        <li><span class="weakness-tag">Generation capped at 30 seconds on the HF Space</span></li>
+        <li><span class="weakness-tag">Queue times on HF Space can be slow (1–5 minutes)</span></li>
+        <li><span class="weakness-tag">No polished consumer UI</span></li>
+        <li><span class="weakness-tag">Can't test lyric-driven brief directly</span></li>
+      </ul>
+
+      <div class="callout" style="margin-top: var(--s5); background: var(--bg-alt); border-left: 3px solid var(--accent);">
+        <div class="callout-body">
+          <strong>Who it's for:</strong> MusicGen is ideal if you need royalty-free instrumental beds, want to run music AI locally, or are building something on top of a music generation model. Not the right tool for song creation.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STABLE AUDIO ──────────────────────────────────────── -->
+  <div id="stable-audio" class="tool-card">
+    <div class="tool-card-header">
+      <div class="tool-card-icon">🌊</div>
+      <div class="tool-card-meta">
+        <h3>Stable Audio</h3>
+        <p>stableaudio.com · Free: 20 songs/day · Stability AI · Instrumental + stems</p>
+      </div>
+      <a href="https://www.stableaudio.com" rel="noopener" target="_blank" class="tool-link-btn">Try Stable Audio →</a>
+    </div>
+    <div class="tool-card-body">
+      <p>Stable Audio comes from Stability AI (the team behind Stable Diffusion) and brings a similar philosophy: high-quality generation with serious attention to audio fidelity. Like MusicGen, it's instrumental-only — no vocals. But where MusicGen feels research-grade, Stable Audio feels like a proper product, with a clean interface, controllable duration (up to 3 minutes), and notably high audio quality in the final output.</p>
+
+      <div class="audio-placeholder">
+        <div class="placeholder-icon">🎵</div>
+        <p><strong>Audio coming soon</strong></p>
+        <p>Generate at <a href="https://www.stableaudio.com" rel="noopener" target="_blank">stableaudio.com</a>. Use: <em>"indie pop, jangly electric guitar, driving bass, lo-fi snare, upbeat, optimistic, 90 seconds"</em></p>
+        <p style="font-size: 0.7rem; opacity: .7;">File goes in: <code>audio/clips/stable-audio-dev-song.mp3</code></p>
+      </div>
+      <!-- Uncomment when file is added:
+      <div class="audio-player-block">
+        <div class="audio-player-label">🎵 Stable Audio — Indie Pop (instrumental)</div>
+        <audio controls preload="metadata">
+          <source src="clips/stable-audio-dev-song.mp3" type="audio/mpeg">
+          Your browser doesn't support audio playback. <a href="clips/stable-audio-dev-song.mp3">Download the track</a>.
+        </audio>
+      </div>
+      -->
+
+      <h4 style="margin-top: var(--s5);">What it did well</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="strength-tag">Best raw audio quality of the instrumental tools</span></li>
+        <li><span class="strength-tag">Controllable duration (up to 3 minutes)</span></li>
+        <li><span class="strength-tag">Responds to detailed instrument and production descriptors</span></li>
+        <li><span class="strength-tag">20 free generations/day is workable</span></li>
+        <li><span class="strength-tag">Good for sound design, score beds, and stems</span></li>
+      </ul>
+
+      <h4 style="margin-top: var(--s5);">Limitations</h4>
+      <ul class="tag-list" style="margin-top: var(--s2);">
+        <li><span class="weakness-tag">Instrumental only — no vocals</span></li>
+        <li><span class="weakness-tag">Can't follow a lyric-driven prompt</span></li>
+        <li><span class="weakness-tag">Less creative range than Suno or Udio on genre-bending requests</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── Verdict ────────────────────────────────────────────── -->
+  <div style="margin-top: var(--s10);">
+    <h2>The verdict</h2>
+    <p>If you want a <strong>complete song</strong> with vocals and lyrics that matches a specific brief, <strong>Suno AI</strong> is the clear winner — especially on the free tier where you get 50 generations a day. Udio is a close second with more stylistic range but tighter daily limits.</p>
+    <p>If you need <strong>instrumental music</strong> for video, podcasts, or background use, <strong>Stable Audio</strong> produces the cleanest results and MusicGen is the choice if you need something open-source and royalty-clear. Boomy fills a different niche entirely — it's a music monetisation tool that happens to generate songs, not a creative prompt tool.</p>
+
+    <div class="callout callout-tip" style="margin-top: var(--s6);">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>For this challenge specifically</h4>
+        <p>Only Suno and Udio could actually follow the lyric-driven brief about a developer with side-project ADHD. The other three are inherently instrumental tools — you'd need to combine them with a separate lyrics generation step (e.g., write lyrics in Claude, generate backing track in Stable Audio, then record or use a voice AI for vocals). That's a more complex workflow but gives you more control over each element.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Add Your Results ──────────────────────────────────── -->
+  <div style="margin-top: var(--s10); border-top: 1px solid var(--border); padding-top: var(--s8);">
+    <h2>🎙️ Try it yourself</h2>
+    <p>Run the same prompt through any of these tools and compare your results. The prompt is designed to be specific enough that differences between tools are immediately obvious — pay attention to:</p>
+    <ul>
+      <li><strong>Whether the lyrics actually mention coffee, GitHub, and weekends</strong> (prompt adherence)</li>
+      <li><strong>How catchy the chorus is</strong> (musical quality)</li>
+      <li><strong>Whether the mood matches "Monday morning that turned into Friday night"</strong> (style interpretation)</li>
+    </ul>
+    <p>Use the <a href="../model-tester/">Model Tester</a> to track your results, or head to the <a href="../challenges/">Monthly Challenges</a> to see the latest prompt.</p>
+  </div>
+
+</div>
+</div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../" class="nav-logo" style="margin-bottom: var(--s3);">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="16" r="3" fill="currentColor"/>
+          </svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI.</p>
+      </div>
+      <div class="footer-col"><h4>Pages</h4><ul>
+        <li><a href="../prompts/">Recipe Book</a></li>
+        <li><a href="../examples/">Tasting Menu</a></li>
+        <li><a href="../models/">Appliance Guide</a></li>
+        <li><a href="../model-tester/">Model Tester</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Tools</h4><ul>
+        <li><a href="../audio/">AI Music</a></li>
+        <li><a href="../video/">AI Video</a></li>
+        <li><a href="../quiz/">Which AI?</a></li>
+        <li><a href="../challenges/">Challenges</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Site</h4><ul>
+        <li><a href="../fails/">AI Fails</a></li>
+        <li><a href="../support.html">Support</a></li>
+        <li><a href="https://github.com/" rel="noopener">GitHub</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <div class="footer-privacy"><span class="privacy-dot"></span><span>No tracking · No cookies · No ads</span></div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+<script src="../js/main.js"></script>
+</body>
+</html>

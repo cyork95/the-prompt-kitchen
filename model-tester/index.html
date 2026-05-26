@@ -435,14 +435,74 @@
     <h2><span class="step-number locked" id="step5-num">5</span> Export for the site</h2>
     <div id="step5-locked-msg" style="color:var(--text-3); font-size:var(--text-sm);">Complete Steps 1–4 first.</div>
     <div id="step5-content" style="display:none;">
-      <p style="color:var(--text-2); margin-bottom:var(--s4);">Your session data is formatted below. Copy it and paste into <code>examples/index.html</code> before the "Want to try these patterns?" callout — or use the JSON to build your own format.</p>
+      <p style="color:var(--text-2); margin-bottom:var(--s4);">Your session data is formatted below. <strong>Copy it and paste</strong> into <code>examples/index.html</code> — or <strong>publish directly to GitHub</strong> with one click (requires a GitHub token, set up below).</p>
 
-      <div style="display:flex; gap:var(--s3); margin-bottom:var(--s4); flex-wrap:wrap;">
+      <div style="display:flex; gap:var(--s3); margin-bottom:var(--s4); flex-wrap:wrap; align-items:center;">
         <button class="btn btn-primary" onclick="copyExport('html')">Copy HTML snippet</button>
-        <button class="btn btn-secondary" onclick="copyExport('json')">Copy JSON data</button>
-        <button class="btn btn-secondary" onclick="downloadExport()">Download JSON file</button>
-        <button class="btn btn-secondary" onclick="resetAll()">🔄 Start new session</button>
+        <button class="btn btn-primary" id="btn-publish-github" onclick="publishToGitHub()" style="background:var(--success,#22c55e); border-color:var(--success,#22c55e);">🚀 Publish to site</button>
+        <button class="btn btn-secondary" onclick="copyExport('json')">Copy JSON</button>
+        <button class="btn btn-secondary" onclick="downloadExport()">Download JSON</button>
+        <button class="btn btn-secondary" onclick="resetAll()">🔄 New session</button>
       </div>
+
+      <!-- GitHub publish status -->
+      <div id="github-publish-status" style="display:none; margin-bottom:var(--s4);"></div>
+
+      <!-- GitHub settings panel -->
+      <details id="github-settings-panel" style="margin-bottom:var(--s5); border:1px solid var(--border); border-radius:var(--r2); overflow:hidden;">
+        <summary style="padding:var(--s3) var(--s4); cursor:pointer; background:var(--bg-alt); font-size:var(--text-sm); font-weight:600; list-style:none; display:flex; justify-content:space-between; align-items:center;">
+          ⚙️ GitHub publish settings
+          <span style="color:var(--text-3);" id="github-settings-status">Not configured</span>
+        </summary>
+        <div style="padding:var(--s5);">
+          <div class="callout callout-tip" style="margin-bottom:var(--s5);">
+            <span class="callout-icon">🔑</span>
+            <div class="callout-body">
+              <h4>How to get your GitHub token (one-time setup)</h4>
+              <ol style="margin:var(--s2) 0 0 var(--s4); font-size:var(--text-sm); line-height:1.8;">
+                <li>Go to <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener"><strong>github.com/settings/tokens</strong></a> → Fine-grained tokens</li>
+                <li>Click <strong>"Generate new token"</strong></li>
+                <li>Name it: <code>Prompt Kitchen Publisher</code>, set expiration to 1 year</li>
+                <li>Under <strong>Repository access</strong>: select <em>Only select repositories</em> → pick <code>the-prompt-kitchen</code></li>
+                <li>Under <strong>Permissions → Repository permissions</strong>: set <em>Contents</em> to <strong>Read and write</strong></li>
+                <li>Click <strong>Generate token</strong>, copy it, paste it below</li>
+              </ol>
+              <p style="margin-top:var(--s3); font-size:var(--text-sm); color:var(--text-3);">Your token is stored only in this browser (localStorage). It never leaves your device except to call the GitHub API directly.</p>
+            </div>
+          </div>
+
+          <div style="display:grid; gap:var(--s3);">
+            <div>
+              <label style="font-size:var(--text-sm); font-weight:600; display:block; margin-bottom:var(--s1);">GitHub Personal Access Token</label>
+              <input type="password" id="gh-token" placeholder="github_pat_..." style="width:100%; padding:var(--s2) var(--s3); border:1px solid var(--border); border-radius:var(--r1); background:var(--bg); color:var(--text-1); font-size:var(--text-sm); box-sizing:border-box;" />
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--s3);">
+              <div>
+                <label style="font-size:var(--text-sm); font-weight:600; display:block; margin-bottom:var(--s1);">GitHub username</label>
+                <input type="text" id="gh-owner" placeholder="cyork95" style="width:100%; padding:var(--s2) var(--s3); border:1px solid var(--border); border-radius:var(--r1); background:var(--bg); color:var(--text-1); font-size:var(--text-sm); box-sizing:border-box;" />
+              </div>
+              <div>
+                <label style="font-size:var(--text-sm); font-weight:600; display:block; margin-bottom:var(--s1);">Repository name</label>
+                <input type="text" id="gh-repo" placeholder="the-prompt-kitchen" style="width:100%; padding:var(--s2) var(--s3); border:1px solid var(--border); border-radius:var(--r1); background:var(--bg); color:var(--text-1); font-size:var(--text-sm); box-sizing:border-box;" />
+              </div>
+            </div>
+            <div>
+              <label style="font-size:var(--text-sm); font-weight:600; display:block; margin-bottom:var(--s1);">Publish to file</label>
+              <select id="gh-target-file" style="width:100%; padding:var(--s2) var(--s3); border:1px solid var(--border); border-radius:var(--r1); background:var(--bg); color:var(--text-1); font-size:var(--text-sm);">
+                <option value="examples/index.html">examples/index.html (Tasting Menu)</option>
+                <option value="fails/index.html">fails/index.html (Fails Hall of Fame)</option>
+                <option value="audio/index.html">audio/index.html (Audio comparison)</option>
+                <option value="video/index.html">video/index.html (Video gallery)</option>
+              </select>
+            </div>
+            <div style="display:flex; gap:var(--s2);">
+              <button class="btn btn-primary btn-sm" onclick="saveGitHubSettings()">Save settings</button>
+              <button class="btn btn-secondary btn-sm" onclick="testGitHubConnection()">Test connection</button>
+              <button class="btn btn-secondary btn-sm" onclick="clearGitHubSettings()">Clear token</button>
+            </div>
+          </div>
+        </div>
+      </details>
 
       <div id="export-format-tabs" style="display:flex; gap:var(--s2); margin-bottom:var(--s3);">
         <button class="model-filter-btn active" onclick="switchExportTab('html', this)">HTML</button>
@@ -1069,6 +1129,172 @@ function resetAll() {
   if (!confirm('Reset everything and start a new session?')) return;
   localStorage.removeItem('pk-tester-state');
   location.reload();
+}
+
+/* ── GitHub API Publish ── */
+
+function saveGitHubSettings() {
+  const token = document.getElementById('gh-token').value.trim();
+  const owner = document.getElementById('gh-owner').value.trim();
+  const repo  = document.getElementById('gh-repo').value.trim();
+  if (!token || !owner || !repo) { alert('Please fill in all three fields.'); return; }
+  localStorage.setItem('pk-gh-token', token);
+  localStorage.setItem('pk-gh-owner', owner);
+  localStorage.setItem('pk-gh-repo',  repo);
+  updateGitHubSettingsStatus();
+  alert('✅ Settings saved. Click "Test connection" to verify.');
+}
+
+function clearGitHubSettings() {
+  localStorage.removeItem('pk-gh-token');
+  localStorage.removeItem('pk-gh-owner');
+  localStorage.removeItem('pk-gh-repo');
+  document.getElementById('gh-token').value = '';
+  updateGitHubSettingsStatus();
+}
+
+function updateGitHubSettingsStatus() {
+  const token = localStorage.getItem('pk-gh-token');
+  const owner = localStorage.getItem('pk-gh-owner');
+  const repo  = localStorage.getItem('pk-gh-repo');
+  const el = document.getElementById('github-settings-status');
+  if (!el) return;
+  if (token && owner && repo) {
+    el.textContent = `✅ ${owner}/${repo}`;
+    el.style.color = '#22c55e';
+    // Pre-fill fields
+    document.getElementById('gh-token').value = token;
+    document.getElementById('gh-owner').value = owner;
+    document.getElementById('gh-repo').value  = repo;
+  } else {
+    el.textContent = 'Not configured';
+    el.style.color = '';
+  }
+}
+
+async function testGitHubConnection() {
+  const { token, owner, repo } = getGitHubConfig();
+  if (!token) { alert('Save your settings first.'); return; }
+  setPublishStatus('⏳ Testing connection…', 'info');
+  try {
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setPublishStatus(`✅ Connected to <strong>${data.full_name}</strong>. You're good to publish.`, 'success');
+    } else {
+      const err = await res.json();
+      setPublishStatus(`❌ Connection failed: ${err.message}. Check your token and repo name.`, 'error');
+    }
+  } catch(e) {
+    setPublishStatus(`❌ Network error: ${e.message}`, 'error');
+  }
+}
+
+function getGitHubConfig() {
+  return {
+    token: localStorage.getItem('pk-gh-token') || '',
+    owner: localStorage.getItem('pk-gh-owner') || '',
+    repo:  localStorage.getItem('pk-gh-repo')  || '',
+  };
+}
+
+async function publishToGitHub() {
+  const { token, owner, repo } = getGitHubConfig();
+  if (!token || !owner || !repo) {
+    document.getElementById('github-settings-panel').open = true;
+    setPublishStatus('⚙️ Open the settings panel above and enter your GitHub token first.', 'info');
+    return;
+  }
+  if (!state.exportHtml) {
+    alert('Generate the export first (click "Generate export for the site" in Step 4).');
+    return;
+  }
+
+  const targetFile = document.getElementById('gh-target-file')?.value || 'examples/index.html';
+  const INSERTION_MARKER = 'Want to try these patterns yourself?';
+
+  setPublishStatus('⏳ Fetching current file from GitHub…', 'info');
+
+  try {
+    // Step 1: Get current file
+    const fileRes = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}/contents/${targetFile}`,
+      { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' } }
+    );
+    if (!fileRes.ok) {
+      const err = await fileRes.json();
+      throw new Error(`Could not fetch file: ${err.message}`);
+    }
+    const fileData = await fileRes.json();
+    const currentContent = atob(fileData.content.replace(/\n/g, ''));
+    const sha = fileData.sha;
+
+    // Step 2: Find insertion point
+    const markerIndex = currentContent.indexOf(INSERTION_MARKER);
+    if (markerIndex === -1) {
+      throw new Error(`Could not find insertion marker ("${INSERTION_MARKER}") in the file. Is the right file selected?`);
+    }
+
+    // Walk back to find the opening <div of the "Want to try" block
+    const divBeforeMarker = currentContent.lastIndexOf('<div', markerIndex);
+
+    // Step 3: Insert new HTML before that div
+    const newContent =
+      currentContent.slice(0, divBeforeMarker) +
+      '\n' + state.exportHtml + '\n' +
+      currentContent.slice(divBeforeMarker);
+
+    // Step 4: Commit
+    setPublishStatus('⏳ Publishing to GitHub…', 'info');
+    const catLabel = PROMPT_CATEGORIES.find(c => c.id === state.promptCategory)?.label || 'Session';
+    const commitMessage = `Add Model Tester session: ${catLabel} — ${new Date().toISOString().split('T')[0]} (${state.selectedModels.length} AI${state.selectedModels.length !== 1 ? 's' : ''})`;
+
+    const putRes = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}/contents/${targetFile}`,
+      {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/vnd.github+json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: commitMessage,
+          content: btoa(unescape(encodeURIComponent(newContent))),
+          sha: sha,
+        })
+      }
+    );
+
+    if (!putRes.ok) {
+      const err = await putRes.json();
+      throw new Error(`Commit failed: ${err.message}`);
+    }
+
+    const putData = await putRes.json();
+    const commitUrl = putData.commit?.html_url || `https://github.com/${owner}/${repo}/commits/main`;
+    setPublishStatus(
+      `🎉 <strong>Published!</strong> Your session is now live on the site. <a href="${commitUrl}" target="_blank" rel="noopener">View commit →</a><br><small style="color:var(--text-3);">GitHub Pages usually deploys within 1–2 minutes.</small>`,
+      'success'
+    );
+
+  } catch(e) {
+    setPublishStatus(`❌ ${e.message}`, 'error');
+  }
+}
+
+function setPublishStatus(html, type) {
+  const el = document.getElementById('github-publish-status');
+  if (!el) return;
+  el.style.display = '';
+  const colors = { info: '#3b82f6', success: '#22c55e', error: '#ef4444' };
+  el.innerHTML = `<div style="padding:var(--s3) var(--s4); border-radius:var(--r2); border:1px solid ${colors[type]}20; background:${colors[type]}10; color:${colors[type]}; font-size:var(--text-sm);">${html}</div>`;
+}
+
+// Restore GitHub settings on load
+document.addEventListener('DOMContentLoaded', updateGitHubSettingsStatus);
 }
 
 /* ── Helpers ── */
