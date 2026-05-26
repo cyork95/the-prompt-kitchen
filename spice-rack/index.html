@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spice Rack — Interactive Prompt Builder | The Prompt Kitchen</title>
+  <meta name="description" content="Build better AI prompts in seconds. Pick a recipe, fill in your details, and generate a ready-to-use prompt for Claude, ChatGPT, Gemini, or any AI tool." />
+  <link rel="canonical" href="https://thepromptkitchen.fyi/spice-rack/" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    /* ── Spice Rack Styles ── */
+
+    /* Progress bar */
+    .sr-progress {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: var(--s8);
+      max-width: 480px;
+    }
+    .sr-progress-step {
+      display: flex;
+      align-items: center;
+      gap: var(--s2);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--text-3);
+      transition: color .2s;
+    }
+    .sr-progress-step.active { color: var(--accent); }
+    .sr-progress-step.done { color: #22c55e; }
+    .sr-progress-dot {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 700; color: var(--text-3);
+      transition: background .2s, color .2s;
+      flex-shrink: 0;
+    }
+    .sr-progress-step.active .sr-progress-dot { background: var(--accent); color: #fff; }
+    .sr-progress-step.done .sr-progress-dot { background: #22c55e; color: #fff; }
+    .sr-progress-line {
+      flex: 1; height: 2px; background: var(--border);
+      margin: 0 var(--s2);
+      transition: background .3s;
+      max-width: 80px;
+    }
+    .sr-progress-line.done { background: #22c55e; }
+
+    /* Filter tabs */
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s2);
+      margin-bottom: var(--s5);
+    }
+    .filter-tab {
+      padding: 5px var(--s3);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--bg);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--text-2);
+      cursor: pointer;
+      transition: border-color .15s, background .15s, color .15s;
+      line-height: 1.4;
+    }
+    .filter-tab:hover { border-color: var(--accent); color: var(--text-1); }
+    .filter-tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* Recipe picker grid */
+    .recipe-picker-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: var(--s3);
+    }
+    .recipe-picker-card {
+      padding: var(--s4);
+      border: 2px solid var(--border);
+      border-radius: var(--r3);
+      background: var(--bg);
+      cursor: pointer;
+      text-align: left;
+      transition: border-color .15s, background .15s, transform .1s, box-shadow .15s;
+      position: relative;
+    }
+    .recipe-picker-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,.08);
+    }
+    .recipe-picker-card.active {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      box-shadow: 0 0 0 3px var(--accent-border);
+    }
+    .rpc-icon { font-size: 1.75rem; margin-bottom: var(--s2); display: block; }
+    .rpc-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: var(--accent-light);
+      border: 1px solid var(--accent-border);
+      color: var(--accent);
+      margin-bottom: var(--s2);
+    }
+    .rpc-title {
+      font-weight: 700;
+      font-size: var(--text-sm);
+      color: var(--text-1);
+      display: block;
+      margin-bottom: 3px;
+      line-height: 1.3;
+    }
+    .rpc-desc {
+      font-size: 0.75rem;
+      color: var(--text-3);
+      line-height: 1.4;
+    }
+    .rpc-check {
+      position: absolute;
+      top: var(--s3);
+      right: var(--s3);
+      width: 20px; height: 20px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: none;
+      align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 0.65rem;
+    }
+    .recipe-picker-card.active .rpc-check { display: flex; }
+
+    /* Builder panel */
+    .builder-panel {
+      display: none;
+      margin-top: var(--s8);
+      animation: fadeSlideIn .25s ease;
+    }
+    .builder-panel.visible { display: block; }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .builder-header {
+      display: flex;
+      align-items: center;
+      gap: var(--s3);
+      margin-bottom: var(--s5);
+      flex-wrap: wrap;
+    }
+    .builder-recipe-icon { font-size: 2rem; }
+    .builder-recipe-title { font-size: var(--text-xl); font-weight: 800; margin: 0; }
+    .builder-recipe-desc { font-size: var(--text-sm); color: var(--text-2); margin: 0; }
+    .builder-change-btn {
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    /* Fields */
+    .fields-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s5);
+      margin-bottom: var(--s6);
+    }
+    .field-group label {
+      display: block;
+      font-weight: 600;
+      font-size: var(--text-sm);
+      color: var(--text-1);
+      margin-bottom: var(--s2);
+    }
+    .field-group .field-hint {
+      font-size: 0.75rem;
+      color: var(--text-3);
+      margin-bottom: var(--s2);
+      font-weight: 400;
+    }
+    .field-group input,
+    .field-group textarea,
+    .field-group select {
+      width: 100%;
+      padding: var(--s3) var(--s4);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: var(--text-sm);
+      line-height: 1.5;
+      font-family: inherit;
+      transition: border-color .15s, box-shadow .15s;
+      box-sizing: border-box;
+    }
+    .field-group input:focus,
+    .field-group textarea:focus,
+    .field-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-border);
+    }
+    .field-group textarea { resize: vertical; min-height: 80px; }
+    .field-required::after { content: ' *'; color: var(--accent); }
+
+    /* Seasoning section */
+    .seasoning-section {
+      margin-bottom: var(--s6);
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      overflow: hidden;
+    }
+    .seasoning-toggle {
+      width: 100%;
+      padding: var(--s3) var(--s4);
+      background: var(--bg-alt);
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-weight: 600;
+      font-size: var(--text-sm);
+      color: var(--text-1);
+      display: flex;
+      align-items: center;
+      gap: var(--s2);
+      justify-content: space-between;
+    }
+    .seasoning-toggle:hover { background: var(--border); }
+    .seasoning-body {
+      display: none;
+      padding: var(--s4);
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .seasoning-body.open { display: block; }
+    .seasoning-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: var(--s4);
+    }
+    .seasoning-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--text-3);
+      margin-bottom: var(--s2);
+    }
+    .seasoning-group select {
+      width: 100%;
+      padding: var(--s2) var(--s3);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      background: var(--bg);
+      color: var(--text-1);
+      font-size: var(--text-sm);
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .seasoning-note {
+      font-size: 0.75rem;
+      color: var(--text-3);
+      margin-top: var(--s3);
+    }
+
+    /* Generate button */
+    .generate-btn {
+      width: 100%;
+      padding: var(--s4) var(--s6);
+      font-size: var(--text-base);
+      font-weight: 700;
+    }
+
+    /* Output panel */
+    .output-panel {
+      display: none;
+      margin-top: var(--s8);
+      animation: fadeSlideIn .25s ease;
+    }
+    .output-panel.visible { display: block; }
+
+    .output-header {
+      display: flex;
+      align-items: center;
+      gap: var(--s3);
+      margin-bottom: var(--s4);
+      flex-wrap: wrap;
+    }
+    .output-meta {
+      font-size: var(--text-sm);
+      color: var(--text-3);
+      margin-left: auto;
+    }
+
+    .prompt-output-wrap {
+      position: relative;
+      margin-bottom: var(--s4);
+    }
+    .prompt-output {
+      width: 100%;
+      min-height: 280px;
+      padding: var(--s5);
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      background: var(--bg-alt);
+      color: var(--text-1);
+      font-size: var(--text-sm);
+      line-height: 1.7;
+      font-family: var(--font-mono, monospace);
+      resize: vertical;
+      box-sizing: border-box;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .prompt-output:focus { outline: none; border-color: var(--accent); }
+
+    .output-actions {
+      display: flex;
+      gap: var(--s2);
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: var(--s6);
+    }
+    .copy-confirm {
+      font-size: var(--text-sm);
+      color: #22c55e;
+      font-weight: 600;
+      display: none;
+      margin-left: var(--s2);
+    }
+
+    /* Remix strip */
+    .remix-strip {
+      padding: var(--s4) var(--s5);
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      margin-bottom: var(--s5);
+    }
+    .remix-strip-title {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--text-2);
+      margin-bottom: var(--s3);
+    }
+    .remix-btns {
+      display: flex;
+      gap: var(--s2);
+      flex-wrap: wrap;
+    }
+    .remix-btn {
+      padding: var(--s2) var(--s4);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      background: var(--bg);
+      cursor: pointer;
+      font-size: var(--text-sm);
+      color: var(--text-2);
+      font-weight: 500;
+      transition: border-color .15s, background .15s, color .15s;
+      font-family: inherit;
+    }
+    .remix-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+
+    /* Divider with label */
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--accent);
+      margin-bottom: var(--s4);
+      display: flex;
+      align-items: center;
+      gap: var(--s2);
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Step headings */
+    .sr-step-heading {
+      font-size: var(--text-xl);
+      font-weight: 800;
+      margin: 0 0 var(--s2);
+    }
+    .sr-step-sub {
+      font-size: var(--text-sm);
+      color: var(--text-2);
+      margin: 0 0 var(--s5);
+    }
+
+    /* Hidden card state */
+    .recipe-picker-card[data-hidden="true"] { display: none; }
+
+    @media (max-width: 640px) {
+      .recipe-picker-grid { grid-template-columns: 1fr 1fr; }
+      .seasoning-grid { grid-template-columns: 1fr; }
+      .builder-change-btn { width: 100%; margin-left: 0; margin-top: var(--s2); }
+    }
+    @media (max-width: 400px) {
+      .recipe-picker-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../prompts/">Recipe Book</a></li>
+      <li><a href="../context/">🧑‍🍳 Kitchen Prep</a></li>
+      <li><a href="../examples/">Tasting Menu</a></li>
+      <li><a href="../models/">Appliance Guide</a></li>
+      <li><a href="../model-tester/">Test Kitchen</a></li>
+      <li class="nav-more">
+        <button class="nav-more-btn" aria-haspopup="true" aria-expanded="false">More <span class="nav-more-chevron">▾</span></button>
+        <ul class="nav-dropdown" role="menu">
+          <li><a href="../spice-rack/">🌶️ Spice Rack</a></li>
+          <li><a href="../audio/">🎵 Kitchen Radio</a></li>
+          <li><a href="../video/">🎬 Kitchen Cinema</a></li>
+          <li><a href="../quiz/">👨‍🍳 Ask the Chef</a></li>
+          <li><a href="../challenges/">🏆 Cook-Off</a></li>
+          <li class="nav-dropdown-divider" role="separator"></li>
+          <li><a href="../fails/">🔥 Kitchen Disasters</a></li>
+          <li><a href="../daily/">⭐ Daily Specials</a></li>
+          <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
+          <li><a href="../gallery/">🍽️ The Table Spread</a></li>
+          <li><a href="../support.html">♥ Tip Jar</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark">☾</span><span class="theme-icon-light">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../prompts/">📖 Recipe Book</a></li>
+    <li><a href="../spice-rack/">🌶️ Spice Rack</a></li>
+    <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+    <li><a href="../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../model-tester/">🧪 Test Kitchen</a></li>
+    <li><a href="../audio/">🎵 Kitchen Radio</a></li>
+    <li><a href="../video/">🎬 Kitchen Cinema</a></li>
+    <li><a href="../quiz/">👨‍🍳 Ask the Chef</a></li>
+    <li><a href="../challenges/">🏆 Cook-Off</a></li>
+    <li><a href="../fails/">🔥 Kitchen Disasters</a></li>
+    <li><a href="../daily/">⭐ Daily Specials</a></li>
+    <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
+    <li><a href="../gallery/">🍽️ The Table Spread</a></li>
+    <li><a href="../support.html">♥ Tip Jar</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">›</span><span class="current">Spice Rack</span>
+    </nav>
+    <h1>🌶️ Spice Rack</h1>
+    <p class="lead">Pick a recipe, fill in your details, and get a ready-to-paste prompt — built exactly for your situation. Works with Claude, ChatGPT, Gemini, or any AI.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container" style="max-width: 860px;">
+
+  <!-- Progress indicator -->
+  <div class="sr-progress" id="sr-progress">
+    <div class="sr-progress-step active" id="prog-1">
+      <span class="sr-progress-dot">1</span>
+      <span>Pick recipe</span>
+    </div>
+    <div class="sr-progress-line" id="prog-line-1"></div>
+    <div class="sr-progress-step" id="prog-2">
+      <span class="sr-progress-dot">2</span>
+      <span>Add ingredients</span>
+    </div>
+    <div class="sr-progress-line" id="prog-line-2"></div>
+    <div class="sr-progress-step" id="prog-3">
+      <span class="sr-progress-dot">3</span>
+      <span>Copy &amp; use</span>
+    </div>
+  </div>
+
+  <!-- ── STEP 1: Pick Recipe ── -->
+  <div id="step-pick">
+    <h2 class="sr-step-heading">What do you want to do?</h2>
+    <p class="sr-step-sub">Pick the recipe that matches your goal. You'll fill in the details next.</p>
+
+    <!-- Category filter -->
+    <div class="filter-tabs" id="filter-tabs">
+      <button class="filter-tab active" data-filter="all">All</button>
+      <button class="filter-tab" data-filter="Writing">Writing</button>
+      <button class="filter-tab" data-filter="Learning">Learning</button>
+      <button class="filter-tab" data-filter="Planning">Planning</button>
+      <button class="filter-tab" data-filter="Productivity">Productivity</button>
+      <button class="filter-tab" data-filter="Decisions">Decisions</button>
+      <button class="filter-tab" data-filter="Outreach">Outreach</button>
+      <button class="filter-tab" data-filter="Ideation">Ideation</button>
+    </div>
+
+    <!-- Recipe cards -->
+    <div class="recipe-picker-grid" id="recipe-picker-grid">
+      <!-- populated by JS -->
+    </div>
+  </div>
+
+  <!-- ── STEP 2: Builder ── -->
+  <div class="builder-panel" id="builder-panel">
+    <div class="section-label">Step 2 — Add your ingredients</div>
+
+    <!-- Recipe header -->
+    <div class="builder-header">
+      <span class="builder-recipe-icon" id="builder-icon"></span>
+      <div>
+        <h3 class="builder-recipe-title" id="builder-title"></h3>
+        <p class="builder-recipe-desc" id="builder-desc"></p>
+      </div>
+      <button class="btn btn-secondary btn-sm builder-change-btn" onclick="resetToStep1()">← Change recipe</button>
+    </div>
+
+    <!-- Dynamic fields -->
+    <div class="fields-grid" id="fields-container"></div>
+
+    <!-- Seasoning -->
+    <div class="seasoning-section">
+      <button class="seasoning-toggle" onclick="toggleSeasoning()" id="seasoning-toggle">
+        <span>🧂 Seasoning — add extra flavour (optional)</span>
+        <span id="seasoning-arrow" style="font-size:0.75rem;color:var(--text-3);">▾ expand</span>
+      </button>
+      <div class="seasoning-body" id="seasoning-body">
+        <div class="seasoning-grid">
+          <div class="seasoning-group">
+            <label>Tone</label>
+            <select id="season-tone">
+              <option value="">— Let AI decide —</option>
+              <option value="Professional">Professional</option>
+              <option value="Casual &amp; warm">Casual &amp; warm</option>
+              <option value="Direct and concise">Direct and concise</option>
+              <option value="Formal">Formal</option>
+              <option value="Encouraging and positive">Encouraging and positive</option>
+              <option value="Blunt — no softening">Blunt — no softening</option>
+            </select>
+          </div>
+          <div class="seasoning-group">
+            <label>Length</label>
+            <select id="season-length">
+              <option value="">— Let AI decide —</option>
+              <option value="Brief — keep it short, under 150 words">Brief (under 150 words)</option>
+              <option value="Standard — full response, no padding">Standard</option>
+              <option value="Detailed — cover edge cases and nuance">Detailed</option>
+              <option value="Comprehensive — exhaustive, include examples">Comprehensive</option>
+            </select>
+          </div>
+          <div class="seasoning-group">
+            <label>Format</label>
+            <select id="season-format">
+              <option value="">— Let AI decide —</option>
+              <option value="Flowing prose — natural paragraphs">Flowing prose</option>
+              <option value="Bullet points — easy to scan">Bullet points</option>
+              <option value="Numbered steps — sequential actions">Numbered steps</option>
+              <option value="Structured — use headers and sub-bullets">Structured (headers + bullets)</option>
+              <option value="Table — compare side-by-side">Table</option>
+            </select>
+          </div>
+          <div class="seasoning-group">
+            <label>Audience</label>
+            <select id="season-audience">
+              <option value="">— Not specified —</option>
+              <option value="I'm a complete beginner in this area">Complete beginner</option>
+              <option value="I have general knowledge but no formal training">General knowledge, no formal training</option>
+              <option value="I'm a professional in a related field">Professional in a related field</option>
+              <option value="I'm an expert — skip the basics">Expert — skip basics</option>
+            </select>
+          </div>
+        </div>
+        <p class="seasoning-note">Seasoning adds constraint lines to the bottom of your prompt. Leave all blank to let the AI use its judgment.</p>
+      </div>
+    </div>
+
+    <!-- Generate button -->
+    <button class="btn btn-primary generate-btn" onclick="generatePrompt()" id="generate-btn">
+      🍳 Generate My Prompt
+    </button>
+  </div>
+
+  <!-- ── STEP 3: Output ── -->
+  <div class="output-panel" id="output-panel">
+    <div class="section-label">Step 3 — Your prompt is ready</div>
+
+    <div class="output-header">
+      <div>
+        <h3 style="margin:0 0 var(--s1);">Copy this into any AI</h3>
+        <p style="font-size:var(--text-sm);color:var(--text-2);margin:0;">Works with <a href="https://claude.ai" rel="noopener" target="_blank">Claude</a>, <a href="https://chat.openai.com" rel="noopener" target="_blank">ChatGPT</a>, <a href="https://gemini.google.com" rel="noopener" target="_blank">Gemini</a>, or any AI tool.</p>
+      </div>
+      <div class="output-meta" id="output-meta"></div>
+    </div>
+
+    <div class="prompt-output-wrap">
+      <textarea class="prompt-output" id="prompt-output" spellcheck="false"></textarea>
+    </div>
+
+    <div class="output-actions">
+      <button class="btn btn-primary" onclick="copyPrompt()">📋 Copy Prompt</button>
+      <button class="btn btn-secondary" onclick="scrollToBuilder()">✏️ Tweak ingredients</button>
+      <button class="btn btn-secondary" onclick="resetToStep1()">↩ Start over</button>
+      <span class="copy-confirm" id="copy-confirm">Copied!</span>
+    </div>
+
+    <!-- Remixes -->
+    <div class="remix-strip">
+      <div class="remix-strip-title">🔁 Quick remixes — one click to adjust the flavour:</div>
+      <div class="remix-btns">
+        <button class="remix-btn" onclick="applyRemix('spicy')">🌶️ Spicier — push deeper, challenge me</button>
+        <button class="remix-btn" onclick="applyRemix('mild')">🧊 Milder — simpler, just the essentials</button>
+        <button class="remix-btn" onclick="applyRemix('budget')">💰 Budget — free tools &amp; low-cost approaches only</button>
+        <button class="remix-btn" onclick="applyRemix('examples')">📎 Add examples — show me, don't just tell me</button>
+        <button class="remix-btn" onclick="applyRemix('stepbystep')">🔢 Step-by-step — numbered actions I can follow</button>
+      </div>
+    </div>
+
+    <!-- Pro tip -->
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <h4>Pro tip: treat the output as a conversation starter</h4>
+        <p>Paste this prompt, read the AI's first response, then follow up with "Go deeper on [the part that matters most]" or "What did you assume that might not be true?" The best results come from dialogue, not a single exchange.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../" class="nav-logo" style="margin-bottom: var(--s3);">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="16" r="3" fill="currentColor"/>
+          </svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI.</p>
+      </div>
+      <div class="footer-col"><h4>Learn</h4><ul>
+        <li><a href="../prompts/">Recipe Book</a></li>
+        <li><a href="../daily/">Daily Specials</a></li>
+        <li><a href="../quiz/">Ask the Chef</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Compare</h4><ul>
+        <li><a href="../models/">Appliance Guide</a></li>
+        <li><a href="../model-tester/">Test Kitchen</a></li>
+        <li><a href="../examples/">Tasting Menu</a></li>
+        <li><a href="../challenges/">Cook-Off</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Create</h4><ul>
+        <li><a href="../image-video/">Image &amp; Video</a></li>
+        <li><a href="../audio/">Kitchen Radio</a></li>
+        <li><a href="../video/">Kitchen Cinema</a></li>
+        <li><a href="../gallery/">Gallery</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Site</h4><ul>
+        <li><a href="../spice-rack/">🌶️ Spice Rack</a></li>
+        <li><a href="../support.html">Tip Jar</a></li>
+        <li><a href="https://github.com/cyork95/the-prompt-kitchen" rel="noopener">GitHub</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <span>Developed with ♥ by <a href="https://yorkdevelops.com" rel="noopener" style="color:inherit">York.Dev</a></span>
+      <div class="footer-privacy"><span class="privacy-dot"></span><span>No tracking · No cookies · No ads</span></div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+<script src="../js/main.js"></script>
+<script>
+/* ══════════════════════════════════════════════════════
+   SPICE RACK — Interactive Prompt Builder
+   ══════════════════════════════════════════════════════ */
+
+// ── Recipe Definitions ──────────────────────────────────
+
+const RECIPES = [
+
+  /* ─ Writing ─────────────────────────────────── */
+  {
+    id: 'draft-critique-revise',
+    icon: '✍️',
+    tag: 'Writing',
+    title: 'Draft → Critique → Revise',
+    desc: 'Write anything better with a built-in self-critique loop',
+    fields: [
+      { id: 'writing_type', label: 'What are you writing?', type: 'select', required: true,
+        options: ['email', 'proposal', 'report', 'cover letter', 'essay', 'blog post', 'LinkedIn post', 'social post', 'product description', 'announcement', 'apology letter', 'thank-you note', 'pitch deck script'] },
+      { id: 'purpose', label: 'Purpose — what are you trying to achieve?', type: 'textarea', required: true,
+        placeholder: 'e.g. Convince my client that a 2-week delay is acceptable and keep the relationship intact', rows: 2 },
+      { id: 'audience', label: 'Audience — who will read this?', type: 'text', required: true,
+        placeholder: 'e.g. A long-term client who has been patient but has a hard deadline coming up' },
+      { id: 'key_points', label: 'Key points to include', type: 'textarea', required: false,
+        placeholder: 'e.g. Honest reason for the delay, new delivery date, what we\'re offering to make it right', rows: 2 },
+      { id: 'word_limit', label: 'Target length', type: 'select', required: false,
+        options: ['Let AI decide', 'Under 100 words', 'Under 150 words', 'Under 200 words', 'Under 300 words', 'Under 500 words', 'No strict limit'] },
+    ],
+    build: (v) => {
+      const type = v.writing_type || 'document';
+      const purpose = v.purpose || '[your goal here]';
+      const audience = v.audience || '[who will read this]';
+      const points = v.key_points ? '\nKey points to include: ' + v.key_points : '';
+      const limit = (v.word_limit && v.word_limit !== 'Let AI decide') ? '\nLength: ' + v.word_limit : '';
+      return 'Draft a ' + type + ' for me. Here\'s the situation:\n\n'
+        + 'Purpose: ' + purpose + '\n'
+        + 'Audience: ' + audience
+        + points + limit + '\n\n'
+        + '---\n\n'
+        + 'Now critique what you just wrote. Be honest — what\'s weak? What could be misread? Where is it too long, too vague, or too generic? What\'s the single biggest improvement?\n\n'
+        + '---\n\n'
+        + 'Now rewrite it, fixing the issues you identified. Make it tighter and more specific.';
+    }
+  },
+
+  {
+    id: 'tone-shift',
+    icon: '🎚️',
+    tag: 'Writing',
+    title: 'Tone Shift',
+    desc: 'Rewrite anything in a different voice without changing the facts',
+    fields: [
+      { id: 'original', label: 'Paste the writing you want to transform', type: 'textarea', required: true,
+        placeholder: 'Paste your email, paragraph, or document here…', rows: 5 },
+      { id: 'target_tone', label: 'Target tone', type: 'select', required: true,
+        options: ['warm and conversational', 'concise and direct', 'formal and professional', 'friendly and encouraging', 'authoritative but approachable', 'apologetic but confident', 'playful and engaging'] },
+      { id: 'target_audience', label: 'Who is the new audience?', type: 'text', required: false,
+        placeholder: 'e.g. Customers who have complained, a senior executive, a first-time buyer' },
+    ],
+    build: (v) => {
+      const orig = v.original || '[paste your original text here]';
+      const tone = v.target_tone || 'clear and direct';
+      const audience = v.target_audience ? ' for ' + v.target_audience : '';
+      return 'Here\'s a piece of writing I want you to rewrite:\n\n"""\n' + orig + '\n"""\n\n'
+        + 'Rewrite this in a ' + tone + ' tone' + audience + '.\n\n'
+        + 'Rules:\n'
+        + '- Keep all the factual content exactly the same — don\'t add or remove information\n'
+        + '- Change only the language, sentence structure, and register\n'
+        + '- Don\'t add filler phrases like "I hope this finds you well"\n'
+        + '- Make it feel natural, not like it was rewritten by a committee';
+    }
+  },
+
+  {
+    id: 'summarize',
+    icon: '📄',
+    tag: 'Writing',
+    title: 'Summarize for [Audience]',
+    desc: 'Turn any document or article into exactly what your audience needs',
+    fields: [
+      { id: 'content', label: 'Paste the content to summarize', type: 'textarea', required: true,
+        placeholder: 'Paste the article, document, or report here…', rows: 5 },
+      { id: 'audience', label: 'Who is this summary for?', type: 'text', required: true,
+        placeholder: 'e.g. My CEO who has 2 minutes, a 70-year-old with no medical background' },
+      { id: 'aspect', label: 'What do they most need to understand?', type: 'text', required: false,
+        placeholder: 'e.g. The financial risk, the key side effects, the decision that needs to be made' },
+      { id: 'format_pref', label: 'Summary format', type: 'select', required: false,
+        options: ['Let AI decide', 'One sentence only', '3 bullet points', 'Short paragraph + bullets', 'Full structured summary'] },
+    ],
+    build: (v) => {
+      const content = v.content || '[paste your content here]';
+      const audience = v.audience || '[your audience]';
+      const aspect = v.aspect ? '\n\nThey especially need to understand: ' + v.aspect : '';
+      const fmt = (v.format_pref && v.format_pref !== 'Let AI decide') ? '\n\nFormat: ' + v.format_pref : '';
+      return 'Here\'s a document I need summarized:\n\n"""\n' + content + '\n"""\n\n'
+        + 'Summarize this for ' + audience + '.' + aspect + fmt + '\n\n'
+        + 'Use plain language — if a technical term is necessary, explain it in plain words immediately after. '
+        + 'Don\'t include things from the source that aren\'t directly useful for this audience.';
+    }
+  },
+
+  /* ─ Learning ────────────────────────────────── */
+  {
+    id: 'teach-me',
+    icon: '🎓',
+    tag: 'Learning',
+    title: 'Teach Me Like I\'m...',
+    desc: 'Get any concept explained at exactly your level',
+    fields: [
+      { id: 'topic', label: 'What do you want to understand?', type: 'text', required: true,
+        placeholder: 'e.g. How compound interest works, what a transformer model is, why inflation happens' },
+      { id: 'level', label: 'Explain it as if I\'m...', type: 'select', required: true,
+        options: ['a curious 10-year-old — pure basics, lots of analogies', 'a complete adult beginner with no background', 'someone with general interest but no formal training', 'a professional in a related field', 'an expert — skip basics, give me the nuance'] },
+      { id: 'already_know', label: 'What do you already know? (optional)', type: 'text', required: false,
+        placeholder: 'e.g. I know money in a bank earns interest each year, but that\'s all' },
+      { id: 'style_pref', label: 'How should the explanation feel?', type: 'select', required: false,
+        options: ['Use analogies and metaphors', 'Use real numbers and concrete examples', 'Keep it visual and intuitive', 'Be precise — no dumbing down', 'No math or formulas please'] },
+    ],
+    build: (v) => {
+      const topic = v.topic || '[your topic]';
+      const level = v.level ? v.level.split(' — ')[0] : 'a curious beginner';
+      const levelNote = v.level || '';
+      const know = v.already_know ? '\n\nI already know: ' + v.already_know : '\n\nI\'m starting from scratch.';
+      const style = v.style_pref ? '\n\nStyle preference: ' + v.style_pref : '';
+      return 'Explain ' + topic + ' to me like I\'m ' + levelNote + '.' + know + style + '\n\n'
+        + 'After the explanation, check my understanding: give me one question I could ask myself '
+        + 'to know whether I actually got it.';
+    }
+  },
+
+  {
+    id: 'learn-skill',
+    icon: '🗓️',
+    tag: 'Learning',
+    title: 'Learn Any Skill in 30 Days',
+    desc: 'A realistic, personalized accelerated learning plan',
+    fields: [
+      { id: 'skill', label: 'What do you want to learn?', type: 'text', required: true,
+        placeholder: 'e.g. SQL, conversational Spanish, watercolour painting, public speaking' },
+      { id: 'starting_point', label: 'Your current level', type: 'select', required: true,
+        options: ['Complete beginner — I know nothing about this', 'I know the very basics', 'Intermediate — I can do simple things', 'I have related experience that transfers'] },
+      { id: 'goal_outcome', label: 'What does success look like?', type: 'textarea', required: true,
+        placeholder: 'e.g. Write SQL queries to pull and filter data from our company database without help', rows: 2 },
+      { id: 'time_commitment', label: 'Time available per day', type: 'select', required: true,
+        options: ['20 minutes/day', '45 minutes/day', '1 hour/day', '2+ hours/day', 'Weekends only (~3 hours/weekend'] },
+      { id: 'deadline_driver', label: 'What\'s driving the 30-day timeline? (optional)', type: 'text', required: false,
+        placeholder: 'e.g. Starting a new job, personal project deadline, just want a clear structure' },
+    ],
+    build: (v) => {
+      const skill = v.skill || '[your skill]';
+      const start = v.starting_point || 'a beginner';
+      const goal = v.goal_outcome || '[what success looks like]';
+      const time = v.time_commitment || '[time available]';
+      const driver = v.deadline_driver ? '\nContext: ' + v.deadline_driver : '';
+      return 'I want to learn ' + skill + ' in 30 days. Design me a realistic learning plan.\n\n'
+        + 'My starting point: ' + start + '\n'
+        + 'My goal: ' + goal + '\n'
+        + 'Time I can commit: ' + time + driver + '\n\n'
+        + 'Give me:\n'
+        + '1. A week-by-week breakdown (Weeks 1–4) with a clear focus for each week\n'
+        + '2. The 3 most important concepts to nail in the first 7 days\n'
+        + '3. The biggest mistake beginners make that wastes their time — and how to avoid it\n'
+        + '4. One free resource and one paid resource (with cost) for each phase\n'
+        + '5. A simple way to measure whether I\'m actually making progress each week';
+    }
+  },
+
+  /* ─ Planning ────────────────────────────────── */
+  {
+    id: 'research-plan',
+    icon: '🗺️',
+    tag: 'Planning',
+    title: 'Research → Plan → Implement',
+    desc: 'Map any project before diving in — understand, plan, then act',
+    fields: [
+      { id: 'goal', label: 'What do you want to accomplish?', type: 'text', required: true,
+        placeholder: 'e.g. Start a vegetable garden, launch a side business, learn to invest' },
+      { id: 'context', label: 'Your situation', type: 'textarea', required: true,
+        placeholder: 'e.g. Complete beginner, 10×12 ft sunny backyard, want things my family will eat', rows: 3 },
+      { id: 'timeframe', label: 'What timeframe for first steps?', type: 'select', required: false,
+        options: ['This week', 'This month', 'In the next 3 months', 'As soon as possible', 'No rush — planning ahead'] },
+    ],
+    build: (v) => {
+      const goal = v.goal || '[your goal]';
+      const context = v.context || '[your situation]';
+      const tf = v.timeframe ? v.timeframe.toLowerCase() : 'this week';
+      return 'I want to ' + goal + '. I\'m not sure of the best approach yet, so let\'s do this in stages.\n\n'
+        + 'First, help me understand the landscape. What are the key things I should know before starting? '
+        + 'What are the most common mistakes people make with this?\n\n'
+        + 'Then, based on that, suggest a concrete plan for my specific situation. I am: ' + context + '\n\n'
+        + 'Finally, give me the first 3 actionable steps I can take ' + tf + '.';
+    }
+  },
+
+  {
+    id: 'step-by-step',
+    icon: '🪜',
+    tag: 'Planning',
+    title: 'Step-by-Step Breakdown',
+    desc: 'Turn any overwhelming task into a clear numbered action plan',
+    fields: [
+      { id: 'goal', label: 'What do you need to accomplish?', type: 'text', required: true,
+        placeholder: 'e.g. Set up a household budget, migrate our database, plan a wedding' },
+      { id: 'context', label: 'Your situation', type: 'textarea', required: true,
+        placeholder: 'e.g. Tools you have, skill level, time available, constraints like budget', rows: 3 },
+      { id: 'flag_risks', label: 'What to flag', type: 'select', required: false,
+        options: ['Flag where most beginners get stuck', 'Flag where I might need outside help', 'Flag the most risky steps', 'Flag where decisions get complicated', 'Flag all of the above'] },
+    ],
+    build: (v) => {
+      const goal = v.goal || '[your goal]';
+      const ctx = v.context || '[your situation, tools, skill level, constraints]';
+      const flag = v.flag_risks || 'Flag steps where most people get stuck or where decisions get complicated';
+      return 'I need to ' + goal + '. Break this down into a step-by-step plan for me.\n\n'
+        + 'My situation: ' + ctx + '\n\n'
+        + 'Give me concrete, actionable steps — each step should be specific enough that I know exactly what to do. '
+        + flag + '.';
+    }
+  },
+
+  /* ─ Productivity ────────────────────────────── */
+  {
+    id: 'meeting-followup',
+    icon: '📧',
+    tag: 'Productivity',
+    title: 'Post-Meeting Follow-Up Email',
+    desc: 'Turn messy notes into a sharp follow-up email in 60 seconds',
+    fields: [
+      { id: 'meeting_type', label: 'What kind of meeting was it?', type: 'select', required: true,
+        options: ['Discovery / sales call', 'Client check-in', 'Team planning session', 'Job interview', 'Vendor or supplier demo', 'Strategy or brainstorm session', 'Feedback or review session', 'Project kickoff', 'Difficult / challenging conversation'] },
+      { id: 'attendees', label: 'Who attended? (names + roles)', type: 'text', required: false,
+        placeholder: 'e.g. Sarah (Head of Marketing) and James (CMO) at Elevate Health' },
+      { id: 'notes', label: 'Your raw notes', type: 'textarea', required: true,
+        placeholder: 'Paste your notes, bullet points, or a Zoom transcript — as messy as they are', rows: 6 },
+      { id: 'formality', label: 'Tone of the relationship', type: 'select', required: true,
+        options: ['Formal — this is a new or high-stakes relationship', 'Professional but warm — established working relationship', 'Casual — we know each other well'] },
+    ],
+    build: (v) => {
+      const type = v.meeting_type || 'meeting';
+      const who = v.attendees ? ' with ' + v.attendees : '';
+      const notes = v.notes || '[paste your notes here]';
+      const formal = v.formality || 'professional but warm';
+      return 'I just had a ' + type + who + '. Here are my raw notes:\n\n' + notes + '\n\n'
+        + 'Write a follow-up email that:\n'
+        + '- Opens by thanking them and naming the specific topic we discussed (not "our meeting today")\n'
+        + '- Summarizes the 2–3 key points we agreed on\n'
+        + '- Lists action items clearly: what, who, by when (flag [OWNER?] if unclear from my notes)\n'
+        + '- Ends with a clear next step — either a date for the next touchpoint or what I\'ll deliver first\n'
+        + '- Tone: ' + formal + '\n'
+        + '- Length: Short — under 200 words. This is a follow-up, not a report.';
+    }
+  },
+
+  {
+    id: 'weekly-review',
+    icon: '🔄',
+    tag: 'Productivity',
+    title: 'Weekly Review & Reset',
+    desc: 'Clear your head and plan next week with structured reflection',
+    fields: [
+      { id: 'brain_dump', label: 'Brain dump — everything on your mind right now', type: 'textarea', required: true,
+        placeholder: 'Don\'t edit this — just write everything out: tasks, worries, unfinished things, ideas, things you said you\'d do…', rows: 5 },
+      { id: 'wins', label: 'What went well this week?', type: 'textarea', required: false,
+        placeholder: 'Finished the proposal, had a good client call, finally cleared my inbox…', rows: 2 },
+      { id: 'frustrations', label: 'What didn\'t go well or felt draining?', type: 'textarea', required: false,
+        placeholder: 'Got pulled into meetings all day, couldn\'t focus, the project scope changed again…', rows: 2 },
+      { id: 'next_priorities', label: 'What\'s already on your plate next week?', type: 'textarea', required: false,
+        placeholder: 'The Q3 report is due Thursday, team 1:1s, need to respond to the contractor…', rows: 2 },
+    ],
+    build: (v) => {
+      const dump = v.brain_dump || '[paste everything on your mind]';
+      const wins = v.wins ? '\nWins: ' + v.wins : '';
+      const probs = v.frustrations ? '\nFrustrations: ' + v.frustrations : '';
+      const next = v.next_priorities ? '\nNext week\'s known priorities: ' + v.next_priorities : '';
+      return 'I\'m doing my weekly review. Help me process and plan.\n\n'
+        + 'Here\'s my brain dump — everything on my mind right now:\n' + dump + '\n\n'
+        + 'Here\'s what happened this week:' + wins + probs + next + '\n\n'
+        + 'Based on this, help me:\n'
+        + '1. Identify the 3 most important things I should focus on next week (not just urgent — actually important)\n'
+        + '2. Flag anything in my brain dump I should schedule, delegate, or drop entirely\n'
+        + '3. Note one pattern you see in my wins and frustrations I should pay attention to\n'
+        + '4. Give me a clean "top 3 priorities" card I could put on my desk for the week';
+    }
+  },
+
+  /* ─ Decisions ───────────────────────────────── */
+  {
+    id: 'compare-options',
+    icon: '⚖️',
+    tag: 'Decisions',
+    title: 'Compare My Options',
+    desc: 'Get a clear, structured comparison with a real recommendation',
+    fields: [
+      { id: 'option_a', label: 'Option A', type: 'text', required: true,
+        placeholder: 'e.g. Notion' },
+      { id: 'option_b', label: 'Option B', type: 'text', required: true,
+        placeholder: 'e.g. Linear' },
+      { id: 'option_c', label: 'Option C (optional)', type: 'text', required: false,
+        placeholder: 'e.g. Trello' },
+      { id: 'context', label: 'Your situation and constraints', type: 'textarea', required: true,
+        placeholder: 'e.g. Team of 5 at a software agency, remote-first, mix of technical and non-technical people, budget under $20/person/month', rows: 3 },
+      { id: 'priorities', label: 'What matters most — in priority order', type: 'textarea', required: true,
+        placeholder: 'e.g.\n1. Easy adoption for non-technical teammates\n2. Handles both client projects and internal work\n3. Good mobile app', rows: 3 },
+    ],
+    build: (v) => {
+      const a = v.option_a || 'Option A';
+      const b = v.option_b || 'Option B';
+      const c = v.option_c ? ', and ' + v.option_c : '';
+      const ctx = v.context || '[your situation]';
+      const pri = v.priorities || '[your priorities in order]';
+      return 'I need to choose between ' + a + ', ' + b + c + '.\n\n'
+        + 'My situation: ' + ctx + '\n\n'
+        + 'What matters most to me, in order:\n' + pri + '\n\n'
+        + 'Compare them specifically on those factors. Then give me a clear recommendation — '
+        + 'not "it depends," but your best assessment given what I\'ve told you, and explain why. '
+        + 'Also tell me what would have to be true for the runner-up to be the better choice.';
+    }
+  },
+
+  {
+    id: 'decision-1010',
+    icon: '⏱️',
+    tag: 'Decisions',
+    title: 'The 10-10-10 Decision Test',
+    desc: 'Get unstuck by stress-testing your choice across three time horizons',
+    fields: [
+      { id: 'decision', label: 'What are you deciding?', type: 'text', required: true,
+        placeholder: 'e.g. Whether to take a new job offer that pays less but has better balance' },
+      { id: 'option_a', label: 'Option A', type: 'text', required: true,
+        placeholder: 'e.g. Stay at current company' },
+      { id: 'option_b', label: 'Option B', type: 'text', required: true,
+        placeholder: 'e.g. Take the new offer' },
+      { id: 'stuck_reason', label: 'What\'s making this hard?', type: 'textarea', required: true,
+        placeholder: 'e.g. I have a mortgage and I\'ve always told myself I\'d never take a pay cut. But I\'ve been miserable for two years.', rows: 3 },
+    ],
+    build: (v) => {
+      const decision = v.decision || '[your decision]';
+      const a = v.option_a || 'Option A';
+      const b = v.option_b || 'Option B';
+      const stuck = v.stuck_reason || '[what\'s making it difficult]';
+      return 'I\'m trying to make this decision: ' + decision + '\n\n'
+        + 'My options: ' + a + ' vs. ' + b + '\n\n'
+        + 'What\'s making it hard: ' + stuck + '\n\n'
+        + 'Apply the 10-10-10 framework:\n'
+        + '- In 10 minutes: How will I feel right after making each choice?\n'
+        + '- In 10 months: How will each option look in context of where I am then?\n'
+        + '- In 10 years: Will this even matter? What would I wish I had done?\n\n'
+        + 'After working through the horizons:\n'
+        + '1. Tell me which time horizon I\'m probably overweighting right now (and why)\n'
+        + '2. Give me your honest read on what this framework suggests I should do\n'
+        + '3. Name the one thing I haven\'t mentioned that could change the answer';
+    }
+  },
+
+  {
+    id: 'devils-advocate',
+    icon: '😈',
+    tag: 'Decisions',
+    title: 'Devil\'s Advocate',
+    desc: 'Challenge your plan hard — find the weaknesses before you commit',
+    fields: [
+      { id: 'decision', label: 'Describe your decision or plan', type: 'textarea', required: true,
+        placeholder: 'e.g. I\'ve decided to quit my job and go freelance as a graphic designer next March', rows: 3 },
+      { id: 'confident_parts', label: 'What are you most confident about? (optional)', type: 'text', required: false,
+        placeholder: 'e.g. I already have 2 potential clients and 6 months of savings' },
+      { id: 'worry', label: 'What\'s your biggest worry? (optional)', type: 'text', required: false,
+        placeholder: 'e.g. Whether I\'ll be able to find consistent work after the first few months' },
+    ],
+    build: (v) => {
+      const dec = v.decision || '[your decision or plan]';
+      const conf = v.confident_parts ? '\n\nWhat I feel most confident about: ' + v.confident_parts : '';
+      const worry = v.worry ? '\nMy biggest worry: ' + v.worry : '';
+      return 'I\'ve decided to: ' + dec + conf + worry + '\n\n'
+        + 'I want you to play devil\'s advocate — push back hard on this idea. '
+        + 'What are the strongest arguments against it? What could go wrong? '
+        + 'What am I probably not considering?\n\n'
+        + 'Then: what would you need to see to feel confident this is a good decision? '
+        + 'What evidence, validation, or conditions would change the risk profile significantly?\n\n'
+        + 'Don\'t soften it. I\'d rather hear this now.';
+    }
+  },
+
+  /* ─ Outreach ────────────────────────────────── */
+  {
+    id: 'cold-email',
+    icon: '📬',
+    tag: 'Outreach',
+    title: 'Cold Email That Gets Replies',
+    desc: 'Personalized cold outreach that leads with what they care about',
+    fields: [
+      { id: 'sender', label: 'Your name & role', type: 'text', required: true,
+        placeholder: 'e.g. Sarah Chen, UX researcher at a fintech startup' },
+      { id: 'recipient', label: 'Recipient\'s name & role', type: 'text', required: true,
+        placeholder: 'e.g. Marcus Webb, host of the "Product Failures" podcast' },
+      { id: 'specific_hook', label: 'One specific thing you know about them', type: 'textarea', required: true,
+        hint: 'This is 80% of the email. Be concrete — a post, project, talk, or achievement of theirs.',
+        placeholder: 'e.g. His episode on the Robinhood IPO app crash — specifically the point about loading state UX causing panic selling', rows: 3 },
+      { id: 'ask', label: 'What are you asking for?', type: 'text', required: true,
+        placeholder: 'e.g. A 15-minute call to discuss whether a research-focused episode would fit his show' },
+      { id: 'value', label: 'What\'s in it for them?', type: 'textarea', required: true,
+        placeholder: 'e.g. I have 3 unpublished fintech UX failure case studies that would be exclusive content for his show', rows: 2 },
+    ],
+    build: (v) => {
+      const sender = v.sender || '[your name & role]';
+      const recip = v.recipient || '[recipient name & role]';
+      const hook = v.specific_hook || '[specific thing you know about them]';
+      const ask = v.ask || '[what you\'re asking for]';
+      const value = v.value || '[what\'s in it for them]';
+      return 'Write a cold email from ' + sender + ' to ' + recip + '.\n\n'
+        + 'What I know about them specifically: ' + hook + '\n\n'
+        + 'What I\'m asking for: ' + ask + '\n\n'
+        + 'What\'s in it for them: ' + value + '\n\n'
+        + 'Rules for the email:\n'
+        + '- Subject line that references the specific thing I mentioned (not generic)\n'
+        + '- Under 150 words total\n'
+        + '- Lead with THEM — reference what I know about their work in the first sentence\n'
+        + '- One clear ask only — no list of things I want\n'
+        + '- No "I hope this email finds you well" or similar filler\n'
+        + '- Sign off with my name and one-line context (not a full signature block)';
+    }
+  },
+
+  /* ─ Ideation ────────────────────────────────── */
+  {
+    id: 'reverse-brainstorm',
+    icon: '💣',
+    tag: 'Ideation',
+    title: 'Reverse Brainstorm',
+    desc: 'Find hidden weaknesses by actively trying to destroy your idea first',
+    fields: [
+      { id: 'idea', label: 'Describe your idea or plan', type: 'textarea', required: true,
+        placeholder: 'e.g. A $29/month app that helps freelancers automatically set aside the right tax amount from every payment', rows: 3 },
+      { id: 'context', label: 'Stage and what\'s at stake', type: 'textarea', required: true,
+        placeholder: 'e.g. I\'m a solo developer, would build this on weekends, haven\'t written any code yet but have the idea fully mapped out', rows: 2 },
+    ],
+    build: (v) => {
+      const idea = v.idea || '[your idea or plan]';
+      const ctx = v.context || '[stage, who\'s involved, what\'s at stake]';
+      return 'I have an idea I want to stress-test using reverse brainstorming.\n\n'
+        + 'The idea: ' + idea + '\n'
+        + 'Context: ' + ctx + '\n\n'
+        + 'Phase 1 — Kill it.\n'
+        + 'Give me 10 specific ways this idea could fail. Not generic risks — specific, realistic '
+        + 'failure modes for this exact idea. Include failures from: execution, market/audience, timing, '
+        + 'assumptions that might be wrong, competition, and things outside my control.\n\n'
+        + 'Phase 2 — Flip it.\n'
+        + 'For the 3 most likely or most damaging failure modes, tell me: what would prevent or mitigate '
+        + 'each one? What\'s the early signal that it\'s happening?\n\n'
+        + 'Phase 3 — Verdict.\n'
+        + 'Does this idea look stronger or weaker after this analysis? What\'s the single most important '
+        + 'thing I should validate before committing any serious time or money?';
+    }
+  },
+
+  {
+    id: 'content-repurpose',
+    icon: '♻️',
+    tag: 'Ideation',
+    title: 'Content Repurposing Machine',
+    desc: 'Turn one piece of content into five ready-to-post formats',
+    fields: [
+      { id: 'original_content', label: 'Paste your original content', type: 'textarea', required: true,
+        placeholder: 'Paste a blog post, newsletter, video transcript, or long LinkedIn post…', rows: 6 },
+      { id: 'audience', label: 'Who is your audience?', type: 'text', required: true,
+        placeholder: 'e.g. Solo founders and indie makers in the SaaS space' },
+      { id: 'tone_desc', label: 'How do you normally sound?', type: 'text', required: false,
+        placeholder: 'e.g. Direct and a little dry, occasionally self-deprecating, no buzzwords' },
+      { id: 'platforms', label: 'Which formats do you need?', type: 'select', required: false,
+        options: ['All 5 (Twitter/X thread, LinkedIn post, email intro, Instagram caption, TL;DR)', 'Twitter/X thread + LinkedIn post only', 'LinkedIn post + email newsletter intro only', 'Just give me a TL;DR and 3 pull quotes'] },
+    ],
+    build: (v) => {
+      const content = v.original_content || '[paste your original content here]';
+      const audience = v.audience || '[your audience]';
+      const tone = v.tone_desc ? '\nMy tone: ' + v.tone_desc : '';
+      const platforms = v.platforms || 'All 5 (Twitter/X thread, LinkedIn post, email intro, Instagram caption, TL;DR)';
+      return 'Here\'s a piece of content I want repurposed:\n\n"""\n' + content + '\n"""\n\n'
+        + 'My audience: ' + audience + tone + '\n\n'
+        + 'Repurpose this into: ' + platforms + '\n\n'
+        + 'Format details:\n'
+        + '1. Twitter/X thread — 5–7 tweets, hook tweet first, each tweet one clear idea\n'
+        + '2. LinkedIn post — 150–200 words, ends with a question to drive comments\n'
+        + '3. Email newsletter intro — 100 words, conversational, makes them want to read the full piece\n'
+        + '4. Instagram caption — 80 words max, strong hook first line, includes a CTA\n'
+        + '5. TL;DR — 3 bullet points, useful as a content preview\n\n'
+        + 'Keep my tone consistent. Don\'t add ideas that weren\'t in the original.';
+    }
+  },
+
+];
+
+// ── State ────────────────────────────────────────────────
+let selectedRecipe = null;
+let basePromptText  = '';   // the prompt before any remix modifier
+let seasoningOpen   = false;
+
+// ── Init ─────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function () {
+  renderRecipeCards('all');
+  setupFilterTabs();
+});
+
+// ── Recipe Picker ─────────────────────────────────────────
+function renderRecipeCards(filter) {
+  const grid = document.getElementById('recipe-picker-grid');
+  grid.innerHTML = '';
+  RECIPES.forEach(recipe => {
+    const hidden = filter !== 'all' && recipe.tag !== filter;
+    const card = document.createElement('button');
+    card.className = 'recipe-picker-card' + (selectedRecipe && selectedRecipe.id === recipe.id ? ' active' : '');
+    card.setAttribute('data-id', recipe.id);
+    card.setAttribute('data-hidden', hidden ? 'true' : 'false');
+    if (hidden) card.style.display = 'none';
+    card.innerHTML =
+      '<span class="rpc-icon">' + recipe.icon + '</span>' +
+      '<span class="rpc-tag">' + recipe.tag + '</span>' +
+      '<span class="rpc-title">' + recipe.title + '</span>' +
+      '<span class="rpc-desc">' + recipe.desc + '</span>' +
+      '<span class="rpc-check">✓</span>';
+    card.addEventListener('click', function () { selectRecipe(recipe.id); });
+    grid.appendChild(card);
+  });
+}
+
+function setupFilterTabs() {
+  document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.addEventListener('click', function () {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      const filter = this.dataset.filter;
+      RECIPES.forEach(r => {
+        const card = document.querySelector('[data-id="' + r.id + '"]');
+        if (!card) return;
+        const hide = filter !== 'all' && r.tag !== filter;
+        card.style.display = hide ? 'none' : '';
+      });
+    });
+  });
+}
+
+function selectRecipe(id) {
+  selectedRecipe = RECIPES.find(r => r.id === id);
+  if (!selectedRecipe) return;
+
+  // Highlight selected card
+  document.querySelectorAll('.recipe-picker-card').forEach(c => {
+    c.classList.toggle('active', c.dataset.id === id);
+  });
+
+  // Populate builder
+  document.getElementById('builder-icon').textContent  = selectedRecipe.icon;
+  document.getElementById('builder-title').textContent = selectedRecipe.title;
+  document.getElementById('builder-desc').textContent  = selectedRecipe.desc;
+  renderFields(selectedRecipe.fields);
+
+  // Show builder, hide output
+  document.getElementById('builder-panel').classList.add('visible');
+  document.getElementById('output-panel').classList.remove('visible');
+
+  // Progress
+  setProgress(2);
+
+  // Scroll to builder
+  setTimeout(() => {
+    document.getElementById('builder-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+}
+
+// ── Field Renderer ────────────────────────────────────────
+function renderFields(fields) {
+  const container = document.getElementById('fields-container');
+  container.innerHTML = '';
+  fields.forEach(f => {
+    const group = document.createElement('div');
+    group.className = 'field-group';
+
+    const labelEl = document.createElement('label');
+    labelEl.setAttribute('for', 'field-' + f.id);
+    labelEl.innerHTML = f.label + (f.required ? ' <span class="field-required"></span>' : '');
+    group.appendChild(labelEl);
+
+    if (f.hint) {
+      const hint = document.createElement('div');
+      hint.className = 'field-hint';
+      hint.textContent = f.hint;
+      group.appendChild(hint);
+    }
+
+    let input;
+    if (f.type === 'select') {
+      input = document.createElement('select');
+      f.options.forEach(opt => {
+        const o = document.createElement('option');
+        o.value = opt;
+        o.textContent = opt;
+        input.appendChild(o);
+      });
+    } else if (f.type === 'textarea') {
+      input = document.createElement('textarea');
+      input.placeholder = f.placeholder || '';
+      input.rows = f.rows || 3;
+    } else {
+      input = document.createElement('input');
+      input.type = 'text';
+      input.placeholder = f.placeholder || '';
+    }
+    input.id   = 'field-' + f.id;
+    input.name = f.id;
+    group.appendChild(input);
+    container.appendChild(group);
+  });
+}
+
+// ── Seasoning ─────────────────────────────────────────────
+function toggleSeasoning() {
+  seasoningOpen = !seasoningOpen;
+  document.getElementById('seasoning-body').classList.toggle('open', seasoningOpen);
+  document.getElementById('seasoning-arrow').textContent = seasoningOpen ? '▴ collapse' : '▾ expand';
+}
+
+function buildSeasoning() {
+  const tone     = document.getElementById('season-tone').value;
+  const length   = document.getElementById('season-length').value;
+  const format   = document.getElementById('season-format').value;
+  const audience = document.getElementById('season-audience').value;
+  const parts = [];
+  if (tone)     parts.push('Tone: ' + tone);
+  if (length)   parts.push('Length: ' + length);
+  if (format)   parts.push('Format: ' + format);
+  if (audience) parts.push('My background: ' + audience);
+  if (parts.length === 0) return '';
+  return '\n\n---\nConstraints:\n' + parts.map(p => '- ' + p).join('\n');
+}
+
+// ── Generate ──────────────────────────────────────────────
+function generatePrompt() {
+  if (!selectedRecipe) return;
+
+  // Collect field values
+  const values = {};
+  selectedRecipe.fields.forEach(f => {
+    const el = document.getElementById('field-' + f.id);
+    values[f.id] = el ? el.value.trim() : '';
+  });
+
+  // Build prompt
+  const core = selectedRecipe.build(values);
+  const seasoning = buildSeasoning();
+  basePromptText = core + seasoning;
+
+  // Render output
+  const outputEl = document.getElementById('prompt-output');
+  outputEl.value = basePromptText;
+
+  // Char/word count
+  const words = basePromptText.split(/\s+/).filter(Boolean).length;
+  document.getElementById('output-meta').textContent = words + ' words · ' + basePromptText.length + ' characters';
+
+  // Show output panel
+  document.getElementById('output-panel').classList.add('visible');
+  setProgress(3);
+
+  // Scroll to output
+  setTimeout(() => {
+    document.getElementById('output-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+}
+
+// ── Copy ──────────────────────────────────────────────────
+function copyPrompt() {
+  const text = document.getElementById('prompt-output').value;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const confirm = document.getElementById('copy-confirm');
+    confirm.style.display = 'inline';
+    setTimeout(() => { confirm.style.display = 'none'; }, 2200);
+  });
+}
+
+// ── Remixes ───────────────────────────────────────────────
+const REMIX_SUFFIXES = {
+  spicy:      '\n\n---\nPush this further. Go deeper — be more specific, challenge any assumptions I\'ve made, and don\'t hold back. If something I\'ve said is unclear or problematic, call it out directly.',
+  mild:       '\n\n---\nSimplify this. Give me the most important 20% that delivers 80% of the value. Cut anything that\'s nice-to-have but not essential. I want the version I can act on immediately.',
+  budget:     '\n\n---\nOptimize for zero or near-zero cost. Free tools, open-source options, DIY approaches. If something truly requires money, give me the cheapest viable path and state the minimum spend.',
+  examples:   '\n\n---\nDon\'t just describe — show me. Include at least 2 concrete, realistic examples of what a good answer looks like. Make it specific enough that I could use it as a template.',
+  stepbystep: '\n\n---\nPresent your answer as a numbered sequence of specific, actionable steps. Each step should be concrete enough that I know exactly what to do without further clarification.',
+};
+
+function applyRemix(type) {
+  const suffix = REMIX_SUFFIXES[type];
+  if (!suffix) return;
+  const newPrompt = basePromptText + suffix;
+  document.getElementById('prompt-output').value = newPrompt;
+  const words = newPrompt.split(/\s+/).filter(Boolean).length;
+  document.getElementById('output-meta').textContent = words + ' words · ' + newPrompt.length + ' characters';
+  document.getElementById('prompt-output').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ── Navigation ────────────────────────────────────────────
+function resetToStep1() {
+  selectedRecipe = null;
+  document.querySelectorAll('.recipe-picker-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('builder-panel').classList.remove('visible');
+  document.getElementById('output-panel').classList.remove('visible');
+  setProgress(1);
+  document.getElementById('step-pick').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function scrollToBuilder() {
+  document.getElementById('builder-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Progress ──────────────────────────────────────────────
+function setProgress(step) {
+  [1, 2, 3].forEach(n => {
+    const el   = document.getElementById('prog-' + n);
+    const line = document.getElementById('prog-line-' + n);
+    el.classList.remove('active', 'done');
+    if (line) line.classList.remove('done');
+    if (n < step)  { el.classList.add('done');   if (line) line.classList.add('done'); }
+    if (n === step)  el.classList.add('active');
+  });
+}
+</script>
+</body>
+</html>
