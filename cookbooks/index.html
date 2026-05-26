@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookbooks — Curated Prompt Collections | The Prompt Kitchen</title>
+  <meta name="description" content="Curated prompt recipe collections for specific types of people — indie hackers, students, creators, and startup founders. Find the cookbook built for your situation." />
+  <meta property="og:title"       content="Cookbooks | The Prompt Kitchen" />
+  <meta property="og:description" content="Curated prompt recipe collections for indie hackers, students, creators, and startup founders." />
+  <meta property="og:url"         content="https://thepromptkitchen.fyi/cookbooks/" />
+  <link rel="canonical" href="https://thepromptkitchen.fyi/cookbooks/" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    /* ── Cookbooks Hub Styles ── */
+    .cookbooks-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s6);
+      margin: var(--s8) 0;
+    }
+    @media (max-width: 680px) {
+      .cookbooks-grid { grid-template-columns: 1fr; }
+    }
+
+    .cookbook-card {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+      border-radius: var(--r4);
+      background: var(--bg);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow .2s, border-color .2s, transform .15s;
+    }
+    .cookbook-card:hover {
+      border-color: var(--accent-border);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+    }
+    .cookbook-card-band {
+      height: 6px;
+      background: var(--accent);
+    }
+    .cookbook-card-band.green { background: var(--green); }
+    .cookbook-card-band.blue  { background: #4A7FA5; }
+    .cookbook-card-band.gold  { background: #A07820; }
+
+    .cookbook-card-body {
+      padding: var(--s6);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--s3);
+    }
+    .cookbook-card-icon { font-size: 2.5rem; line-height: 1; }
+    .cookbook-card-title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      margin: 0;
+      color: var(--text-1);
+      line-height: 1.2;
+    }
+    .cookbook-card-tagline {
+      font-size: var(--text-sm);
+      color: var(--text-2);
+      font-style: italic;
+      margin: 0;
+      line-height: 1.5;
+    }
+    .cookbook-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s2);
+      margin-top: auto;
+      padding-top: var(--s4);
+      border-top: 1px solid var(--border);
+      align-items: center;
+    }
+    .cookbook-for-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: var(--text-xs);
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: var(--r-full);
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      color: var(--text-2);
+    }
+    .cookbook-recipe-count {
+      font-size: var(--text-xs);
+      color: var(--text-3);
+      margin-left: auto;
+    }
+    .cookbook-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s2);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--accent);
+      margin-top: var(--s3);
+    }
+    .cookbook-cta::after { content: ' →'; }
+    .cookbook-card:hover .cookbook-cta { text-decoration: underline; }
+
+    /* What is a cookbook */
+    .what-is-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s5);
+      margin: var(--s6) 0;
+    }
+    @media (max-width: 600px) {
+      .what-is-grid { grid-template-columns: 1fr; }
+    }
+    .what-is-card {
+      padding: var(--s4) var(--s5);
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      background: var(--bg);
+    }
+    .what-is-card h4 {
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0 0 var(--s2);
+    }
+    .what-is-card p {
+      font-size: var(--text-sm);
+      color: var(--text-2);
+      margin: 0;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo" aria-label="The Prompt Kitchen — Home">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../prompts/">📖 Recipe Book</a></li>
+      <li><a href="../context/">🧑‍🍳 Kitchen Prep</a></li>
+      <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+      <li><a href="../models/">🍳 Appliance Guide</a></li>
+      <li><a href="../model-tester/">🧪 Test Kitchen</a></li>
+      <li class="nav-more">
+        <button class="nav-more-btn" aria-haspopup="true" aria-expanded="false">More <span class="nav-more-chevron">▾</span></button>
+        <ul class="nav-dropdown" role="menu">
+          <li><a href="../spice-rack/">🌶️ Spice Rack</a></li>
+          <li><a href="../pantry/">🥫 The Pantry</a></li>
+          <li><a href="../cookbooks/">📚 Cookbooks</a></li>
+          <li><a href="../audio/">🎵 Kitchen Radio</a></li>
+          <li><a href="../video/">🎬 Kitchen Cinema</a></li>
+          <li><a href="../quiz/">👨‍🍳 Ask the Chef</a></li>
+          <li><a href="../challenges/">🏆 Cook-Off</a></li>
+          <li class="nav-dropdown-divider" role="separator"></li>
+          <li><a href="../fails/">🔥 Kitchen Disasters</a></li>
+          <li><a href="../daily/">⭐ Daily Specials</a></li>
+          <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
+          <li><a href="../gallery/">🍽️ The Table Spread</a></li>
+          <li><a href="../support.html">♥ Tip Jar</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark" aria-hidden="true">☾</span>
+        <span class="theme-icon-light" aria-hidden="true">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../prompts/">📖 Recipe Book</a></li>
+    <li><a href="../cookbooks/">📚 Cookbooks</a></li>
+    <li><a href="../pantry/">🥫 The Pantry</a></li>
+    <li><a href="../spice-rack/">🌶️ Spice Rack</a></li>
+    <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+    <li><a href="../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../model-tester/">🧪 Test Kitchen</a></li>
+    <li><a href="../audio/">🎵 Kitchen Radio</a></li>
+    <li><a href="../video/">🎬 Kitchen Cinema</a></li>
+    <li><a href="../quiz/">👨‍🍳 Ask the Chef</a></li>
+    <li><a href="../challenges/">🏆 Cook-Off</a></li>
+    <li><a href="../fails/">🔥 Kitchen Disasters</a></li>
+    <li><a href="../daily/">⭐ Daily Specials</a></li>
+    <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
+    <li><a href="../gallery/">🍽️ The Table Spread</a></li>
+    <li><a href="../support.html">♥ Tip Jar</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">›</span><span class="current">Cookbooks</span>
+    </nav>
+    <h1>📚 Cookbooks</h1>
+    <p class="lead">Curated prompt collections built around a specific kind of person — and the specific problems they actually face.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container">
+
+<div style="max-width: 680px; margin-bottom: var(--s6);">
+  <p style="font-size: var(--text-base); color: var(--text-2); line-height: 1.7;">The <a href="../prompts/">Recipe Book</a> has great recipes for everyone. A Cookbook goes further — it's a curated collection built around <em>your</em> situation. The Indie Hacker Cookbook and the Student Cookbook both cover "how to get feedback on your writing," but they're asking for very different things. These cookbooks speak your language and skip the irrelevant parts.</p>
+</div>
+
+<!-- What makes a cookbook different -->
+<div class="what-is-grid">
+  <div class="what-is-card">
+    <h4>📖 Recipe Book</h4>
+    <p>Universal patterns that work for anyone. Good when you know the technique you need.</p>
+  </div>
+  <div class="what-is-card">
+    <h4>📚 Cookbook</h4>
+    <p>Audience-specific collections. Good when you know your situation and want everything relevant in one place.</p>
+  </div>
+  <div class="what-is-card">
+    <h4>🌶️ Spice Rack</h4>
+    <p>Interactive prompt builder. Good when you want a ready-to-paste prompt with your details filled in.</p>
+  </div>
+  <div class="what-is-card">
+    <h4>🥫 The Pantry</h4>
+    <p>Reusable building blocks. Good when you want to customize or compose your own prompts.</p>
+  </div>
+</div>
+
+<!-- Cookbook cards -->
+<div class="cookbooks-grid">
+
+  <a href="indie-hacker/" class="cookbook-card">
+    <div class="cookbook-card-band"></div>
+    <div class="cookbook-card-body">
+      <span class="cookbook-card-icon">💻</span>
+      <h2 class="cookbook-card-title">Indie Hacker Cookbook</h2>
+      <p class="cookbook-card-tagline">"Ship faster. Learn cheaper. Grow without a team."</p>
+      <p style="font-size: var(--text-sm); color: var(--text-2); margin: 0; line-height: 1.6;">For solo founders and bootstrappers who use AI as a force multiplier — handling the research, writing, marketing, and customer work that a whole team would normally cover.</p>
+      <div class="cookbook-card-meta">
+        <span class="cookbook-for-tag">👤 For: Solo founders &amp; bootstrappers</span>
+        <span class="cookbook-recipe-count">10 recipes</span>
+      </div>
+      <span class="cookbook-cta">Open cookbook</span>
+    </div>
+  </a>
+
+  <a href="student/" class="cookbook-card">
+    <div class="cookbook-card-band green"></div>
+    <div class="cookbook-card-body">
+      <span class="cookbook-card-icon">✏️</span>
+      <h2 class="cookbook-card-title">Student Cookbook</h2>
+      <p class="cookbook-card-tagline">"Study smarter, write better, understand anything."</p>
+      <p style="font-size: var(--text-sm); color: var(--text-2); margin: 0; line-height: 1.6;">For students at any level who want AI as a personal tutor, writing coach, and study partner — without having it do the work for you. These are the recipes that improve your thinking, not replace it.</p>
+      <div class="cookbook-card-meta">
+        <span class="cookbook-for-tag">👤 For: High school &amp; university students</span>
+        <span class="cookbook-recipe-count">8 recipes</span>
+      </div>
+      <span class="cookbook-cta">Open cookbook</span>
+    </div>
+  </a>
+
+  <a href="creator/" class="cookbook-card">
+    <div class="cookbook-card-band blue"></div>
+    <div class="cookbook-card-body">
+      <span class="cookbook-card-icon">🎬</span>
+      <h2 class="cookbook-card-title">Creator Cookbook</h2>
+      <p class="cookbook-card-tagline">"Content that sounds like you, scales like a team."</p>
+      <p style="font-size: var(--text-sm); color: var(--text-2); margin: 0; line-height: 1.6;">For YouTubers, bloggers, podcasters, and newsletter writers building an audience. These recipes help you create more, stay consistent, and protect the voice your audience actually showed up for.</p>
+      <div class="cookbook-card-meta">
+        <span class="cookbook-for-tag">👤 For: YouTubers, bloggers &amp; newsletter writers</span>
+        <span class="cookbook-recipe-count">8 recipes</span>
+      </div>
+      <span class="cookbook-cta">Open cookbook</span>
+    </div>
+  </a>
+
+  <a href="startup-founder/" class="cookbook-card">
+    <div class="cookbook-card-band gold"></div>
+    <div class="cookbook-card-body">
+      <span class="cookbook-card-icon">🚀</span>
+      <h2 class="cookbook-card-title">Startup Founder Cookbook</h2>
+      <p class="cookbook-card-tagline">"Move fast without breaking your narrative."</p>
+      <p style="font-size: var(--text-sm); color: var(--text-2); margin: 0; line-height: 1.6;">For early-stage founders navigating pitch decks, hiring, investor updates, and team alignment. These recipes sharpen thinking and tighten communication — when the stakes are higher than a side project.</p>
+      <div class="cookbook-card-meta">
+        <span class="cookbook-for-tag">👤 For: Early-stage founders (seed–Series A)</span>
+        <span class="cookbook-recipe-count">9 recipes</span>
+      </div>
+      <span class="cookbook-cta">Open cookbook</span>
+    </div>
+  </a>
+
+</div><!-- /cookbooks-grid -->
+
+<div class="callout callout-tip" style="margin-top: var(--s6);">
+  <span class="callout-icon">💡</span>
+  <div class="callout-body">
+    <h4>Don't see your situation?</h4>
+    <p>The <a href="../prompts/">Recipe Book</a> has 26 universal recipes that work across any context — research, writing, planning, decisions, feedback, and more. Browse there for the building blocks, then use the <a href="../pantry/">Pantry</a> to assemble them for your specific needs.</p>
+  </div>
+</div>
+
+</div><!-- /container -->
+</div><!-- /section -->
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../" class="nav-logo" style="margin-bottom: var(--s3); display: inline-flex;" aria-label="Home">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="16" r="3" fill="currentColor"/>
+          </svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI. Free, open, and always will be.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="../prompts/">Recipe Book</a></li>
+          <li><a href="../pantry/">The Pantry</a></li>
+          <li><a href="../cookbooks/">Cookbooks</a></li>
+          <li><a href="../daily/">Daily Specials</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Compare</h4>
+        <ul>
+          <li><a href="../models/">Appliance Guide</a></li>
+          <li><a href="../quiz/">Ask the Chef</a></li>
+          <li><a href="../model-tester/">Test Kitchen</a></li>
+          <li><a href="../challenges/">Cook-Off</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Create</h4>
+        <ul>
+          <li><a href="../spice-rack/">Spice Rack</a></li>
+          <li><a href="../audio/">Kitchen Radio</a></li>
+          <li><a href="../video/">Kitchen Cinema</a></li>
+          <li><a href="../image-video/">Image &amp; Video</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Site</h4>
+        <ul>
+          <li><a href="../fails/">Kitchen Disasters</a></li>
+          <li><a href="../support.html">Tip Jar</a></li>
+          <li><a href="https://github.com/cyork95/the-prompt-kitchen" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <span>Developed with ♥ by <a href="https://yorkdevelops.com" rel="noopener" style="color:inherit">York.Dev</a></span>
+      <div class="footer-privacy">
+        <span class="privacy-dot"></span>
+        <span>No tracking · No cookies · No ads · No account needed</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+<script src="../js/main.js"></script>
+</body>
+</html>

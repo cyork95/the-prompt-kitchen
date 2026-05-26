@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Startup Founder Cookbook — AI Prompts for Founders | The Prompt Kitchen</title>
+  <meta name="description" content="9 AI prompt recipes for early-stage startup founders. Pitch narratives, investor updates, OKR pressure tests, job descriptions, board meeting prep, and more." />
+  <link rel="canonical" href="https://thepromptkitchen.fyi/cookbooks/startup-founder/" />
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    .cookbook-hero { background: #FBF6E8; border: 1px solid #D4B85A; border-radius: var(--r4); padding: var(--s8); margin-bottom: var(--s10); display: grid; grid-template-columns: auto 1fr; gap: var(--s6); align-items: start; }
+    [data-theme="dark"] .cookbook-hero { background: #1F1A09; border-color: #5A480F; }
+    @media (max-width: 580px) { .cookbook-hero { grid-template-columns: 1fr; } .cookbook-hero-icon { display: none; } }
+    .cookbook-hero-icon { font-size: 4rem; line-height: 1; }
+    .cookbook-hero-tagline { font-size: var(--text-xl); font-style: italic; color: #8A6010; margin: var(--s2) 0 var(--s4); font-weight: 600; }
+    [data-theme="dark"] .cookbook-hero-tagline { color: #D4B85A; }
+    .cookbook-hero-meta { display: flex; flex-wrap: wrap; gap: var(--s3); margin-top: var(--s4); }
+    .cookbook-hero-pill { display: inline-flex; align-items: center; gap: 5px; font-size: var(--text-xs); font-weight: 700; padding: 4px 12px; border-radius: var(--r-full); background: var(--bg); border: 1px solid #D4B85A; color: #8A6010; }
+    [data-theme="dark"] .cookbook-hero-pill { border-color: #5A480F; color: #D4B85A; }
+    .diff-badge { display: inline-block; font-size: 0.65rem; font-weight: 700; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .04em; padding: 2px 8px; border-radius: var(--r-full); }
+    .diff-beginner  { background: var(--green-light); color: var(--green); border: 1px solid var(--green); }
+    .diff-homecook  { background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-border); }
+    .diff-souschef  { background: #EDE8FF; color: #6B4EBB; border: 1px solid #C4B5FD; }
+    [data-theme="dark"] .diff-souschef { background: #2A1F45; color: #B89FFF; border-color: #5C3DB3; }
+    .why-callout { margin-top: var(--s5); padding: var(--s4) var(--s5); background: var(--bg-alt); border-left: 3px solid #A07820; border-radius: 0 var(--r2) var(--r2) 0; }
+    [data-theme="dark"] .why-callout { border-left-color: #D4B85A; }
+    .why-callout-label { font-size: var(--text-xs); font-weight: 700; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: #A07820; margin-bottom: var(--s2); }
+    [data-theme="dark"] .why-callout-label { color: #D4B85A; }
+    .why-callout p { font-size: var(--text-sm); color: var(--text-2); margin: 0; line-height: 1.6; }
+    .toc-sm { margin-bottom: var(--s8); }
+    .toc-sm h4 { margin-bottom: var(--s3); }
+    .toc-sm ol { margin: 0; padding-left: var(--s5); display: grid; grid-template-columns: 1fr 1fr; gap: var(--s1) var(--s6); }
+    @media (max-width: 580px) { .toc-sm ol { grid-template-columns: 1fr; } }
+    .toc-sm a { font-size: var(--text-sm); color: var(--text-2); }
+    .toc-sm a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="../../" class="nav-logo" aria-label="The Prompt Kitchen — Home">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../../prompts/">📖 Recipe Book</a></li>
+      <li><a href="../../context/">🧑‍🍳 Kitchen Prep</a></li>
+      <li><a href="../../examples/">🍽️ Tasting Menu</a></li>
+      <li><a href="../../models/">🍳 Appliance Guide</a></li>
+      <li><a href="../../model-tester/">🧪 Test Kitchen</a></li>
+      <li class="nav-more">
+        <button class="nav-more-btn" aria-haspopup="true" aria-expanded="false">More <span class="nav-more-chevron">▾</span></button>
+        <ul class="nav-dropdown" role="menu">
+          <li><a href="../../spice-rack/">🌶️ Spice Rack</a></li>
+          <li><a href="../../pantry/">🥫 The Pantry</a></li>
+          <li><a href="../../cookbooks/">📚 Cookbooks</a></li>
+          <li><a href="../../audio/">🎵 Kitchen Radio</a></li>
+          <li><a href="../../video/">🎬 Kitchen Cinema</a></li>
+          <li><a href="../../quiz/">👨‍🍳 Ask the Chef</a></li>
+          <li><a href="../../challenges/">🏆 Cook-Off</a></li>
+          <li class="nav-dropdown-divider" role="separator"></li>
+          <li><a href="../../fails/">🔥 Kitchen Disasters</a></li>
+          <li><a href="../../daily/">⭐ Daily Specials</a></li>
+          <li><a href="../../image-video/">🎨 Image &amp; Video</a></li>
+          <li><a href="../../gallery/">🍽️ The Table Spread</a></li>
+          <li><a href="../../support.html">♥ Tip Jar</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode"><span class="theme-icon-dark" aria-hidden="true">☾</span><span class="theme-icon-light" aria-hidden="true">☀</span></button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../../prompts/">📖 Recipe Book</a></li>
+    <li><a href="../../cookbooks/">📚 Cookbooks</a></li>
+    <li><a href="../../pantry/">🥫 The Pantry</a></li>
+    <li><a href="../../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../../model-tester/">🧪 Test Kitchen</a></li>
+    <li><a href="../../support.html">♥ Tip Jar</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../../">Home</a><span class="sep">›</span><a href="../">Cookbooks</a><span class="sep">›</span><span class="current">Startup Founder</span>
+    </nav>
+    <h1>🚀 Startup Founder Cookbook</h1>
+    <p class="lead">Sharper thinking, tighter communication, faster decisions — at the stage when all three are existential.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container">
+
+<div class="cookbook-hero">
+  <span class="cookbook-hero-icon">🚀</span>
+  <div>
+    <p class="cookbook-hero-tagline">"Move fast without breaking your narrative."</p>
+    <p style="color: var(--text-2); font-size: var(--text-sm); line-height: 1.7; margin: 0 0 var(--s3);">Early-stage founders face a specific cluster of communication challenges that don't exist at any other stage: pitching before you have proof, hiring missionaries without a brand, writing investor updates that are honest but not catastrophizing. These 9 recipes are built for those moments.</p>
+    <div class="cookbook-hero-meta">
+      <span class="cookbook-hero-pill">👤 Early-stage founders (seed–Series A)</span>
+      <span class="cookbook-hero-pill">🎯 Pitching, hiring, communicating, deciding</span>
+      <span class="cookbook-hero-pill">📋 9 recipes</span>
+    </div>
+  </div>
+</div>
+
+<div class="toc-sm toc">
+  <h4>Jump to a recipe</h4>
+  <ol>
+    <li><a href="#pitch-narrative">The Pitch Deck Narrative</a></li>
+    <li><a href="#user-interviews">User Interview Distiller</a></li>
+    <li><a href="#investor-update">Investor Update Writer</a></li>
+    <li><a href="#okr-test">OKR Pressure Test</a></li>
+    <li><a href="#job-description">Job Description Rewrite</a></li>
+    <li><a href="#positioning">Competitive Positioning Map</a></li>
+    <li><a href="#post-mortem">The Post-Mortem</a></li>
+    <li><a href="#onboarding">First 90 Days Onboarding Plan</a></li>
+    <li><a href="#board-prep">Board Meeting Prep</a></li>
+  </ol>
+</div>
+
+<!-- 1 -->
+<details id="pitch-narrative" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div><span class="recipe-tag">Fundraising</span><h3>The Pitch Deck Narrative</h3></div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>🎓 Difficulty: <span class="diff-badge diff-souschef">Sous Chef</span></span>
+      <span>⏱️ When to use: Before building your deck — the story comes first, slides second</span>
+    </div>
+    <p>Investors fund stories, not slide decks. The slides are just a delivery mechanism for a narrative that builds inevitability from problem to solution to "why you, why now." Most founders build the slides and then try to find the narrative in them. This recipe inverts that order.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>I'm building [company name] — [one plain-English sentence].
+
+Here are the key facts:
+- The problem: [what's broken — make it specific, not "the market is inefficient"]
+- The insight: [what most people miss or get wrong about this problem]
+- The solution: [what you do — specifically, not "a platform that enables..."]
+- Why now: [what changed recently to make this possible or urgent?]
+- The market: [who the early adopter is — narrow and specific is better than "large TAM"]
+- Traction: [what you have — revenue, users, pilots, LOIs, waitlist — even if it's small]
+- Team: [why you and your team are specifically the right people for this]
+- The ask: [amount, use of funds in plain English]
+
+Write the narrative thread — NOT the slides themselves. The through-line story that makes an investor lean forward.
+
+The story should:
+- Open with a specific moment or observation, not "the market is $X billion"
+- Build a sense of inevitability — by the end, the question isn't "should this exist?" but "who's going to win?"
+- Make "why us, why now" feel obvious from the story itself, not asserted at the end
+
+Be direct about what's not proven yet — investors know the difference between confidence and delusion.</pre></div>
+    <div class="why-callout">
+      <p class="why-callout-label">🔑 Why it's in this cookbook</p>
+      <p>The "open with a specific moment, not a TAM" instruction is the single most impactful thing in this recipe. Decks that open with market size feel like a pitch; decks that open with a vivid problem feel like a discovery. Investors hear 1,000 pitches a year — the ones that start with a story are the ones that get remembered.</p>
+    </div>
+  </div>
+</details>
+
+<!-- 2 -->
+<details id="user-interviews" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div><span class="recipe-tag">Research</span><h3>User Interview Distiller</h3></div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>🎓 Difficulty: <span class="diff-badge diff-homecook">Home Cook</span></span>
+      <span>⏱️ When to use: After every batch of customer conversations before writing a PRD or making a pivot</span>
+    </div>
+    <p>Pre-PMF, synthesizing customer research is where founders lose the most time and make the most mistakes. The signal is in the details, patterns, and contradictions across multiple conversations — not in any single conversation. This recipe finds the pattern.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>I just completed [X] customer interviews. Here are my notes:
+
+[PASTE RAW NOTES — rough is fine, the messier the better]
+
+Please analyze across all conversations and give me:
+1. The 3–5 most consistent pain points, ranked by how frequently mentioned and how emotionally charged they were
+2. The job they're actually hiring this product to do — the real outcome they want, not the feature they asked for
+3. Verbatim quotes that capture the core pain (these become your copy and your investor narrative)
+4. The biggest contradiction — where two customers said something that doesn't square with each other
+5. The 3 most important hypotheses to test next, based on what you heard
+
+Don't synthesize ambiguous data into false certainty. If the data is thin or genuinely conflicting, tell me that explicitly — I'd rather know I need more interviews than act on wrong signal.</pre></div>
+    <div class="why-callout">
+      <p class="why-callout-label">🔑 Why it's in this cookbook</p>
+      <p>The "biggest contradiction" prompt is the most valuable line here, and the one founders most want to skip. Contradictions in customer research usually mean you're talking to more than one customer segment — each with different needs and different willingness to pay. Finding that split early is far cheaper than finding it after you've built the product.</p>
+    </div>
+  </div>
+</details>
+
+<!-- 3 -->
+<details id="investor-update" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div><span class="recipe-tag">Investor Relations</span><h3>Investor Update Writer</h3></div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>🎓 Difficulty: <span class="diff-badge diff-homecook">Home Cook</span></span>
+      <span>⏱️ When to use: End of every month — takes 30 minutes and builds enormous trust over time</span>
+    </div>
+    <p>Most founders write investor updates either too infrequently (when things are going well only) or too optimistically (burying the hard stuff). Good updates are honest, specific, and ask for help. They compound — investors who've seen 12 months of honest updates will move faster when you need them.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>I need to write my [month] investor update. Here are the raw facts:
+
+Metrics:
+- Revenue / ARR / MRR: [current] vs. [last month] ([change %])
+- Users / customers: [current] vs. [last month]
+- Key business metric: [whatever matters most at your stage]
+- Burn rate / runway: [$X/month] / [Y months]
+
+Since last update:
+- What we shipped or completed: [list]
+- What we didn't hit (and the honest reason): [list]
+- One thing that surprised us: [optional but valuable]
+
+What's not going well or at risk:
+[be honest — this is where most founders lie by omission]
+
+Specific asks for this month:
+[what do you actually need from your investors? intros? advice? hires?]
+
+Write a concise investor update that:
+- Opens with the single most important thing — good or bad (don't bury the lede)
+- Shows the real trend over time, not just this month's snapshot
+- Names risks without catastrophizing
+- Makes the asks specific and easy to act on
+
+Tone: confident but honest. Like an update from someone who knows what they're doing and doesn't need constant validation — but also doesn't pretend things are fine when they're not.</pre></div>
+    <div class="why-callout">
+      <p class="why-callout-label">🔑 Why it's in this cookbook</p>
+      <p>The "specific asks" section is what most founders leave out — and it's the most valuable part for investors who genuinely want to help but don't know how. Vague asks ("if you know anyone who might be a good fit...") get ignored. Specific asks ("we're looking for a Series A-stage CFO in fintech, specifically someone who's navigated SOC 2") get warm intros.</p>
+    </div>
+  </div>
+</details>
+
+<!-- 4 -->
+<details id="okr-test" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div><span class="recipe-tag">Strategy</span><h3>OKR Pressure Test</h3></div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>🎓 Difficulty: <span class="diff-badge diff-souschef">Sous Chef</span></span>
+      <span>⏱️ When to use: Before finalizing quarterly goals — not after the all-hands</span>
+    </div>
+    <p>Poorly written OKRs are worse than no OKRs — they create false alignment, measure the wrong things, and become a bureaucratic ritual that confuses effort with impact. This recipe pressure-tests your OKRs against the specific failure modes that most commonly show up in early-stage companies.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>Here are the OKRs I'm planning for [Q_ / H_]:
+
+[PASTE YOUR DRAFT OKRs — Objectives and Key Results]
+
+Please pressure-test them against these specific failure modes:
+1. Activity vs. outcome — are any Key Results measuring activities or outputs rather than the results you actually care about?
+2. Internal conflict — do any KRs work against each other if the team optimizes hard for both?
+3. Ambition calibration — are they ambitious enough to require real change, or comfortable enough to be "achievable" without effort?
+4. Strategic alignment — do they connect to the company's actual priorities this stage, or are they "stuff we should do regardless"?
+5. Missing signal — is there something important the company isn't measuring that these KRs would allow to silently deteriorate?
+
+Then: what's the single change that would make this OKR set significantly stronger?
+
+Don't give me generic OKR advice. Give me specific feedback on what I actually wrote — name the specific KR that's wrong and why.</pre></div>
+    <div class="why-callout">
+      <p class="why-callout-label">🔑 Why it's in this cookbook</p>
+      <p>The "missing signal" question is the one that saves you. At early-stage, the most dangerous thing isn't pursuing the wrong goal — it's pursuing the right goal while silently killing something else that matters. Good OKRs cover what you're optimizing for <em>and</em> what you can't let degrade.</p>
+    </div>
+  </div>
+</details>
+
+<!-- 5 -->
+<details id="job-description" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div><span class="recipe-tag">Hiring</span><h3>Job Description Rewrite</h3></div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>🎓 Difficulty: <span class="diff-badge diff-homecook">Home Cook</span></span>
+      <span>⏱️ When to use: Before posting any early-stage role — the JD is your first filter</span>
+    </div>
+    <p>At the early stage, each hire defines the culture for the next 10 hires. A generic JD attracts generic candidates. A specific, honest JD that describes how someone actually thinks — not just what credentials they have — attracts the missionaries you actually need.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>Here's a job description I've drafted for [role]:
+
+[PASTE YOUR CURRENT JD]
+
+Context:
+- Company stage: [seed / pre-seed / Series A — be honest about what that means]
+- Team size: [X people]
+- What we're building: [1-sentence]
+- Why this role is critical right now: [what specific gap does this person fill?]
+- What the first 90 days actually looks like: [specific expectations]
+- What success looks like at 6 months: [outcome, not activity]
+
+Rewrite this JD to:
+1. Lead with why the role matters — not a bulleted list of responsibilities
+2. Be honest about stage realities (early = ambiguous, resource-constrained, high-impact — don't dress it up as "exciting opportunity")
+3. Describe the candidate by how they think and what they've built, not their credential checklist
+4. Make the mission feel specific and real, not like marketing copy
+5. Replace the laundry list of requirements with the 3–4 things that genuinely matter for success
+
+Cut anything that's really about signaling seniority rather than filtering for fit. A shorter JD that's honest outperforms a longer one that sounds impressive every time.</pre></div>
+    <div class="why-callout">
+      <p class="why-callout-label">🔑 Why it's in this cookbook</p>
+      <p>Early hires define culture more than any values doc ever will. The "be honest about stage realities" instruction is the hardest for founders because it means admitting the job is harder than it looks. But candidates who join knowing exactly what they're getting into stay. Candidates who join expecting something different leave — at the worst possible time.</p>
+    </div>
+  </div>
+</details>
+
+<!-- 6 -->
+<details id="positioning" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div><span class="recipe-tag">Strategy</span><h3>Competitive Positioning Map</h3></div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>🎓 Difficulty: <span class="diff-badge diff-souschef">Sous Chef</span></span>
+      <span>⏱️ When to use: Before finalizing pricing, sales messaging, or fundraising narrative</span>
+    </div>
+    <p>Vague positioning — "we're better, simpler, and more affordable" — is how startups lose deals to competitors with clearer stories. Good positioning excludes someone. If your position appeals to everyone, it resonates with no one. This recipe maps the competitive landscape so you can choose your territory deliberately.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>I need to sharpen my product's positioning. Here's the landscape:
+
+My product: [description]
+My ICP: [specific — the customer who feels the pain most acutely, who would pay first]
+Current positioning (how I describe us now): [paste your current tagline or positioning statement]
+
+Competitors to map:
+1. [Name]: [what they do, who they're built for]
+2. [Name]: [what they do, who they're built for]
+3. [Name]: [what they do, who they're built for]
+4. The status quo / "do nothing" option: [how people solve this today without anyone's product]
+
+For each alternative:
+- Who are they actually built for?
+- What are they clearly optimizing for (not just what they say, but what their product reveals)?
+- What are they systematically leaving on the table?
+
+Then give me 2–3 positioning options for my product, each with:
+- The specific customer it wins
+- The specific customer it excludes
+- The one-sentence positioning statement it implies
+
+A good positioning statement excludes someone. If mine doesn't — push back on it explicitly.</pre></div>
+    <div class="why-callout">
+      <p class="why-callout-label">🔑 Why it's in this cookbook</p>
+      <p>The "include who it excludes" instruction is the most counterintuitive and most important. Every founder's instinct is to broaden the positioning to capture more market. But narrower, sharper positioning wins more deals because it speaks directly to the person with the sharpest pain — and they become the foundation you expand from.</p>
+    </div>
+  </div>
+</details>
+
+<!-- 7 -->
+<details id="post-mortem" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div><span class="recipe-tag">Team</span><h3>The Post-Mortem</h3></div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>🎓 Difficulty: <span class="diff-badge diff-homecook">Home Cook</span></span>
+      <span>⏱️ When to use: Within 48 hours of any significant failure — feature, metric, deal, or team event</span>
+    </div>
+    <p>Unstructured post-mortems find scapegoats. Structured ones find root causes. The difference between a startup that learns fast and one that keeps making the same mistakes is almost always whether they run good post-mortems or just have a "lessons learned" conversation that doesn't lead anywhere.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>We need to run a post-mortem on [what happened: a failed feature / a missed metric / a lost deal / a team issue].
+
+What happened (facts, not interpretations):
+[describe the event and outcome as objectively as possible]
+
+Timeline of key decisions:
+[list the key moments, forks in the road, and choices made]
+
+Initial reactions from the team (if you have them):
+[what people said informally — this surfaces the narrative before you examine it]
+
+Please run a structured post-mortem:
+1. Separate facts from interpretations — what do we know happened vs. what stories are we telling about why?
+2. Root cause analysis — use "5 Whys" if helpful. Find what actually failed, not what broke at the surface
+3. What was in our control vs. what wasn't — be honest about both
+4. 2–3 specific, actionable changes that would prevent recurrence — not "communicate better," but what specifically changes
+5. What does "this worked" look like — how would we know in 30 days that the changes actually fixed the root cause?
+
+Avoid personal blame while being honest about accountability. Both can be true.</pre></div>
+    <div class="why-callout">
+      <p class="why-callout-label">🔑 Why it's in this cookbook</p>
+      <p>The "separate facts from interpretations" step is the one teams are most likely to skip — and it's where the most expensive decisions get made. The story the team tells about a failure within 24 hours is almost never the whole picture. Getting the facts down first, before the narratives calcify, is the whole point of doing this quickly.</p>
+    </div>
+  </div>
+</details>
+
+<!-- 8 -->
+<details id="onboarding" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div><span class="recipe-tag">Hiring</span><h3>First 90 Days Onboarding Plan</h3></div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>🎓 Difficulty: <span class="diff-badge diff-homecook">Home Cook</span></span>
+      <span>⏱️ When to use: The week before a new hire starts — not the day they arrive</span>
+    </div>
+    <p>Onboarding directly predicts retention and time-to-productivity. Most early-stage startups improvise it — the founder is too busy, the new hire figures things out by trial and error, and two months in nobody's sure if things are working. A structured 90-day plan fixes this with 2 hours of prep.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>I just hired / am about to hire [role] at our [stage] startup.
+
+Context:
+- Their background: [brief summary of relevant experience]
+- Why we hired them: [the specific capability we needed — be precise]
+- Team they'll work with: [who they'll interact with most, and what those relationships need to look like]
+- What we need from them in 6 months: [the outcome, not a list of activities]
+- Biggest risk in this hire: [what would make this go wrong?]
+
+Create a 90-day onboarding plan:
+
+Days 1–30 — Learn:
+What do they need to understand before touching anything? Who do they meet? What do they observe and document? What questions should they be able to answer by day 30?
+
+Days 31–60 — Contribute:
+Their first small wins. What projects give them real impact without overwhelming them? What should they lead vs. support?
+
+Days 61–90 — Own:
+What specific area should they fully own by day 90? What's the concrete success criteria?
+
+For each phase: what's the biggest risk if we skip it? And how do we check in effectively without making them feel micromanaged?</pre></div>
+    <div class="why-callout">
+      <p class="why-callout-label">🔑 Why it's in this cookbook</p>
+      <p>The "biggest risk in this hire" field is where most founders get honest with themselves for the first time. If you can name the failure mode, you can design the onboarding to prevent it. If you can't name it, you're hoping it doesn't happen instead of planning against it.</p>
+    </div>
+  </div>
+</details>
+
+<!-- 9 -->
+<details id="board-prep" class="recipe-card" style="margin-bottom: var(--s10);">
+  <summary class="recipe-card-header">
+    <div><span class="recipe-tag">Investor Relations</span><h3>Board Meeting Prep</h3></div>
+    <span class="recipe-chevron" aria-hidden="true">▾</span>
+  </summary>
+  <div class="recipe-card-body">
+    <div class="recipe-meta">
+      <span>🎓 Difficulty: <span class="diff-badge diff-souschef">Sous Chef</span></span>
+      <span>⏱️ When to use: One week before every board meeting — not the night before</span>
+    </div>
+    <p>Most board meetings are passive presentations followed by Q&amp;A. The best ones are active conversations where the board actually makes a difference. The difference is almost entirely in how the founder prepares — and specifically whether they come with a real decision to make, not just data to share.</p>
+    <div class="recipe-section-label">The Recipe</div>
+    <div class="prompt-block"><pre>I have a board meeting in [X weeks]. Here's my context:
+
+Since the last meeting:
+- What we said we'd do: [the commitments you made]
+- What we actually did: [honest accounting — what shipped, what didn't]
+- Key metrics movement: [the numbers that matter, with context]
+- What changed in the business or market: [surprises, good or bad]
+
+What I need from this meeting:
+[the specific decision, approval, or input you need — be precise]
+
+What I'm worried they'll ask about:
+[the 2–3 questions that make you uncomfortable to think about]
+
+Help me prepare:
+1. The 3 things the board needs to truly understand this quarter — not 15 slides' worth, just 3
+2. The narrative arc: here's what we said → here's what happened → here's why → here's what we're doing about it
+3. The one real decision we need to make together in this meeting (not announce — decide)
+4. Honest, specific answers to the 3 tough questions — practice the uncomfortable ones, not just the easy ones
+
+The goal of a board meeting is to leave with better decisions than you came in with. If we're just presenting, we're wasting everyone's time.</pre></div>
+    <div class="why-callout">
+      <p class="why-callout-label">🔑 Why it's in this cookbook</p>
+      <p>The "practice the uncomfortable questions" instruction is the most valuable preparation you can do. The board will ask them regardless — the only question is whether you've thought through a clear, honest answer in advance or whether you're improvising under pressure in the room. Preparation isn't about having perfect answers; it's about having thought through the hard ones before the meeting rather than during it.</p>
+    </div>
+  </div>
+</details>
+
+<div style="margin-top: var(--s12); padding-top: var(--s8); border-top: 1px solid var(--border); display: flex; gap: var(--s4); flex-wrap: wrap;">
+  <a href="../" class="btn btn-outline">← All Cookbooks</a>
+  <a href="../indie-hacker/" class="btn btn-outline">Back to: Indie Hacker Cookbook</a>
+  <a href="../../prompts/" class="btn btn-outline">Browse the Recipe Book</a>
+</div>
+
+</div></div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../../" class="nav-logo" style="margin-bottom:var(--s3);display:inline-flex;" aria-label="Home">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="16" r="3" fill="currentColor"/></svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI. Free, open, and always will be.</p>
+      </div>
+      <div class="footer-col"><h4>Cookbooks</h4><ul>
+        <li><a href="../indie-hacker/">Indie Hacker</a></li>
+        <li><a href="../student/">Student</a></li>
+        <li><a href="../creator/">Creator</a></li>
+        <li><a href="../startup-founder/">Startup Founder</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Learn</h4><ul>
+        <li><a href="../../prompts/">Recipe Book</a></li>
+        <li><a href="../../pantry/">The Pantry</a></li>
+        <li><a href="../../daily/">Daily Specials</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Tools</h4><ul>
+        <li><a href="../../spice-rack/">Spice Rack</a></li>
+        <li><a href="../../model-tester/">Test Kitchen</a></li>
+        <li><a href="../../models/">Appliance Guide</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Site</h4><ul>
+        <li><a href="../../support.html">Tip Jar</a></li>
+        <li><a href="https://github.com/cyork95/the-prompt-kitchen" rel="noopener">GitHub</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <span>Developed with ♥ by <a href="https://yorkdevelops.com" rel="noopener" style="color:inherit">York.Dev</a></span>
+      <div class="footer-privacy"><span class="privacy-dot"></span><span>No tracking · No cookies · No ads · No account needed</span></div>
+    </div>
+  </div>
+</footer>
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+<script src="../../js/main.js"></script>
+</body>
+</html>
