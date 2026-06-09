@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kitchen Gadgets — AI Agent Skills | The Prompt Kitchen</title>
+  <meta name="description" content="Production-grade AI agent skills for every phase of software development. Browse, filter, and install engineering skills for Claude, Gemini, and any AI coding agent." />
+  <link rel="canonical" href="https://thepromptkitchen.fyi/gadgets/" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <script>
+    (function(){
+      const t = localStorage.getItem('pk-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    /* ── Kitchen Gadgets Styles ── */
+
+    .gadgets-intro {
+      display: flex;
+      gap: var(--s4);
+      align-items: flex-start;
+      margin-bottom: var(--s6);
+      flex-wrap: wrap;
+    }
+    .gadgets-intro-text { flex: 1; min-width: 260px; }
+    .gadgets-source-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s2);
+      padding: var(--s2) var(--s4);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--text-2);
+      text-decoration: none;
+      background: var(--bg-alt);
+      transition: border-color .15s, color .15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .gadgets-source-link:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Filter tabs */
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s2);
+      margin-bottom: var(--s5);
+    }
+    .filter-tab {
+      padding: 5px var(--s3);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--bg);
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--text-2);
+      cursor: pointer;
+      transition: border-color .15s, background .15s, color .15s;
+      line-height: 1.4;
+    }
+    .filter-tab:hover { border-color: var(--accent); color: var(--text-1); }
+    .filter-tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* Stats bar */
+    .gadgets-stats {
+      display: flex;
+      gap: var(--s5);
+      margin-bottom: var(--s5);
+      flex-wrap: wrap;
+    }
+    .gadget-stat {
+      font-size: var(--text-sm);
+      color: var(--text-3);
+    }
+    .gadget-stat strong { color: var(--text-1); font-weight: 700; }
+
+    /* Gadget grid */
+    .gadgets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: var(--s3);
+      margin-bottom: var(--s6);
+    }
+
+    /* Gadget card */
+    .gadget-card {
+      padding: var(--s4);
+      border: 2px solid var(--border);
+      border-radius: var(--r3);
+      background: var(--bg);
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+      transition: border-color .15s, background .15s, transform .1s, box-shadow .15s;
+      position: relative;
+    }
+    .gadget-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,.08);
+    }
+    .gadget-card.active {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      box-shadow: 0 0 0 3px var(--accent-border);
+    }
+    .gadget-card[data-hidden="true"] { display: none; }
+
+    .gc-icon { font-size: 1.75rem; margin-bottom: var(--s2); display: block; }
+    .gc-cat {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: var(--accent-light);
+      border: 1px solid var(--accent-border);
+      color: var(--accent);
+      margin-bottom: var(--s2);
+    }
+    .gc-name {
+      font-weight: 700;
+      font-size: var(--text-sm);
+      color: var(--text-1);
+      display: block;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .gc-tagline {
+      font-size: 0.75rem;
+      color: var(--text-2);
+      line-height: 1.4;
+    }
+    .gc-open-indicator {
+      position: absolute;
+      top: var(--s3);
+      right: var(--s3);
+      width: 20px; height: 20px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: none;
+      align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 0.65rem;
+    }
+    .gadget-card.active .gc-open-indicator { display: flex; }
+
+    /* Detail Panel */
+    .gadget-detail {
+      display: none;
+      margin-bottom: var(--s6);
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      background: var(--bg-alt);
+      overflow: hidden;
+      animation: fadeSlideIn .2s ease;
+    }
+    .gadget-detail.visible { display: block; }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .detail-header {
+      padding: var(--s5) var(--s6);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--s4);
+      flex-wrap: wrap;
+    }
+    .detail-icon { font-size: 2.5rem; flex-shrink: 0; }
+    .detail-header-text { flex: 1; min-width: 200px; }
+    .detail-name {
+      font-size: var(--text-xl);
+      font-weight: 800;
+      margin: 0 0 var(--s1);
+      color: var(--text-1);
+    }
+    .detail-tagline {
+      font-size: var(--text-sm);
+      color: var(--text-2);
+      margin: 0 0 var(--s3);
+    }
+    .detail-actions {
+      display: flex;
+      gap: var(--s2);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .detail-close-btn {
+      margin-left: auto;
+      flex-shrink: 0;
+      align-self: flex-start;
+    }
+
+    .detail-body {
+      padding: var(--s5) var(--s6);
+    }
+
+    .detail-section {
+      margin-bottom: var(--s5);
+    }
+    .detail-section-title {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--accent);
+      margin-bottom: var(--s3);
+      display: flex;
+      align-items: center;
+      gap: var(--s2);
+    }
+    .detail-section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .detail-overview {
+      font-size: var(--text-sm);
+      color: var(--text-1);
+      line-height: 1.7;
+    }
+    .detail-when-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--s2);
+    }
+    .detail-when-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--s2);
+      font-size: var(--text-sm);
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+    .detail-when-list li::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .detail-principles {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--s3);
+    }
+    .principle-card {
+      padding: var(--s3) var(--s4);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+    }
+    .principle-card-title {
+      font-weight: 700;
+      font-size: var(--text-sm);
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+    .principle-card-desc {
+      font-size: 0.75rem;
+      color: var(--text-2);
+      line-height: 1.4;
+    }
+
+    .install-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r2);
+      padding: var(--s4);
+    }
+    .install-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-3);
+      margin-bottom: var(--s2);
+    }
+    .install-snippet {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.78rem;
+      color: var(--text-1);
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--r1);
+      padding: var(--s3) var(--s4);
+      white-space: pre-wrap;
+      word-break: break-all;
+      margin-bottom: var(--s3);
+      line-height: 1.6;
+    }
+    .install-actions {
+      display: flex;
+      gap: var(--s2);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .copy-confirm-inline {
+      font-size: var(--text-sm);
+      color: #22c55e;
+      font-weight: 600;
+      display: none;
+    }
+
+    /* Phase flow diagram */
+    .phase-flow {
+      display: flex;
+      gap: 0;
+      flex-wrap: wrap;
+      margin-bottom: var(--s6);
+      border: 1px solid var(--border);
+      border-radius: var(--r3);
+      overflow: hidden;
+    }
+    .phase-pill {
+      flex: 1;
+      min-width: 100px;
+      padding: var(--s3) var(--s4);
+      text-align: center;
+      background: var(--bg-alt);
+      border-right: 1px solid var(--border);
+      cursor: pointer;
+      transition: background .15s, color .15s;
+    }
+    .phase-pill:last-child { border-right: none; }
+    .phase-pill:hover { background: var(--accent-light); }
+    .phase-pill.active { background: var(--accent); color: #fff; }
+    .phase-pill-icon { font-size: 1.1rem; display: block; }
+    .phase-pill-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      display: block;
+      margin-top: 2px;
+    }
+    .phase-pill-count {
+      font-size: 0.65rem;
+      opacity: .7;
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      .gadgets-grid { grid-template-columns: 1fr 1fr; }
+      .detail-header { padding: var(--s4); }
+      .detail-body { padding: var(--s4); }
+      .detail-principles { grid-template-columns: 1fr; }
+      .phase-flow { display: grid; grid-template-columns: repeat(3, 1fr); }
+      .phase-pill { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    }
+    @media (max-width: 400px) {
+      .gadgets-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation">
+  <div class="nav-inner">
+    <a href="../" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="16" cy="16" r="3" fill="currentColor"/>
+      </svg>
+      <span class="nav-logo-text">The Prompt Kitchen</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../prompts/">📖 Recipe Book</a></li>
+      <li><a href="../context/">🧑‍🍳 Kitchen Prep</a></li>
+      <li><a href="../meal-prep/">🍱 Meal Prep</a></li>
+      <li><a href="../guardrails/">🛡️ Guardrails</a></li>
+      <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+      <li><a href="../models/">🍳 Appliance Guide</a></li>
+      <li><a href="../model-tester/">🧪 Test Kitchen</a></li>
+      <li class="nav-more">
+        <button class="nav-more-btn" aria-haspopup="true" aria-expanded="false">More <span class="nav-more-chevron">▾</span></button>
+        <ul class="nav-dropdown" role="menu">
+          <li><a href="../gadgets/">🔧 Kitchen Gadgets</a></li>
+          <li><a href="../spice-rack/">🌶️ Spice Rack</a></li>
+          <li><a href="../pantry/">🧑‍🍳 The Pantry</a></li>
+          <li><a href="../cookbooks/">📚 Cookbooks</a></li>
+          <li><a href="../meal-prep/">🍱 Meal Prep</a></li>
+          <li><a href="../guardrails/">🛡️ Guardrails</a></li>
+          <li><a href="../audio/">🎵 Kitchen Radio</a></li>
+          <li><a href="../video/">🎬 Kitchen Cinema</a></li>
+          <li><a href="../quiz/">👨‍🍳 Ask the Chef</a></li>
+          <li><a href="../challenges/">🏆 Cook-Off</a></li>
+          <li class="nav-dropdown-divider" role="separator"></li>
+          <li><a href="../fails/">🔥 Kitchen Disasters</a></li>
+          <li><a href="../daily/">⭐ Daily Specials</a></li>
+          <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
+          <li><a href="../gallery/">🍽️ The Table Spread</a></li>
+          <li><a href="../support.html">♥ Tip Jar</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="nav-actions">
+      <button class="btn-theme" id="btn-theme" aria-label="Toggle dark mode">
+        <span class="theme-icon-dark">☾</span><span class="theme-icon-light">☀</span>
+      </button>
+      <button class="btn-hamburger" id="btn-hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="nav-mobile">
+  <ul class="nav-mobile-links" role="list">
+    <li><a href="../prompts/">📖 Recipe Book</a></li>
+    <li><a href="../gadgets/">🔧 Kitchen Gadgets</a></li>
+    <li><a href="../examples/">🍽️ Tasting Menu</a></li>
+    <li><a href="../models/">🍳 Appliance Guide</a></li>
+    <li><a href="../model-tester/">🧪 Test Kitchen</a></li>
+    <li><a href="../audio/">🎵 Kitchen Radio</a></li>
+    <li><a href="../video/">🎬 Kitchen Cinema</a></li>
+    <li><a href="../quiz/">👨‍🍳 Ask the Chef</a></li>
+    <li><a href="../challenges/">🏆 Cook-Off</a></li>
+    <li><a href="../fails/">🔥 Kitchen Disasters</a></li>
+    <li><a href="../daily/">⭐ Daily Specials</a></li>
+    <li><a href="../image-video/">🎨 Image &amp; Video</a></li>
+    <li><a href="../gallery/">🍽️ The Table Spread</a></li>
+    <li><a href="../support.html">♥ Tip Jar</a></li>
+  </ul>
+</div>
+
+<main id="main-content">
+<div class="page-header">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../">Home</a><span class="sep">›</span><span class="current">Kitchen Gadgets</span>
+    </nav>
+    <h1>🔧 Kitchen Gadgets</h1>
+    <p class="lead">Production-grade AI agent skills for every phase of software development. Click any gadget to see how it works and grab the install snippet for your project.</p>
+  </div>
+</div>
+
+<div class="section">
+<div class="container" style="max-width: 1000px;">
+
+  <!-- Intro + source link -->
+  <div class="gadgets-intro">
+    <div class="gadgets-intro-text">
+      <p style="font-size:var(--text-sm);color:var(--text-2);margin:0;">
+        These skills encode the engineering workflows senior engineers follow — from defining requirements through shipping and maintaining production systems. Each gadget is a reusable process you can load into any AI coding agent.
+      </p>
+    </div>
+    <a href="https://github.com/addyosmani/agent-skills" target="_blank" rel="noopener" class="gadgets-source-link">
+      ⭐ View on GitHub
+    </a>
+  </div>
+
+  <!-- Phase flow -->
+  <div class="phase-flow" id="phase-flow" role="tablist" aria-label="Filter by development phase">
+    <!-- populated by JS -->
+  </div>
+
+  <!-- Filter tabs -->
+  <div class="filter-tabs" id="filter-tabs">
+    <button class="filter-tab active" data-filter="all">All gadgets</button>
+    <button class="filter-tab" data-filter="Define">🎯 Define</button>
+    <button class="filter-tab" data-filter="Plan">📋 Plan</button>
+    <button class="filter-tab" data-filter="Build">💻 Build</button>
+    <button class="filter-tab" data-filter="Review">🔍 Review</button>
+    <button class="filter-tab" data-filter="Ship">🚀 Ship</button>
+    <button class="filter-tab" data-filter="Maintain">🛡️ Maintain</button>
+  </div>
+
+  <!-- Stats -->
+  <div class="gadgets-stats">
+    <div class="gadget-stat"><strong id="visible-count">23</strong> gadgets</div>
+    <div class="gadget-stat">Source: <strong><a href="https://github.com/addyosmani/agent-skills" target="_blank" rel="noopener" style="color:inherit">addyosmani/agent-skills</a></strong></div>
+    <div class="gadget-stat">Works with <strong>Claude</strong>, <strong>Gemini</strong>, any AI coding agent</div>
+  </div>
+
+  <!-- Gadget grid -->
+  <div class="gadgets-grid" id="gadgets-grid">
+    <!-- populated by JS -->
+  </div>
+
+  <!-- Detail panel -->
+  <div class="gadget-detail" id="gadget-detail" role="region" aria-label="Gadget detail">
+    <!-- populated by JS -->
+  </div>
+
+  <!-- Callout -->
+  <div class="callout callout-tip">
+    <span class="callout-icon">💡</span>
+    <div class="callout-body">
+      <h4>How to use these gadgets</h4>
+      <p>Copy the install snippet for any gadget and paste it into a message to your AI agent — or add the raw GitHub URL to your <code>CLAUDE.md</code> / <code>AGENTS.md</code> / <code>GEMINI.md</code> file so it's always available. Each skill encodes a process that senior engineers follow, giving your agent a repeatable, opinionated workflow for that task.</p>
+    </div>
+  </div>
+
+</div>
+</div>
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="../" class="nav-logo" style="margin-bottom: var(--s3);">
+          <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M8 6C8 6 6 10 6 16C6 22 10 26 16 26C22 26 26 22 26 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 6V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M12 10L16 6L20 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="16" r="3" fill="currentColor"/>
+          </svg>
+          <span class="nav-logo-text">The Prompt Kitchen</span>
+        </a>
+        <p>Simple recipes for getting the most out of AI.</p>
+      </div>
+      <div class="footer-col"><h4>Learn</h4><ul>
+        <li><a href="../prompts/">Recipe Book</a></li>
+        <li><a href="../daily/">Daily Specials</a></li>
+        <li><a href="../quiz/">Ask the Chef</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Compare</h4><ul>
+        <li><a href="../models/">Appliance Guide</a></li>
+        <li><a href="../model-tester/">Test Kitchen</a></li>
+        <li><a href="../examples/">Tasting Menu</a></li>
+        <li><a href="../challenges/">Cook-Off</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Create</h4><ul>
+        <li><a href="../image-video/">Image &amp; Video</a></li>
+        <li><a href="../audio/">Kitchen Radio</a></li>
+        <li><a href="../video/">Kitchen Cinema</a></li>
+        <li><a href="../gallery/">Gallery</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Site</h4><ul>
+        <li><a href="../gadgets/">Kitchen Gadgets</a></li>
+        <li><a href="../support.html">Tip Jar</a></li>
+        <li><a href="https://github.com/cyork95/the-prompt-kitchen" rel="noopener">GitHub</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 The Prompt Kitchen · <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener" style="color:inherit">CC BY 4.0</a></span>
+      <span>Developed with ♥ by <a href="https://yorkdevelops.com" rel="noopener" style="color:inherit">York.Dev</a></span>
+      <div class="footer-privacy"><span class="privacy-dot"></span><span>No tracking · No cookies · No ads</span></div>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+<script src="../js/main.js"></script>
+<script>
+/* ══════════════════════════════════════════════════════
+   KITCHEN GADGETS — AI Agent Skills Browser
+   Source: https://github.com/addyosmani/agent-skills
+   ══════════════════════════════════════════════════════ */
+
+const BASE_RAW = 'https://raw.githubusercontent.com/addyosmani/agent-skills/main/skills/';
+const BASE_GH  = 'https://github.com/addyosmani/agent-skills/tree/main/skills/';
+
+const GADGETS = [
+
+  /* ── Define ──────────────────────────────────────── */
+  {
+    id: 'interview-me',
+    icon: '🎤',
+    category: 'Define',
+    name: 'Interview Me',
+    tagline: 'Close the gap between what you ask for and what you actually want',
+    overview: 'What people ask for and what they actually want are different things. They ask for "a dashboard" because that\'s what one asks for, not because a dashboard solves their problem. This skill extracts intent through one-question-at-a-time dialogue until ~95% confidence — before any plan, spec, or code exists.',
+    whenToUse: [
+      'The ask is missing who the user is, why they want it, what success looks like, or what the binding constraint is',
+      'Someone says "build me X" without "for whom" or "why now"',
+      'You\'re about to silently fill in ambiguous requirements',
+      'The user invokes: "interview me", "grill me", "are we sure?", "stress-test my thinking"',
+    ],
+    principles: [
+      { title: 'One question at a time', desc: 'Never ask two questions at once. One focused question per turn.' },
+      { title: 'Attach your best guess', desc: 'Always include your current best interpretation — the user corrects it or confirms it.' },
+      { title: 'Before everything else', desc: 'This runs before idea-refine, spec-driven-dev, or any planning.' },
+    ],
+  },
+  {
+    id: 'idea-refine',
+    icon: '💡',
+    category: 'Define',
+    name: 'Idea Refine',
+    tagline: 'Turn raw concepts into sharp, actionable ideas worth building',
+    overview: 'Refines raw ideas into sharp, actionable concepts through structured divergent and convergent thinking. First expands possibilities, then evaluates and converges, then produces a concrete one-pager moving work forward. Use when an idea is still vague or when you need to stress-test assumptions before committing.',
+    whenToUse: [
+      'An idea is still vague or underspecified',
+      'You need to stress-test assumptions before committing to a plan',
+      'You want to expand options before converging on one',
+      'Triggered by: "ideate", "refine this idea", "stress-test my plan"',
+    ],
+    principles: [
+      { title: 'Diverge first', desc: 'Generate variations and alternatives before evaluating.' },
+      { title: 'Stress-test', desc: 'Surface hidden assumptions and cluster related ideas.' },
+      { title: 'Converge to a one-pager', desc: 'Produce a concrete markdown brief that moves work forward.' },
+    ],
+  },
+  {
+    id: 'spec-driven-development',
+    icon: '📐',
+    category: 'Define',
+    name: 'Spec-Driven Development',
+    tagline: 'Write the specification before writing any code',
+    overview: 'Write a structured specification before writing any code. The spec is the shared source of truth between you and the engineer — it defines what we\'re building, why, and how we\'ll know it\'s done. Code without a spec is guessing. This skill is the bridge between a vague idea and a concrete implementation plan.',
+    whenToUse: [
+      'Starting a new project or feature with unclear requirements',
+      'Requirements are ambiguous, incomplete, or exist only as a vague idea',
+      'The change touches multiple files or modules',
+      'You\'re about to make an architectural decision',
+      'The task would take more than 30 minutes to implement',
+    ],
+    principles: [
+      { title: 'Define success criteria', desc: 'Specs must include measurable acceptance criteria — not just descriptions.' },
+      { title: 'Document trade-offs', desc: 'Record what was considered and rejected, not just what was chosen.' },
+      { title: 'Align before building', desc: 'The spec is a contract. Get agreement before a line of code is written.' },
+    ],
+  },
+
+  /* ── Plan ────────────────────────────────────────── */
+  {
+    id: 'planning-and-task-breakdown',
+    icon: '📋',
+    category: 'Plan',
+    name: 'Planning & Task Breakdown',
+    tagline: 'Decompose any feature into small, verifiable tasks',
+    overview: 'Decompose work into small, verifiable tasks with explicit acceptance criteria. Good task breakdown is the difference between an agent that completes work reliably and one that produces a tangled mess. Every task should be small enough to implement, test, and verify in a single focused session.',
+    whenToUse: [
+      'You have a spec and need to break it into implementable units',
+      'A task feels too large or vague to start',
+      'Work needs to be parallelized across multiple agents or sessions',
+      'The implementation order isn\'t obvious',
+    ],
+    principles: [
+      { title: 'Thin vertical slices', desc: 'Each task delivers working, testable behavior — not just a layer.' },
+      { title: 'Explicit acceptance criteria', desc: 'Every task has a verifiable definition of done.' },
+      { title: 'Ordered dependencies', desc: 'Map what must exist before each task can begin.' },
+    ],
+  },
+  {
+    id: 'incremental-implementation',
+    icon: '🪜',
+    category: 'Plan',
+    name: 'Incremental Implementation',
+    tagline: 'Build one piece, test it, verify it, then expand',
+    overview: 'Build in thin vertical slices — implement one piece, test it, verify it, then expand. Avoid implementing an entire feature in one pass. Each increment should leave the system in a working, testable state. This is the execution discipline that makes large features manageable.',
+    whenToUse: [
+      'Implementing any multi-file change',
+      'Building a new feature from a task breakdown',
+      'Refactoring existing code',
+      'Any time you\'re tempted to write more than ~100 lines before testing',
+    ],
+    principles: [
+      { title: 'Always working state', desc: 'Each commit leaves the system deployable — no "half done" states.' },
+      { title: 'Test before expanding', desc: 'Verify each slice before building on top of it.' },
+      { title: 'Small batches', desc: 'Smaller changes are easier to review, debug, and roll back.' },
+    ],
+  },
+  {
+    id: 'context-engineering',
+    icon: '🧠',
+    category: 'Plan',
+    name: 'Context Engineering',
+    tagline: 'Feed your agent the right information at the right time',
+    overview: 'Context is the single biggest lever for agent output quality — too little and the agent hallucinates, too much and it loses focus. Context engineering is the practice of deliberately curating what the agent sees, when it sees it, and how it\'s structured.',
+    whenToUse: [
+      'Starting a new coding session',
+      'Agent output quality is declining (wrong patterns, hallucinated APIs, ignoring conventions)',
+      'Switching between different parts of a codebase',
+      'Setting up a new project for AI-assisted development',
+      'The agent is not following project conventions',
+    ],
+    principles: [
+      { title: 'Hierarchy matters', desc: 'Project rules beat session instructions beat defaults. Structure context deliberately.' },
+      { title: 'Just-in-time loading', desc: 'Load relevant context when it\'s needed, not all at once.' },
+      { title: 'Rules files', desc: 'CLAUDE.md / AGENTS.md encode permanent project context so you don\'t repeat yourself.' },
+    ],
+  },
+  {
+    id: 'using-agent-skills',
+    icon: '🗺️',
+    category: 'Plan',
+    name: 'Using Agent Skills',
+    tagline: 'Discover and invoke the right skill for any task',
+    overview: 'The meta-skill that governs how all other skills are discovered and invoked. Maps tasks to development phases and selects the appropriate skill. Use when starting a session or when you need to identify which skill applies to the current task.',
+    whenToUse: [
+      'Starting a new session and unsure which skill to apply',
+      'A task doesn\'t obviously map to a known workflow',
+      'You want to understand the full skill library and when to use each',
+      'Onboarding to agent-assisted development for the first time',
+    ],
+    principles: [
+      { title: 'Phase-first thinking', desc: 'Identify the development phase before selecting a skill.' },
+      { title: 'Skills are processes', desc: 'Each skill encodes a workflow, not just a capability.' },
+      { title: 'Composable', desc: 'Skills can be chained — interview-me → spec → plan → build → review → ship.' },
+    ],
+  },
+
+  /* ── Build ───────────────────────────────────────── */
+  {
+    id: 'api-and-interface-design',
+    icon: '🔌',
+    category: 'Build',
+    name: 'API & Interface Design',
+    tagline: 'Design stable interfaces that are hard to misuse',
+    overview: 'Design stable, well-documented interfaces that are hard to misuse. Good interfaces make the right thing easy and the wrong thing hard. This applies to REST APIs, GraphQL schemas, module boundaries, component props, and any surface where one piece of code talks to another.',
+    whenToUse: [
+      'Designing new API endpoints or GraphQL schemas',
+      'Defining module boundaries or contracts between teams',
+      'Creating component prop interfaces',
+      'Establishing database schema that informs API shape',
+      'Changing existing public interfaces',
+    ],
+    principles: [
+      { title: 'Hard to misuse', desc: 'The right path should be obvious; wrong paths should fail loudly.' },
+      { title: 'Stable contracts', desc: 'Public interfaces are a promise. Design for longevity.' },
+      { title: 'Document intent', desc: 'Interfaces should express what they do, not how they do it.' },
+    ],
+  },
+  {
+    id: 'frontend-ui-engineering',
+    icon: '🎨',
+    category: 'Build',
+    name: 'Frontend UI Engineering',
+    tagline: 'Build production-quality UIs that look designed, not generated',
+    overview: 'Build production-quality user interfaces that are accessible, performant, and visually polished. The goal is UI that looks like it was built by a design-aware engineer — not generated by an AI. This means real design system adherence, proper accessibility, thoughtful interaction patterns, and no generic "AI aesthetic."',
+    whenToUse: [
+      'Building new UI components or pages',
+      'Modifying existing user-facing interfaces',
+      'Implementing responsive layouts',
+      'Adding interactivity or state management',
+      'Fixing visual or UX issues',
+    ],
+    principles: [
+      { title: 'Accessibility first', desc: 'Semantic HTML, ARIA, keyboard nav — not an afterthought.' },
+      { title: 'Design system adherence', desc: 'Use existing tokens and components. Don\'t invent new patterns.' },
+      { title: 'No AI aesthetic', desc: 'Generic gradients, Lorem ipsum, and misaligned spacing are red flags.' },
+    ],
+  },
+  {
+    id: 'test-driven-development',
+    icon: '🧪',
+    category: 'Build',
+    name: 'Test-Driven Development',
+    tagline: 'Write the failing test before writing the code',
+    overview: 'Write a failing test before writing the code that makes it pass. For bug fixes, reproduce the bug with a test before attempting a fix. Tests are proof — "seems right" is not done. A codebase with good tests is an AI agent\'s superpower; a codebase without tests is a liability.',
+    whenToUse: [
+      'Implementing any new logic or behavior',
+      'Fixing any bug (the Prove-It Pattern)',
+      'Modifying existing functionality',
+      'Adding edge case handling',
+      'Any change that could break existing behavior',
+    ],
+    principles: [
+      { title: 'Red → Green → Refactor', desc: 'Write failing test, make it pass, clean it up. Never skip steps.' },
+      { title: 'The Prove-It Pattern', desc: 'Reproduce the bug with a test first — it proves the fix when it goes green.' },
+      { title: 'Tests are documentation', desc: 'Good tests describe behavior, not implementation details.' },
+    ],
+  },
+  {
+    id: 'source-driven-development',
+    icon: '📚',
+    category: 'Build',
+    name: 'Source-Driven Development',
+    tagline: 'Ground every implementation decision in official documentation',
+    overview: 'Every framework-specific code decision must be backed by official documentation. Don\'t implement from memory — verify, cite, and let the user see your sources. Training data goes stale, APIs get deprecated, best practices evolve. This skill ensures code that traces back to authoritative sources.',
+    whenToUse: [
+      'Building with any framework or library where correctness matters',
+      'Implementing features where the framework\'s recommended approach matters',
+      'Writing boilerplate or patterns that will be copied across a project',
+      'Any time you\'re about to write framework-specific code from memory',
+    ],
+    principles: [
+      { title: 'Cite your sources', desc: 'Every framework pattern should link back to official docs.' },
+      { title: 'Training data is stale', desc: 'APIs deprecate. Always verify against the current version docs.' },
+      { title: 'Show your work', desc: 'Let the user verify the source — builds trust and catches errors.' },
+    ],
+  },
+  {
+    id: 'doubt-driven-development',
+    icon: '🤔',
+    category: 'Build',
+    name: 'Doubt-Driven Development',
+    tagline: 'Adversarial review of non-trivial decisions before they stand',
+    overview: 'A confident answer is not a correct one. Long sessions accumulate context that quietly turns assumptions into "facts." Doubt-driven development materializes a fresh-context reviewer — biased to disprove, not approve — before any non-trivial output stands. An in-flight posture, not a post-hoc review.',
+    whenToUse: [
+      'A decision introduces or modifies branching logic',
+      'The change crosses a module or service boundary',
+      'You\'re asserting a property the compiler can\'t verify: thread safety, idempotence, ordering',
+      'Correctness matters more than speed, or stakes are high (production, security, irreversible)',
+    ],
+    principles: [
+      { title: 'Fresh context', desc: 'The reviewer is biased to disprove — it hasn\'t accumulated the session\'s assumptions.' },
+      { title: 'In-flight, not post-hoc', desc: 'Verify while course-correction is cheap, not after committing.' },
+      { title: 'Non-trivial threshold', desc: 'Only decisions that could silently break behavior need this check.' },
+    ],
+  },
+
+  /* ── Review ──────────────────────────────────────── */
+  {
+    id: 'code-review-and-quality',
+    icon: '🔍',
+    category: 'Review',
+    name: 'Code Review & Quality',
+    tagline: 'Multi-axis review before any change merges',
+    overview: 'Multi-dimensional code review with quality gates. Every change gets reviewed before merge — no exceptions. Review covers five axes: correctness, readability, architecture, security, and performance. The approval standard: approve when it definitely improves code health, even if not perfect.',
+    whenToUse: [
+      'Before merging any PR or change',
+      'After completing a feature implementation',
+      'When another agent or model produced code you need to evaluate',
+      'When refactoring existing code',
+      'After any bug fix (review both the fix and the regression test)',
+    ],
+    principles: [
+      { title: 'Five axes', desc: 'Correctness, readability, architecture, security, performance — all matter.' },
+      { title: 'Improve, don\'t perfect', desc: 'Approve if it improves overall health. Don\'t block for style preferences.' },
+      { title: 'No exceptions', desc: 'Every change gets reviewed — agent-generated code included.' },
+    ],
+  },
+  {
+    id: 'code-simplification',
+    icon: '✂️',
+    category: 'Review',
+    name: 'Code Simplification',
+    tagline: 'Reduce complexity while preserving exact behavior',
+    overview: 'Simplify code by reducing complexity while preserving exact behavior. The goal is not fewer lines — it\'s code that is easier to read, understand, modify, and debug. Every simplification must pass: "Would a new team member understand this faster than the original?"',
+    whenToUse: [
+      'After a feature is working and tests pass, but the implementation feels heavier than it needs to be',
+      'During code review when readability or complexity issues are flagged',
+      'When you encounter deeply nested logic, long functions, or unclear names',
+      'When refactoring code written under time pressure',
+    ],
+    principles: [
+      { title: 'Behavior preservation', desc: 'Simplification that changes behavior is a bug, not an improvement.' },
+      { title: 'The new-teammate test', desc: 'Would someone new understand this faster? That\'s the benchmark.' },
+      { title: 'Delete > abstract', desc: 'Deleting code is almost always better than abstracting it.' },
+    ],
+  },
+  {
+    id: 'debugging-and-error-recovery',
+    icon: '🐛',
+    category: 'Review',
+    name: 'Debugging & Error Recovery',
+    tagline: 'Systematic root-cause analysis — no guessing',
+    overview: 'Systematic debugging with structured triage. When something breaks, stop adding features, preserve evidence, and follow a structured process to find and fix the root cause. Guessing wastes time. The triage checklist works for test failures, build errors, runtime bugs, and production incidents.',
+    whenToUse: [
+      'Tests fail after a code change',
+      'The build breaks',
+      'Runtime behavior doesn\'t match expectations',
+      'A bug report arrives',
+      'Something worked before and stopped working',
+    ],
+    principles: [
+      { title: 'Preserve evidence', desc: 'Don\'t change anything before understanding the failure. Evidence disappears.' },
+      { title: 'Structured triage', desc: 'Follow the checklist — it surfaces root causes that guessing misses.' },
+      { title: 'Reproduce before fixing', desc: 'If you can\'t reproduce it, you don\'t understand it.' },
+    ],
+  },
+  {
+    id: 'browser-testing-with-devtools',
+    icon: '🔬',
+    category: 'Review',
+    name: 'Browser DevTools Testing',
+    tagline: 'Live browser inspection via Chrome DevTools MCP',
+    overview: 'Use Chrome DevTools MCP to give your agent eyes into the browser. This bridges the gap between static code analysis and live browser execution — the agent can see what the user sees, inspect the DOM, read console logs, analyze network requests, and capture performance data.',
+    whenToUse: [
+      'Building or modifying anything that renders in a browser',
+      'Debugging UI issues (layout, styling, interaction)',
+      'Diagnosing console errors or warnings',
+      'Analyzing network requests and API responses',
+      'Profiling performance (Core Web Vitals, paint timing, layout shifts)',
+      'Verifying that a fix actually works in the browser',
+    ],
+    principles: [
+      { title: 'Verify, don\'t guess', desc: 'See what the browser actually renders instead of inferring from code.' },
+      { title: 'Runtime data', desc: 'Console logs, network payloads, and DOM state tell you what static analysis can\'t.' },
+      { title: 'Requires DevTools MCP', desc: 'Needs the chrome-devtools MCP server configured in your agent.' },
+    ],
+  },
+
+  /* ── Ship ────────────────────────────────────────── */
+  {
+    id: 'ci-cd-and-automation',
+    icon: '⚙️',
+    category: 'Ship',
+    name: 'CI/CD & Automation',
+    tagline: 'Automate quality gates so nothing bad reaches production',
+    overview: 'Automate quality gates so no change reaches production without passing tests, lint, type checking, and build. CI/CD is the enforcement mechanism for every other skill — it catches what humans and agents miss, consistently, on every single change. Shift Left: catch problems as early as possible.',
+    whenToUse: [
+      'Setting up a new project\'s CI pipeline',
+      'Adding or modifying automated checks',
+      'Configuring deployment pipelines',
+      'When quality is inconsistently enforced across the team',
+    ],
+    principles: [
+      { title: 'Shift left', desc: 'A bug caught in linting costs minutes; caught in production costs hours.' },
+      { title: 'Faster is safer', desc: 'Smaller batches and more frequent releases reduce risk.' },
+      { title: 'No exceptions', desc: 'CI runs on every change. No bypassing, no "just this once."' },
+    ],
+  },
+  {
+    id: 'git-workflow-and-versioning',
+    icon: '🌿',
+    category: 'Ship',
+    name: 'Git Workflow & Versioning',
+    tagline: 'Treat commits as save points, history as documentation',
+    overview: 'Git is your safety net. Treat commits as save points, branches as sandboxes, and history as documentation. With AI agents generating code at high speed, disciplined version control is the mechanism that keeps changes manageable, reviewable, and reversible.',
+    whenToUse: [
+      'Always — every code change flows through git',
+      'Making any commit, branch, or merge decision',
+      'Resolving conflicts',
+      'Organizing work across multiple parallel streams',
+    ],
+    principles: [
+      { title: 'Trunk-based dev', desc: 'Keep main always deployable. Short-lived branches merging within 1–3 days.' },
+      { title: 'Atomic commits', desc: 'Each commit is a single logical change with a clear message explaining why.' },
+      { title: 'Reversibility', desc: 'If you can\'t roll it back in 5 minutes, your deployment strategy needs work.' },
+    ],
+  },
+  {
+    id: 'shipping-and-launch',
+    icon: '🚀',
+    category: 'Ship',
+    name: 'Shipping & Launch',
+    tagline: 'Deploy safely with monitoring in place and a rollback plan ready',
+    overview: 'Ship with confidence. The goal is not just to deploy — it\'s to deploy safely, with monitoring in place, a rollback plan ready, and a clear understanding of what success looks like. Every launch should be reversible, observable, and incremental.',
+    whenToUse: [
+      'Deploying a feature to production for the first time',
+      'Releasing a significant change to users',
+      'Migrating data or infrastructure',
+      'Opening a beta or early access program',
+      'Any deployment that carries risk (all of them)',
+    ],
+    principles: [
+      { title: 'Reversible by default', desc: 'If you can\'t roll back, you\'re not ready to ship.' },
+      { title: 'Observable', desc: 'Monitoring and alerting must be in place before the deploy button is pressed.' },
+      { title: 'Incremental', desc: 'Feature flags, canary releases, staged rollouts — never big-bang deploys.' },
+    ],
+  },
+  {
+    id: 'performance-optimization',
+    icon: '⚡',
+    category: 'Ship',
+    name: 'Performance Optimization',
+    tagline: 'Measure first — optimize only what data proves matters',
+    overview: 'Measure before optimizing. Performance work without measurement is guessing — and guessing leads to premature optimization that adds complexity without improving what matters. Profile first, identify the actual bottleneck, fix it, measure again.',
+    whenToUse: [
+      'Performance requirements exist in the spec (load time budgets, response time SLAs)',
+      'Users or monitoring report slow behavior',
+      'Core Web Vitals scores are below thresholds',
+      'You suspect a change introduced a regression',
+      'Building features that handle large datasets or high traffic',
+    ],
+    principles: [
+      { title: 'Measure first', desc: 'Optimizing without a profile is guessing. Always profile first.' },
+      { title: 'Fix the bottleneck', desc: 'The slowest part of the critical path is the only thing that matters.' },
+      { title: 'Measure again', desc: 'Verify the optimization actually helped. Some "fixes" make things worse.' },
+    ],
+  },
+
+  /* ── Maintain ────────────────────────────────────── */
+  {
+    id: 'security-and-hardening',
+    icon: '🔒',
+    category: 'Maintain',
+    name: 'Security & Hardening',
+    tagline: 'Treat every input as hostile, every secret as sacred',
+    overview: 'Security-first development practices for web applications. Treat every external input as hostile, every secret as sacred, and every authorization check as mandatory. Security isn\'t a phase — it\'s a constraint on every line of code that touches user data, authentication, or external systems.',
+    whenToUse: [
+      'Building anything that accepts user input',
+      'Implementing authentication or authorization',
+      'Storing or transmitting sensitive data',
+      'Integrating with external APIs or services',
+      'Adding file uploads, webhooks, or callbacks',
+      'Handling payment or PII data',
+    ],
+    principles: [
+      { title: 'Zero trust input', desc: 'Validate and sanitize everything from outside your trust boundary.' },
+      { title: 'Principle of least privilege', desc: 'Grant only the access needed. Revoke when no longer needed.' },
+      { title: 'Defense in depth', desc: 'Multiple layers of controls — no single point of failure.' },
+    ],
+  },
+  {
+    id: 'deprecation-and-migration',
+    icon: '🗑️',
+    category: 'Maintain',
+    name: 'Deprecation & Migration',
+    tagline: 'Remove what no longer earns its keep — safely',
+    overview: 'Code is a liability, not an asset. Every line of code has ongoing maintenance cost. Deprecation is the discipline of removing code that no longer earns its keep, and migration is the process of moving users safely from the old to the new. Most engineering organizations are good at building; few are good at removing.',
+    whenToUse: [
+      'Replacing an old system, API, or library with a new one',
+      'Sunsetting a feature that\'s no longer needed',
+      'Consolidating duplicate implementations',
+      'Removing dead code that nobody owns but everybody depends on',
+      'Planning the lifecycle of a new system (deprecation starts at design time)',
+    ],
+    principles: [
+      { title: 'Code is a liability', desc: 'Every line costs: bugs to fix, dependencies to update, engineers to onboard.' },
+      { title: 'Migrate, don\'t abandon', desc: 'Provide a clear path from old to new before removing the old.' },
+      { title: 'Deprecation starts at design', desc: 'Plan how a system will be removed when you design it.' },
+    ],
+  },
+  {
+    id: 'documentation-and-adrs',
+    icon: '📝',
+    category: 'Maintain',
+    name: 'Documentation & ADRs',
+    tagline: 'Record the why, not just the what',
+    overview: 'Document decisions, not just code. The most valuable documentation captures the why — the context, constraints, and trade-offs that led to a decision. Code shows what was built; documentation explains why it was built this way and what alternatives were considered.',
+    whenToUse: [
+      'Making a significant architectural decision',
+      'Choosing between competing approaches',
+      'Adding or changing a public API',
+      'Shipping a feature that changes user-facing behavior',
+      'Onboarding new team members or agents to the project',
+      'When you find yourself explaining the same thing repeatedly',
+    ],
+    principles: [
+      { title: 'Document the why', desc: 'What was decided is in the code. Why it was decided lives only in docs.' },
+      { title: 'ADRs are immutable', desc: 'Don\'t edit old ADRs — supersede them with new ones.' },
+      { title: 'Write for the agent too', desc: 'Good ADRs give AI coding agents critical context that prevents bad suggestions.' },
+    ],
+  },
+
+];
+
+// ── Phase metadata ─────────────────────────────────────────
+const PHASES = [
+  { id: 'Define', icon: '🎯', label: 'Define',  desc: 'Clarify intent before building' },
+  { id: 'Plan',   icon: '📋', label: 'Plan',    desc: 'Organize and structure the work' },
+  { id: 'Build',  icon: '💻', label: 'Build',   desc: 'Active development' },
+  { id: 'Review', icon: '🔍', label: 'Review',  desc: 'Quality gates and verification' },
+  { id: 'Ship',   icon: '🚀', label: 'Ship',    desc: 'Deploy safely to production' },
+  { id: 'Maintain', icon: '🛡️', label: 'Maintain', desc: 'Security, docs, and cleanup' },
+];
+
+// ── State ──────────────────────────────────────────────────
+let activeGadget = null;
+let activeFilter = 'all';
+
+// ── Init ───────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function () {
+  renderPhaseFlow();
+  renderGadgets('all');
+  setupFilterTabs();
+});
+
+// ── Phase Flow ─────────────────────────────────────────────
+function renderPhaseFlow() {
+  const flow = document.getElementById('phase-flow');
+  PHASES.forEach(phase => {
+    const count = GADGETS.filter(g => g.category === phase.id).length;
+    const pill = document.createElement('button');
+    pill.className = 'phase-pill';
+    pill.setAttribute('data-phase', phase.id);
+    pill.setAttribute('title', phase.desc);
+    pill.setAttribute('role', 'tab');
+    pill.setAttribute('aria-selected', 'false');
+    pill.innerHTML =
+      '<span class="phase-pill-icon">' + phase.icon + '</span>' +
+      '<span class="phase-pill-label">' + phase.label + '</span>' +
+      '<span class="phase-pill-count">' + count + ' gadgets</span>';
+    pill.addEventListener('click', function () {
+      const isActive = this.classList.contains('active');
+      document.querySelectorAll('.phase-pill').forEach(p => {
+        p.classList.remove('active');
+        p.setAttribute('aria-selected', 'false');
+      });
+      if (isActive) {
+        applyFilter('all');
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.toggle('active', t.dataset.filter === 'all'));
+      } else {
+        this.classList.add('active');
+        this.setAttribute('aria-selected', 'true');
+        applyFilter(phase.id);
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.toggle('active', t.dataset.filter === phase.id));
+      }
+    });
+    flow.appendChild(pill);
+  });
+}
+
+// ── Gadget Grid ────────────────────────────────────────────
+function renderGadgets(filter) {
+  const grid = document.getElementById('gadgets-grid');
+  grid.innerHTML = '';
+  let visibleCount = 0;
+  GADGETS.forEach(g => {
+    const hidden = filter !== 'all' && g.category !== filter;
+    if (!hidden) visibleCount++;
+    const card = document.createElement('button');
+    card.className = 'gadget-card' + (activeGadget && activeGadget.id === g.id ? ' active' : '');
+    card.setAttribute('data-id', g.id);
+    card.setAttribute('data-hidden', hidden ? 'true' : 'false');
+    if (hidden) card.style.display = 'none';
+    card.innerHTML =
+      '<span class="gc-icon">' + g.icon + '</span>' +
+      '<span class="gc-cat">' + g.category + '</span>' +
+      '<span class="gc-name">' + g.name + '</span>' +
+      '<span class="gc-tagline">' + g.tagline + '</span>' +
+      '<span class="gc-open-indicator">▾</span>';
+    card.addEventListener('click', function () { toggleGadget(g.id); });
+    grid.appendChild(card);
+  });
+  document.getElementById('visible-count').textContent = visibleCount;
+}
+
+function setupFilterTabs() {
+  document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.addEventListener('click', function () {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      // sync phase pills
+      document.querySelectorAll('.phase-pill').forEach(p => {
+        p.classList.toggle('active', p.dataset.phase === this.dataset.filter);
+        p.setAttribute('aria-selected', p.dataset.phase === this.dataset.filter ? 'true' : 'false');
+      });
+      applyFilter(this.dataset.filter);
+    });
+  });
+}
+
+function applyFilter(filter) {
+  activeFilter = filter;
+  let visibleCount = 0;
+  GADGETS.forEach(g => {
+    const card = document.querySelector('[data-id="' + g.id + '"]');
+    if (!card) return;
+    const hide = filter !== 'all' && g.category !== filter;
+    card.style.display = hide ? 'none' : '';
+    if (!hide) visibleCount++;
+  });
+  document.getElementById('visible-count').textContent = visibleCount;
+  // If active gadget is now hidden, close the detail panel
+  if (activeGadget && filter !== 'all' && activeGadget.category !== filter) {
+    closeDetail();
+  }
+}
+
+// ── Gadget Detail ──────────────────────────────────────────
+function toggleGadget(id) {
+  if (activeGadget && activeGadget.id === id) {
+    closeDetail();
+    return;
+  }
+  const gadget = GADGETS.find(g => g.id === id);
+  if (!gadget) return;
+  activeGadget = gadget;
+
+  // Update card states
+  document.querySelectorAll('.gadget-card').forEach(c => {
+    c.classList.toggle('active', c.dataset.id === id);
+  });
+
+  renderDetail(gadget);
+
+  const detail = document.getElementById('gadget-detail');
+  detail.classList.add('visible');
+
+  setTimeout(() => {
+    detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 80);
+}
+
+function closeDetail() {
+  activeGadget = null;
+  document.querySelectorAll('.gadget-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('gadget-detail').classList.remove('visible');
+}
+
+function renderDetail(g) {
+  const rawUrl  = BASE_RAW + g.id + '/SKILL.md';
+  const ghUrl   = BASE_GH  + g.id;
+  const snippet = 'Use this skill for ' + g.name.toLowerCase() + ':\n' + rawUrl;
+
+  const whenItems = g.whenToUse.map(w =>
+    '<li>' + escHtml(w) + '</li>'
+  ).join('');
+
+  const principleCards = g.principles.map(p =>
+    '<div class="principle-card">' +
+      '<div class="principle-card-title">' + escHtml(p.title) + '</div>' +
+      '<div class="principle-card-desc">' + escHtml(p.desc) + '</div>' +
+    '</div>'
+  ).join('');
+
+  const phaseObj = PHASES.find(ph => ph.id === g.category);
+
+  document.getElementById('gadget-detail').innerHTML = `
+    <div class="detail-header">
+      <span class="detail-icon">${g.icon}</span>
+      <div class="detail-header-text">
+        <h2 class="detail-name">${escHtml(g.name)}</h2>
+        <p class="detail-tagline">${escHtml(g.tagline)}</p>
+        <div class="detail-actions">
+          <span class="gc-cat">${escHtml(g.category)}</span>
+          ${phaseObj ? '<span style="font-size:var(--text-sm);color:var(--text-3);">' + escHtml(phaseObj.desc) + '</span>' : ''}
+        </div>
+      </div>
+      <button class="btn btn-secondary btn-sm detail-close-btn" onclick="closeDetail()">✕ Close</button>
+    </div>
+    <div class="detail-body">
+
+      <div class="detail-section">
+        <div class="detail-section-title">Overview</div>
+        <p class="detail-overview">${escHtml(g.overview)}</p>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-section-title">When to use</div>
+        <ul class="detail-when-list">${whenItems}</ul>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-section-title">Core principles</div>
+        <div class="detail-principles">${principleCards}</div>
+      </div>
+
+      <div class="detail-section">
+        <div class="detail-section-title">Install this gadget</div>
+        <div class="install-box">
+          <div class="install-label">Paste into your AI agent, or add to CLAUDE.md / AGENTS.md</div>
+          <pre class="install-snippet" id="snippet-${escHtml(g.id)}">${escHtml(snippet)}</pre>
+          <div class="install-actions">
+            <button class="btn btn-primary btn-sm" onclick="copySnippet('${escHtml(g.id)}')">📋 Copy snippet</button>
+            <a href="${escHtml(ghUrl)}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">↗ View on GitHub</a>
+            <a href="${escHtml(rawUrl)}" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">📄 Raw SKILL.md</a>
+            <span class="copy-confirm-inline" id="confirm-${escHtml(g.id)}">Copied!</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  `;
+}
+
+function copySnippet(id) {
+  const el = document.getElementById('snippet-' + id);
+  if (!el) return;
+  navigator.clipboard.writeText(el.textContent.trim()).then(() => {
+    const confirm = document.getElementById('confirm-' + id);
+    if (confirm) {
+      confirm.style.display = 'inline';
+      setTimeout(() => { confirm.style.display = 'none'; }, 2200);
+    }
+  });
+}
+
+function escHtml(str) {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+</script>
+</body>
+</html>
